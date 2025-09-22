@@ -1,6 +1,8 @@
 public @interface ejercicios_constantes
 
     // declara una varibale de tipo String y asignale tu nombre
+    String cursor = "maike";
+     IO.println(cursor)
     // crea una variable de tipo int y asignale tu edad
     // crea una variable double con tu altura en metros
     // declara una variable de tipo boolean que indique si te gusta programasr
