@@ -22,11 +22,6 @@
             transform: translateY(-2px);
         }
         
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
         input:focus, select:focus {
             outline: none;
             border-color: #667eea;
@@ -276,4 +271,93 @@
                             <option value="there is">there is</option>
                             <option value="there are">there are</option>
                         </select>
-                        <p id="f3q
+                        <p id="f3q2" class="mt-2 text-sm font-medium hidden"></p>
+                    </div>
+                </div>
+                
+                <button onclick="checkEx3()" class="mt-4 bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 exercise-btn">
+                    Verificar respuestas
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Ejercicio 1: Presente Simple
+        function checkEx1() {
+            const answers = ["works", "play", "doesn't like", "study", "live"];
+            
+            for (let i = 1; i <= 5; i++) {
+                let input = document.getElementById(`e1q${i}`);
+                let feedback = document.getElementById(`f1q${i}`);
+                let userAnswer = input.value.trim().toLowerCase();
+                
+                if (userAnswer === answers[i-1]) {
+                    input.classList.add("correct");
+                    input.classList.remove("incorrect");
+                    feedback.textContent = "✅ Correcto";
+                    feedback.className = "mt-2 text-green-600 font-medium";
+                    feedback.classList.remove("hidden");
+                } else {
+                    input.classList.add("incorrect");
+                    input.classList.remove("correct");
+                    feedback.textContent = `❌ Incorrecto. Respuesta: ${answers[i-1]}`;
+                    feedback.className = "mt-2 text-red-600 font-medium";
+                    feedback.classList.remove("hidden");
+                }
+            }
+        }
+
+        // Ejercicio 2: Pasado Simple
+        function checkEx2() {
+            const answers = ["went", "made", "watched", "traveled", "lost"];
+            
+            for (let i = 1; i <= 5; i++) {
+                let select = document.getElementById(`e2q${i}`);
+                let feedback = document.getElementById(`f2q${i}`);
+                let userAnswer = select.value;
+                
+                if (userAnswer === answers[i-1]) {
+                    select.classList.add("correct");
+                    select.classList.remove("incorrect");
+                    feedback.textContent = "✅ Correcto";
+                    feedback.className = "mt-2 text-green-600 font-medium";
+                    feedback.classList.remove("hidden");
+                } else {
+                    select.classList.add("incorrect");
+                    select.classList.remove("correct");
+                    feedback.textContent = `❌ Incorrecto. Respuesta: ${answers[i-1]}`;
+                    feedback.className = "mt-2 text-red-600 font-medium";
+                    feedback.classList.remove("hidden");
+                }
+            }
+        }
+
+        // Ejercicio 3: There is / There are
+        function checkEx3() {
+            const answers = ["there is", "there are"];
+            
+            for (let i = 1; i <= 2; i++) {
+                let select = document.getElementById(`e3q${i}`);
+                let feedback = document.getElementById(`f3q${i}`);
+                let userAnswer = select.value;
+                
+                if (userAnswer === answers[i-1]) {
+                    select.classList.add("correct");
+                    select.classList.remove("incorrect");
+                    feedback.textContent = "✅ Correcto";
+                    feedback.className = "mt-2 text-green-600 font-medium";
+                    feedback.classList.remove("hidden");
+                } else {
+                    select.classList.add("incorrect");
+                    select.classList.remove("correct");
+                    feedback.textContent = `❌ Incorrecto. Respuesta: ${answers[i-1]}`;
+                    feedback.className = "mt-2 text-red-600 font-medium";
+                    feedback.classList.remove("hidden");
+                }
+            }
+        }
+    </script>
+</body>
+</html>
