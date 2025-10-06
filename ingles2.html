@@ -8,50 +8,31 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+        * { font-family: 'Inter', sans-serif; }
         
-        /* Gradiente personalizado para el header */
-        .gradient-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
+        .gradient-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         
-        /* Sombras suaves para las tarjetas */
         .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
             transition: all 0.3s ease;
         }
         
         .card-shadow:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
             transform: translateY(-2px);
         }
         
-        /* Animación para el mensaje de éxito */
-        .success-animation {
-            animation: slideInDown 0.5s ease-out;
-        }
-        
         @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Estilo para inputs con focus */
-        input:focus, textarea:focus, select:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
         
-        /* Estilo para vocabulario cards */
         .vocab-card {
             transition: all 0.3s ease;
             cursor: pointer;
@@ -62,61 +43,35 @@
             transform: scale(1.02);
         }
         
-        /* Botón de check para ejercicios */
-        .exercise-btn {
-            transition: all 0.2s ease;
-        }
+        .exercise-btn { transition: all 0.2s ease; }
+        .exercise-btn:hover { transform: scale(1.05); }
         
-        .exercise-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        /* Respuesta correcta/incorrecta */
-        .correct {
-            background-color: #d1fae5;
-            border-color: #10b981;
-        }
-        
-        .incorrect {
-            background-color: #fee2e2;
-            border-color: #ef4444;
-        }
+        .correct { background-color: #d1fae5 !important; border-color: #10b981 !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; }
     </style>
 </head>
 <body class="bg-gray-50">
     
-    <!-- 🏠 ENCABEZADO -->
     <header class="gradient-header text-white py-16">
         <div class="container mx-auto px-4 max-w-6xl">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4">
-                Plan de Aprendizaje de Inglés
-            </h1>
-            <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4">
-                Fase 1: Fundamentos Sólidos
-            </h2>
-            <p class="text-lg md:text-xl text-center opacity-90 max-w-3xl mx-auto">
-                Consolida tu base, amplía tu vocabulario y da tu siguiente paso hacia el nivel B1.
-            </p>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4">Plan de Aprendizaje de Inglés</h1>
+            <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4">Fase 1: Fundamentos Sólidos</h2>
+            <p class="text-lg md:text-xl text-center opacity-90 max-w-3xl mx-auto">Consolida tu base, amplía tu vocabulario y da tu siguiente paso hacia el nivel B1.</p>
         </div>
     </header>
 
-    <!-- 📘 CONTENIDO PRINCIPAL -->
     <main class="container mx-auto px-4 py-12 max-w-6xl">
         
-        <!-- 🎯 OBJETIVO -->
         <section class="bg-white rounded-2xl p-8 md:p-10 card-shadow mb-8">
             <div class="flex items-start gap-4">
                 <span class="text-5xl">🎯</span>
                 <div>
                     <h3 class="text-3xl font-bold text-gray-800 mb-3">Objetivo</h3>
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        Consolidar la base gramatical y ampliar vocabulario básico para lograr comunicación efectiva en situaciones cotidianas.
-                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">Consolidar la base gramatical y ampliar vocabulario básico para lograr comunicación efectiva en situaciones cotidianas.</p>
                 </div>
             </div>
         </section>
 
-        <!-- 📚 TEMAS CLAVE -->
         <section class="bg-white rounded-2xl p-8 md:p-10 card-shadow mb-8">
             <div class="flex items-start gap-4 mb-6">
                 <span class="text-5xl">📚</span>
@@ -141,14 +96,12 @@
             </div>
         </section>
 
-        <!-- 📖 VOCABULARIO EXPANDIDO -->
         <section class="bg-white rounded-2xl p-8 md:p-10 card-shadow mb-8">
             <div class="flex items-start gap-4 mb-6">
                 <span class="text-5xl">📖</span>
-                <h3 class="text-3xl font-bold text-gray-800">Vocabulario esencial por categoría</h3>
+                <h3 class="text-3xl font-bold text-gray-800">Vocabulario esencial</h3>
             </div>
             
-            <!-- Rutinas diarias -->
             <div class="mb-6">
                 <h4 class="text-xl font-semibold text-purple-700 mb-3">🌅 Rutinas diarias</h4>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -168,26 +121,9 @@
                         <p class="font-semibold text-gray-800">Go to work</p>
                         <p class="text-sm text-gray-600">Ir al trabajo</p>
                     </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Take a shower</p>
-                        <p class="text-sm text-gray-600">Ducharse</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Do homework</p>
-                        <p class="text-sm text-gray-600">Hacer tarea</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Go to bed</p>
-                        <p class="text-sm text-gray-600">Ir a dormir</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Watch TV</p>
-                        <p class="text-sm text-gray-600">Ver televisión</p>
-                    </div>
                 </div>
             </div>
 
-            <!-- Familia -->
             <div class="mb-6">
                 <h4 class="text-xl font-semibold text-purple-700 mb-3">👨‍👩‍👧‍👦 Familia</h4>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -204,139 +140,13 @@
                         <p class="text-sm text-gray-600">Abuelos</p>
                     </div>
                     <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Aunt/Uncle</p>
-                        <p class="text-sm text-gray-600">Tía/Tío</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
                         <p class="font-semibold text-gray-800">Cousin</p>
                         <p class="text-sm text-gray-600">Primo/a</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Nephew/Niece</p>
-                        <p class="text-sm text-gray-600">Sobrino/a</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Comida -->
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold text-purple-700 mb-3">🍽️ Comida</h4>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Vegetables</p>
-                        <p class="text-sm text-gray-600">Verduras</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Fruits</p>
-                        <p class="text-sm text-gray-600">Frutas</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Meat</p>
-                        <p class="text-sm text-gray-600">Carne</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Chicken</p>
-                        <p class="text-sm text-gray-600">Pollo</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Fish</p>
-                        <p class="text-sm text-gray-600">Pescado</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Bread</p>
-                        <p class="text-sm text-gray-600">Pan</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Rice</p>
-                        <p class="text-sm text-gray-600">Arroz</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Pasta</p>
-                        <p class="text-sm text-gray-600">Pasta</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Cheese</p>
-                        <p class="text-sm text-gray-600">Queso</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Eggs</p>
-                        <p class="text-sm text-gray-600">Huevos</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trabajo -->
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold text-purple-700 mb-3">💼 Trabajo</h4>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Office</p>
-                        <p class="text-sm text-gray-600">Oficina</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Boss</p>
-                        <p class="text-sm text-gray-600">Jefe</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Colleague</p>
-                        <p class="text-sm text-gray-600">Colega</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Meeting</p>
-                        <p class="text-sm text-gray-600">Reunión</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Project</p>
-                        <p class="text-sm text-gray-600">Proyecto</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Deadline</p>
-                        <p class="text-sm text-gray-600">Plazo límite</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lugares -->
-            <div>
-                <h4 class="text-xl font-semibold text-purple-700 mb-3">🏙️ Lugares</h4>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Restaurant</p>
-                        <p class="text-sm text-gray-600">Restaurante</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Hospital</p>
-                        <p class="text-sm text-gray-600">Hospital</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Bank</p>
-                        <p class="text-sm text-gray-600">Banco</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Supermarket</p>
-                        <p class="text-sm text-gray-600">Supermercado</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Library</p>
-                        <p class="text-sm text-gray-600">Biblioteca</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Park</p>
-                        <p class="text-sm text-gray-600">Parque</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">School</p>
-                        <p class="text-sm text-gray-600">Escuela</p>
-                    </div>
-                    <div class="vocab-card bg-gray-50 rounded-lg p-3 border border-gray-200">
-                        <p class="font-semibold text-gray-800">Gym</p>
-                        <p class="text-sm text-gray-600">Gimnasio</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ✏️ PRÁCTICA DE GRAMÁTICA -->
         <section class="bg-white rounded-2xl p-8 md:p-10 card-shadow mb-8">
             <div class="flex items-start gap-4 mb-6">
                 <span class="text-5xl">✏️</span>
@@ -344,133 +154,126 @@
             </div>
 
             <!-- Ejercicio 1: Presente Simple -->
-            <div class="mb-8 bg-blue-50 rounded-xl p-6">
+            <div class="mb-8 bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
                 <h4 class="text-xl font-semibold text-blue-800 mb-4">Ejercicio 1: Presente Simple</h4>
-                <p class="text-gray-700 mb-4">Completa las oraciones con la forma correcta del verbo entre paréntesis:</p>
+                <p class="text-gray-700 mb-4">Completa con la forma correcta del verbo:</p>
                 
                 <div class="space-y-4">
                     <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">1. She ___________ (work) in a hospital.</p>
-                        <input type="text" id="ex1q1" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tu respuesta">
-                        <p id="feedback1q1" class="mt-2 text-sm font-medium hidden"></p>
+                        <p class="text-gray-800 mb-2">1. She ___ (work) in a hospital.</p>
+                        <input type="text" id="e1q1" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tu respuesta">
+                        <p id="f1q1" class="mt-2 text-sm font-medium hidden"></p>
                     </div>
-                    
                     <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">2. They ___________ (play) soccer every weekend.</p>
-                        <input type="text" id="ex1q2" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tu respuesta">
-                        <p id="feedback1q2" class="mt-2 text-sm font-medium hidden"></p>
+                        <p class="text-gray-800 mb-2">2. They ___ (play) soccer every weekend.</p>
+                        <input type="text" id="e1q2" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tu respuesta">
+                        <p id="f1q2" class="mt-2 text-sm font-medium hidden"></p>
                     </div>
-                    
                     <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">3. He ___________ (not like) coffee.</p>
-                        <input type="text" id="ex1q3" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tu respuesta">
-                        <p id="feedback1q3" class="mt-2 text-sm font-medium hidden"></p>
+                        <p class="text-gray-800 mb-2">3. He ___ (not like) coffee.</p>
+                        <input type="text" id="e1q3" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tu respuesta">
+                        <p id="f1q3" class="mt-2 text-sm font-medium hidden"></p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4">
+                        <p class="text-gray-800 mb-2">4. I ___ (study) English every day.</p>
+                        <input type="text" id="e1q4" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tu respuesta">
+                        <p id="f1q4" class="mt-2 text-sm font-medium hidden"></p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4">
+                        <p class="text-gray-800 mb-2">5. We ___ (live) in Madrid.</p>
+                        <input type="text" id="e1q5" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tu respuesta">
+                        <p id="f1q5" class="mt-2 text-sm font-medium hidden"></p>
                     </div>
                 </div>
                 
-                <button onclick="checkExercise1()" class="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 exercise-btn">
+                <button onclick="checkEx1()" class="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 exercise-btn">
                     Verificar respuestas
                 </button>
             </div>
 
             <!-- Ejercicio 2: Pasado Simple -->
-            <div class="mb-8 bg-green-50 rounded-xl p-6">
+            <div class="mb-8 bg-green-50 rounded-xl p-6 border-2 border-green-200">
                 <h4 class="text-xl font-semibold text-green-800 mb-4">Ejercicio 2: Pasado Simple</h4>
                 <p class="text-gray-700 mb-4">Elige la forma correcta del verbo en pasado:</p>
                 
                 <div class="space-y-4">
                     <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">1. Yesterday, I ___________ to the supermarket.</p>
-                        <select id="ex2q1" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
+                        <p class="text-gray-800 mb-2">1. Yesterday, I ___ to the supermarket.</p>
+                        <select id="e2q1" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
                             <option value="">Selecciona...</option>
                             <option value="go">go</option>
                             <option value="went">went</option>
                             <option value="goes">goes</option>
                         </select>
-                        <p id="feedback2q1" class="mt-2 text-sm font-medium hidden"></p>
+                        <p id="f2q1" class="mt-2 text-sm font-medium hidden"></p>
                     </div>
-                    
                     <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">2. She ___________ a delicious cake last week.</p>
-                        <select id="ex2q2" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
+                        <p class="text-gray-800 mb-2">2. She ___ a delicious cake last week.</p>
+                        <select id="e2q2" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
                             <option value="">Selecciona...</option>
                             <option value="make">make</option>
                             <option value="made">made</option>
                             <option value="makes">makes</option>
                         </select>
-                        <p id="feedback2q2" class="mt-2 text-sm font-medium hidden"></p>
+                        <p id="f2q2" class="mt-2 text-sm font-medium hidden"></p>
                     </div>
-                    
                     <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">3. We ___________ a movie last night.</p>
-                        <select id="ex2q3" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
+                        <p class="text-gray-800 mb-2">3. We ___ a movie last night.</p>
+                        <select id="e2q3" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
                             <option value="">Selecciona...</option>
                             <option value="watch">watch</option>
                             <option value="watched">watched</option>
                             <option value="watches">watches</option>
                         </select>
-                        <p id="feedback2q3" class="mt-2 text-sm font-medium hidden"></p>
+                        <p id="f2q3" class="mt-2 text-sm font-medium hidden"></p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4">
+                        <p class="text-gray-800 mb-2">4. They ___ to Paris last summer.</p>
+                        <select id="e2q4" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
+                            <option value="">Selecciona...</option>
+                            <option value="travel">travel</option>
+                            <option value="traveled">traveled</option>
+                            <option value="travels">travels</option>
+                        </select>
+                        <p id="f2q4" class="mt-2 text-sm font-medium hidden"></p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4">
+                        <p class="text-gray-800 mb-2">5. He ___ his keys yesterday.</p>
+                        <select id="e2q5" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
+                            <option value="">Selecciona...</option>
+                            <option value="lose">lose</option>
+                            <option value="lost">lost</option>
+                            <option value="loses">loses</option>
+                        </select>
+                        <p id="f2q5" class="mt-2 text-sm font-medium hidden"></p>
                     </div>
                 </div>
                 
-                <button onclick="checkExercise2()" class="mt-4 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 exercise-btn">
+                <button onclick="checkEx2()" class="mt-4 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 exercise-btn">
                     Verificar respuestas
                 </button>
             </div>
 
-            <!-- Ejercicio 3: There is / There are -->
-            <div class="bg-purple-50 rounded-xl p-6">
+            <!-- Ejercicio 3: There is/are -->
+            <div class="mb-8 bg-purple-50 rounded-xl p-6 border-2 border-purple-200">
                 <h4 class="text-xl font-semibold text-purple-800 mb-4">Ejercicio 3: There is / There are</h4>
                 <p class="text-gray-700 mb-4">Completa con "there is" o "there are":</p>
                 
                 <div class="space-y-4">
                     <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">1. ___________ a book on the table.</p>
-                        <select id="ex3q1" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
+                        <p class="text-gray-800 mb-2">1. ___ a book on the table.</p>
+                        <select id="e3q1" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
                             <option value="">Selecciona...</option>
                             <option value="there is">there is</option>
                             <option value="there are">there are</option>
                         </select>
-                        <p id="feedback3q1" class="mt-2 text-sm font-medium hidden"></p>
+                        <p id="f3q1" class="mt-2 text-sm font-medium hidden"></p>
                     </div>
-                    
                     <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">2. ___________ many students in the classroom.</p>
-                        <select id="ex3q2" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
+                        <p class="text-gray-800 mb-2">2. ___ many students in the classroom.</p>
+                        <select id="e3q2" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
                             <option value="">Selecciona...</option>
                             <option value="there is">there is</option>
                             <option value="there are">there are</option>
                         </select>
-                        <p id="feedback3q2" class="mt-2 text-sm font-medium hidden"></p>
-                    </div>
-                    
-                    <div class="bg-white rounded-lg p-4">
-                        <p class="text-gray-800 mb-2">3. ___________ a cat and two dogs in the garden.</p>
-                        <select id="ex3q3" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg">
-                            <option value="">Selecciona...</option>
-                            <option value="there is">there is</option>
-                            <option value="there are">there are</option>
-                        </select>
-                        <p id="feedback3q3" class="mt-2 text-sm font-medium hidden"></p>
-                    </div>
-                </div>
-                
-                <button onclick="checkExercise3()" class="mt-4 bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 exercise-btn">
-                    Verificar respuestas
-                </button>
-            </div>
-        </section>
-
-        <!-- 🧠 ACTIVIDADES RECOMENDADAS -->
-        <section class="bg-white rounded-2xl p-8 md:p-10 card-shadow mb-8">
-            <div class="flex items-start gap-4 mb-6">
-                <span class="text-5xl">🧠</span>
-                <h3 class="text-3xl font-bold text-gray-800">Actividades recomendadas</h3>
-            </div>
-            <div class="space-y-4">
-                <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-5 border-l-4 border-blue-500">
-                    <p class="text-gray-800"><span class="font-semibold">📘 Gramática:</span> Estudia 20–30 minutos diarios con <em>English Grammar in Use – Murphy</em> o <em>BBC Learning English</em>.</p>
-                </div>
-                <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-5 border-l-4 border-green-500">
-                    <p class="text-gray-800"><span class="font-semibold">🎧 Listening:</span> Escucha podcasts lentos como <em>EnglishClass101</em>, <em>ESLPod</em>, o <em>BBC 6 Minute English</em>.</p>
-                </div>
+                        <p id="f3q
