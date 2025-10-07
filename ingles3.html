@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica de Inglés</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            background-color: #ddd;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .tab-button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .category-selector {
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .question {
+            font-size: 20px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0b7dda;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .option-button {
+            padding: 15px;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            border: 2px solid #ddd;
+            cursor: pointer;
+        }
+        .option-button:hover {
+            background-color: #e0e0e0;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .incorrect {
+            background-color: #f44336;
+            color: white;
+        }
+        .score {
+            text-align: center;
+            font-size: 20px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff3cd;
+            border-radius: 5px;
+        }
+        .grammar-exercise {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎓 Práctica de Inglés</h1>
+    
+    <div class="tabs">
+        <button class="tab-button active" onclick="showTab('escribir')">✍️ Escribir</button>
+        <button class="tab-button" onclick="showTab('seleccionar')">✔️ Seleccionar</button>
+        <button class="tab-button" onclick="showTab('gramatica')">📚 Gramática</button>
+    </div>
+
+    <!-- TAB: ESCRIBIR -->
+    <div id="escribir" class="tab-content active">
+        <div class="category-selector">
+            <label>Categoría:</label>
+            <select id="categoryWrite" onchange="newWriteQuestion()">
+                <option value="comida">🍽️ Comida y Bebidas</option>
+                <option value="trabajo">💼 Trabajo y Profesiones</option>
+                <option value="ciudad">🏙️ Lugares de la Ciudad</option>
+                <option value="transporte">🚗 Transporte</option>
+                <option value="casa">🏠 La Casa</option>
+                <option value="ropa">👔 Ropa y Accesorios</option>
+            </select>
+        </div>
+        
+        <div class="score">
+            Correctas: <span id="scoreWrite">0</span> | Incorrectas: <span id="wrongWrite">0</span>
+        </div>
+        
+        <div class="question" id="questionWrite"></div>
+        <input type="text" id="answerWrite" placeholder="Escribe tu respuesta aquí..." onkeypress="checkEnter(event, 'write')">
+        <button onclick="checkWriteAnswer()">Comprobar</button>
+        <button onclick="newWriteQuestion()">Siguiente</button>
+        <div id="resultWrite" class="result" style="display:none;"></div>
+    </div>
+
+    <!-- TAB: SELECCIONAR -->
+    <div id="seleccionar" class="tab-content">
+        <div class="category-selector">
+            <label>Categoría:</label>
+            <select id="categorySelect" onchange="newSelectQuestion()">
+                <option value="comida">🍽️ Comida y Bebidas</option>
+                <option value="trabajo">💼 Trabajo y Profesiones</option>
+                <option value="ciudad">🏙️ Lugares de la Ciudad</option>
+                <option value="transporte">🚗 Transporte</option>
+                <option value="casa">🏠 La Casa</option>
+                <option value="ropa">👔 Ropa y Accesorios</option>
+            </select>
+        </div>
+        
+        <div class="score">
+            Correctas: <span id="scoreSelect">0</span> | Incorrectas: <span id="wrongSelect">0</span>
+        </div>
+        
+        <div class="question" id="questionSelect"></div>
+        <div class="options" id="optionsSelect"></div>
+        <div id="resultSelect" class="result" style="display:none;"></div>
+    </div>
+
+    <!-- TAB: GRAMÁTICA -->
+    <div id="gramatica" class="tab-content">
+        <h2>Ejercicios de Gramática</h2>
+        
+        <div class="category-selector">
+            <label>Tema:</label>
+            <select id="grammarTopic" onchange="newGrammarQuestion()">
+                <option value="verbs">Tiempos Verbales</option>
+                <option value="prepositions">Preposiciones</option>
+                <option value="articles">Artículos (a/an/the)</option>
+                <option value="plurals">Plurales</option>
+            </select>
+        </div>
+        
+        <div class="score">
+            Correctas: <span id="scoreGrammar">0</span> | Incorrectas: <span id="wrongGrammar">0</span>
+        </div>
+        
+        <div class="grammar-exercise">
+            <div class="question" id="questionGrammar"></div>
+            <input type="text" id="answerGrammar" placeholder="Escribe tu respuesta..." onkeypress="checkEnter(event, 'grammar')">
+            <button onclick="checkGrammarAnswer()">Comprobar</button>
+            <button onclick="newGrammarQuestion()">Siguiente</button>
+        </div>
+        
+        <div id="resultGrammar" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        const vocabulary = {
+            comida: {
+                'Pan': 'Bread', 'Mantequilla': 'Butter', 'Queso': 'Cheese', 'Huevos': 'Eggs',
+                'Leche': 'Milk', 'Arroz': 'Rice', 'Pasta': 'Pasta', 'Carne': 'Meat',
+                'Pollo': 'Chicken', 'Pescado': 'Fish', 'Verduras': 'Vegetables', 'Fruta': 'Fruit',
+                'Sal': 'Salt', 'Pimienta': 'Pepper', 'Azúcar': 'Sugar', 'Aceite': 'Oil',
+                'Manzana': 'Apple', 'Plátano': 'Banana', 'Naranja': 'Orange', 'Fresa': 'Strawberry',
+                'Sandía': 'Watermelon', 'Uvas': 'Grapes', 'Pera': 'Pear', 'Melocotón': 'Peach',
+                'Tomate': 'Tomato', 'Patata': 'Potato', 'Zanahoria': 'Carrot', 'Cebolla': 'Onion',
+                'Lechuga': 'Lettuce', 'Pimiento': 'Pepper', 'Pepino': 'Cucumber', 'Brócoli': 'Broccoli',
+                'Agua': 'Water', 'Café': 'Coffee', 'Té': 'Tea', 'Zumo': 'Juice',
+                'Refresco': 'Soda', 'Cerveza': 'Beer', 'Vino': 'Wine'
+            },
+            trabajo: {
+                'Profesor/a': 'Teacher', 'Médico/a': 'Doctor', 'Enfermero/a': 'Nurse',
+                'Ingeniero/a': 'Engineer', 'Abogado/a': 'Lawyer', 'Contable': 'Accountant',
+                'Cocinero/a': 'Chef', 'Camarero/a': 'Waiter', 'Policía': 'Police officer',
+                'Bombero/a': 'Firefighter', 'Conductor/a': 'Driver', 'Vendedor/a': 'Salesperson',
+                'Gerente': 'Manager', 'Secretario/a': 'Secretary', 'Programador/a': 'Programmer',
+                'Oficina': 'Office', 'Empresa': 'Company', 'Jefe/a': 'Boss', 'Colega': 'Colleague',
+                'Empleado/a': 'Employee', 'Salario': 'Salary', 'Reunión': 'Meeting',
+                'Horario': 'Schedule', 'Descanso': 'Break', 'Horas extra': 'Overtime',
+                'Contrato': 'Contract', 'Entrevista': 'Interview'
+            },
+            ciudad: {
+                'Banco': 'Bank', 'Hospital': 'Hospital', 'Escuela': 'School',
+                'Universidad': 'University', 'Biblioteca': 'Library', 'Museo': 'Museum',
+                'Teatro': 'Theater', 'Cine': 'Cinema', 'Restaurante': 'Restaurant',
+                'Cafetería': 'Café', 'Supermercado': 'Supermarket', 'Tienda': 'Store',
+                'Centro comercial': 'Mall', 'Mercado': 'Market', 'Farmacia': 'Pharmacy',
+                'Correos': 'Post office', 'Comisaría': 'Police station', 'Estación de bomberos': 'Fire station',
+                'Parque': 'Park', 'Plaza': 'Square', 'Calle': 'Street', 'Avenida': 'Avenue',
+                'Edificio': 'Building', 'Puente': 'Bridge'
+            },
+            transporte: {
+                'Coche': 'Car', 'Autobús': 'Bus', 'Tren': 'Train', 'Metro': 'Subway',
+                'Taxi': 'Taxi', 'Bicicleta': 'Bicycle', 'Motocicleta': 'Motorcycle',
+                'Avión': 'Airplane', 'Barco': 'Boat', 'Barco grande': 'Ship',
+                'Helicóptero': 'Helicopter', 'Estación': 'Station', 'Aeropuerto': 'Airport',
+                'Billete': 'Ticket', 'Conductor': 'Driver', 'Pasajero': 'Passenger',
+                'Tráfico': 'Traffic', 'Carretera': 'Road', 'Autopista': 'Highway',
+                'Parada': 'Stop', 'Llegar': 'Arrive', 'Salir': 'Depart'
+            },
+            casa: {
+                'Cocina': 'Kitchen', 'Salón': 'Living room', 'Dormitorio': 'Bedroom',
+                'Baño': 'Bathroom', 'Comedor': 'Dining room', 'Garaje': 'Garage',
+                'Jardín': 'Garden', 'Balcón': 'Balcony', 'Pasillo': 'Hallway',
+                'Sótano': 'Basement', 'Ático': 'Attic', 'Mesa': 'Table', 'Silla': 'Chair',
+                'Sofá': 'Sofa', 'Cama': 'Bed', 'Escritorio': 'Desk', 'Armario': 'Closet',
+                'Estantería': 'Shelf', 'Lámpara': 'Lamp', 'Espejo': 'Mirror',
+                'Cortinas': 'Curtains', 'Alfombra': 'Carpet', 'Televisión': 'Television',
+                'Frigorífico': 'Refrigerator', 'Estufa': 'Stove', 'Horno': 'Oven',
+                'Microondas': 'Microwave', 'Lavadora': 'Washing machine', 'Lavavajillas': 'Dishwasher'
+            },
+            ropa: {
+                'Camisa': 'Shirt', 'Camiseta': 'T-shirt', 'Pantalones': 'Pants',
+                'Vaqueros': 'Jeans', 'Vestido': 'Dress', 'Falda': 'Skirt',
+                'Chaqueta': 'Jacket', 'Abrigo': 'Coat', 'Suéter': 'Sweater',
+                'Zapatos': 'Shoes', 'Botas': 'Boots', 'Zapatillas deportivas': 'Sneakers',
+                'Calcetines': 'Socks', 'Sombrero': 'Hat', 'Gorra': 'Cap',
+                'Bufanda': 'Scarf', 'Guantes': 'Gloves', 'Cinturón': 'Belt'
+            }
+        };
+
+        const grammarExercises = {
+            verbs: [
+                {q: 'I ___ to school every day. (go)', a: 'go'},
+                {q: 'She ___ breakfast at 8 AM. (eat)', a: 'eats'},
+                {q: 'They ___ football yesterday. (play)', a: 'played'},
+                {q: 'He ___ working now. (be)', a: 'is'},
+                {q: 'We ___ to the cinema tomorrow. (go)', a: 'will go'},
+                {q: 'I ___ my homework already. (finish)', a: 'have finished'},
+                {q: 'She ___ a book when I called. (read)', a: 'was reading'},
+                {q: 'They ___ in Madrid for 5 years. (live)', a: 'have lived'},
+                {q: 'He ___ coffee every morning. (drink)', a: 'drinks'},
+                {q: 'We ___ to Paris last summer. (travel)', a: 'traveled'}
+            ],
+            prepositions: [
+                {q: 'I live ___ Madrid.', a: 'in'},
+                {q: 'The book is ___ the table.', a: 'on'},
+                {q: 'She arrives ___ 9 o\'clock.', a: 'at'},
+                {q: 'We go to school ___ bus.', a: 'by'},
+                {q: 'The cat is ___ the box.', a: 'in'},
+                {q: 'He sits ___ me.', a: 'next to'},
+                {q: 'The picture is ___ the wall.', a: 'on'},
+                {q: 'I study ___ night.', a: 'at'},
+                {q: 'She was born ___ May.', a: 'in'},
+                {q: 'We meet ___ the park.', a: 'at'}
+            ],
+            articles: [
+                {q: '___ apple a day keeps the doctor away.', a: 'An'},
+                {q: 'I have ___ dog.', a: 'a'},
+                {q: '___ sun is bright today.', a: 'The'},
+                {q: 'She is ___ teacher.', a: 'a'},
+                {q: 'I need ___ umbrella.', a: 'an'},
+                {q: '___ moon is beautiful tonight.', a: 'The'},
+                {q: 'He wants ___ new car.', a: 'a'},
+                {q: 'Do you have ___ orange?', a: 'an'},
+                {q: '___ Earth is round.', a: 'The'},
+                {q: 'I saw ___ elephant at the zoo.', a: 'an'}
+            ],
+            plurals: [
+                {q: 'One cat, two ___', a: 'cats'},
+                {q: 'One box, two ___', a: 'boxes'},
+                {q: 'One child, two ___', a: 'children'},
+                {q: 'One woman, two ___', a: 'women'},
+                {q: 'One tooth, two ___', a: 'teeth'},
+                {q: 'One potato, two ___', a: 'potatoes'},
+                {q: 'One knife, two ___', a: 'knives'},
+                {q: 'One person, two ___', a: 'people'},
+                {q: 'One foot, two ___', a: 'feet'},
+                {q: 'One fish, two ___', a: 'fish'}
+            ]
+        };
+
+        let currentWord = {};
+        let scores = {write: 0, select: 0, grammar: 0};
+        let wrong = {write: 0, select: 0, grammar: 0};
+        let currentGrammarEx = {};
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function getRandomWord(category) {
+            const words = Object.keys(vocabulary[category]);
+            const spanish = words[Math.floor(Math.random() * words.length)];
+            return {spanish, english: vocabulary[category][spanish]};
+        }
+
+        function newWriteQuestion() {
+            const category = document.getElementById('categoryWrite').value;
+            currentWord = getRandomWord(category);
+            document.getElementById('questionWrite').textContent = `¿Cómo se dice "${currentWord.spanish}" en inglés?`;
+            document.getElementById('answerWrite').value = '';
+            document.getElementById('resultWrite').style.display = 'none';
+        }
+
+        function checkWriteAnswer() {
+            const userAnswer = document.getElementById('answerWrite').value.trim().toLowerCase();
+            const correctAnswer = currentWord.english.toLowerCase();
+            const result = document.getElementById('resultWrite');
+            
+            if (userAnswer === correctAnswer) {
+                result.textContent = `¡Correcto! ✓`;
+                result.className = 'result correct';
+                scores.write++;
+            } else {
+                result.textContent = `Incorrecto. La respuesta correcta es: ${currentWord.english}`;
+                result.className = 'result incorrect';
+                wrong.write++;
+            }
+            result.style.display = 'block';
+            document.getElementById('scoreWrite').textContent = scores.write;
+            document.getElementById('wrongWrite').textContent = wrong.write;
+        }
+
+        function newSelectQuestion() {
+            const category = document.getElementById('categorySelect').value;
+            currentWord = getRandomWord(category);
+            
+            const allWords = Object.values(vocabulary[category]);
+            const options = [currentWord.english];
+            
+            while (options.length < 4) {
+                const random = allWords[Math.floor(Math.random() * allWords.length)];
+                if (!options.includes(random)) options.push(random);
+            }
+            
+            options.sort(() => Math.random() - 0.5);
+            
+            document.getElementById('questionSelect').textContent = `¿Cómo se dice "${currentWord.spanish}" en inglés?`;
+            
+            const optionsDiv = document.getElementById('optionsSelect');
+            optionsDiv.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                btn.textContent = opt;
+                btn.onclick = () => checkSelectAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+            
+            document.getElementById('resultSelect').style.display = 'none';
+        }
+
+        function checkSelectAnswer(selected) {
+            const result = document.getElementById('resultSelect');
+            
+            if (selected === currentWord.english) {
+                result.textContent = `¡Correcto! ✓`;
+                result.className = 'result correct';
+                scores.select++;
+            } else {
+                result.textContent = `Incorrecto. La respuesta correcta es: ${currentWord.english}`;
+                result.className = 'result incorrect';
+                wrong.select++;
+            }
+            result.style.display = 'block';
+            document.getElementById('scoreSelect').textContent = scores.select;
+            document.getElementById('wrongSelect').textContent = wrong.select;
+            
+            setTimeout(newSelectQuestion, 2000);
+        }
+
+        function newGrammarQuestion() {
+            const topic = document.getElementById('grammarTopic').value;
+            const exercises = grammarExercises[topic];
+            currentGrammarEx = exercises[Math.floor(Math.random() * exercises.length)];
+            
+            document.getElementById('questionGrammar').textContent = currentGrammarEx.q;
+            document.getElementById('answerGrammar').value = '';
+            document.getElementById('resultGrammar').style.display = 'none';
+        }
+
+        function checkGrammarAnswer() {
+            const userAnswer = document.getElementById('answerGrammar').value.trim().toLowerCase();
+            const correctAnswer = currentGrammarEx.a.toLowerCase();
+            const result = document.getElementById('resultGrammar');
+            
+            if (userAnswer === correctAnswer) {
+                result.textContent = `¡Correcto! ✓`;
+                result.className = 'result correct';
+                scores.grammar++;
+            } else {
+                result.textContent = `Incorrecto. La respuesta correcta es: ${currentGrammarEx.a}`;
+                result.className = 'result incorrect';
+                wrong.grammar++;
+            }
+            result.style.display = 'block';
+            document.getElementById('scoreGrammar').textContent = scores.grammar;
+            document.getElementById('wrongGrammar').textContent = wrong.grammar;
+        }
+
+        function checkEnter(event, type) {
+            if (event.key === 'Enter') {
+                if (type === 'write') checkWriteAnswer();
+                else if (type === 'grammar') checkGrammarAnswer();
+            }
+        }
+
+        newWriteQuestion();
+        newSelectQuestion();
+        newGrammarQuestion();
+    </script>
+</body>
+</html>
