@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Inglés en 3 Meses</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background:#667eea;min-height:100vh;padding:10px}
+        .container{max-width:1200px;margin:0 auto;background:#fff;border-radius:15px;overflow:hidden}
+        header{background:#667eea;color:#fff;padding:20px;text-align:center}
+        h1{font-size:2em;margin-bottom:5px}
+        .tabs{display:flex;background:#f8f9fa;overflow-x:auto}
+        .tab{padding:12px 20px;cursor:pointer;border:none;background:none;font-size:1em}
+        .tab.active{background:#fff;color:#667eea;font-weight:bold}
+        .content{padding:20px}
+        .section{display:none}
+        .section.active{display:block}
+        .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:15px 0}
+        .vocab-card{background:#667eea;color:#fff;padding:15px;border-radius:8px}
+        .vocab-english{font-size:1.2em;font-weight:bold}
+        .vocab-spanish{font-size:0.9em;opacity:0.9}
+        .practice-area{background:#f8f9fa;padding:20px;border-radius:8px;margin:15px 0}
+        .question{font-size:1.2em;margin-bottom:15px;color:#333}
+        .options{display:grid;gap:8px;margin:15px 0}
+        .option{padding:12px;background:#fff;border:2px solid #ddd;border-radius:6px;cursor:pointer}
+        .option:hover{border-color:#667eea;background:#f0f4ff}
+        .option.correct{background:#d4edda;border-color:#28a745}
+        .option.incorrect{background:#f8d7da;border-color:#dc3545}
+        .btn{padding:10px 25px;font-size:1em;border:none;border-radius:6px;cursor:pointer;margin:5px;background:#667eea;color:#fff}
+        .btn:hover{opacity:0.9}
+        .score{font-size:1.3em;text-align:center;padding:15px;background:#667eea;color:#fff;border-radius:8px;margin:15px 0}
+        input[type="text"]{width:100%;padding:12px;font-size:1em;border:2px solid #ddd;border-radius:6px;margin:8px 0}
+        .feedback{padding:12px;border-radius:6px;margin:10px 0;font-size:1em}
+        .feedback.correct{background:#d4edda;color:#155724}
+        .feedback.incorrect{background:#f8d7da;color:#721c24}
+        .category-title{background:#667eea;color:#fff;padding:12px;border-radius:6px;margin:15px 0;font-size:1.2em}
+        .progress-bar{width:100%;height:25px;background:#e9ecef;border-radius:12px;overflow:hidden;margin:15px 0}
+        .progress-fill{height:100%;background:#667eea;transition:width 0.5s;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Aprende Inglés en 3 Meses</h1>
+            <p>Vocabulario: Rutinas, Familia, Comida, Trabajo y Lugares</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('teoria')">📚 Teoría</button>
+            <button class="tab" onclick="showSection('practica1')">✍️ Traducción</button>
+            <button class="tab" onclick="showSection('practica2')">🎯 Multiple Choice</button>
+            <button class="tab" onclick="showSection('practica3')">🔄 Completar</button>
+            <button class="tab" onclick="showSection('practica4')">🎲 Práctica Mixta</button>
+        </div>
+        
+        <div class="content">
+            <div id="teoria" class="section active">
+                <h2 style="color:#667eea;margin-bottom:15px">📖 Vocabulario Completo</h2>
+                
+                <div class="category-title">🌅 RUTINAS DIARIAS</div>
+                <div class="vocab-grid">
+                    <div class="vocab-card"><div class="vocab-english">wake up</div><div class="vocab-spanish">despertarse</div></div>
+                    <div class="vocab-card"><div class="vocab-english">get up</div><div class="vocab-spanish">levantarse</div></div>
+                    <div class="vocab-card"><div class="vocab-english">brush teeth</div><div class="vocab-spanish">cepillarse los dientes</div></div>
+                    <div class="vocab-card"><div class="vocab-english">take a shower</div><div class="vocab-spanish">ducharse</div></div>
+                    <div class="vocab-card"><div class="vocab-english">get dressed</div><div class="vocab-spanish">vestirse</div></div>
+                    <div class="vocab-card"><div class="vocab-english">have breakfast</div><div class="vocab-spanish">desayunar</div></div>
+                    <div class="vocab-card"><div class="vocab-english">go to work</div><div class="vocab-spanish">ir al trabajo</div></div>
+                    <div class="vocab-card"><div class="vocab-english">have lunch</div><div class="vocab-spanish">almorzar</div></div>
+                    <div class="vocab-card"><div class="vocab-english">come home</div><div class="vocab-spanish">volver a casa</div></div>
+                    <div class="vocab-card"><div class="vocab-english">have dinner</div><div class="vocab-spanish">cenar</div></div>
+                    <div class="vocab-card"><div class="vocab-english">watch TV</div><div class="vocab-spanish">ver televisión</div></div>
+                    <div class="vocab-card"><div class="vocab-english">go to bed</div><div class="vocab-spanish">irse a la cama</div></div>
+                    <div class="vocab-card"><div class="vocab-english">do homework</div><div class="vocab-spanish">hacer tarea</div></div>
+                    <div class="vocab-card"><div class="vocab-english">exercise</div><div class="vocab-spanish">hacer ejercicio</div></div>
+                </div>
+
+                <div class="category-title">👨‍👩‍👧‍👦 FAMILIA</div>
+                <div class="vocab-grid">
+                    <div class="vocab-card"><div class="vocab-english">father/dad</div><div class="vocab-spanish">padre/papá</div></div>
+                    <div class="vocab-card"><div class="vocab-english">mother/mom</div><div class="vocab-spanish">madre/mamá</div></div>
+                    <div class="vocab-card"><div class="vocab-english">brother</div><div class="vocab-spanish">hermano</div></div>
+                    <div class="vocab-card"><div class="vocab-english">sister</div><div class="vocab-spanish">hermana</div></div>
+                    <div class="vocab-card"><div class="vocab-english">son</div><div class="vocab-spanish">hijo</div></div>
+                    <div class="vocab-card"><div class="vocab-english">daughter</div><div class="vocab-spanish">hija</div></div>
+                    <div class="vocab-card"><div class="vocab-english">grandfather</div><div class="vocab-spanish">abuelo</div></div>
+                    <div class="vocab-card"><div class="vocab-english">grandmother</div><div class="vocab-spanish">abuela</div></div>
+                    <div class="vocab-card"><div class="vocab-english">uncle</div><div class="vocab-spanish">tío</div></div>
+                    <div class="vocab-card"><div class="vocab-english">aunt</div><div class="vocab-spanish">tía</div></div>
+                    <div class="vocab-card"><div class="vocab-english">cousin</div><div class="vocab-spanish">primo/prima</div></div>
+                    <div class="vocab-card"><div class="vocab-english">husband</div><div class="vocab-spanish">esposo</div></div>
+                    <div class="vocab-card"><div class="vocab-english">wife</div><div class="vocab-spanish">esposa</div></div>
+                    <div class="vocab-card"><div class="vocab-english">parents</div><div class="vocab-spanish">padres</div></div>
+                    <div class="vocab-card"><div class="vocab-english">children</div><div class="vocab-spanish">hijos</div></div>
+                    <div class="vocab-card"><div class="vocab-english">baby</div><div class="vocab-spanish">bebé</div></div>
+                </div>
+
+                <div class="category-title">🍕 COMIDA</div>
+                <div class="vocab-grid">
+                    <div class="vocab-card"><div class="vocab-english">bread</div><div class="vocab-spanish">pan</div></div>
+                    <div class="vocab-card"><div class="vocab-english">milk</div><div class="vocab-spanish">leche</div></div>
+                    <div class="vocab-card"><div class="vocab-english">egg</div><div class="vocab-spanish">huevo</div></div>
+                    <div class="vocab-card"><div class="vocab-english">cheese</div><div class="vocab-spanish">queso</div></div>
+                    <div class="vocab-card"><div class="vocab-english">chicken</div><div class="vocab-spanish">pollo</div></div>
+                    <div class="vocab-card"><div class="vocab-english">beef</div><div class="vocab-spanish">carne de res</div></div>
+                    <div class="vocab-card"><div class="vocab-english">fish</div><div class="vocab-spanish">pescado</div></div>
+                    <div class="vocab-card"><div class="vocab-english">rice</div><div class="vocab-spanish">arroz</div></div>
+                    <div class="vocab-card"><div class="vocab-english">potato</div><div class="vocab-spanish">patata</div></div>
+                    <div class="vocab-card"><div class="vocab-english">tomato</div><div class="vocab-spanish">tomate</div></div>
+                    <div class="vocab-card"><div class="vocab-english">apple</div><div class="vocab-spanish">manzana</div></div>
+                    <div class="vocab-card"><div class="vocab-english">banana</div><div class="vocab-spanish">plátano</div></div>
+                    <div class="vocab-card"><div class="vocab-english">orange</div><div class="vocab-spanish">naranja</div></div>
+                    <div class="vocab-card"><div class="vocab-english">water</div><div class="vocab-spanish">agua</div></div>
+                    <div class="vocab-card"><div class="vocab-english">coffee</div><div class="vocab-spanish">café</div></div>
+                    <div class="vocab-card"><div class="vocab-english">tea</div><div class="vocab-spanish">té</div></div>
+                    <div class="vocab-card"><div class="vocab-english">juice</div><div class="vocab-spanish">jugo</div></div>
+                    <div class="vocab-card"><div class="vocab-english">salad</div><div class="vocab-spanish">ensalada</div></div>
+                    <div class="vocab-card"><div class="vocab-english">soup</div><div class="vocab-spanish">sopa</div></div>
+                    <div class="vocab-card"><div class="vocab-english">meat</div><div class="vocab-spanish">carne</div></div>
+                </div>
+
+                <div class="category-title">💼 TRABAJO</div>
+                <div class="vocab-grid">
+                    <div class="vocab-card"><div class="vocab-english">job</div><div class="vocab-spanish">trabajo</div></div>
+                    <div class="vocab-card"><div class="vocab-english">office</div><div class="vocab-spanish">oficina</div></div>
+                    <div class="vocab-card"><div class="vocab-english">boss</div><div class="vocab-spanish">jefe</div></div>
+                    <div class="vocab-card"><div class="vocab-english">employee</div><div class="vocab-spanish">empleado</div></div>
+                    <div class="vocab-card"><div class="vocab-english">manager</div><div class="vocab-spanish">gerente</div></div>
+                    <div class="vocab-card"><div class="vocab-english">colleague</div><div class="vocab-spanish">colega</div></div>
+                    <div class="vocab-card"><div class="vocab-english">meeting</div><div class="vocab-spanish">reunión</div></div>
+                    <div class="vocab-card"><div class="vocab-english">computer</div><div class="vocab-spanish">computadora</div></div>
+                    <div class="vocab-card"><div class="vocab-english">desk</div><div class="vocab-spanish">escritorio</div></div>
+                    <div class="vocab-card"><div class="vocab-english">salary</div><div class="vocab-spanish">salario</div></div>
+                    <div class="vocab-card"><div class="vocab-english">schedule</div><div class="vocab-spanish">horario</div></div>
+                    <div class="vocab-card"><div class="vocab-english">project</div><div class="vocab-spanish">proyecto</div></div>
+                    <div class="vocab-card"><div class="vocab-english">email</div><div class="vocab-spanish">correo electrónico</div></div>
+                    <div class="vocab-card"><div class="vocab-english">contract</div><div class="vocab-spanish">contrato</div></div>
+                </div>
+
+                <div class="category-title">🏢 LUGARES</div>
+                <div class="vocab-grid">
+                    <div class="vocab-card"><div class="vocab-english">house</div><div class="vocab-spanish">casa</div></div>
+                    <div class="vocab-card"><div class="vocab-english">apartment</div><div class="vocab-spanish">apartamento</div></div>
+                    <div class="vocab-card"><div class="vocab-english">school</div><div class="vocab-spanish">escuela</div></div>
+                    <div class="vocab-card"><div class="vocab-english">hospital</div><div class="vocab-spanish">hospital</div></div>
+                    <div class="vocab-card"><div class="vocab-english">restaurant</div><div class="vocab-spanish">restaurante</div></div>
+                    <div class="vocab-card"><div class="vocab-english">supermarket</div><div class="vocab-spanish">supermercado</div></div>
+                    <div class="vocab-card"><div class="vocab-english">bank</div><div class="vocab-spanish">banco</div></div>
+                    <div class="vocab-card"><div class="vocab-english">park</div><div class="vocab-spanish">parque</div></div>
+                    <div class="vocab-card"><div class="vocab-english">library</div><div class="vocab-spanish">biblioteca</div></div>
+                    <div class="vocab-card"><div class="vocab-english">gym</div><div class="vocab-spanish">gimnasio</div></div>
+                    <div class="vocab-card"><div class="vocab-english">airport</div><div class="vocab-spanish">aeropuerto</div></div>
+                    <div class="vocab-card"><div class="vocab-english">station</div><div class="vocab-spanish">estación</div></div>
+                    <div class="vocab-card"><div class="vocab-english">street</div><div class="vocab-spanish">calle</div></div>
+                    <div class="vocab-card"><div class="vocab-english">city</div><div class="vocab-spanish">ciudad</div></div>
+                    <div class="vocab-card"><div class="vocab-english">store</div><div class="vocab-spanish">tienda</div></div>
+                    <div class="vocab-card"><div class="vocab-english">hotel</div><div class="vocab-spanish">hotel</div></div>
+                </div>
+            </div>
+
+            <div id="practica1" class="section">
+                <h2 style="color:#667eea;margin-bottom:15px">✍️ Práctica de Traducción</h2>
+                <div class="score">Puntuación: <span id="score1">0</span>/<span id="total1">0</span></div>
+                <div class="practice-area">
+                    <div class="question" id="question1"></div>
+                    <input type="text" id="answer1" placeholder="Escribe tu respuesta...">
+                    <button class="btn" onclick="checkTranslation()">Verificar</button>
+                    <button class="btn" onclick="nextTranslation()">Siguiente</button>
+                    <div id="feedback1"></div>
+                </div>
+            </div>
+
+            <div id="practica2" class="section">
+                <h2 style="color:#667eea;margin-bottom:15px">🎯 Multiple Choice</h2>
+                <div class="score">Puntuación: <span id="score2">0</span>/<span id="total2">0</span></div>
+                <div class="practice-area">
+                    <div class="question" id="question2"></div>
+                    <div class="options" id="options2"></div>
+                    <button class="btn" onclick="nextMultiple()">Siguiente</button>
+                </div>
+            </div>
+
+            <div id="practica3" class="section">
+                <h2 style="color:#667eea;margin-bottom:15px">🔄 Completar Palabra</h2>
+                <div class="score">Puntuación: <span id="score3">0</span>/<span id="total3">0</span></div>
+                <div class="practice-area">
+                    <div class="question" id="question3"></div>
+                    <input type="text" id="answer3" placeholder="Completa...">
+                    <button class="btn" onclick="checkComplete()">Verificar</button>
+                    <button class="btn" onclick="nextComplete()">Siguiente</button>
+                    <div id="feedback3"></div>
+                </div>
+            </div>
+
+            <div id="practica4" class="section">
+                <h2 style="color:#667eea;margin-bottom:15px">🎲 Práctica Mixta</h2>
+                <div class="score">Total: <span id="score4">0</span>/<span id="total4">0</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress" style="width:0%">0%</div>
+                </div>
+                <div class="practice-area" id="mixedQuestion"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const vocab = {
+            routines: {"wake up":"despertarse","get up":"levantarse","brush teeth":"cepillarse los dientes","take a shower":"ducharse","get dressed":"vestirse","have breakfast":"desayunar","go to work":"ir al trabajo","have lunch":"almorzar","come home":"volver a casa","have dinner":"cenar","watch TV":"ver televisión","go to bed":"irse a la cama","do homework":"hacer tarea","exercise":"hacer ejercicio"},
+            family: {"father":"padre","mother":"madre","brother":"hermano","sister":"hermana","son":"hijo","daughter":"hija","grandfather":"abuelo","grandmother":"abuela","uncle":"tío","aunt":"tía","cousin":"primo","husband":"esposo","wife":"esposa","parents":"padres","dad":"papá","mom":"mamá","children":"hijos","baby":"bebé"},
+            food: {"bread":"pan","milk":"leche","egg":"huevo","cheese":"queso","chicken":"pollo","beef":"carne de res","fish":"pescado","rice":"arroz","potato":"patata","tomato":"tomate","apple":"manzana","banana":"plátano","orange":"naranja","water":"agua","coffee":"café","tea":"té","juice":"jugo","salad":"ensalada","soup":"sopa","meat":"carne"},
+            work: {"job":"trabajo","office":"oficina","boss":"jefe","employee":"empleado","manager":"gerente","colleague":"colega","meeting":"reunión","computer":"computadora","desk":"escritorio","salary":"salario","schedule":"horario","project":"proyecto","email":"correo electrónico","contract":"contrato"},
+            places: {"house":"casa","apartment":"apartamento","school":"escuela","hospital":"hospital","restaurant":"restaurante","supermarket":"supermercado","bank":"banco","park":"parque","library":"biblioteca","gym":"gimnasio","airport":"aeropuerto","station":"estación","street":"calle","city":"ciudad","store":"tienda","hotel":"hotel"}
+        };
+
+        let allVocab = {};
+        Object.values(vocab).forEach(cat => Object.assign(allVocab, cat));
+        let currentWord = {};
+        let scores = {1:0, 2:0, 3:0, 4:0};
+        let totals = {1:0, 2:0, 3:0, 4:0};
+
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+            if(id==='practica1') nextTranslation();
+            if(id==='practica2') nextMultiple();
+            if(id==='practica3') nextComplete();
+            if(id==='practica4') nextMixed();
+        }
+
+        function getRandom() {
+            const keys = Object.keys(allVocab);
+            const word = keys[Math.floor(Math.random()*keys.length)];
+            return {english:word, spanish:allVocab[word]};
+        }
+
+        function nextTranslation() {
+            currentWord = getRandom();
+            const toSpanish = Math.random()>0.5;
+            document.getElementById('question1').textContent = toSpanish ? 
+                `Traduce al español: "${currentWord.english}"` : 
+                `Traduce al inglés: "${currentWord.spanish}"`;
+            currentWord.answer = toSpanish ? currentWord.spanish : currentWord.english;
+            document.getElementById('answer1').value = '';
+            document.getElementById('feedback1').innerHTML = '';
+        }
+
+        function checkTranslation() {
+            const ans = document.getElementById('answer1').value.trim().toLowerCase();
+            totals[1]++;
+            if(ans === currentWord.answer.toLowerCase()) {
+                scores[1]++;
+                document.getElementById('feedback1').innerHTML = '<div class="feedback correct">¡Correcto! ✓</div>';
+            } else {
+                document.getElementById('feedback1').innerHTML = `<div class="feedback incorrect">Incorrecto. Correcto: "${currentWord.answer}"</div>`;
+            }
+            document.getElementById('score1').textContent = scores[1];
+            document.getElementById('total1').textContent = totals[1];
+        }
+
+        function nextMultiple() {
+            currentWord = getRandom();
+            const toSpanish = Math.random()>0.5;
+            document.getElementById('question2').textContent = toSpanish ? 
+                `¿Qué significa "${currentWord.english}"?` : 
+                `¿Cómo se dice "${currentWord.spanish}" en inglés?`;
+            currentWord.answer = toSpanish ? currentWord.spanish : currentWord.english;
+            
+            const opts = [currentWord.answer];
+            while(opts.length < 4) {
+                const rnd = getRandom();
+                const opt = toSpanish ? rnd.spanish : rnd.english;
+                if(!opts.includes(opt)) opts.push(opt);
+            }
+            opts.sort(() => Math.random()-0.5);
+            document.getElementById('options2').innerHTML = opts.map(o => 
+                `<div class="option" onclick="selectOpt(this,'${o}')">${o}</div>`
+            ).join('');
+        }
+
+        function selectOpt(el, sel) {
+            totals[2]++;
+            const allOpts = document.querySelectorAll('#options2 .option');
+            allOpts.forEach(o => o.style.pointerEvents = 'none');
+            if(sel === currentWord.answer) {
+                scores[2]++;
+                el.classList.add('correct');
+            } else {
+                el.classList.add('incorrect');
+                allOpts.forEach(o => {
+                    if(o.textContent === currentWord.answer) o.classList.add('correct');
+                });
+            }
+            document.getElementById('score2').textContent = scores[2];
+            document.getElementById('total2').textContent = totals[2];
+        }
+
+        function nextComplete() {
+            currentWord = getRandom();
+            const w = currentWord.english;
+            const hint = w.substring(0, Math.ceil(w.length/2)) + '_'.repeat(Math.floor(w.length/2));
+            document.getElementById('question3').textContent = 
+                `Completa en inglés: "${currentWord.spanish}"\nPista: ${hint}`;
+            document.getElementById('answer3').value = '';
+            document.getElementById('feedback3').innerHTML = '';
+        }
+
+        function checkComplete() {
+            const ans = document.getElementById('answer3').value.trim().toLowerCase();
+            totals[3]++;
+            if(ans === currentWord.english.toLowerCase()) {
+                scores[3]++;
+                document.getElementById('feedback3').innerHTML = '<div class="feedback correct">¡Correcto! ✓</div>';
+            } else {
+                document.getElementById('feedback3').innerHTML = 
+                    `<div class="feedback incorrect">Incorrecto. Correcto: "${currentWord.english}"</div>`;
+            }
+            document.getElementById('score3').textContent = scores[3];
+            document.getElementById('total3').textContent = totals[3];
+        }
+
+        function nextMixed() {
+            const type = Math.floor(Math.random()*3);
+            const cont = document.getElementById('mixedQuestion');
+            currentWord = getRandom();
+            
+            if(type === 0) {
+                const toSp = Math.random()>0.5;
+                currentWord.answer = toSp ? currentWord.spanish : currentWord.english;
+                cont.innerHTML = `<h3>Traducción</h3><div class="question">${toSp ? 
+                    `Traduce: "${currentWord.english}"` : 
+                    `Traduce: "${currentWord.spanish}"`}</div>
+                    <input type="text" id="mixAns" placeholder="Tu respuesta...">
+                    <button class="btn" onclick="checkMixed()">Verificar</button>
+                    <div id="mixFeed"></div>`;
+            } else if(type === 1) {
+                const toSp = Math.random()>0.5;
+                currentWord.answer = toSp ? currentWord.spanish : currentWord.english;
+                const opts = [currentWord.answer];
+                while(opts.length < 4) {
+                    const r = getRandom();
+                    const o = toSp ? r.spanish : r.english;
+                    if(!opts.includes(o)) opts.push(o);
+                }
+                opts.sort(() => Math.random()-0.5);
+                cont.innerHTML = `<h3>Multiple Choice</h3><div class="question">${toSp ? 
+                    `¿Qué significa "${currentWord.english}"?` : 
+                    `¿Cómo se dice "${currentWord.spanish}"?`}</div>
+                    <div class="options">${opts.map(o => 
+                        `<div class="option" onclick="checkMixedOpt(this,'${o}')">${o}</div>`
+                    ).join('')}</div><div id="mixFeed"></div>`;
+            } else {
+                const w = currentWord.english;
+                const h = w.substring(0, Math.ceil(w.length/2)) + '_'.repeat(Math.floor(w.length/2));
+                currentWord.answer = w;
+                cont.innerHTML = `<h3>Completar</h3><div class="question">Completa: "${currentWord.spanish}"<br>Pista: ${h}</div>
+                    <input type="text" id="mixAns" placeholder="Tu respuesta...">
+                    <button class="btn" onclick="checkMixed()">Verificar</button>
+                    <div id="mixFeed"></div>`;
+            }
+        }
+
+        function checkMixed() {
+            const ans = document.getElementById('mixAns').value.trim().toLowerCase();
+            totals[4]++;
+            if(ans === currentWord.answer.toLowerCase()) {
+                scores[4]++;
+                document.getElementById('mixFeed').innerHTML = '<div class="feedback correct">¡Correcto! ✓</div>';
+            } else {
+                document.getElementById('mixFeed').innerHTML = 
+                    `<div class="feedback incorrect">Incorrecto. Correcto: "${currentWord.answer}"</div>`;
+            }
+            updateMixed();
+        }
+
+        function checkMixedOpt(el, sel) {
+            totals[4]++;
+            const opts = document.querySelectorAll('#mixedQuestion .option');
+            opts.forEach(o => o.style.pointerEvents = 'none');
+            if(sel === currentWord.answer) {
+                scores[4]++;
+                el.classList.add('correct');
+                document.getElementById('mixFeed').innerHTML = '<div class="feedback correct">¡Correcto! ✓</div>';
+            } else {
+                el.classList.add('incorrect');
+                opts.forEach(o => {
+                    if(o.textContent === currentWord.answer) o.classList.add('correct');
+                });
+                document.getElementById('mixFeed').innerHTML = '<div class="feedback incorrect">Incorrecto</div>';
+            }
+            updateMixed();
+        }
+
+        function updateMixed() {
+            document.getElementById('score4').textContent = scores[4];
+            document.getElementById('total4').textContent = totals[4];
+            const pct = totals[4] > 0 ? Math.round((scores[4]/totals[4])*100) : 0;
+            document.getElementById('progress').style.width = pct + '%';
+            document.getElementById('progress').textContent = pct + '%';
+        }
+
+        nextTranslation();
+    </script>
+</body>
+</html>

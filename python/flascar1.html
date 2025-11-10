@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards - Métodos de Cadenas en Python</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        #shuffle {
+            background-color: #ff9800;
+        }
+        
+        #shuffle:hover {
+            background-color: #e68a00;
+        }
+        
+        #reset {
+            background-color: #f44336;
+        }
+        
+        #reset:hover {
+            background-color: #d32f2f;
+        }
+        
+        .progress {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .flashcard-container {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-radius: 15px;
+        }
+        
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .card-front {
+            background-color: #ffffff;
+            color: #333;
+        }
+        
+        .card-back {
+            background-color: #f8f9fa;
+            color: #333;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+        
+        .term {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .hint {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .definition {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        
+        .example {
+            margin-top: 15px;
+            font-style: italic;
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 14px;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .mini-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .mini-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .mini-term {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .mini-def {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .completed {
+            background-color: #d4edda;
+        }
+        
+        @media (max-width: 768px) {
+            .flashcard-container {
+                height: 250px;
+            }
+            
+            .term {
+                font-size: 24px;
+            }
+            
+            .definition {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flashcards - Métodos de Cadenas en Python</h1>
+        
+        <div class="controls">
+            <button id="prev">Anterior</button>
+            <button id="flip">Voltear</button>
+            <button id="next">Siguiente</button>
+            <button id="shuffle">Mezclar</button>
+            <button id="reset">Reiniciar</button>
+        </div>
+        
+        <div class="progress">
+            <span id="current">1</span> / <span id="total">50</span>
+        </div>
+        
+        <div class="flashcard-container">
+            <div class="flashcard">
+                <div class="card-front">
+                    <div class="term" id="term">Término</div>
+                    <div class="hint">(Haz clic para ver la definición)</div>
+                </div>
+                <div class="card-back">
+                    <div class="definition" id="definition">Definición</div>
+                    <div class="example" id="example">Ejemplo</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cards-grid" id="cardsGrid">
+            <!-- Las mini tarjetas se generarán aquí con JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Datos de las flashcards
+        const flashcards = [
+            {
+                term: "Capitalize",
+                definition: "Cambia todas las letras a minúsculas menos la primera.",
+                example: "'hola MUNDO'.capitalize() → 'Hola mundo'"
+            },
+            {
+                term: "Center",
+                definition: "Formatea una cadena alineando al centro.",
+                example: "'texto'.center(10) → '  texto  '"
+            },
+            {
+                term: "Encode",
+                definition: "Codifica una cadena según la codificación deseada.",
+                example: "'cadena'.encode('utf-8') → b'cadena'"
+            },
+            {
+                term: "Expandtabs",
+                definition: "Convierte los tabuladores en espacios.",
+                example: "'a\\tb'.expandtabs(4) → 'a   b'"
+            },
+            {
+                term: "Format",
+                definition: "Formatea una cadena de forma avanzada.",
+                example: "'{} {}'.format('Hola', 'mundo') → 'Hola mundo'"
+            },
+            {
+                term: "Index",
+                definition: "Devuelve el índice de una cadena de caracteres o ValueError.",
+                example: "'python'.index('t') → 2"
+            },
+            {
+                term: "Isalpha",
+                definition: "Comprueba si la cadena es alfabética.",
+                example: "'abc'.isalpha() → True, 'abc1'.isalpha() → False"
+            },
+            {
+                term: "Isdecimal",
+                definition: "Comprueba si la cadena es un decimal.",
+                example: "'123'.isdecimal() → True, '12.3'.isdecimal() → False"
+            },
+            {
+                term: "Isidentifier",
+                definition: "Comprueba si la cadena es un identificador válido.",
+                example: "'var_name'.isidentifier() → True, '123var'.isidentifier() → False"
+            },
+            {
+                term: "Isnumeric",
+                definition: "Comprueba si la cadena es numérica.",
+                example: "'123'.isnumeric() → True, 'abc'.isnumeric() → False"
+            },
+            {
+                term: "Isspace",
+                definition: "Comprueba si la cadena solo contiene espacios.",
+                example: "'   '.isspace() → True, 'a b'.isspace() → False"
+            },
+            {
+                term: "Casefold",
+                definition: "Utilizada para comparar cadenas sin importar el tamaño de los caracteres.",
+                example: "'ß'.casefold() → 'ss'"
+            },
+            {
+                term: "Count",
+                definition: "Cuenta las ocurrencias de una subcadena.",
+                example: "'banana'.count('a') → 3"
+            },
+            {
+                term: "Endswith",
+                definition: "Comprueba si la cadena termina con una cadena específica.",
+                example: "'archivo.txt'.endswith('.txt') → True"
+            },
+            {
+                term: "Find",
+                definition: "Devuelve el índice de la cadena buscada o -1 si no se encuentra.",
+                example: "'python'.find('th') → 2"
+            },
+            {
+                term: "Format_map",
+                definition: "Igual que format pero sin hacer una copia de los parámetros.",
+                example: "'{x} {y}'.format_map({'x':1, 'y':2}) → '1 2'"
+            },
+            {
+                term: "Isalnum",
+                definition: "Comprueba si la cadena es alfanumérica.",
+                example: "'abc123'.isalnum() → True, 'abc 123'.isalnum() → False"
+            },
+            {
+                term: "Isascii",
+                definition: "Comprueba si la cadena es ASCII.",
+                example: "'abc'.isascii() → True, 'café'.isascii() → False"
+            },
+            {
+                term: "Isdigit",
+                definition: "Comprueba si la cadena es un dígito.",
+                example: "'123'.isdigit() → True, '12.3'.isdigit() → False"
+            },
+            {
+                term: "Islower",
+                definition: "Comprueba si todos los caracteres son minúsculas.",
+                example: "'hola'.islower() → True, 'Hola'.islower() → False"
+            },
+            {
+                term: "Isprintable",
+                definition: "Comprueba si la cadena es imprimible.",
+                example: "'hola'.isprintable() → True, 'hola\\n'.isprintable() → False"
+            },
+            {
+                term: "Istitle",
+                definition: "Comprueba si la cadena tiene formato título.",
+                example: "'Título Del Libro'.istitle() → True, 'Título del libro'.istitle() → False"
+            },
+            {
+                term: "Isupper",
+                definition: "Comprueba si todos los caracteres son mayúsculas.",
+                example: "'HOLA'.isupper() → True, 'Hola'.isupper() → False"
+            },
+            {
+                term: "Ljust",
+                definition: "Justifica la cadena a la izquierda.",
+                example: "'texto'.ljust(10) → 'texto     '"
+            },
+            {
+                term: "Lstrip",
+                definition: "Elimina los caracteres de espacio de la izquierda.",
+                example: "'   texto'.lstrip() → 'texto'"
+            },
+            {
+                term: "Partition",
+                definition: "Crea particiones de una cadena usando un separador.",
+                example: "'uno-dos-tres'.partition('-') → ('uno', '-', 'dos-tres')"
+            },
+            {
+                term: "Removeprefix",
+                definition: "Devuelve una nueva cadena con el prefijo especificado eliminado si se encuentra en la cadena original.",
+                example: "'TestCadena'.removeprefix('Test') → 'Cadena'"
+            },
+            {
+                term: "Rfind",
+                definition: "Devuelve el índice de la cadena como parámetro buscando por la derecha o -1.",
+                example: "'banana'.rfind('a') → 5"
+            },
+            {
+                term: "Rjust",
+                definition: "Justifica la cadena a la derecha.",
+                example: "'texto'.rjust(10) → '     texto'"
+            },
+            {
+                term: "Rsplit",
+                definition: "Devuelve una lista de cadenas al separar la original por un separador buscando por la derecha.",
+                example: "'uno,dos,tres'.rsplit(',', 1) → ['uno,dos', 'tres']"
+            },
+            {
+                term: "Split",
+                definition: "Devuelve una lista de cadenas al separar la original por un separador.",
+                example: "'uno dos tres'.split() → ['uno', 'dos', 'tres']"
+            },
+            {
+                term: "Startswith",
+                definition: "Comprueba si la cadena comienza con una cadena específica.",
+                example: "'archivo.txt'.startswith('archivo') → True"
+            },
+            {
+                term: "Swapcase",
+                definition: "Cambia el tamaño de cada letra.",
+                example: "'PyThOn'.swapcase() → 'pYtHoN'"
+            },
+            {
+                term: "Translate",
+                definition: "Reemplaza cada caracter por otro siguiendo una tabla de traducciones.",
+                example: "'abc'.translate(str.maketrans('abc', '123')) → '123'"
+            },
+            {
+                term: "Zfill",
+                definition: "Añade ceros a la izquierda a una cadena numérica.",
+                example: "'42'.zfill(5) → '00042'"
+            },
+            {
+                term: "Join",
+                definition: "Une todos los elementos de un iterable en una cadena.",
+                example: "','.join(['a', 'b', 'c']) → 'a,b,c'"
+            },
+            {
+                term: "Lower",
+                definition: "Convierte la cadena a minúsculas.",
+                example: "'HOLA'.lower() → 'hola'"
+            },
+            {
+                term: "Maketrans",
+                definition: "Crea una tabla de traducción para translate.",
+                example: "tabla = str.maketrans('aeiou', '12345')"
+            },
+            {
+                term: "Replace",
+                definition: "Reemplaza en la misma cadena un caracter por otro.",
+                example: "'hola mundo'.replace('mundo', 'Python') → 'hola Python'"
+            },
+            {
+                term: "Removesuffix",
+                definition: "Devuelve una nueva cadena con el sufijo especificado eliminado si se encuentra en la cadena original.",
+                example: "'CadenaTest'.removesuffix('Test') → 'Cadena'"
+            },
+            {
+                term: "Rindex",
+                definition: "Devuelve el índice de la cadena como parámetro buscando por la derecha o ValueError.",
+                example: "'banana'.rindex('a') → 5"
+            },
+            {
+                term: "Rpartition",
+                definition: "Crea particiones de una cadena usando un separador y comenzando por la derecha.",
+                example: "'uno-dos-tres'.rpartition('-') → ('uno-dos', '-', 'tres')"
+            },
+            {
+                term: "Rstrip",
+                definition: "Elimina los espacios finales.",
+                example: "'texto   '.rstrip() → 'texto'"
+            },
+            {
+                term: "Splitlines",
+                definition: "Devuelve una lista de cadenas separando la original por saltos de línea.",
+                example: "'línea1\\nlínea2'.splitlines() → ['línea1', 'línea2']"
+            },
+            {
+                term: "Strip",
+                definition: "Elimina los espacios iniciales y finales de la cadena.",
+                example: "'  texto  '.strip() → 'texto'"
+            },
+            {
+                term: "Title",
+                definition: "Convierte la cadena a formato título.",
+                example: "'hola mundo'.title() → 'Hola Mundo'"
+            },
+            {
+                term: "Upper",
+                definition: "Convierte la cadena a mayúsculas.",
+                example: "'hola'.upper() → 'HOLA'"
+            }
+        ];
+
+        // Variables de estado
+        let currentCardIndex = 0;
+        let completedCards = new Set();
+
+        // Elementos DOM
+        const flashcardElement = document.querySelector('.flashcard');
+        const termElement = document.getElementById('term');
+        const definitionElement = document.getElementById('definition');
+        const exampleElement = document.getElementById('example');
+        const currentElement = document.getElementById('current');
+        const totalElement = document.getElementById('total');
+        const cardsGridElement = document.getElementById('cardsGrid');
+        const prevButton = document.getElementById('prev');
+        const flipButton = document.getElementById('flip');
+        const nextButton = document.getElementById('next');
+        const shuffleButton = document.getElementById('shuffle');
+        const resetButton = document.getElementById('reset');
+
+        // Inicializar
+        function init() {
+            totalElement.textContent = flashcards.length;
+            updateCard();
+            createMiniCards();
+        }
+
+        // Actualizar la tarjeta actual
+        function updateCard() {
+            const currentCard = flashcards[currentCardIndex];
+            termElement.textContent = currentCard.term;
+            definitionElement.textContent = currentCard.definition;
+            exampleElement.textContent = currentCard.example;
+            currentElement.textContent = currentCardIndex + 1;
+            
+            // Volver a la vista frontal
+            flashcardElement.classList.remove('flipped');
+            
+            // Actualizar mini tarjetas
+            updateMiniCards();
+        }
+
+        // Crear mini tarjetas
+        function createMiniCards() {
+            cardsGridElement.innerHTML = '';
+            flashcards.forEach((card, index) => {
+                const miniCard = document.createElement('div');
+                miniCard.className = 'mini-card';
+                miniCard.innerHTML = `
+                    <div class="mini-term">${card.term}</div>
+                    <div class="mini-def">${card.definition.substring(0, 50)}...</div>
+                `;
+                miniCard.addEventListener('click', () => {
+                    currentCardIndex = index;
+                    updateCard();
+                });
+                cardsGridElement.appendChild(miniCard);
+            });
+            updateMiniCards();
+        }
+
+        // Actualizar estado de mini tarjetas
+        function updateMiniCards() {
+            const miniCards = document.querySelectorAll('.mini-card');
+            miniCards.forEach((card, index) => {
+                if (index === currentCardIndex) {
+                    card.style.border = '2px solid #4CAF50';
+                } else {
+                    card.style.border = '1px solid #ddd';
+                }
+                
+                if (completedCards.has(index)) {
+                    card.classList.add('completed');
+                } else {
+                    card.classList.remove('completed');
+                }
+            });
+        }
+
+        // Event Listeners
+        flashcardElement.addEventListener('click', () => {
+            flashcardElement.classList.toggle('flipped');
+            completedCards.add(currentCardIndex);
+            updateMiniCards();
+        });
+
+        flipButton.addEventListener('click', () => {
+            flashcardElement.classList.toggle('flipped');
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+            updateCard();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+            updateCard();
+        });
+
+        shuffleButton.addEventListener('click', () => {
+            // Algoritmo de Fisher-Yates para mezclar
+            for (let i = flashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+            }
+            currentCardIndex = 0;
+            updateCard();
+            createMiniCards();
+        });
+
+        resetButton.addEventListener('click', () => {
+            currentCardIndex = 0;
+            completedCards.clear();
+            updateCard();
+        });
+
+        // Inicializar la aplicación
+        init();
+    </script>
+</body>
+</html>
