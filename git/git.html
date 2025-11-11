@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Comandos Git</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+        
+        header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+        }
+        
+        h1 {
+            color: #f14e32;
+            margin-bottom: 10px;
+        }
+        
+        .panel {
+            background-color: #252526;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #569cd6;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .terminal {
+            background-color: #0d1117;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        
+        .terminal-line {
+            margin-bottom: 5px;
+        }
+        
+        .prompt {
+            color: #7ee787;
+        }
+        
+        .command-input {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .command-input input {
+            flex-grow: 1;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command-input button {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin-left: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .command-input button:hover {
+            background-color: #2ea043;
+        }
+        
+        .file-system {
+            background-color: #161b22;
+            border-radius: 6px;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        
+        .file-item {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-item:before {
+            content: "📄";
+            margin-right: 8px;
+        }
+        
+        .folder:before {
+            content: "📁";
+        }
+        
+        .git-status {
+            background-color: #161b22;
+            border-radius: 6px;
+            padding: 15px;
+            height: 150px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        
+        .status-item {
+            padding: 3px 0;
+        }
+        
+        .untracked {
+            color: #ff7b72;
+        }
+        
+        .modified {
+            color: #ffa657;
+        }
+        
+        .staged {
+            color: #7ee787;
+        }
+        
+        .commit-history {
+            background-color: #161b22;
+            border-radius: 6px;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+        }
+        
+        .commit {
+            padding: 8px;
+            margin-bottom: 8px;
+            border-left: 3px solid #238636;
+            background-color: rgba(35, 134, 54, 0.1);
+        }
+        
+        .commit-hash {
+            font-family: 'Courier New', monospace;
+            color: #7ee787;
+            font-size: 0.9em;
+        }
+        
+        .commit-message {
+            margin-top: 3px;
+        }
+        
+        .commands-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .command-card {
+            background-color: #161b22;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .command-card:hover {
+            background-color: #1f2937;
+            transform: translateY(-2px);
+        }
+        
+        .command-name {
+            font-weight: bold;
+            color: #569cd6;
+        }
+        
+        .command-desc {
+            font-size: 0.9em;
+            margin-top: 5px;
+            color: #8b949e;
+        }
+        
+        .help-text {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #8b949e;
+        }
+        
+        .branch-info {
+            background-color: #161b22;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .branch-name {
+            color: #7ee787;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Simulador de Comandos Git</h1>
+            <p>Practica los comandos de Git en este entorno interactivo. Escribe comandos en la terminal o haz clic en las tarjetas de comandos.</p>
+        </header>
+        
+        <div class="panel">
+            <h2>Terminal de Git</h2>
+            <div class="terminal" id="terminal">
+                <div class="terminal-line">
+                    <span class="prompt">usuario@git-simulator:~$</span> Bienvenido al simulador de Git
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">usuario@git-simulator:~$</span> Escribe 'help' para ver los comandos disponibles
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">usuario@git-simulator:~$</span> git status
+                </div>
+                <div class="terminal-line">
+                    En la rama master
+                </div>
+                <div class="terminal-line">
+                    No hay commits todavía
+                </div>
+                <div class="terminal-line">
+                    nada para confirmar (crea/copia archivos y usa "git add" para hacerles seguimiento)
+                </div>
+            </div>
+            
+            <div class="command-input">
+                <input type="text" id="command" placeholder="Escribe un comando de Git...">
+                <button id="execute">Ejecutar</button>
+            </div>
+            
+            <div class="branch-info">
+                Rama actual: <span class="branch-name" id="current-branch">master</span>
+            </div>
+            
+            <h2>Comandos de Git</h2>
+            <div class="commands-list" id="commands-list">
+                <!-- Los comandos se insertarán aquí con JavaScript -->
+            </div>
+            
+            <div class="help-text">
+                <p><strong>Nota:</strong> Este es un simulador. Los comandos funcionan de forma similar a Git real, pero con funcionalidad limitada.</p>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2>Sistema de Archivos</h2>
+            <div class="file-system" id="file-system">
+                <!-- Los archivos se mostrarán aquí -->
+            </div>
+            
+            <h2>Estado de Git</h2>
+            <div class="git-status" id="git-status">
+                <!-- El estado de Git se mostrará aquí -->
+            </div>
+            
+            <h2>Historial de Commits</h2>
+            <div class="commit-history" id="commit-history">
+                <!-- Los commits se mostrarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado del simulador
+        const state = {
+            files: [
+                { name: 'index.html', content: '<html>...</html>', status: 'untracked' },
+                { name: 'style.css', content: 'body { ... }', status: 'untracked' },
+                { name: 'app.js', content: 'console.log("Hola");', status: 'untracked' }
+            ],
+            commits: [],
+            currentBranch: 'master',
+            branches: ['master'],
+            stagedFiles: [],
+            currentDirectory: '/proyecto',
+            commandHistory: [],
+            historyIndex: -1
+        };
+
+        // Comandos disponibles
+        const commands = [
+            {
+                name: 'git init',
+                description: 'Inicializa un nuevo repositorio Git',
+                execute: () => {
+                    if (state.commits.length === 0) {
+                        addToTerminal('Inicializado repositorio Git vacío en ' + state.currentDirectory);
+                    } else {
+                        addToTerminal('Reinicializado repositorio Git existente en ' + state.currentDirectory);
+                    }
+                    updateGitStatus();
+                }
+            },
+            {
+                name: 'git status',
+                description: 'Muestra el estado del directorio de trabajo',
+                execute: () => {
+                    addToTerminal('En la rama ' + state.currentBranch);
+                    
+                    if (state.commits.length === 0) {
+                        addToTerminal('No hay commits todavía');
+                    } else {
+                        addToTerminal('nada para confirmar, el árbol de trabajo está limpio');
+                    }
+                    
+                    const untracked = state.files.filter(f => f.status === 'untracked');
+                    const modified = state.files.filter(f => f.status === 'modified');
+                    const staged = state.files.filter(f => f.status === 'staged');
+                    
+                    if (untracked.length > 0) {
+                        addToTerminal('Archivos sin seguimiento:');
+                        untracked.forEach(file => {
+                            addToTerminal('  ' + file.name);
+                        });
+                        addToTerminal('(usa "git add <archivo>..." para incluirlo en lo que se será confirmado)');
+                    }
+                    
+                    if (modified.length > 0) {
+                        addToTerminal('Cambios no staged para commit:');
+                        addToTerminal('  (usa "git add <archivo>..." para actualizar lo que será confirmado)');
+                        modified.forEach(file => {
+                            addToTerminal('  modificado: ' + file.name);
+                        });
+                    }
+                    
+                    if (staged.length > 0) {
+                        addToTerminal('Cambios a ser confirmados:');
+                        addToTerminal('  (usa "git restore --staged <archivo>..." para sacar del área de staging)');
+                        staged.forEach(file => {
+                            addToTerminal('  nuevo archivo: ' + file.name);
+                        });
+                    }
+                    
+                    updateGitStatus();
+                }
+            },
+            {
+                name: 'git add .',
+                description: 'Añade todos los archivos al área de staging',
+                execute: () => {
+                    state.files.forEach(file => {
+                        if (file.status === 'untracked' || file.status === 'modified') {
+                            file.status = 'staged';
+                        }
+                    });
+                    addToTerminal('Todos los archivos añadidos al área de staging');
+                    updateFileSystem();
+                    updateGitStatus();
+                }
+            },
+            {
+                name: 'git add [archivo]',
+                description: 'Añade un archivo específico al área de staging',
+                execute: (fileName) => {
+                    if (!fileName) {
+                        addToTerminal('fatal: no se especificó un archivo');
+                        return;
+                    }
+                    
+                    const file = state.files.find(f => f.name === fileName);
+                    if (file) {
+                        file.status = 'staged';
+                        addToTerminal('Archivo "' + fileName + '" añadido al área de staging');
+                    } else {
+                        addToTerminal('fatal: ruta "' + fileName + '" no coincide con ningún archivo');
+                    }
+                    updateFileSystem();
+                    updateGitStatus();
+                }
+            },
+            {
+                name: 'git commit -m "mensaje"',
+                description: 'Confirma los cambios con un mensaje',
+                execute: (message) => {
+                    if (!message) {
+                        addToTerminal('error: se requiere un mensaje de commit');
+                        addToTerminal('Ejemplo: git commit -m "Mensaje descriptivo"');
+                        return;
+                    }
+                    
+                    const stagedFiles = state.files.filter(f => f.status === 'staged');
+                    if (stagedFiles.length === 0) {
+                        addToTerminal('no hay nada agregado al commit');
+                        return;
+                    }
+                    
+                    // Crear nuevo commit
+                    const commit = {
+                        hash: generateHash(),
+                        message: message,
+                        date: new Date(),
+                        files: [...stagedFiles]
+                    };
+                    
+                    state.commits.push(commit);
+                    
+                    // Cambiar estado de los archivos staged a unmodified
+                    state.files.forEach(file => {
+                        if (file.status === 'staged') {
+                            file.status = 'unmodified';
+                        }
+                    });
+                    
+                    addToTerminal('[' + state.currentBranch + ' ' + commit.hash.substring(0, 7) + '] ' + message);
+                    addToTerminal(' ' + stagedFiles.length + ' archivo(s) cambiado(s)');
+                    
+                    updateCommitHistory();
+                    updateGitStatus();
+                }
+            },
+            {
+                name: 'git log',
+                description: 'Muestra el historial de commits',
+                execute: () => {
+                    if (state.commits.length === 0) {
+                        addToTerminal('fatal: el repositorio actual aún no tiene commits');
+                        return;
+                    }
+                    
+                    state.commits.slice().reverse().forEach(commit => {
+                        addToTerminal('commit ' + commit.hash);
+                        addToTerminal('Autor: Usuario <usuario@ejemplo.com>');
+                        addToTerminal('Fecha: ' + commit.date.toLocaleString());
+                        addToTerminal('');
+                        addToTerminal('    ' + commit.message);
+                        addToTerminal('');
+                    });
+                }
+            },
+            {
+                name: 'git log --oneline',
+                description: 'Muestra el historial de commits en una línea',
+                execute: () => {
+                    if (state.commits.length === 0) {
+                        addToTerminal('fatal: el repositorio actual aún no tiene commits');
+                        return;
+                    }
+                    
+                    state.commits.slice().reverse().forEach(commit => {
+                        addToTerminal(commit.hash.substring(0, 7) + ' ' + commit.message);
+                    });
+                }
+            },
+            {
+                name: 'git branch [nombre]',
+                description: 'Crea una nueva rama',
+                execute: (branchName) => {
+                    if (!branchName) {
+                        // Mostrar ramas existentes
+                        addToTerminal('Ramas:');
+                        state.branches.forEach(branch => {
+                            if (branch === state.currentBranch) {
+                                addToTerminal('* ' + branch);
+                            } else {
+                                addToTerminal('  ' + branch);
+                            }
+                        });
+                        return;
+                    }
+                    
+                    if (state.branches.includes(branchName)) {
+                        addToTerminal('fatal: la rama "' + branchName + '" ya existe');
+                        return;
+                    }
+                    
+                    state.branches.push(branchName);
+                    addToTerminal('Rama creada: ' + branchName);
+                    updateBranchInfo();
+                }
+            },
+            {
+                name: 'git checkout [rama]',
+                description: 'Cambia a una rama diferente',
+                execute: (branchName) => {
+                    if (!branchName) {
+                        addToTerminal('fatal: se requiere un nombre de rama');
+                        return;
+                    }
+                    
+                    if (!state.branches.includes(branchName)) {
+                        addToTerminal('error: la rama "' + branchName + '" no existe');
+                        return;
+                    }
+                    
+                    state.currentBranch = branchName;
+                    addToTerminal('Cambiado a la rama "' + branchName + '"');
+                    updateBranchInfo();
+                }
+            },
+            {
+                name: 'touch [archivo]',
+                description: 'Crea un nuevo archivo',
+                execute: (fileName) => {
+                    if (!fileName) {
+                        addToTerminal('touch: falta el operando');
+                        addToTerminal('Pruebe "touch --help" para más información.');
+                        return;
+                    }
+                    
+                    if (state.files.find(f => f.name === fileName)) {
+                        addToTerminal('El archivo "' + fileName + '" ya existe');
+                        return;
+                    }
+                    
+                    state.files.push({
+                        name: fileName,
+                        content: '',
+                        status: 'untracked'
+                    });
+                    
+                    addToTerminal('Archivo "' + fileName + '" creado');
+                    updateFileSystem();
+                    updateGitStatus();
+                }
+            },
+            {
+                name: 'mkdir [directorio]',
+                description: 'Crea un nuevo directorio',
+                execute: (dirName) => {
+                    if (!dirName) {
+                        addToTerminal('mkdir: falta el operando');
+                        addToTerminal('Pruebe "mkdir --help" para más información.');
+                        return;
+                    }
+                    
+                    addToTerminal('Directorio "' + dirName + '" creado');
+                }
+            },
+            {
+                name: 'ls',
+                description: 'Lista archivos y directorios',
+                execute: () => {
+                    state.files.forEach(file => {
+                        addToTerminal(file.name);
+                    });
+                }
+            },
+            {
+                name: 'help',
+                description: 'Muestra los comandos disponibles',
+                execute: () => {
+                    addToTerminal('Comandos disponibles:');
+                    commands.forEach(cmd => {
+                        addToTerminal('  ' + cmd.name + ' - ' + cmd.description);
+                    });
+                    addToTerminal('');
+                    addToTerminal('También puedes usar comandos de sistema como: ls, touch, mkdir');
+                }
+            }
+        ];
+
+        // Inicializar la interfaz
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCommandsList();
+            updateFileSystem();
+            updateGitStatus();
+            updateCommitHistory();
+            updateBranchInfo();
+            
+            // Configurar el input de comandos
+            const commandInput = document.getElementById('command');
+            const executeButton = document.getElementById('execute');
+            
+            executeButton.addEventListener('click', executeCommand);
+            commandInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    executeCommand();
+                } else if (e.key === 'ArrowUp') {
+                    // Navegar por el historial de comandos
+                    if (state.commandHistory.length > 0) {
+                        state.historyIndex = Math.min(state.historyIndex + 1, state.commandHistory.length - 1);
+                        commandInput.value = state.commandHistory[state.commandHistory.length - 1 - state.historyIndex];
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    if (state.historyIndex > 0) {
+                        state.historyIndex--;
+                        commandInput.value = state.commandHistory[state.commandHistory.length - 1 - state.historyIndex];
+                    } else if (state.historyIndex === 0) {
+                        state.historyIndex = -1;
+                        commandInput.value = '';
+                    }
+                }
+            });
+            
+            // Ejecutar git status inicial
+            setTimeout(() => {
+                commands.find(c => c.name === 'git status').execute();
+            }, 500);
+        });
+
+        // Funciones auxiliares
+        function initializeCommandsList() {
+            const commandsList = document.getElementById('commands-list');
+            commands.forEach(cmd => {
+                const card = document.createElement('div');
+                card.className = 'command-card';
+                card.innerHTML = `
+                    <div class="command-name">${cmd.name}</div>
+                    <div class="command-desc">${cmd.description}</div>
+                `;
+                card.addEventListener('click', () => {
+                    document.getElementById('command').value = cmd.name;
+                    executeCommand();
+                });
+                commandsList.appendChild(card);
+            });
+        }
+
+        function executeCommand() {
+            const commandInput = document.getElementById('command');
+            const commandText = commandInput.value.trim();
+            
+            if (!commandText) return;
+            
+            // Añadir comando al historial
+            state.commandHistory.push(commandText);
+            state.historyIndex = -1;
+            
+            // Mostrar comando en terminal
+            addToTerminal('<span class="prompt">usuario@git-simulator:~$</span> ' + commandText);
+            
+            // Procesar comando
+            let executed = false;
+            
+            // Comandos de Git
+            if (commandText.startsWith('git ')) {
+                const gitCommand = commandText.substring(4);
+                
+                if (gitCommand.startsWith('add ')) {
+                    const fileName = gitCommand.substring(4).trim();
+                    if (fileName === '.') {
+                        commands.find(c => c.name === 'git add .').execute();
+                    } else {
+                        commands.find(c => c.name === 'git add [archivo]').execute(fileName);
+                    }
+                    executed = true;
+                } else if (gitCommand.startsWith('commit -m ')) {
+                    const message = gitCommand.substring(10).replace(/"/g, '');
+                    commands.find(c => c.name === 'git commit -m "mensaje"').execute(message);
+                    executed = true;
+                } else if (gitCommand.startsWith('branch ')) {
+                    const branchName = gitCommand.substring(7).trim();
+                    commands.find(c => c.name === 'git branch [nombre]').execute(branchName);
+                    executed = true;
+                } else if (gitCommand.startsWith('checkout ')) {
+                    const branchName = gitCommand.substring(9).trim();
+                    commands.find(c => c.name === 'git checkout [rama]').execute(branchName);
+                    executed = true;
+                } else {
+                    // Comandos simples de Git
+                    const simpleCommand = commands.find(c => c.name === 'git ' + gitCommand);
+                    if (simpleCommand) {
+                        simpleCommand.execute();
+                        executed = true;
+                    }
+                }
+            }
+            
+            // Comandos del sistema
+            if (!executed) {
+                if (commandText.startsWith('touch ')) {
+                    const fileName = commandText.substring(6).trim();
+                    commands.find(c => c.name === 'touch [archivo]').execute(fileName);
+                    executed = true;
+                } else if (commandText.startsWith('mkdir ')) {
+                    const dirName = commandText.substring(6).trim();
+                    commands.find(c => c.name === 'mkdir [directorio]').execute(dirName);
+                    executed = true;
+                } else if (commandText === 'ls') {
+                    commands.find(c => c.name === 'ls').execute();
+                    executed = true;
+                } else if (commandText === 'help') {
+                    commands.find(c => c.name === 'help').execute();
+                    executed = true;
+                }
+            }
+            
+            if (!executed) {
+                addToTerminal('Comando no reconocido: ' + commandText);
+                addToTerminal('Escribe "help" para ver los comandos disponibles');
+            }
+            
+            // Limpiar input
+            commandInput.value = '';
+            
+            // Hacer scroll al final de la terminal
+            const terminal = document.getElementById('terminal');
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function addToTerminal(text) {
+            const terminal = document.getElementById('terminal');
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+            line.innerHTML = text;
+            terminal.appendChild(line);
+        }
+
+        function updateFileSystem() {
+            const fileSystem = document.getElementById('file-system');
+            fileSystem.innerHTML = '';
+            
+            state.files.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                let statusIndicator = '';
+                if (file.status === 'untracked') {
+                    statusIndicator = '<span class="untracked"> (sin seguimiento)</span>';
+                } else if (file.status === 'modified') {
+                    statusIndicator = '<span class="modified"> (modificado)</span>';
+                } else if (file.status === 'staged') {
+                    statusIndicator = '<span class="staged"> (en staging)</span>';
+                }
+                
+                fileItem.innerHTML = file.name + statusIndicator;
+                fileSystem.appendChild(fileItem);
+            });
+        }
+
+        function updateGitStatus() {
+            const gitStatus = document.getElementById('git-status');
+            gitStatus.innerHTML = '';
+            
+            const untracked = state.files.filter(f => f.status === 'untracked');
+            const modified = state.files.filter(f => f.status === 'modified');
+            const staged = state.files.filter(f => f.status === 'staged');
+            const unmodified = state.files.filter(f => f.status === 'unmodified');
+            
+            if (untracked.length > 0) {
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item untracked';
+                statusItem.textContent = `Archivos sin seguimiento: ${untracked.length}`;
+                gitStatus.appendChild(statusItem);
+            }
+            
+            if (modified.length > 0) {
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item modified';
+                statusItem.textContent = `Archivos modificados: ${modified.length}`;
+                gitStatus.appendChild(statusItem);
+            }
+            
+            if (staged.length > 0) {
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item staged';
+                statusItem.textContent = `Archivos en staging: ${staged.length}`;
+                gitStatus.appendChild(statusItem);
+            }
+            
+            if (unmodified.length > 0) {
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item';
+                statusItem.textContent = `Archivos sin cambios: ${unmodified.length}`;
+                gitStatus.appendChild(statusItem);
+            }
+            
+            if (state.commits.length === 0) {
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item';
+                statusItem.textContent = 'No hay commits en el repositorio';
+                gitStatus.appendChild(statusItem);
+            } else {
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item';
+                statusItem.textContent = `Commits realizados: ${state.commits.length}`;
+                gitStatus.appendChild(statusItem);
+            }
+        }
+
+        function updateCommitHistory() {
+            const commitHistory = document.getElementById('commit-history');
+            commitHistory.innerHTML = '';
+            
+            if (state.commits.length === 0) {
+                const noCommits = document.createElement('div');
+                noCommits.textContent = 'No hay commits todavía';
+                commitHistory.appendChild(noCommits);
+                return;
+            }
+            
+            state.commits.slice().reverse().forEach(commit => {
+                const commitElement = document.createElement('div');
+                commitElement.className = 'commit';
+                commitElement.innerHTML = `
+                    <div class="commit-hash">${commit.hash.substring(0, 7)}</div>
+                    <div class="commit-message">${commit.message}</div>
+                `;
+                commitHistory.appendChild(commitElement);
+            });
+        }
+
+        function updateBranchInfo() {
+            document.getElementById('current-branch').textContent = state.currentBranch;
+        }
+
+        function generateHash() {
+            return Math.random().toString(36).substring(2, 9);
+        }
+    </script>
+</body>
+</html>
