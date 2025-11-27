@@ -86,6 +86,7 @@
             font-family: 'Courier New', monospace;
             font-size: 13px;
             line-height: 1.5;
+            white-space: pre-wrap; /* Permite saltos de línea largos */
         }
         
         code {
@@ -188,7 +189,6 @@
 </head>
 <body>
     <div class="pdf-container">
-        <!-- Página 1: Búsqueda con find() -->
         <div class="page">
             <div class="page-header">
                 <h1>🐍 Python Cheatsheet Completo</h1>
@@ -257,7 +257,6 @@ print(cadena[ini:fin])</pre>
             <div class="page-number">— Página 1 —</div>
         </div>
         
-        <!-- Página 2: index() y Slicing -->
         <div class="page">
             <div class="page-header">
                 <h1>🐍 Python Cheatsheet Completo</h1>
@@ -371,7 +370,6 @@ print(cadena[ini:fin])</pre>
             <div class="page-number">— Página 2 —</div>
         </div>
         
-        <!-- Página 3: Slicing Avanzado -->
         <div class="page">
             <div class="page-header">
                 <h1>🐍 Python Cheatsheet Completo</h1>
@@ -432,7 +430,7 @@ for i in range(0, len(texto), tam):
             <h4>Mitad adelante y mitad invertida:</h4>
             <pre>mitad = len(texto) // 2
 
-for c in texto[:mitad]:        # Normal
+for c in texto[:mitad]:      # Normal
     print(c)
 
 for c in texto[mitad:][::-1]:  # Invertida
@@ -453,7 +451,6 @@ for c in texto[mitad:][::-1]:  # Invertida
             <div class="page-number">— Página 3 —</div>
         </div>
         
-        <!-- Página 4: Formato de Extracción y zfill() -->
         <div class="page">
             <div class="page-header">
                 <h1>🐍 Python Cheatsheet Completo</h1>
@@ -542,7 +539,6 @@ print(numero_binario.zfill(8))</pre>
             <div class="page-number">— Página 4 —</div>
         </div>
         
-        <!-- Página 5: Formato de 12 Horas -->
         <div class="page">
             <div class="page-header">
                 <h1>🐍 Python Cheatsheet Completo</h1>
@@ -660,6 +656,340 @@ print(convertir_24_a_12("12:00"))  # 12:00PM</pre>
             
             <div class="page-number">— Página 5 —</div>
         </div>
+        
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
+            </div>
+            
+            <h2>7. Ejercicios de Programación Básica</h2>
+            
+            <h3>7.1 🎲 Lanzamiento de Dados Aleatorios</h3>
+            <p>Utiliza <code>input()</code>, la librería <code>random</code> y un bucle <code>for</code>.</p>
+            <div class="tip-box">
+                <div class="box-title">Patrones Clave</div>
+                <ul>
+                    <li><strong>Entrada:</strong> <code>input()</code> y conversión a entero con <code>int()</code>.</li>
+                    <li><strong>Aleatoriedad:</strong> <code>import random</code> y <code>random.randint(min, max)</code>.</li>
+                </ul>
+            </div>
+            <pre>import random
+try:
+    num_dados = int(input("¿Cuántos dados quieres lanzar? "))
+except ValueError:
+    print("Por favor, introduce un número válido.")
+    exit()
+print(f"\nLanzando {num_dados} dados...")
+for i in range(1, num_dados + 1):
+    resultado = random.randint(1, 6)
+    print(f"Dado {i}: **{resultado}**")</pre>
+            
+            <div class="section-divider"></div>
+            
+            <h3>7.2 🎁 Selección Aleatoria de Premios</h3>
+            <p>Usa una <strong>Lista</strong> y el método <code>random.choice()</code> para seleccionar un elemento al azar.</p>
+            <div class="tip-box">
+                <div class="box-title">Patrones Clave</div>
+                <ul>
+                    <li><strong>Estructura:</strong> Lista (<code>[]</code>).</li>
+                    <li><strong>Aleatoriedad:</strong> <code>random.choice(lista)</code>.</li>
+                </ul>
+            </div>
+            <pre>import random
+premios = [
+    "Viaje a la playa",
+    "Consola de videojuegos",
+    "Tablet de última generación",
+    "Tarjeta de regalo de $100"
+]
+print(f"Hay **{len(premios)}** premios disponibles.")
+premio_ganado = random.choice(premios)
+print("-" * 30)
+print(f"¡El premio seleccionado al azar es: **{premio_ganado}**!")
+print("-" * 30)</pre>
+            
+            <div class="section-divider"></div>
+            
+            <h3>7.3 Comprobación de Capicúa (Palíndromo)</h3>
+            <p>El patrón más sencillo es comparar la cadena con su versión invertida usando <strong>Slicing</strong>.</p>
+            <div class="tip-box">
+                <div class="box-title">Patrones Clave</div>
+                <ul>
+                    <li><strong>Inversión:</strong> <code>cadena[::-1]</code> (patrón Pythónico).</li>
+                    <li><strong>Condicional:</strong> Sentencia <code>if/else</code>.</li>
+                </ul>
+            </div>
+            <pre>entrada = input("Introduce una palabra o número para verificar si es capicúa: ")
+entrada_invertida = entrada[::-1]
+if entrada == entrada_invertida:
+    print(f"'{entrada}' **Sí** es capicúa. (Original == Invertida)")
+else:
+    print(f"'{entrada}' **NO** es capicúa.")
+print(f"(Original: {entrada} | Invertida: {entrada_invertida})")</pre>
+            
+            <div class="page-number">— Página 6 —</div>
+        </div>
+        
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
+            </div>
+            
+            <h3>7.4 🎰 Simulación de Lotería Simple (Aleatoriedad en bucle)</h3>
+            <pre>import random
+try:
+    cantidad = int(input("¿Cuántos números de lotería quieres jugar (1-50)? "))
+except ValueError:
+    print("Error: Por favor, introduce un número entero válido.")
+    exit()
+    
+numeros_sorteo = []
+contador = 0
+while contador < cantidad:
+    numero_aleatorio = random.randint(1, 50)
+    numeros_sorteo.append(numero_aleatorio)
+    contador = contador + 1
+    
+print("\n Tus números de la suerte son:")
+print(numeros_sorteo)</pre>
+            
+            <div class="section-divider"></div>
+            
+            <h3>7.5 🏀 Asignación de Equipo Aleatoria (random.sample y set)</h3>
+            <p>Usa <code>random.sample</code> para el primer equipo y la <strong>diferencia de conjuntos</strong> para el segundo.</p>
+            <pre>import random
+jugadores_disponibles = [
+    "Ana", "Beto", "Carlos", "Diana", "Elena",
+    "Felipe", "Gala", "Hugo", "Irene", "Javier"
+]
+print(f"Total de jugadores disponibles: {len(jugadores_disponibles)}")
+
+# Patrón clave: Muestreo aleatorio (5 jugadores únicos)
+equipo_alfa = random.sample(jugadores_disponibles, 5)
+
+# Obtener el Equipo Beta usando diferencia de conjuntos
+set_alfa = set(equipo_alfa)
+set_todos = set(jugadores_disponibles)
+set_beta = set_todos - set_alfa # Diferencia de conjuntos
+equipo_beta = list(set_beta)
+
+print("-" * 30)
+print("Equipo Alfa:", equipo_alfa)
+print("Equipo Beta:", equipo_beta)</pre>
+            
+            <div class="section-divider"></div>
+            
+            <h3>7.6 ✨ Verificación de Anagrama (Normalización y sorted)</h3>
+            <p>Compara las formas **canónicas** (ordenadas) de dos palabras después de normalizarlas.</p>
+            <pre>palabra1 = input("Introduce la primera palabra: ")
+palabra2 = input("Introduce la segunda palabra: ")
+
+# Normalización: minúsculas y quitar espacios
+normalizada1 = palabra1.lower().replace(' ', '')
+normalizada2 = palabra2.lower().replace(' ', '')
+
+# Patrón clave: Ordenación alfabética
+ordenada1 = sorted(normalizada1)
+ordenada2 = sorted(normalizada2)
+
+print("-" * 30)
+if ordenada1 == ordenada2:
+    print(f"¡'{palabra1}' y '{palabra2}' SÍ son anagramas!")
+else:
+    print(f"'{palabra1}' y '{palabra2}' NO son anagramas.")</pre>
+            
+            <div class="page-number">— Página 7 —</div>
+        </div>
+        
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
+            </div>
+            
+            <h2>8. Casos de Uso de .replace()</h2>
+            <p>Este método es esencial para estandarizar y limpiar datos de texto.</p>
+            
+            <h3>8.1 Limpieza de Datos en una Lista (Bucle)</h3>
+            <pre>titulos_sucios = [
+    " Artículo (OFERTA) 1",
+    "Artículo 2 - [DESCUENTO]",
+    "Artículo 3: ¡NUEVO!"
+]
+titulos_limpios = []
+
+for titulo in titulos_sucios:
+    # Múltiples reemplazos para limpiar
+    titulo_limpio = titulo.replace("(OFERTA)", "").replace("[DESCUENTO]", "").replace("¡NUEVO!", "")
+    # Eliminamos espacios extra al inicio/fin
+    titulos_limpios.append(titulo_limpio.strip())
+    
+print("--- REPLACE: Limpieza en Bucle ---")
+print(titulos_limpios) # Salida: ['Artículo 1', 'Artículo 2 -', 'Artículo 3:']</pre>
+            
+            <h3>8.2 Estandarización de Separadores (Decimales)</h3>
+            <pre>precios_mixtos = ["10,50", "25.99", "5,00", "99.99"]
+precios_estandar = []
+for precio in precios_mixtos:
+    # Reemplaza la coma por el punto en cada cadena
+    precio_limpio = precio.replace(",", ".")
+    # Convertimos a número (float) para cálculos
+    precios_estandar.append(float(precio_limpio))
+    
+print("--- REPLACE: Estandarización de Decimales ---")
+print(precios_estandar)</pre>
+            
+            <h3>8.3 Eliminación de Puntuación al Analizar Texto</h3>
+            <pre>texto = "¿Hola, cómo estás? Estoy bien."
+# Reemplazamos todos los signos de puntuación por un espacio vacío
+texto_limpio = texto.replace("¿", "").replace("?", "").replace(",", "").replace(".", "")
+
+print("\n--- REPLACE: Eliminación de Puntuación ---")
+print(texto_limpio)</pre>
+            
+            <div class="page-number">— Página 8 —</div>
+        </div>
+        
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
+            </div>
+            
+            <h2>9. Casos de Uso de sorted()</h2>
+            <p>La función <code>sorted()</code> es clave para ordenar y establecer el orden canónico de los datos.</p>
+            
+            <h3>9.1 Verificación Canónica (Anagramas)</h3>
+            <pre>palabra_a = "esparto"
+palabra_b = "pastor" 
+
+# Patrón clave: Ordenamos las letras. Si son iguales, son anagramas.
+if sorted(palabra_a.lower()) == sorted(palabra_b.lower()):
+    print("--- SORTED: Verificación de Anagrama ---")
+    print(f"'{palabra_a}' y '{palabra_b}' SÍ son anagramas.")
+else:
+    print("--- SORTED: Verificación de Anagrama ---")
+    print(f"'{palabra_a}' y '{palabra_b}' NO son anagramas.")</pre>
+            
+            <h3>9.2 Agrupación por Anagramas (Uso Avanzado con Bucle)</h3>
+            <pre>palabras = ["piel", "mono", "lipo", "opio", "nool"]
+grupos_anagramas = {}
+
+for palabra in palabras:
+    # 1. Obtenemos la forma canónica (ordenada de las letras)
+    clave_ordenada = "".join(sorted(palabra))
+    
+    # 2. Usamos la forma ordenada como clave en el diccionario
+    if clave_ordenada not in grupos_anagramas:
+        grupos_anagramas[clave_ordenada] = []
+        
+    # 3. Añadimos la palabra original al grupo correspondiente
+    grupos_anagramas[clave_ordenada].append(palabra)
+    
+print("\n--- SORTED: Agrupación en Bucle ---")
+print(grupos_anagramas) 
+# Salida: {'eilp': ['piel', 'lipo'], 'mnoo': ['mono'], ...}</pre>
+            
+            <h3>9.3 Ordenar Registros por un Criterio Específico (key)</h3>
+            <p>Se usa el argumento <code>key</code> (una función <code>lambda</code>) para indicar por qué campo ordenar.</p>
+            <pre>usuarios = [
+    {"nombre": "Ana", "edad": 30},
+    {"nombre": "Beto", "edad": 22},
+    {"nombre": "Carlos", "edad": 30}
+]
+# Ordenamos la lista de diccionarios por el valor de la clave 'edad'
+usuarios_ordenados = sorted(usuarios, key=lambda u: u["edad"])
+
+print("\n--- SORTED: Ordenar por Clave (Edad) ---")
+print(usuarios_ordenados)</pre>
+            
+            <h3>9.4 Encontrar el Mínimo/Máximo con Ordenación</h3>
+            <pre>puntuaciones = [95, 88, 72, 99, 81, 100]
+
+# 1. Ordenar de forma descendente (reverse=True)
+puntuaciones_ordenadas = sorted(puntuaciones, reverse=True)
+
+# 2. Acceder al tercer elemento (índice 2)
+tercer_mas_grande = puntuaciones_ordenadas[2]
+
+print("\n--- SORTED: Encontrar 3er Mayor Elemento ---")
+print(f"Puntuaciones Ordenadas: {puntuaciones_ordenadas}")
+print(f"El 3er valor más grande es: {tercer_mas_grande}")</pre>
+
+            <div class="page-number">— Página 9 —</div>
+        </div>
+        
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
+            </div>
+            
+            <h2>10. Casos de Uso de set()</h2>
+            <p>Los conjuntos son invaluables para operaciones de unicidad y comparaciones de grupos.</p>
+            
+            <h3>10.1 Eliminación de Duplicados</h3>
+            <div class="tip-box">
+                <div class="box-title">Patrón Clave</div>
+                Convertir a <code>set()</code> elimina los duplicados, luego <code>list()</code> lo convierte de nuevo a lista.
+            </div>
+            <pre>lista_con_duplicados = [10, 20, 30, 10, 40, 20, 50]
+lista_sin_duplicados = list(set(lista_con_duplicados))
+
+print("--- SET: Eliminación de Duplicados ---")
+print(lista_sin_duplicados)
+# Nota: El orden puede variar ya que set es desordenado.</pre>
+            
+            <h3>10.2 Rastreo de Elementos Vistos (Unicidad en Bucle)</h3>
+            <pre>registros_eventos = ["login", "click", "login", "compra", "click"]
+eventos_procesados = set()
+
+print("\n--- SET: Rastreo de Unicidad en Bucle ---")
+for evento in registros_eventos:
+    # Comprobamos si el evento ya está en el set
+    if evento not in eventos_procesados:
+        print(f"***NUEVO EVENTO** Procesando: {evento}")
+        # Lógica para procesar un nuevo tipo de evento
+        eventos_procesados.add(evento) # Marcado como 'visto'
+    else:
+        print(f" (Evento ya visto, ignorando: {evento})")</pre>
+            
+            <h3>10.3 Encontrar Elementos Comunes (Intersección)</h3>
+            <p>Usa el operador de intersección (<code>&</code>) entre dos conjuntos.</p>
+            <pre>clientes_tienda_a = {"Pedro", "Ana", "Luis", "Marta"}
+clientes_tienda_b = {"Ana", "Carlos", "Marta", "Elena"}
+
+comunes = clientes_tienda_a & clientes_tienda_b
+
+print("\n--- SET: Intersección (Comunes) ---")
+print(comunes) # Salida: {'Marta', 'Ana'}</pre>
+            
+            <h3>10.4 Encontrar Elementos Únicos de Múltiples Listas (Unión)</h3>
+            <p>Usa el operador de unión (<code>|</code>) para combinar todos los elementos únicos.</p>
+            <pre>productos_enero = {"A", "B", "C"}
+productos_febrero = {"B", "D", "E"}
+productos_marzo = {"A", "E", "F"}
+ 
+todos_los_productos = productos_enero | productos_febrero | productos_marzo
+ 
+print("\n--- SET: Unión (Todos los Únicos) ---")
+print(todos_los_productos) # Salida: {'F', 'D', 'E', 'B', 'C', 'A'}</pre>
+            
+            <h3>10.5 Verificar si una Lista es Subconjunto de Otra</h3>
+            <p>Usa el método <code>.issubset()</code> para verificar si un conjunto está completamente contenido en otro.</p>
+            <pre>stock_actual = {"TV", "Móvil", "Tablet", "Altavoz"}
+pedido_cliente = {"Móvil", "Tablet"}
+ 
+es_posible = pedido_cliente.issubset(stock_actual)
+ 
+print("\n--- SET: Subconjunto (Verificación de Stock) ---")
+print(f"¿Se puede completar el pedido? {es_posible}")</pre>
+            
+            <div class="page-number">— Página 10 —</div>
+        </div>
+        
     </div>
 </body>
 </html>
