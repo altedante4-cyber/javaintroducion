@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Cheatsheet - Examen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .search-box {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        #searchInput {
+            width: 80%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            outline: none;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            background: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .tab-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section.hidden {
+            display: none;
+        }
+        
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 15px 0 10px 0;
+            font-size: 1.2em;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+        
+        code {
+            color: #e83e8c;
+            font-weight: bold;
+        }
+        
+        .note {
+            background: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .tip {
+            background: #d4edda;
+            padding: 10px;
+            border-left: 4px solid #28a745;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .search-box, .tabs {
+                display: none;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            #searchInput {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐍 Python Cheatsheet - Examen</h1>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar sintaxis... (ej: array, random, validación)">
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="filterContent('all')">Todo</button>
+                <button class="tab-btn" onclick="filterContent('arrays')">Arrays</button>
+                <button class="tab-btn" onclick="filterContent('random')">Random</button>
+                <button class="tab-btn" onclick="filterContent('validacion')">Validación</button>
+                <button class="tab-btn" onclick="filterContent('strings')">Strings</button>
+                <button class="tab-btn" onclick="filterContent('matrices')">Matrices</button>
+                <button class="tab-btn" onclick="filterContent('patrones')">Patrones</button>
+            </div>
+        </header>
+        
+        <div class="content">
+            <!-- ARRAYS 1D -->
+            <div class="section" data-category="arrays">
+                <h2>📊 Arrays 1D - Creación</h2>
+                
+                <h3>Array vacío</h3>
+                <pre>array = []</pre>
+                
+                <h3>Array con valores</h3>
+                <pre>valores = [1, 2, 3, 4, 5]</pre>
+                
+                <h3>Array de ceros</h3>
+                <pre>ceros = [0] * 10
+# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</pre>
+                
+                <h3>Array consecutivo</h3>
+                <pre>numeros = [i for i in range(10)]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
+                
+                <h3>Array con condición</h3>
+                <pre>pares = [i for i in range(20) if i % 2 == 0]
+# [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]</pre>
+                
+                <h3>Array con operaciones</h3>
+                <pre>cuadrados = [i**2 for i in range(5)]
+# [0, 1, 4, 9, 16]</pre>
+                
+                <div class="tip">
+                    <strong>✨ Pythonic:</strong> Usa list comprehension en lugar de bucles while
+                </div>
+            </div>
+            
+            <!-- RANDOM -->
+            <div class="section" data-category="random">
+                <h2>🎲 Random - Números Aleatorios</h2>
+                
+                <h3>Importar</h3>
+                <pre>import random</pre>
+                
+                <h3>Entero aleatorio</h3>
+                <pre>numero = random.randint(1, 100)  # 1 a 100</pre>
+                
+                <h3>Decimal aleatorio</h3>
+                <pre>decimal = random.random()  # 0.0 a 1.0
+decimal = random.uniform(1.5, 9.5)  # rango</pre>
+                
+                <h3>Elegir elemento</h3>
+                <pre>frutas = ['manzana', 'banana', 'naranja']
+fruta = random.choice(frutas)</pre>
+                
+                <h3>Muestra sin repetición</h3>
+                <pre>muestra = random.sample([1,2,3,4,5], 3)</pre>
+                
+                <h3>Muestra con repetición</h3>
+                <pre>con_rep = random.choices(['A','B','C'], k=5)</pre>
+                
+                <h3>Mezclar array</h3>
+                <pre>random.shuffle(mi_array)  # in-place</pre>
+                
+                <h3>Array aleatorio</h3>
+                <pre>array = [random.randint(10, 100) for _ in range(5)]</pre>
+            </div>
+            
+            <!-- MATRICES -->
+            <div class="section" data-category="matrices">
+                <h2>🔲 Matrices 2D</h2>
+                
+                <h3>Matriz de ceros</h3>
+                <pre>filas, cols = 3, 3
+matriz = [[0 for _ in range(cols)] for _ in range(filas)]</pre>
+                
+                <h3>Matriz con valores</h3>
+                <pre>matriz = [[i*cols + j + 1 for j in range(cols)] 
+          for i in range(filas)]</pre>
+                
+                <h3>Matriz aleatoria</h3>
+                <pre>import random
+matriz = [[random.randint(1, 100) for _ in range(cols)] 
+          for _ in range(filas)]</pre>
+                
+                <h3>Recorrer por filas</h3>
+                <pre>for i in range(len(matriz)):
+    for j in range(len(matriz[i])):
+        print(f"[{i}][{j}] = {matriz[i][j]}")</pre>
+                
+                <h3>Recorrer por columnas</h3>
+                <pre>for j in range(len(matriz[0])):
+    columna = [matriz[i][j] for i in range(len(matriz))]
+    print(f"Columna {j}: {columna}")</pre>
+                
+                <h3>Mostrar sin corchetes</h3>
+                <pre>for fila in matriz:
+    print(' '.join(str(x) for x in fila))</pre>
+                
+                <div class="note">
+                    <strong>⚠️ Importante:</strong> Siempre usar list comprehension para matrices, no <code>[0]*n]*m</code>
+                </div>
+            </div>
+            
+            <!-- BUSCAMINAS -->
+            <div class="section" data-category="patrones">
+                <h2>💣 Buscaminas Completo</h2>
+                
+                <pre>import random
+
+# Entrada validada
+while True:
+    try:
+        tamaño = int(input("Tamaño: "))
+        if tamaño > 0:
+            break
+    except ValueError:
+        print("Número inválido")
+
+while True:
+    try:
+        minas = int(input("Minas: "))
+        if 0 <= minas <= tamaño * tamaño:
+            break
+    except ValueError:
+        print("Número inválido")
+
+# Crear tablero
+tablero = [[0 for _ in range(tamaño)] 
+           for _ in range(tamaño)]
+
+# Colocar minas
+colocadas = 0
+while colocadas < minas:
+    f = random.randint(0, tamaño-1)
+    c = random.randint(0, tamaño-1)
+    if tablero[f][c] == 0:
+        tablero[f][c] = 1
+        colocadas += 1
+
+# Mostrar
+for fila in tablero:
+    visual = ['■' if x == 1 else '□' for x in fila]
+    print(' '.join(visual))</pre>
+            </div>
+            
+            <!-- VALIDACIÓN -->
+            <div class="section" data-category="validacion">
+                <h2>✅ Validación de Entrada</h2>
+                
+                <h3>Número entero</h3>
+                <pre>while True:
+    try:
+        num = int(input("Número: "))
+        break
+    except ValueError:
+        print("Error: número inválido")</pre>
+                
+                <h3>Con rango</h3>
+                <pre>while True:
+    try:
+        num = int(input("Número (1-100): "))
+        if 1 <= num <= 100:
+            break
+        else:
+            print("Debe estar entre 1 y 100")
+    except ValueError:
+        print("Error: número inválido")</pre>
+                
+                <h3>Número decimal</h3>
+                <pre>while True:
+    try:
+        num = float(input("Decimal: "))
+        break
+    except ValueError:
+        print("Error: decimal inválido")</pre>
+                
+                <h3>Texto no vacío</h3>
+                <pre>while True:
+    texto = input("Nombre: ").strip()
+    if texto:
+        break
+    else:
+        print("No puede estar vacío")</pre>
+                
+                <h3>Solo letras</h3>
+                <pre>while True:
+    texto = input("Solo letras: ").strip()
+    if texto.isalpha():
+        break
+    else:
+        print("Solo letras permitidas")</pre>
+                
+                <h3>Opciones menú</h3>
+                <pre>while True:
+    op = input("Opción (1-3): ").strip()
+    if op in ['1', '2', '3']:
+        break
+    else:
+        print("Opción inválida")</pre>
+            </div>
+            
+            <!-- STRINGS -->
+            <div class="section" data-category="strings">
+                <h2>📝 Strings y Split</h2>
+                
+                <h3>Split básico</h3>
+                <pre>texto = "Hola mundo Python"
+lista = texto.split()
+# ['Hola', 'mundo', 'Python']</pre>
+                
+                <h3>Split con separador</h3>
+                <pre>datos = "Juan,25,Madrid"
+lista = datos.split(',')
+# ['Juan', '25', 'Madrid']</pre>
+                
+                <h3>Split con límite</h3>
+                <pre>texto = "uno dos tres cuatro"
+lista = texto.split(' ', 1)
+# ['uno', 'dos tres cuatro']</pre>
+                
+                <h3>Limpiar espacios</h3>
+                <pre>texto = " a , b , c "
+lista = [x.strip() for x in texto.split(',')]
+# ['a', 'b', 'c']</pre>
+                
+                <h3>Join (unir)</h3>
+                <pre>lista = ['a', 'b', 'c']
+texto = ' '.join(lista)  # "a b c"</pre>
+                
+                <h3>Find (buscar)</h3>
+                <pre>texto = "python es genial"
+pos = texto.find("es")  # 7
+pos = texto.find("java")  # -1 (no encontrado)</pre>
+                
+                <h3>Buscar todas las apariciones</h3>
+                <pre>texto = "python es python"
+palabra = "python"
+posiciones = []
+pos = texto.find(palabra)
+while pos != -1:
+    posiciones.append(pos)
+    pos = texto.find(palabra, pos + 1)</pre>
+            </div>
+            
+            <!-- REEMPLAZAR -->
+            <div class="section" data-category="arrays">
+                <h2>🔄 Reemplazar Elementos</h2>
+                
+                <h3>Por índice</h3>
+                <pre>lista = ['a', 'b', 'c']
+lista[1] = 'X'  # ['a', 'X', 'c']</pre>
+                
+                <h3>Con for y enumerate</h3>
+                <pre>lista = ['a', 'b', 'a', 'c']
+for i, elem in enumerate(lista):
+    if elem == 'a':
+        lista[i] = 'X'</pre>
+                
+                <h3>Con condición</h3>
+                <pre>lista = [10, 20, 30, 40]
+for i in range(len(lista)):
+    if lista[i] > 25:
+        lista[i] = 0</pre>
+                
+                <h3>List comprehension</h3>
+                <pre>lista = [1, 2, 3, 4, 5]
+nueva = ['par' if x%2==0 else 'impar' 
+         for x in lista]</pre>
+                
+                <h3>Diccionario de reemplazos</h3>
+                <pre>lista = ['rojo', 'verde', 'azul']
+reemplazos = {'rojo': 'RED', 'verde': 'GREEN'}
+nueva = [reemplazos.get(x, x) for x in lista]</pre>
+                
+                <h3>En matriz</h3>
+                <pre>for i in range(len(matriz)):
+    for j in range(len(matriz[i])):
+        if matriz[i][j] == 'c':
+            matriz[i][j] = 'X'</pre>
+            </div>
+            
+            <!-- COUNT -->
+            <div class="section" data-category="arrays">
+                <h2>🔢 Contar Elementos</h2>
+                
+                <h3>Count básico</h3>
+                <pre>lista = [1, 2, 3, 2, 4, 2]
+contador = lista.count(2)  # 3</pre>
+                
+                <h3>Contar con condición</h3>
+                <pre>numeros = [15, 23, 8, 42, 4]
+mayores = 0
+for num in numeros:
+    if num > 20:
+        mayores += 1</pre>
+                
+                <h3>Contar pares</h3>
+                <pre>pares = 0
+for num in numeros:
+    if num % 2 == 0:
+        pares += 1</pre>
+                
+                <h3>Contar en matriz</h3>
+                <pre>total = 0
+for fila in matriz:
+    total += fila.count(1)</pre>
+                
+                <h3>Contar elementos únicos</h3>
+                <pre>lista = ['a', 'b', 'a', 'c', 'b']
+conteo = {}
+for elem in lista:
+    if elem in conteo:
+        conteo[elem] += 1
+    else:
+        conteo[elem] = 1</pre>
+                
+                <h3>Con enumerate</h3>
+                <pre>lista = [10, 20, 30, 20]
+posiciones = []
+for i, elem in enumerate(lista):
+    if elem == 20:
+        posiciones.append(i)</pre>
+            </div>
+            
+            <!-- SWITCH/MATCH -->
+            <div class="section" data-category="patrones">
+                <h2>🔀 Switch (Match/Case)</h2>
+                
+                <h3>Calculadora</h3>
+                <pre>op = input("Operación (S/R/M/D): ").upper()
+
+match op:
+    case 'S':
+        resultado = num1 + num2
+    case 'R':
+        resultado = num1 - num2
+    case 'M':
+        resultado = num1 * num2
+    case 'D':
+        resultado = num1 / num2 if num2 != 0 else "Error"
+    case _:
+        resultado = "Operación inválida"</pre>
+                
+                <h3>Notas</h3>
+                <pre>nota = int(input("Nota (1-10): "))
+
+match nota:
+    case 1 | 2:
+        calif = "Muy deficiente"
+    case 3 | 4:
+        calif = "Insuficiente"
+    case 5:
+        calif = "Suficiente"
+    case 6:
+        calif = "Bien"
+    case 7 | 8:
+        calif = "Notable"
+    case 9 | 10:
+        calif = "Sobresaliente"
+    case _:
+        calif = "Nota inválida"</pre>
+                
+                <h3>Menú interactivo</h3>
+                <pre>while True:
+    print("1. Opción A")
+    print("2. Opción B")
+    print("3. Salir")
+    op = input("Elige: ")
+    
+    match op:
+        case '1':
+            opcion_a()
+        case '2':
+            opcion_b()
+        case '3':
+            break
+        case _:
+            print("Inválido")</pre>
+            </div>
+            
+            <!-- ESTADÍSTICAS -->
+            <div class="section" data-category="patrones">
+                <h2>📈 Análisis Estadístico</h2>
+                
+                <pre>import random
+
+# Crear array
+tamaño = int(input("Tamaño: "))
+array = [random.randint(10, 1000) 
+         for _ in range(tamaño)]
+
+# Máximo y mínimo
+maximo = max(array)
+minimo = min(array)
+media = sum(array) / len(array)
+
+# Posiciones del máximo
+pos_max = [i for i, x in enumerate(array) 
+           if x == maximo]
+
+# Posiciones del mínimo
+pos_min = [i for i, x in enumerate(array) 
+           if x == minimo]
+
+# Mostrar
+print(f"Array: {array}")
+print(f"Máximo: {maximo} en {pos_max}")
+print(f"Mínimo: {minimo} en {pos_min}")
+print(f"Media: {media:.2f}")</pre>
+            </div>
+            
+            <!-- ORDENAMIENTO -->
+            <div class="section" data-category="arrays">
+                <h2>↕️ Ordenar Arrays</h2>
+                
+                <h3>Ordenar (nuevo array)</h3>
+                <pre>array_ordenado = sorted(array)</pre>
+                
+                <h3>Ordenar (in-place)</h3>
+                <pre>array.sort()</pre>
+                
+                <h3>Descendente</h3>
+                <pre>array_desc = sorted(array, reverse=True)
+array.sort(reverse=True)</pre>
+                
+                <h3>Ordenar matriz por columna</h3>
+                <pre>matriz_ord = sorted(matriz, key=lambda x: x[1])</pre>
+            </div>
+            
+            <!-- FILTRADO -->
+            <div class="section" data-category="arrays">
+                <h2>🔍 Filtrar Arrays</h2>
+                
+                <h3>Números pares</h3>
+                <pre>pares = [x for x in array if x % 2 == 0]</pre>
+                
+                <h3>Mayores que N</h3>
+                <pre>mayores = [x for x in array if x > 50]</pre>
+                
+                <h3>Con for</h3>
+                <pre>resultado = []
+for num in array:
+    if num % 2 == 0:
+        resultado.append(num)</pre>
+                
+                <h3>Múltiples condiciones</h3>
+                <pre>filtrado = [x for x in array 
+            if x > 10 and x < 100]</pre>
+            </div>
+            
+            <!-- TRANSFORMACIÓN -->
+            <div class="section" data-category="arrays">
+                <h2>🔧 Transformar Arrays</h2>
+                
+                <h3>Duplicar valores</h3>
+                <pre>duplicados = [x * 2 for x in array]</pre>
+                
+                <h3>Cuadrados</h3>
+                <pre>cuadrados = [x ** 2 for x in array]</pre>
+                
+                <h3>Con map</h3>
+                <pre>resultado = list(map(lambda x: x**2, array))</pre>
+                
+                <h3>Convertir tipos</h3>
+                <pre>texto = [str(x) for x in array]
+numeros = [int(x) for x in lista_texto]</pre>
+            </div>
+            
+            <!-- OPERACIONES COMUNES -->
+            <div class="section" data-category="arrays">
+                <h2>⚙️ Operaciones Comunes</h2>
+                
+                <h3>Añadir elemento</h3>
+                <pre>array.append(valor)</pre>
+                
+                <h3>Insertar en posición</h3>
+                <pre>array.insert(indice, valor)</pre>
+                
+                <h3>Eliminar por índice</h3>
+                <pre>array.pop(indice)
+del array[indice]</pre>
+                
+                <h3>Eliminar por valor</h3>
+                <pre>array.remove(valor)  # primera aparición</pre>
+                
+                <h3>Verificar existencia</h3>
+                <pre>if valor in array:
+    print("Existe")</pre>
+                
+                <h3>Índice de elemento</h3>
+                <pre>if valor in array:
+    pos = array.index(valor)</pre>
+                
+                <h3>Longitud</h3>
+                <pre>tamaño = len(array)</pre>
+                
+                <h3>Suma y promedio</h3>
+                <pre>total = sum(array)
+promedio = sum(array) / len(array)</pre>
+            </div>
+            
+            <!-- FORMATO SALIDA -->
+            <div class="section" data-category="patrones">
+                <h2>🖨️ Formato de Salida</h2>
+                
+                <h3>Decimales</h3>
+                <pre>print(f"Media: {media:.2f}")  # 2 decimales
+print(f"Pi: {3.14159:.3f}")  # 3.142</pre>
+                
+                <h3>Alinear texto</h3>
+                <pre>print(f"{'Nombre':<10} {'Edad':>5}")
+# Izquierda      Derecha</pre>
+                
+                <h3>Porcentaje</h3>
+                <pre>print(f"Porcentaje: {0.85:.1%}")  # 85.0%</pre>
+                
+                <h3>Lista formateada</h3>
+                <pre>print(f"Array: {', '.join(str(x) for x in array)}")</pre>
+            </div>
+            
+            <!-- TIPS FINALES -->
+            <div class="section" data-category="patrones">
+                <h2>💡 Tips para el Examen</h2>
+                
+                <div class="tip">
+                    <strong>✅ Siempre valida entrada:</strong>
+                    <pre>while True:
+    try:
+        num = int(input("Número: "))
+        break
+    except ValueError:
+        print("Error")</pre>
+                </div>
+                
+                <div class="tip">
+                    <strong>✅ Matrices con list comprehension:</strong>
+                    <pre>matriz = [[0 for _ in range(cols)] 
+          for _ in range(filas)]</pre>
+                </div>
+                
+                <div class="tip">
+                    <strong>✅ Acceso seguro:</strong>
+                    <pre>if 0 <= pos < len(array):
+    valor = array[pos]</pre>
+                </div>
+                
+                <div class="note">
+                    <strong>⚠️ Errores comunes:</strong><br>
+                    • No usar <code>[[0]*cols]*filas</code> para matrices<br>
+                    • Validar división por cero<br>
+                    • Verificar índices antes de acceder<br>
+                    • Importar random al principio
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const sections = document.querySelectorAll('.section');
+        
+        // Búsqueda
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+        
+        // Filtrar por categoría
+        function filterContent(category) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            searchInput.value = '';
+            
+            sections.forEach(section => {
+                if (category === 'all') {
+                    section.style.display = 'block';
+                } else {
+                    const sectionCategory = section.getAttribute('data-category');
+                    if (sectionCategory === category) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
