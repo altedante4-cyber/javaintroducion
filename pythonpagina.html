@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Cheatsheet - Examen</title>
+    <title>Python Cheatsheet - Formato PDF</title>
     <style>
         * {
             margin: 0;
@@ -12,774 +12,654 @@
         }
         
         body {
-            font-family: 'Consolas', 'Monaco', monospace;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #525659;
+            color: #2c3e50;
             line-height: 1.6;
+            padding: 20px;
         }
         
-        .container {
-            max-width: 1400px;
+        .pdf-container {
+            max-width: 850px;
             margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
         }
         
-        h1 {
-            color: #667eea;
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .search-box {
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        #searchInput {
-            width: 80%;
-            padding: 15px;
-            font-size: 16px;
-            border: 2px solid #667eea;
-            border-radius: 25px;
-            outline: none;
-        }
-        
-        .tabs {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .tab-btn {
+        .page {
             background: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
+            padding: 60px 70px;
+            min-height: 1100px;
+            page-break-after: always;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .page-header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .page-header h1 {
+            font-size: 32px;
+            color: #2c3e50;
             font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 5px;
         }
         
-        .tab-btn:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .tab-btn.active {
-            background: #667eea;
-            color: white;
-        }
-        
-        .content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-        }
-        
-        .section {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .section.hidden {
-            display: none;
+        .page-header p {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-style: italic;
         }
         
         h2 {
-            color: #667eea;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            font-size: 1.5em;
+            color: #2c3e50;
+            font-size: 24px;
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #34495e;
         }
         
         h3 {
-            color: #764ba2;
-            margin: 15px 0 10px 0;
-            font-size: 1.2em;
+            color: #34495e;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+        
+        h4 {
+            color: #555;
+            font-size: 16px;
+            margin: 15px 0 8px 0;
+            font-weight: 600;
         }
         
         pre {
-            background: #f4f4f4;
+            background: #f8f9fa;
             padding: 15px;
-            border-radius: 5px;
+            border-radius: 4px;
             overflow-x: auto;
-            border-left: 4px solid #667eea;
-            margin: 10px 0;
+            border-left: 4px solid #3498db;
+            margin: 12px 0;
+            font-family: 'Courier New', monospace;
             font-size: 13px;
+            line-height: 1.5;
         }
         
         code {
-            color: #e83e8c;
+            color: #e74c3c;
             font-weight: bold;
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
         }
         
-        .note {
-            background: #fff3cd;
-            padding: 10px;
-            border-left: 4px solid #ffc107;
-            margin: 10px 0;
-            border-radius: 5px;
+        .note-box {
+            background: #fff9e6;
+            padding: 15px;
+            border-left: 5px solid #f39c12;
+            margin: 15px 0;
+            border-radius: 4px;
         }
         
-        .tip {
-            background: #d4edda;
+        .tip-box {
+            background: #e8f5e9;
+            padding: 15px;
+            border-left: 5px solid #4caf50;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background: #ffebee;
+            padding: 15px;
+            border-left: 5px solid #f44336;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .box-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        table th {
+            background: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        table td {
+            border: 1px solid #ddd;
             padding: 10px;
-            border-left: 4px solid #28a745;
-            margin: 10px 0;
-            border-radius: 5px;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .page-number {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(to right, #3498db, transparent);
+            margin: 25px 0;
         }
         
         @media print {
             body {
                 background: white;
             }
-            .search-box, .tabs {
-                display: none;
+            .pdf-container {
+                box-shadow: none;
             }
-            .section {
-                page-break-inside: avoid;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .content {
-                grid-template-columns: 1fr;
-            }
-            h1 {
-                font-size: 1.8em;
-            }
-            #searchInput {
-                width: 95%;
+            .page {
+                page-break-after: always;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🐍 Python Cheatsheet - Examen</h1>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="🔍 Buscar sintaxis... (ej: array, random, validación)">
-            </div>
-            <div class="tabs">
-                <button class="tab-btn active" onclick="filterContent('all')">Todo</button>
-                <button class="tab-btn" onclick="filterContent('arrays')">Arrays</button>
-                <button class="tab-btn" onclick="filterContent('random')">Random</button>
-                <button class="tab-btn" onclick="filterContent('validacion')">Validación</button>
-                <button class="tab-btn" onclick="filterContent('strings')">Strings</button>
-                <button class="tab-btn" onclick="filterContent('matrices')">Matrices</button>
-                <button class="tab-btn" onclick="filterContent('patrones')">Patrones</button>
-            </div>
-        </header>
-        
-        <div class="content">
-            <!-- ARRAYS 1D -->
-            <div class="section" data-category="arrays">
-                <h2>📊 Arrays 1D - Creación</h2>
-                
-                <h3>Array vacío</h3>
-                <pre>array = []</pre>
-                
-                <h3>Array con valores</h3>
-                <pre>valores = [1, 2, 3, 4, 5]</pre>
-                
-                <h3>Array de ceros</h3>
-                <pre>ceros = [0] * 10
-# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</pre>
-                
-                <h3>Array consecutivo</h3>
-                <pre>numeros = [i for i in range(10)]
-# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
-                
-                <h3>Array con condición</h3>
-                <pre>pares = [i for i in range(20) if i % 2 == 0]
-# [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]</pre>
-                
-                <h3>Array con operaciones</h3>
-                <pre>cuadrados = [i**2 for i in range(5)]
-# [0, 1, 4, 9, 16]</pre>
-                
-                <div class="tip">
-                    <strong>✨ Pythonic:</strong> Usa list comprehension en lugar de bucles while
-                </div>
+    <div class="pdf-container">
+        <!-- Página 1: Búsqueda con find() -->
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
             </div>
             
-            <!-- RANDOM -->
-            <div class="section" data-category="random">
-                <h2>🎲 Random - Números Aleatorios</h2>
-                
-                <h3>Importar</h3>
-                <pre>import random</pre>
-                
-                <h3>Entero aleatorio</h3>
-                <pre>numero = random.randint(1, 100)  # 1 a 100</pre>
-                
-                <h3>Decimal aleatorio</h3>
-                <pre>decimal = random.random()  # 0.0 a 1.0
-decimal = random.uniform(1.5, 9.5)  # rango</pre>
-                
-                <h3>Elegir elemento</h3>
-                <pre>frutas = ['manzana', 'banana', 'naranja']
-fruta = random.choice(frutas)</pre>
-                
-                <h3>Muestra sin repetición</h3>
-                <pre>muestra = random.sample([1,2,3,4,5], 3)</pre>
-                
-                <h3>Muestra con repetición</h3>
-                <pre>con_rep = random.choices(['A','B','C'], k=5)</pre>
-                
-                <h3>Mezclar array</h3>
-                <pre>random.shuffle(mi_array)  # in-place</pre>
-                
-                <h3>Array aleatorio</h3>
-                <pre>array = [random.randint(10, 100) for _ in range(5)]</pre>
-            </div>
+            <h2>1. Búsqueda de Texto con find()</h2>
             
-            <!-- MATRICES -->
-            <div class="section" data-category="matrices">
-                <h2>🔲 Matrices 2D</h2>
-                
-                <h3>Matriz de ceros</h3>
-                <pre>filas, cols = 3, 3
-matriz = [[0 for _ in range(cols)] for _ in range(filas)]</pre>
-                
-                <h3>Matriz con valores</h3>
-                <pre>matriz = [[i*cols + j + 1 for j in range(cols)] 
-          for i in range(filas)]</pre>
-                
-                <h3>Matriz aleatoria</h3>
-                <pre>import random
-matriz = [[random.randint(1, 100) for _ in range(cols)] 
-          for _ in range(filas)]</pre>
-                
-                <h3>Recorrer por filas</h3>
-                <pre>for i in range(len(matriz)):
-    for j in range(len(matriz[i])):
-        print(f"[{i}][{j}] = {matriz[i][j]}")</pre>
-                
-                <h3>Recorrer por columnas</h3>
-                <pre>for j in range(len(matriz[0])):
-    columna = [matriz[i][j] for i in range(len(matriz))]
-    print(f"Columna {j}: {columna}")</pre>
-                
-                <h3>Mostrar sin corchetes</h3>
-                <pre>for fila in matriz:
-    print(' '.join(str(x) for x in fila))</pre>
-                
-                <div class="note">
-                    <strong>⚠️ Importante:</strong> Siempre usar list comprehension para matrices, no <code>[0]*n]*m</code>
-                </div>
-            </div>
-            
-            <!-- BUSCAMINAS -->
-            <div class="section" data-category="patrones">
-                <h2>💣 Buscaminas Completo</h2>
-                
-                <pre>import random
+            <h3>1.1 Usar find() en un Bucle</h3>
+            <pre>texto = "hola hola hola mundo"
+sub = "hola"
 
-# Entrada validada
-while True:
-    try:
-        tamaño = int(input("Tamaño: "))
-        if tamaño > 0:
-            break
-    except ValueError:
-        print("Número inválido")
-
-while True:
-    try:
-        minas = int(input("Minas: "))
-        if 0 <= minas <= tamaño * tamaño:
-            break
-    except ValueError:
-        print("Número inválido")
-
-# Crear tablero
-tablero = [[0 for _ in range(tamaño)] 
-           for _ in range(tamaño)]
-
-# Colocar minas
-colocadas = 0
-while colocadas < minas:
-    f = random.randint(0, tamaño-1)
-    c = random.randint(0, tamaño-1)
-    if tablero[f][c] == 0:
-        tablero[f][c] = 1
-        colocadas += 1
-
-# Mostrar
-for fila in tablero:
-    visual = ['■' if x == 1 else '□' for x in fila]
-    print(' '.join(visual))</pre>
-            </div>
-            
-            <!-- VALIDACIÓN -->
-            <div class="section" data-category="validacion">
-                <h2>✅ Validación de Entrada</h2>
-                
-                <h3>Número entero</h3>
-                <pre>while True:
-    try:
-        num = int(input("Número: "))
-        break
-    except ValueError:
-        print("Error: número inválido")</pre>
-                
-                <h3>Con rango</h3>
-                <pre>while True:
-    try:
-        num = int(input("Número (1-100): "))
-        if 1 <= num <= 100:
-            break
-        else:
-            print("Debe estar entre 1 y 100")
-    except ValueError:
-        print("Error: número inválido")</pre>
-                
-                <h3>Número decimal</h3>
-                <pre>while True:
-    try:
-        num = float(input("Decimal: "))
-        break
-    except ValueError:
-        print("Error: decimal inválido")</pre>
-                
-                <h3>Texto no vacío</h3>
-                <pre>while True:
-    texto = input("Nombre: ").strip()
-    if texto:
-        break
-    else:
-        print("No puede estar vacío")</pre>
-                
-                <h3>Solo letras</h3>
-                <pre>while True:
-    texto = input("Solo letras: ").strip()
-    if texto.isalpha():
-        break
-    else:
-        print("Solo letras permitidas")</pre>
-                
-                <h3>Opciones menú</h3>
-                <pre>while True:
-    op = input("Opción (1-3): ").strip()
-    if op in ['1', '2', '3']:
-        break
-    else:
-        print("Opción inválida")</pre>
-            </div>
-            
-            <!-- STRINGS -->
-            <div class="section" data-category="strings">
-                <h2>📝 Strings y Split</h2>
-                
-                <h3>Split básico</h3>
-                <pre>texto = "Hola mundo Python"
-lista = texto.split()
-# ['Hola', 'mundo', 'Python']</pre>
-                
-                <h3>Split con separador</h3>
-                <pre>datos = "Juan,25,Madrid"
-lista = datos.split(',')
-# ['Juan', '25', 'Madrid']</pre>
-                
-                <h3>Split con límite</h3>
-                <pre>texto = "uno dos tres cuatro"
-lista = texto.split(' ', 1)
-# ['uno', 'dos tres cuatro']</pre>
-                
-                <h3>Limpiar espacios</h3>
-                <pre>texto = " a , b , c "
-lista = [x.strip() for x in texto.split(',')]
-# ['a', 'b', 'c']</pre>
-                
-                <h3>Join (unir)</h3>
-                <pre>lista = ['a', 'b', 'c']
-texto = ' '.join(lista)  # "a b c"</pre>
-                
-                <h3>Find (buscar)</h3>
-                <pre>texto = "python es genial"
-pos = texto.find("es")  # 7
-pos = texto.find("java")  # -1 (no encontrado)</pre>
-                
-                <h3>Buscar todas las apariciones</h3>
-                <pre>texto = "python es python"
-palabra = "python"
 posiciones = []
-pos = texto.find(palabra)
-while pos != -1:
-    posiciones.append(pos)
-    pos = texto.find(palabra, pos + 1)</pre>
-            </div>
-            
-            <!-- REEMPLAZAR -->
-            <div class="section" data-category="arrays">
-                <h2>🔄 Reemplazar Elementos</h2>
-                
-                <h3>Por índice</h3>
-                <pre>lista = ['a', 'b', 'c']
-lista[1] = 'X'  # ['a', 'X', 'c']</pre>
-                
-                <h3>Con for y enumerate</h3>
-                <pre>lista = ['a', 'b', 'a', 'c']
-for i, elem in enumerate(lista):
-    if elem == 'a':
-        lista[i] = 'X'</pre>
-                
-                <h3>Con condición</h3>
-                <pre>lista = [10, 20, 30, 40]
-for i in range(len(lista)):
-    if lista[i] > 25:
-        lista[i] = 0</pre>
-                
-                <h3>List comprehension</h3>
-                <pre>lista = [1, 2, 3, 4, 5]
-nueva = ['par' if x%2==0 else 'impar' 
-         for x in lista]</pre>
-                
-                <h3>Diccionario de reemplazos</h3>
-                <pre>lista = ['rojo', 'verde', 'azul']
-reemplazos = {'rojo': 'RED', 'verde': 'GREEN'}
-nueva = [reemplazos.get(x, x) for x in lista]</pre>
-                
-                <h3>En matriz</h3>
-                <pre>for i in range(len(matriz)):
-    for j in range(len(matriz[i])):
-        if matriz[i][j] == 'c':
-            matriz[i][j] = 'X'</pre>
-            </div>
-            
-            <!-- COUNT -->
-            <div class="section" data-category="arrays">
-                <h2>🔢 Contar Elementos</h2>
-                
-                <h3>Count básico</h3>
-                <pre>lista = [1, 2, 3, 2, 4, 2]
-contador = lista.count(2)  # 3</pre>
-                
-                <h3>Contar con condición</h3>
-                <pre>numeros = [15, 23, 8, 42, 4]
-mayores = 0
-for num in numeros:
-    if num > 20:
-        mayores += 1</pre>
-                
-                <h3>Contar pares</h3>
-                <pre>pares = 0
-for num in numeros:
-    if num % 2 == 0:
-        pares += 1</pre>
-                
-                <h3>Contar en matriz</h3>
-                <pre>total = 0
-for fila in matriz:
-    total += fila.count(1)</pre>
-                
-                <h3>Contar elementos únicos</h3>
-                <pre>lista = ['a', 'b', 'a', 'c', 'b']
-conteo = {}
-for elem in lista:
-    if elem in conteo:
-        conteo[elem] += 1
-    else:
-        conteo[elem] = 1</pre>
-                
-                <h3>Con enumerate</h3>
-                <pre>lista = [10, 20, 30, 20]
-posiciones = []
-for i, elem in enumerate(lista):
-    if elem == 20:
-        posiciones.append(i)</pre>
-            </div>
-            
-            <!-- SWITCH/MATCH -->
-            <div class="section" data-category="patrones">
-                <h2>🔀 Switch (Match/Case)</h2>
-                
-                <h3>Calculadora</h3>
-                <pre>op = input("Operación (S/R/M/D): ").upper()
+i = texto.find(sub)
 
-match op:
-    case 'S':
-        resultado = num1 + num2
-    case 'R':
-        resultado = num1 - num2
-    case 'M':
-        resultado = num1 * num2
-    case 'D':
-        resultado = num1 / num2 if num2 != 0 else "Error"
-    case _:
-        resultado = "Operación inválida"</pre>
-                
-                <h3>Notas</h3>
-                <pre>nota = int(input("Nota (1-10): "))
+while i != -1:
+    posiciones.append(i)
+    i = texto.find(sub, i + 1)
 
-match nota:
-    case 1 | 2:
-        calif = "Muy deficiente"
-    case 3 | 4:
-        calif = "Insuficiente"
-    case 5:
-        calif = "Suficiente"
-    case 6:
-        calif = "Bien"
-    case 7 | 8:
-        calif = "Notable"
-    case 9 | 10:
-        calif = "Sobresaliente"
-    case _:
-        calif = "Nota inválida"</pre>
-                
-                <h3>Menú interactivo</h3>
-                <pre>while True:
-    print("1. Opción A")
-    print("2. Opción B")
-    print("3. Salir")
-    op = input("Elige: ")
-    
-    match op:
-        case '1':
-            opcion_a()
-        case '2':
-            opcion_b()
-        case '3':
-            break
-        case _:
-            print("Inválido")</pre>
-            </div>
+print(posiciones)  # Salida: [0, 5, 10]</pre>
             
-            <!-- ESTADÍSTICAS -->
-            <div class="section" data-category="patrones">
-                <h2>📈 Análisis Estadístico</h2>
-                
-                <pre>import random
-
-# Crear array
-tamaño = int(input("Tamaño: "))
-array = [random.randint(10, 1000) 
-         for _ in range(tamaño)]
-
-# Máximo y mínimo
-maximo = max(array)
-minimo = min(array)
-media = sum(array) / len(array)
-
-# Posiciones del máximo
-pos_max = [i for i, x in enumerate(array) 
-           if x == maximo]
-
-# Posiciones del mínimo
-pos_min = [i for i, x in enumerate(array) 
-           if x == minimo]
-
-# Mostrar
-print(f"Array: {array}")
-print(f"Máximo: {maximo} en {pos_max}")
-print(f"Mínimo: {minimo} en {pos_min}")
-print(f"Media: {media:.2f}")</pre>
-            </div>
+            <h3>1.2 Uso Básico de find()</h3>
+            <pre>cadena.find(subcadena)  # Retorna el índice o -1 si no existe</pre>
             
-            <!-- ORDENAMIENTO -->
-            <div class="section" data-category="arrays">
-                <h2>↕️ Ordenar Arrays</h2>
-                
-                <h3>Ordenar (nuevo array)</h3>
-                <pre>array_ordenado = sorted(array)</pre>
-                
-                <h3>Ordenar (in-place)</h3>
-                <pre>array.sort()</pre>
-                
-                <h3>Descendente</h3>
-                <pre>array_desc = sorted(array, reverse=True)
-array.sort(reverse=True)</pre>
-                
-                <h3>Ordenar matriz por columna</h3>
-                <pre>matriz_ord = sorted(matriz, key=lambda x: x[1])</pre>
-            </div>
+            <h3>1.3 Buscar desde un Índice Específico</h3>
+            <pre>cadena.find(subcadena, inicio)
+# Ejemplo:
+"banana".find("na", 2)  # Busca "na" desde posición 2</pre>
             
-            <!-- FILTRADO -->
-            <div class="section" data-category="arrays">
-                <h2>🔍 Filtrar Arrays</h2>
-                
-                <h3>Números pares</h3>
-                <pre>pares = [x for x in array if x % 2 == 0]</pre>
-                
-                <h3>Mayores que N</h3>
-                <pre>mayores = [x for x in array if x > 50]</pre>
-                
-                <h3>Con for</h3>
-                <pre>resultado = []
-for num in array:
-    if num % 2 == 0:
-        resultado.append(num)</pre>
-                
-                <h3>Múltiples condiciones</h3>
-                <pre>filtrado = [x for x in array 
-            if x > 10 and x < 100]</pre>
-            </div>
+            <h3>1.4 Buscar dentro de un Rango</h3>
+            <pre>cadena.find(subcadena, inicio, fin)
+# Ejemplo:
+"banana".find("na", 1, 4)</pre>
             
-            <!-- TRANSFORMACIÓN -->
-            <div class="section" data-category="arrays">
-                <h2>🔧 Transformar Arrays</h2>
-                
-                <h3>Duplicar valores</h3>
-                <pre>duplicados = [x * 2 for x in array]</pre>
-                
-                <h3>Cuadrados</h3>
-                <pre>cuadrados = [x ** 2 for x in array]</pre>
-                
-                <h3>Con map</h3>
-                <pre>resultado = list(map(lambda x: x**2, array))</pre>
-                
-                <h3>Convertir tipos</h3>
-                <pre>texto = [str(x) for x in array]
-numeros = [int(x) for x in lista_texto]</pre>
-            </div>
+            <h3>1.5 Buscar Palabras Completas</h3>
+            <pre>i = cadena.find("hola")
+while i != -1:
+    if (i == 0 or cadena[i-1] == " ") and \
+       (i+4 == len(cadena) or cadena[i+4] == " "):
+        print("Palabra encontrada en", i)
+    i = cadena.find("hola", i + 1)</pre>
             
-            <!-- OPERACIONES COMUNES -->
-            <div class="section" data-category="arrays">
-                <h2>⚙️ Operaciones Comunes</h2>
-                
-                <h3>Añadir elemento</h3>
-                <pre>array.append(valor)</pre>
-                
-                <h3>Insertar en posición</h3>
-                <pre>array.insert(indice, valor)</pre>
-                
-                <h3>Eliminar por índice</h3>
-                <pre>array.pop(indice)
-del array[indice]</pre>
-                
-                <h3>Eliminar por valor</h3>
-                <pre>array.remove(valor)  # primera aparición</pre>
-                
-                <h3>Verificar existencia</h3>
-                <pre>if valor in array:
+            <h3>1.6 Buscar Ignorando Mayúsculas/Minúsculas</h3>
+            <pre>cadena.lower().find(sub.lower())</pre>
+            
+            <h3>1.7 Verificar si Existe (Patrón Booleano)</h3>
+            <pre>if cadena.find(sub) != -1:
     print("Existe")</pre>
-                
-                <h3>Índice de elemento</h3>
-                <pre>if valor in array:
-    pos = array.index(valor)</pre>
-                
-                <h3>Longitud</h3>
-                <pre>tamaño = len(array)</pre>
-                
-                <h3>Suma y promedio</h3>
-                <pre>total = sum(array)
-promedio = sum(array) / len(array)</pre>
+            
+            <h3>1.8 Extraer Texto Antes de Algo</h3>
+            <pre>i = cadena.find(":")
+parte = cadena[:i]</pre>
+            
+            <h3>1.9 Extraer Texto Después de Algo</h3>
+            <pre>i = cadena.find(":")
+parte = cadena[i+1:]</pre>
+            
+            <h3>1.10 Extraer Entre Dos Marcas</h3>
+            <pre>ini = cadena.find("[") + 1
+fin = cadena.find("]", ini)
+print(cadena[ini:fin])</pre>
+            
+            <h3>1.11 Buscar Última Aparición - rfind()</h3>
+            <pre>cadena.rfind(sub)  # Busca desde el final</pre>
+            
+            <div class="page-number">— Página 1 —</div>
+        </div>
+        
+        <!-- Página 2: index() y Slicing -->
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
             </div>
             
-            <!-- FORMATO SALIDA -->
-            <div class="section" data-category="patrones">
-                <h2>🖨️ Formato de Salida</h2>
-                
-                <h3>Decimales</h3>
-                <pre>print(f"Media: {media:.2f}")  # 2 decimales
-print(f"Pi: {3.14159:.3f}")  # 3.142</pre>
-                
-                <h3>Alinear texto</h3>
-                <pre>print(f"{'Nombre':<10} {'Edad':>5}")
-# Izquierda      Derecha</pre>
-                
-                <h3>Porcentaje</h3>
-                <pre>print(f"Porcentaje: {0.85:.1%}")  # 85.0%</pre>
-                
-                <h3>Lista formateada</h3>
-                <pre>print(f"Array: {', '.join(str(x) for x in array)}")</pre>
+            <h2>2. Búsqueda con index()</h2>
+            
+            <h3>2.1 Uso Básico de index()</h3>
+            <pre>cadena.index(sub)  # Retorna índice o ValueError
+
+# Ejemplo:
+"banana".index("na")   # → 2
+"banana".index("x")    # → ValueError</pre>
+            
+            <div class="warning-box">
+                <div class="box-title">⚠️ Diferencia con find()</div>
+                <code>find()</code> retorna -1 si no encuentra la subcadena.<br>
+                <code>index()</code> lanza una excepción ValueError si no la encuentra.
             </div>
             
-            <!-- TIPS FINALES -->
-            <div class="section" data-category="patrones">
-                <h2>💡 Tips para el Examen</h2>
-                
-                <div class="tip">
-                    <strong>✅ Siempre valida entrada:</strong>
-                    <pre>while True:
-    try:
-        num = int(input("Número: "))
-        break
-    except ValueError:
-        print("Error")</pre>
-                </div>
-                
-                <div class="tip">
-                    <strong>✅ Matrices con list comprehension:</strong>
-                    <pre>matriz = [[0 for _ in range(cols)] 
-          for _ in range(filas)]</pre>
-                </div>
-                
-                <div class="tip">
-                    <strong>✅ Acceso seguro:</strong>
-                    <pre>if 0 <= pos < len(array):
-    valor = array[pos]</pre>
-                </div>
-                
-                <div class="note">
-                    <strong>⚠️ Errores comunes:</strong><br>
-                    • No usar <code>[[0]*cols]*filas</code> para matrices<br>
-                    • Validar división por cero<br>
-                    • Verificar índices antes de acceder<br>
-                    • Importar random al principio
-                </div>
+            <h3>2.2 Encontrar Todas las Ocurrencias con index()</h3>
+            <pre>cadena = "hola hola hola"
+sub = "hola"
+
+i = 0
+posiciones = []
+
+try:
+    while True:
+        i = cadena.index(sub, i)
+        posiciones.append(i)
+        i += 1
+except ValueError:
+    pass
+
+print(posiciones)</pre>
+            
+            <h3>2.3 Búsquedas Solapadas</h3>
+            <pre>cadena = "aaaa"
+sub = "aa"
+
+i = 0
+pos = []
+
+try:
+    while True:
+        i = cadena.index(sub, i)
+        pos.append(i)
+        i += 1
+except ValueError:
+    pass
+
+print(pos)  # [0, 1, 2]</pre>
+            
+            <h3>2.4 Extraer Contenido con index()</h3>
+            <h4>Antes de un patrón:</h4>
+            <pre>i = cadena.index(":")
+antes = cadena[:i]</pre>
+            
+            <h4>Después de un patrón:</h4>
+            <pre>i = cadena.index(":")
+despues = cadena[i+1:]</pre>
+            
+            <h4>Entre dos patrones:</h4>
+            <pre>ini = cadena.index("[") + 1
+fin = cadena.index("]", ini)
+print(cadena[ini:fin])</pre>
+            
+            <div class="section-divider"></div>
+            
+            <h2>3. Slicing (Cortes de Cadenas)</h2>
+            
+            <h3>3.1 Sintaxis General</h3>
+            <pre>texto[inicio:fin:paso]</pre>
+            
+            <h3>3.2 Operaciones Básicas</h3>
+            <table>
+                <tr>
+                    <th>Operación</th>
+                    <th>Sintaxis</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>Copia completa</td>
+                    <td><code>texto[:]</code></td>
+                    <td>Copia exacta</td>
+                </tr>
+                <tr>
+                    <td>Texto invertido</td>
+                    <td><code>texto[::-1]</code></td>
+                    <td>Cadena al revés</td>
+                </tr>
+                <tr>
+                    <td>Cada 2 caracteres</td>
+                    <td><code>texto[::2]</code></td>
+                    <td>Saltos de 2</td>
+                </tr>
+                <tr>
+                    <td>Desde índice al final</td>
+                    <td><code>texto[5:]</code></td>
+                    <td>Desde posición 5</td>
+                </tr>
+                <tr>
+                    <td>Hasta un índice</td>
+                    <td><code>texto[:5]</code></td>
+                    <td>Primeros 5 caracteres</td>
+                </tr>
+            </table>
+            
+            <div class="page-number">— Página 2 —</div>
+        </div>
+        
+        <!-- Página 3: Slicing Avanzado -->
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
             </div>
+            
+            <h3>3.3 Slicing Avanzado</h3>
+            
+            <h4>Obtener un rango:</h4>
+            <pre>texto[2:8]  # Caracteres de posición 2 a 7</pre>
+            
+            <h4>Con paso en un rango:</h4>
+            <pre>texto[0:10:2]  # De 0 a 10 saltando de 2 en 2</pre>
+            
+            <h4>Desde el final (índices negativos):</h4>
+            <pre>texto[-3:]     # Últimos 3 caracteres
+texto[:-1]     # Todo menos el último
+texto[-5:-1]   # Desde atrás, rango específico</pre>
+            
+            <h4>Invertir solo una parte:</h4>
+            <pre>texto[10:0:-1]  # Invierte de posición 10 a 1</pre>
+            
+            <h4>Eliminar caracteres:</h4>
+            <pre>texto[1:-1]  # Quita el primero y el último</pre>
+            
+            <h4>Saltos desde atrás:</h4>
+            <pre>texto[::-2]  # Cada 2 caracteres empezando desde el final</pre>
+            
+            <h3>3.4 Patrones con Slicing en Bucles</h3>
+            
+            <h4>Recorrer en bloques de tamaño fijo:</h4>
+            <pre>texto = "abcdefghij"
+tam = 3
+
+for i in range(0, len(texto), tam):
+    bloque = texto[i:i+tam]
+    print(bloque)
+
+# Salida:
+# abc
+# def
+# ghi
+# j</pre>
+            
+            <h4>Obtener todas las subcadenas posibles:</h4>
+            <pre>for i in range(len(texto)):
+    for j in range(i+1, len(texto)+1):
+        print(texto[i:j])</pre>
+            
+            <h4>Procesar al revés usando slicing:</h4>
+            <pre>for c in texto[::-1]:
+    print(c)</pre>
+            
+            <h4>Procesar cada n-ésimo carácter:</h4>
+            <pre>for c in texto[::3]:
+    print(c)</pre>
+            
+            <h4>Mitad adelante y mitad invertida:</h4>
+            <pre>mitad = len(texto) // 2
+
+for c in texto[:mitad]:        # Normal
+    print(c)
+
+for c in texto[mitad:][::-1]:  # Invertida
+    print(c)</pre>
+            
+            <div class="tip-box">
+                <div class="box-title">✨ Resumen de Slicing</div>
+                <ul>
+                    <li><code>texto[:]</code> - Copia completa</li>
+                    <li><code>texto[::-1]</code> - Invertir</li>
+                    <li><code>texto[::n]</code> - Saltos de n</li>
+                    <li><code>texto[a:b]</code> - Rango</li>
+                    <li><code>texto[-n:]</code> - Últimos n</li>
+                    <li><code>texto[:-n]</code> - Todo menos últimos n</li>
+                </ul>
+            </div>
+            
+            <div class="page-number">— Página 3 —</div>
+        </div>
+        
+        <!-- Página 4: Formato de Extracción y zfill() -->
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
+            </div>
+            
+            <h2>4. Formato para Extraer Componentes</h2>
+            
+            <h3>4.1 Extraer Hora (HH:MM AM/PM)</h3>
+            <pre>hora = input("Ingrese la hora (ej: 03:45PM): ")
+
+H = ""
+M = ""
+sacar_formato = ""
+
+for i in range(len(hora)):
+    # Posiciones 0 y 1 son las Horas
+    if i < 2:
+        H += hora[i]
+    # Posiciones 3 y 4 son los Minutos
+    elif i > 2 and i < 5:
+        M += hora[i]
+    # Posiciones 5 y 6 son el formato AM/PM
+    elif i >= 5:
+        sacar_formato += hora[i]
+
+print(f"Horas: {H}")
+print(f"Minutos: {M}")
+print(f"Formato: {sacar_formato}")</pre>
+            
+            <div class="section-divider"></div>
+            
+            <h2>5. Función zfill() - Relleno con Ceros</h2>
+            
+            <h3>5.1 ¿Qué es zfill()?</h3>
+            <p>La función <code>zfill()</code> rellena una cadena con ceros ('0') a la izquierda hasta alcanzar una longitud fija.</p>
+            
+            <h3>5.2 Formateo de Tiempo y Fecha</h3>
+            
+            <h4>Horas y Minutos (HH:MM):</h4>
+            <pre>hora = 9
+minuto = 5
+# Resultado: '09:05'
+print(f"{str(hora).zfill(2)}:{str(minuto).zfill(2)}")</pre>
+            
+            <h4>Días y Meses (DD/MM/AAAA):</h4>
+            <pre>dia = 3
+mes = 1
+# Resultado: '03/01/2025'
+print(f"{str(dia).zfill(2)}/{str(mes).zfill(2)}/2025")</pre>
+            
+            <h3>5.3 Numeración Secuencial</h3>
+            
+            <h4>Identificadores con ancho fijo:</h4>
+            <pre>id_actual = 458
+# Resultado: '000458'
+print(str(id_actual).zfill(6))</pre>
+            
+            <h4>Nombres de archivo secuenciales:</h4>
+            <pre>for i in range(1, 12):
+    # Resultado: 'imagen_01.jpg', 'imagen_02.jpg', ..., 'imagen_11.jpg'
+    print(f"imagen_{str(i).zfill(2)}.jpg")</pre>
+            
+            <div class="tip-box">
+                <div class="box-title">💡 ¿Por qué usar zfill() para archivos?</div>
+                Para que los archivos se ordenen correctamente:<br>
+                ❌ Sin zfill: imagen_1.jpg, imagen_10.jpg, imagen_2.jpg<br>
+                ✅ Con zfill: imagen_01.jpg, imagen_02.jpg, imagen_10.jpg
+            </div>
+            
+            <h3>5.4 Preservación de Signos</h3>
+            
+            <h4>Números negativos:</h4>
+            <pre># Resultado: '-00123' (El signo permanece al inicio)
+print("-123".zfill(6))</pre>
+            
+            <h4>Números positivos (con signo):</h4>
+            <pre># Resultado: '+0005'
+print("+5".zfill(5))</pre>
+            
+            <h3>5.5 Representación Binaria</h3>
+            <pre>numero_binario = bin(10)[2:]  # Convierte a binario sin '0b'
+# Resultado: '00001010'
+print(numero_binario.zfill(8))</pre>
+            
+            <div class="page-number">— Página 4 —</div>
+        </div>
+        
+        <!-- Página 5: Formato de 12 Horas -->
+        <div class="page">
+            <div class="page-header">
+                <h1>🐍 Python Cheatsheet Completo</h1>
+                <p>Guía de Referencia para Exámenes y Práctica</p>
+            </div>
+            
+            <h2>6. Formato de 12 Horas (AM/PM)</h2>
+            
+            <h3>6.1 Concepto</h3>
+            <p>El formato de 12 horas divide el día en dos ciclos de 12 horas cada uno, utilizando los sufijos AM y PM.</p>
+            
+            <div class="note-box">
+                <div class="box-title">📌 Puntos Clave</div>
+                <ul>
+                    <li><strong>AM (Ante Meridiem):</strong> Significa "antes del mediodía". Va desde la medianoche hasta el mediodía.</li>
+                    <li><strong>PM (Post Meridiem):</strong> Significa "después del mediodía". Va desde el mediodía hasta la medianoche.</li>
+                    <li><strong>El 12:</strong> Este es el punto más confuso:
+                        <ul>
+                            <li>12:00 AM es la <strong>Medianoche</strong> (el inicio de un nuevo día)</li>
+                            <li>12:00 PM es el <strong>Mediodía</strong> (el centro del día)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <h3>6.2 Tabla de Referencia</h3>
+            <table>
+                <tr>
+                    <th>Hora en Formato 12h</th>
+                    <th>Significado</th>
+                    <th>Formato 24h</th>
+                </tr>
+                <tr>
+                    <td>12:00 AM</td>
+                    <td>Medianoche</td>
+                    <td>00:00</td>
+                </tr>
+                <tr>
+                    <td>1:00 AM - 11:59 AM</td>
+                    <td>Mañana</td>
+                    <td>01:00 - 11:59</td>
+                </tr>
+                <tr>
+                    <td>12:00 PM</td>
+                    <td>Mediodía</td>
+                    <td>12:00</td>
+                </tr>
+                <tr>
+                    <td>1:00 PM - 11:59 PM</td>
+                    <td>Tarde/Noche</td>
+                    <td>13:00 - 23:59</td>
+                </tr>
+            </table>
+            
+            <h3>6.3 Conversión de 12h a 24h</h3>
+            <pre>def convertir_12_a_24(hora_12):
+    # hora_12 formato: "03:45PM"
+    
+    # Extraer componentes
+    horas = int(hora_12[:2])
+    minutos = hora_12[3:5]
+    periodo = hora_12[5:].upper()
+    
+    # Conversión
+    if periodo == "AM":
+        if horas == 12:
+            horas = 0  # Medianoche
+    else:  # PM
+        if horas != 12:
+            horas += 12  # Tarde/Noche
+    
+    return f"{str(horas).zfill(2)}:{minutos}"
+
+# Ejemplos:
+print(convertir_12_a_24("03:45PM"))  # 15:45
+print(convertir_12_a_24("12:00AM"))  # 00:00
+print(convertir_12_a_24("12:00PM"))  # 12:00</pre>
+            
+            <h3>6.4 Conversión de 24h a 12h</h3>
+            <pre>def convertir_24_a_12(hora_24):
+    # hora_24 formato: "15:45"
+    
+    horas = int(hora_24[:2])
+    minutos = hora_24[3:5]
+    
+    # Determinar AM/PM
+    if horas == 0:
+        horas_12 = 12
+        periodo = "AM"
+    elif horas < 12:
+        horas_12 = horas
+        periodo = "AM"
+    elif horas == 12:
+        horas_12 = 12
+        periodo = "PM"
+    else:
+        horas_12 = horas - 12
+        periodo = "PM"
+    
+    return f"{str(horas_12).zfill(2)}:{minutos}{periodo}"
+
+# Ejemplos:
+print(convertir_24_a_12("15:45"))  # 03:45PM
+print(convertir_24_a_12("00:00"))  # 12:00AM
+print(convertir_24_a_12("12:00"))  # 12:00PM</pre>
+            
+            <div class="warning-box">
+                <div class="box-title">⚠️ Errores Comunes</div>
+                <ul>
+                    <li>Confundir 12:00 AM con mediodía (es medianoche)</li>
+                    <li>Olvidar convertir las 12 PM (no se le suma 12)</li>
+                    <li>No considerar que 12 AM son las 00:00 en formato 24h</li>
+                </ul>
+            </div>
+            
+            <div class="page-number">— Página 5 —</div>
         </div>
     </div>
-    
-    <script>
-        const searchInput = document.getElementById('searchInput');
-        const sections = document.querySelectorAll('.section');
-        
-        // Búsqueda
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            
-            sections.forEach(section => {
-                const text = section.textContent.toLowerCase();
-                if (text.includes(searchTerm) || searchTerm === '') {
-                    section.style.display = 'block';
-                } else {
-                    section.style.display = 'none';
-                }
-            });
-        });
-        
-        // Filtrar por categoría
-        function filterContent(category) {
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            searchInput.value = '';
-            
-            sections.forEach(section => {
-                if (category === 'all') {
-                    section.style.display = 'block';
-                } else {
-                    const sectionCategory = section.getAttribute('data-category');
-                    if (sectionCategory === category) {
-                        section.style.display = 'block';
-                    } else {
-                        section.style.display = 'none';
-                    }
-                }
-            });
-        }
-    </script>
 </body>
 </html>
