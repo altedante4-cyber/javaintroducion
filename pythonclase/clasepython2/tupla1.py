@@ -62,3 +62,13 @@ conjunto1.add("michael")
 
 print(conjunto1)
 
+import random 
+
+conjunto = set()
+
+while len(conjunto) != 10 :
+
+    conjunto.add(random.randint(1,10))
+
+print(conjunto)
+
