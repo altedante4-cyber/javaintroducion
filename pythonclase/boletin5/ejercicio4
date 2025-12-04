@@ -1,0 +1,21 @@
+frase = input("introduce una palabra")
+
+
+listapalabras = frase.split(" ")
+
+vocales = ['a','e','i','o','u']
+contdor = 0
+for palabra in listapalabras:
+    contadorDeVocales = 0
+
+    for vocal in vocales :
+        if palabra.find(vocal) != -1 :
+            contadorDeVocales +=1 
+    
+    if contadorDeVocales >= 4:
+        contador += 1 
+
+
+print("en tu frace hay palabras con mas de 4 vocales defirerentes" )
+
+

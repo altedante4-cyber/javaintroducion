@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementos de Bloque y Línea - Ejemplo Práctico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 800px;
+        }
+        .container {
+            border: 2px solid #333;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .block-element {
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .inline-element {
+            background-color: #fff3e0;
+            border: 1px solid #ff9800;
+            padding: 2px 5px;
+            margin: 0 2px;
+        }
+        .example-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Elementos de Bloque y Línea en HTML</h1>
+    
+    <div class="container">
+        <h2>Elementos de Bloque</h2>
+        
+        <div class="block-element">
+            <h3>Este es un encabezado H3 (elemento de bloque)</h3>
+            <p>Este es un párrafo (elemento de bloque) que contiene <span class="inline-element">elementos de línea</span> en su interior.</p>
+        </div>
+        
+        <div class="block-element">
+            <p>Otro párrafo que muestra cómo los elementos de bloque se colocan uno debajo del otro.</p>
+            <blockquote>
+                Esta es una cita larga usando &lt;blockquote&gt; (elemento de bloque).
+            </blockquote>
+        </div>
+        
+        <div class="example-box">
+            <h4>Ejemplo de código:</h4>
+            <pre><code>&lt;div&gt;
+    &lt;h1&gt;Título&lt;/h1&gt;
+    &lt;p&gt;Párrafo con &lt;strong&gt;texto en negrita&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Elementos de Línea</h2>
+        
+        <p>
+            Los elementos de línea como 
+            <b class="inline-element">negrita</b>, 
+            <i class="inline-element">cursiva</i>, 
+            <strong class="inline-element">importante</strong>, 
+            <em class="inline-element">énfasis</em>, 
+            <sup class="inline-element">superíndice</sup>, 
+            <sub class="inline-element">subíndice</sub>,
+            <mark class="inline-element">texto marcado</mark>,
+            <del class="inline-element">texto eliminado</del>,
+            y <abbr title="HyperText Markup Language" class="inline-element">HTML</abbr>
+            se colocan uno al lado del otro dentro de un párrafo.
+        </p>
+        
+        <p>
+            También podemos tener <q class="inline-element">citas cortas</q> 
+            y <cite class="inline-element">referencias</cite> como elementos de línea.
+        </p>
+        
+        <div class="example-box">
+            <h4>Ejemplo de código:</h4>
+            <pre><code>&lt;p&gt;
+    Texto normal con &lt;strong&gt;énfasis&lt;/strong&gt;,
+    &lt;em&gt;cursiva&lt;/em&gt; y &lt;mark&gt;resaltado&lt;/mark&gt;.
+&lt;/p&gt;</code></pre>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Combinación de Elementos</h2>
+        
+        <div class="block-element">
+            <h3>Artículo de ejemplo</h3>
+            <p>
+                En este párrafo combinamos diferentes elementos: 
+                <strong>texto importante</strong>, 
+                <em>texto con énfasis</em>, 
+                fórmulas como H<sub class="inline-element">2</sub>O, 
+                y referencias<sup class="inline-element">1</sup>.
+            </p>
+            
+            <blockquote>
+                "La creatividad es <mark>inteligencia</mark> divirtiéndose" 
+                - <cite>Albert Einstein</cite>
+            </blockquote>
+            
+            <p>
+                Podemos mostrar texto con <bdo dir="rtl" class="inline-element">dirección invertida</bdo>
+                y también definir <abbr title="World Wide Web" class="inline-element">WWW</abbr>.
+            </p>
+            
+            <hr>
+            
+            <pre>
+Texto preformateado
+    con     espacios   
+        saltos de línea
+    preservados.
+            </pre>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Reglas Importantes</h2>
+        <ul>
+            <li>Los elementos de bloque <strong>pueden</strong> contener elementos de línea</li>
+            <li>Los elementos de línea <strong>NO pueden</strong> contener elementos de bloque</li>
+            <li>Los elementos de bloque ocupan todo el ancho disponible</li>
+            <li>Los elementos de línea ocupan solo el espacio necesario</li>
+        </ul>
+    </div>
+</body>
+</html>
