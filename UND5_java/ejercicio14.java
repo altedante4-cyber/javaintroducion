@@ -1,5 +1,7 @@
+
 import java.util.Random;
 
+public class ejercicio14 {
 public static void main(String[] args) {
 
     String notas [] = {"sol","do","re","mi","fa","sol","la","si"};
@@ -61,5 +63,5 @@ public static void main(String[] args) {
 
 
     
- 
+}
 }

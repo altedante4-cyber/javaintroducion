@@ -72,3 +72,41 @@ while len(conjunto) != 10 :
 
 print(conjunto)
 
+
+#en los conjunto no se en que poscion esta
+
+#eliminar un conjunto remove 
+
+print(conjunto1.remove("Ana")) # si no existe provoca una exepcion
+print(conjunto1.discard("Ana"))# no provoca una excepcepcion si no existe
+
+
+print(conjunto1.pop()) #elimina elementos al azar pero en veldad coge eleementos del principio
+
+
+print(conjunto1)
+
+#para limpiar completamente  utilizamos el conjunto 
+
+conjunto.clear();
+
+print(conjunto1)
+
+lista1 = [1,33,2,1,2,33,42,33,1,25,5,1,33,2]
+#convertimos a conjunto  > luego convvertimos a lista y luego nos quitamos los duplicados
+
+
+conjunto3 = set(lista1)
+
+lista1= list(conjunto3)
+
+print(lista1)
+
+profes1 = {"Yago","Natalia","Jose Maria","Paul","Eduardo","Javier"}
+profes2 = {"Natalia","Puche","Jose Maria","Ana Maria","Israel"}
+
+profesComun = profes1 & profes2 
+
+print(profesComun) # cuando tenemos que enocntrar elementos comunes entre dos listas
+
+
