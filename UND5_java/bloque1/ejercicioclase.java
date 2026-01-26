@@ -1,3 +1,4 @@
+package bloque1;
 import java.util.Random;
 public class ejercicioclase {
 
