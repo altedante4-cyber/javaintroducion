@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="javaclase/|UND5_java/bloque2cadenas/|introducion/|UND5_java/|UND6/|javaper1/" kind="src" path=""/>
+	<classpathentry kind="src" path="introducion"/>
+	<classpathentry kind="src" path="javaclase"/>
+	<classpathentry kind="src" path="javaper1"/>
+	<classpathentry excluding="bloque2cadenas/" kind="src" path="UND5_java"/>
+	<classpathentry kind="src" path="UND5_java/bloque2cadenas"/>
+	<classpathentry kind="src" path="UND6"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
