@@ -33,9 +33,16 @@ public class Cuenta {
 			   
 		 }
 		 
+		 
 		 public void PagarRecibo(double saldo ) {
 			  
 			 this.saldo = saldo ; 
+		 }
+
+		 // pagar cliente 
+		 public double pagarcliente(double saldo_cliente1 , double saldo_cliente2){
+					 return saldo_cliente1 += saldo_cliente2;
+
 		 }
 		
 		

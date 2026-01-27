@@ -1,3 +1,4 @@
+package javaintroducion;
 public class Persona {
     private String dni;
     private Cuenta[] cuentas; // Atributo en minúscula por convención
@@ -13,9 +14,9 @@ public class Persona {
      * */
 
     
-    public Persona(String dni, Cuenta[] cuentasRecibidas) {
+    public Persona(String dni, Cuenta[] cuentas) {
         this.dni = dni;
-        this.cuentas = cuentasRecibidas;
+        this.cuentas = new Cuenta [3];
     }
     
     public void Persona_dni(String dni){
@@ -23,16 +24,30 @@ public class Persona {
 
     }
     
-    public boolean agregarcuenta(String cuenta []) {
+    public boolean agregarcuenta(String cuenta) {
     	 /// devuelve un booleanno<<<<<<<<>>>>>>>> si se agrego correctamente 
-    	  
+          
+         for (int i = 0 ; i < cuentas.length ; i++ ){
+
+              if(!cuentas.equals(null) || !cuentas.equals(' ')){
+                 return true ; 
+              }
+         }
+
+         return false ; 
+        
+          
     }
     
-    public boolean esMorosa() {
+    public boolean esMorosa(double a) {
     	   
     	//devuelve  un booleano true si es morosa o no 
+    	if ( a >= 0.0 ){
+            return true ; 
+
+        }
     	
-    	
+        return false ; 
     	
     
     }
