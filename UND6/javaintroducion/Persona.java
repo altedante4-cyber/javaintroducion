@@ -2,6 +2,7 @@ package javaintroducion;
 public class Persona {
     private String dni;
     private Cuenta[] cuentas; // Atributo en minúscula por convención
+    private int numCuentaAsociadas; 
 
     /*
      * +persona(dni) 
@@ -14,48 +15,45 @@ public class Persona {
      * */
 
     
-    public Persona(String dni, Cuenta[] cuentas) {
+    public Persona(String dni) {
         this.dni = dni;
-        this.cuentas = new Cuenta [3];
+        cuentas = new Cuenta[3];
+        numCuentaAsociadas = 0 ;
+        
     }
     
-    public void Persona_dni(String dni){
-    	this.dni = dni ; 
-
-    }
-    
-    public boolean agregarcuenta(String cuenta) {
+    public boolean agregarcuenta(Cuenta c ) {
     	 /// devuelve un booleanno<<<<<<<<>>>>>>>> si se agrego correctamente 
           
-         for (int i = 0 ; i < cuentas.length ; i++ ){
-
-              if(!cuentas.equals(null) || !cuentas.equals(' ')){
-                 return true ; 
-              }
-         }
-
-         return false ; 
+    	if(numCuentaAsociadas >= 3 ) {
+    		return false ; 
+    	    		
+    	}
+    	
+    	// hay espacio 
+		// 
+		cuentas[numCuentaAsociadas] = c;
+		numCuentaAsociadas ++ ; 
+		return true ; 
+		
+    
         
           
     }
     
-    public boolean esMorosa(double a) {
-    	   
-    	//devuelve  un booleano true si es morosa o no 
-    	if ( a >= 0.0 ){
-            return true ; 
-
-        }
-    	
-        return false ; 
-    	
     
+    public String toString() {
+    	String cad = "dni"+dni+"/n"+ "Cuentas " ;
+    	for (int i = 0 ; i < numCuentaAsociadas ; i++ ) {
+    		 
+    		cad += cuentas[i].toString();
+    	}
+    	
+    	return cad ; 
+    	
     }
     
-    public String damecuenta(String cuenta []) {
-    	  
-    	 
-    }
+    
    	
 		
 }

@@ -5,13 +5,13 @@ public class Cuenta {
 		private double  saldo ;
 		private String n_cuenta ; 
 		
-		// inicialisamo el objeto 
+		// inicialisamo el objeto  
 		
-		 public  Cuenta(String n_cuenta , double saldo) {
+		 public  Cuenta(String n_cuenta) {
 			  
 			 this.n_cuenta = n_cuenta ;
-			 this.saldo = saldo ; 
-			  
+			 // ojo con esto  siempre hay que incialisar los atributos
+			 saldo = 0.0 ;  
 		 }
 		 
 		 
@@ -24,26 +24,43 @@ public class Cuenta {
 			  
 		 }
 		 
+		 public String dameCuenta() {
+			   
+			 return n_cuenta ; 
+			 
+		 }
+		 
 		 
 		 // creacion de los setter 
-		 public  void recibirABonons(double saldo) {
-			   
-			   this.saldo = saldo ; 
-			   
-			   
+		 public  boolean recibirABonons(double cant) {
+			 if(cant >=0 ) {
+				 saldo += cant ; 
+				 return true ; 
+			 }
+			 
+			return false ; 
 		 }
 		 
 		 
-		 public void PagarRecibo(double saldo ) {
+		 public boolean PagarRecibo(double cant ) {
+			 if(cant < 0 ) {
+				  saldo -= cant ;
+				  return true ;
+			 }
+			 
+			 return false ; 
 			  
-			 this.saldo = saldo ; 
 		 }
 
-		 // pagar cliente 
-		 public double pagarcliente(double saldo_cliente1 , double saldo_cliente2){
-					 return saldo_cliente1 += saldo_cliente2;
-
+		 //getter
+		 
+		 public String toString() {
+			  return "Numero Cuent:"+n_cuenta+"Saldo:"+saldo ; 
+			  
 		 }
+		 
+		 
+		 
 		
 		
 }

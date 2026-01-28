@@ -3,25 +3,55 @@ package javaintroducion;
 public class PruebaCuenta {
 
 	public static void main(String[] args) {
-		Cuenta cuan_per1 = new Cuenta("402042",0);
-		Cuenta cuan_per1_sin_fondo = new Cuenta("402042", 700);
-		Persona per = new Persona("402042", null);
-		// ingresar dinero en la primera cuenta
-		cuan_per1.recibirABonons(1100);
-		//pagar alquiler 
-
-		cuan_per1_sin_fondo.PagarRecibo(cuan_per1_sin_fondo.consultar_saldo() - 750);
-		// comrobar si la persona es morosa 
-		if(per.esMorosa(cuan_per1_sin_fondo.consultar_saldo())){
-			System.out.println(" No Es morosa");
-		}else{
-			System.out.println("Es morosa");
+		
+		Persona p1=new Persona("1234a");
+		Cuenta c1=new Cuenta("0");
+		Cuenta c2 = new Cuenta("700");
+		
+		
+		// agregamos cuenta a la persona1 
+		
+		if(p1.agregarcuenta(c1)) {
+			
+			boolean recibir_nomina =  c1.recibirABonons(1000);
+			
+			if(recibir_nomina) {
+				 
+				System.out.println(p1.toString());
+			}else {
+				System.out.println("La operacion no se realizao corectmanete ");
+			}
+			
+			
+			 
+		}else {
+			System.out.println("NO se agrego la cuenta ");
 		}
-		// trasnferencia de una cuenta a otra y comprobar mostrnadolo por pantall que cambia el estado de la persona 
-		// pagamos 
 		
+		
+		
+		
+		if(p1.agregarcuenta(c2)) {
+			
+			boolean retirar_dinero = c2.PagarRecibo(750);
+			
+			if(retirar_dinero) {
+				
+				System.out.println(p1.toString());
+			}else {
+				System.out.println("la persona es morosa ");
+			}
+			
+			// comprobar si esta persona es morosa o no 
+		
+			
+		}else {
+			System.out.println("NO se agrego a la cuenta ");  
+		}
 		
 
+		
+		
 
 	}
 
