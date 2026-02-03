@@ -30,6 +30,7 @@ public class PruebaCuenta {
 		}
 
 		
+		
 if (c1.PagarRecibo(100)) {
     c2.recibirABonons(100);
     System.out.println("Transferencia exitosa.");

@@ -26,7 +26,7 @@ public class Cuenta {
         return false; // Retorna false si no hay dinero o la cantidad es inválida
     }
 
-    @Override
+    s
     public String toString() {
         return "Cuenta: " + n_cuenta + " | Saldo: " + saldo;
     }
