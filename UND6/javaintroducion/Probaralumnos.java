@@ -10,7 +10,7 @@ public class Probaralumnos {
             int opcion ; 
           do{
 
-            System.out.println("1.Agregar alumno \n 2.Buscar un alumno \n 3.Modificar su nota  \n 4.Realizar la media de todas las notas  \n 5.Realizar la media de las notas menores de 5 ");
+            System.out.println("1.Agregar alumno \n 2.Buscar un alumno \n 3.Modificar su nota  \n 4.Realizar la media de todas las notas  \n 5.Realizar la media de las notas menores de 5 \n 6.Los alumnos con mejores notas han sacado \n 7.Los alumnos con peores notas que han sacado  ");
             opcion = sc.nextInt();
             sc.nextLine();
 
@@ -63,11 +63,8 @@ public class Probaralumnos {
                 case 5 :
                      System.out.println("La nota media de los alumnos que tienen una nota inferiro a 5  es  " + mio.mostrarmedianotasmenores() );
                      break ;
-                     
                 case 6 :
                      System.out.println("Los alumnos que mejores notas han sacado es  " + mio.mostraralumnosmejoresnotas());
-
-
                     break ;
                 case 7:
                     System.out.println("mostrar alumnoes con peores notas " + mio.mostraralumnospeoresnotas());
