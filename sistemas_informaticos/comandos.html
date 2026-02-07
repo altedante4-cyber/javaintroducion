@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shell Script - Chuletario Interactivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #131929;
+            --bg-tertiary: #1a2038;
+            --accent-cyan: #00ffcc;
+            --accent-magenta: #ff0099;
+            --accent-yellow: #ffcc00;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0b0;
+            --code-bg: #0d1117;
+            --border: #2d3548;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '$ _';
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 3em;
+            color: var(--accent-cyan);
+            opacity: 0.1;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 0.1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-magenta) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        .search-container {
+            margin: 30px 0;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            border: 2px solid var(--border);
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .nav-tab:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 204, 0.3);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-magenta) 100%);
+            color: var(--bg-primary);
+            border-color: transparent;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            border: 2px solid var(--border);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--border);
+        }
+
+        .section-title::before {
+            content: '>';
+            color: var(--accent-magenta);
+            margin-right: 10px;
+        }
+
+        .command-group {
+            margin-bottom: 25px;
+        }
+
+        .command-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border);
+        }
+
+        .command-header:hover {
+            background: var(--code-bg);
+            border-color: var(--accent-cyan);
+        }
+
+        .command-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--accent-yellow);
+        }
+
+        .command-description {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-left: 15px;
+        }
+
+        .expand-icon {
+            color: var(--accent-cyan);
+            transition: transform 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        .command-header.expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        .command-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .command-details.expanded {
+            max-height: 3000px;
+        }
+
+        .command-content {
+            padding: 20px;
+            background: var(--code-bg);
+            margin-top: 10px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-cyan);
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block::before {
+            content: '$';
+            position: absolute;
+            left: 15px;
+            color: var(--accent-magenta);
+            font-weight: 700;
+        }
+
+        .code-block code {
+            display: block;
+            padding-left: 20px;
+            color: var(--text-primary);
+            white-space: pre;
+        }
+
+        .example-label {
+            color: var(--accent-magenta);
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .info-box {
+            background: rgba(0, 255, 204, 0.1);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .code-block:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-magenta);
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            margin-top: 60px;
+            border-top: 2px solid var(--border);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .nav-tabs { flex-direction: column; }
+            .command-header { flex-direction: column; align-items: flex-start; }
+            .command-description { margin-left: 0; margin-top: 8px; }
+        }
+
+        .highlight { 
+            background: var(--accent-yellow); 
+            color: var(--bg-primary); 
+            padding: 2px 4px; 
+            border-radius: 3px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Shell Script</h1>
+            <p class="subtitle">Chuletario Completo con Ejemplos Prácticos - Todos los comandos del PDF incluidos</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="Buscar comandos... (ej: for, if, redirect, variables)">
+        </div>
+
+        <div class="nav-tabs" id="navTabs">
+            <div class="nav-tab active" data-section="all">Todos</div>
+            <div class="nav-tab" data-section="redirecciones">Redirecciones</div>
+            <div class="nav-tab" data-section="variables">Variables</div>
+            <div class="nav-tab" data-section="arrays">Arrays</div>
+            <div class="nav-tab" data-section="operadores">Operadores</div>
+            <div class="nav-tab" data-section="entrecomillado">Entrecomillado</div>
+            <div class="nav-tab" data-section="expansion">Expansión</div>
+            <div class="nav-tab" data-section="ejecucion">Ejecución</div>
+            <div class="nav-tab" data-section="argumentos">Argumentos CLI</div>
+            <div class="nav-tab" data-section="estructuras">Estructuras de Control</div>
+            <div class="nav-tab" data-section="interactividad">Interactividad</div>
+            <div class="nav-tab" data-section="procesos">Control de Procesos</div>
+        </div>
+
+        <div id="content"></div>
+        
+        <footer>
+            <p>📚 Autor: Adolfo Sanz De Diego | Licencia: CC-BY-SA</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">✨ Chuletario Interactivo - Todos los comandos incluidos ✨</p>
+        </footer>
+    </div>
+
+    <script>
+        const commands = {
+            redirecciones: [
+                { name: 'tee fichero', description: 'Envía output a fichero y a pantalla', examples: [
+                    { label: 'Ejemplo básico', code: 'ls -la | tee listado.txt' },
+                    { label: 'Con bucle', code: 'for i in {1..5}; do echo "Línea $i"; done | tee output.txt' },
+                    { label: 'Append', code: 'date | tee -a log.txt' }
+                ], info: 'Útil para guardar salida mientras la visualizas en tiempo real' },
+                
+                { name: '> fichero', description: 'Redirige output a fichero (sobrescribe)', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Hola Mundo" > archivo.txt' },
+                    { label: 'Con bucle', code: 'for i in {1..10}; do echo $i; done > numeros.txt' }
+                ], info: 'CUIDADO: Sobrescribe el contenido del archivo si existe' },
+                
+                { name: '>> fichero', description: 'Redirige output al final del fichero (append)', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Nueva línea" >> archivo.txt' },
+                    { label: 'Con bucle', code: 'for user in $(cat usuarios.txt); do echo "Procesando $user" >> log.txt; done' }
+                ], info: 'No sobrescribe, añade al final del archivo' },
+                
+                { name: '> /dev/null', description: 'Descarta la salida estándar', examples: [
+                    { label: 'Ejemplo básico', code: 'comando_ruidoso > /dev/null' },
+                    { label: 'Con bucle silencioso', code: 'for file in *.tmp; do rm "$file" > /dev/null; done' }
+                ], info: 'Útil para silenciar comandos que generan demasiada salida' },
+                
+                { name: '2>&1', description: 'Redirige error a output (stderr a stdout)', examples: [
+                    { label: 'Ejemplo básico', code: 'comando 2>&1' },
+                    { label: 'Guardar todo', code: 'script.sh > todo.log 2>&1' }
+                ], info: 'Combina salida estándar y errores en un solo stream' },
+                
+                { name: '2> fichero', description: 'Redirige errores a fichero', examples: [
+                    { label: 'Ejemplo básico', code: 'comando 2> errores.log' },
+                    { label: 'Compilación', code: 'gcc programa.c 2> compile_errors.txt' }
+                ], info: 'Solo captura stderr, stdout sigue en pantalla' },
+                
+                { name: '2>> fichero', description: 'Añade errores al final del fichero', examples: [
+                    { label: 'Ejemplo básico', code: 'comando 2>> errores.log' },
+                    { label: 'Con bucle', code: 'for i in {1..100}; do comando$i 2>> log_errores.txt; done' }
+                ], info: 'Acumula errores sin perder el historial' },
+                
+                { name: '2> /dev/null', description: 'Descarta los errores', examples: [
+                    { label: 'Ejemplo básico', code: 'find / -name "archivo" 2> /dev/null' },
+                    { label: 'Sin errores molestos', code: 'grep -r "patrón" / 2> /dev/null' }
+                ], info: 'Útil para limpiar la salida de comandos con muchos errores de permisos' },
+                
+                { name: '&> fichero', description: 'Redirige output y error a fichero', examples: [
+                    { label: 'Ejemplo básico', code: 'script.sh &> todo.log' },
+                    { label: 'Con bucle', code: 'for test in test_*.sh; do bash "$test" &> "resultado_$test.log"; done' }
+                ], info: 'Atajo para redirigir stdout y stderr juntos' },
+                
+                { name: '&>> fichero', description: 'Añade output y error al final del fichero', examples: [
+                    { label: 'Ejemplo básico', code: 'comando &>> log_completo.txt' },
+                    { label: 'Cron log', code: '0 * * * * /scripts/hourly.sh &>> /var/log/hourly.log' }
+                ], info: 'Mantiene un log completo sin perder información' },
+                
+                { name: '2>&1 | tee fichero', description: 'Envía output y error a fichero y pantalla', examples: [
+                    { label: 'Ejemplo básico', code: 'comando 2>&1 | tee salida.log' },
+                    { label: 'Instalación', code: 'make install 2>&1 | tee install.log' }
+                ], info: 'Ver y guardar todo al mismo tiempo' }
+            ],
+
+            variables: [
+                { name: '$PWD', description: 'Directorio de trabajo actual', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Estás en: $PWD"' },
+                    { label: 'Con bucle', code: 'for dir in */; do cd "$dir"; echo "En $PWD"; cd ..; done' }
+                ], info: 'Equivalente a pwd en variable' },
+                
+                { name: '$OLDPWD', description: 'Directorio de trabajo anterior', examples: [
+                    { label: 'Ejemplo básico', code: 'cd /tmp; echo "Antes estabas en: $OLDPWD"' },
+                    { label: 'Volver atrás', code: 'cd "$OLDPWD"' }
+                ], info: 'Útil para volver al directorio anterior' },
+                
+                { name: '$PPID', description: 'ID del proceso padre', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Proceso padre: $PPID"' },
+                    { label: 'Info completa', code: 'ps -p $PPID -o comm=,pid=,ppid=' }
+                ], info: 'Identifica quién lanzó el script' },
+                
+                { name: '$HOSTNAME', description: 'Nombre del ordenador', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Servidor: $HOSTNAME"' },
+                    { label: 'Con bucle de logs', code: 'for i in {1..5}; do echo "[$HOSTNAME] Log $i" >> server.log; done' }
+                ], info: 'Útil en scripts que corren en múltiples servidores' },
+                
+                { name: '$USER', description: 'Nombre del usuario actual', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Usuario: $USER"' },
+                    { label: 'Verificación', code: 'if [ "$USER" = "root" ]; then echo "Eres root"; fi' }
+                ], info: 'Para controlar permisos y logs personalizados' },
+                
+                { name: '$HOME', description: 'Directorio home del usuario', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Tu home: $HOME"' },
+                    { label: 'Con bucle', code: 'for config in .bashrc .vimrc .gitconfig; do cp "$HOME/$config" backups/; done' }
+                ], info: 'Alternativa a ~ en scripts' },
+                
+                { name: '$PATH', description: 'Rutas de búsqueda de comandos', examples: [
+                    { label: 'Ejemplo básico', code: 'echo $PATH' },
+                    { label: 'Añadir ruta', code: 'PATH=$PATH:/nueva/ruta' }
+                ], info: 'Modifícalo para añadir directorios de comandos personalizados' },
+                
+                { name: '$LANG', description: 'Idioma para mensajes del sistema', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Idioma: $LANG"' },
+                    { label: 'Con bucle', code: 'for lang in es_ES en_US fr_FR; do LANG=$lang.UTF-8 date; done' }
+                ], info: 'Afecta cómo se muestran fechas y mensajes' },
+                
+                { name: '$FUNCNAME', description: 'Nombre de la función en ejecución', examples: [
+                    { label: 'Ejemplo básico', code: 'function test() { echo "Función: $FUNCNAME"; }; test' },
+                    { label: 'Debug', code: 'function debug() { echo "[${FUNCNAME[1]}] mensaje"; }' }
+                ], info: 'Útil para debugging y logs' },
+                
+                { name: '$LINENO', description: 'Número de línea actual del script', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Línea: $LINENO"' },
+                    { label: 'Debug detallado', code: 'echo "[Línea $LINENO] Ejecutando comando"' }
+                ], info: 'Perfecto para debugging de scripts largos' },
+                
+                { name: '$RANDOM', description: 'Número aleatorio (0-32767)', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Aleatorio: $RANDOM"' },
+                    { label: 'Rango 1-100', code: 'echo $((RANDOM % 100 + 1))' },
+                    { label: 'Con bucle', code: 'for i in {1..5}; do echo "Número $i: $RANDOM"; done' }
+                ], info: 'Cada llamada genera un nuevo número' },
+                
+                { name: '$0', description: 'Nombre del script', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Script: $0"' },
+                    { label: 'Basename', code: 'echo "Ejecutando: $(basename $0)"' }
+                ], info: 'Útil para mensajes de ayuda y logs' },
+                
+                { name: '${N}', description: 'Parámetro N pasado al script', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Primer parámetro: $1"' },
+                    { label: 'Múltiples parámetros', code: 'echo "Params: $1, $2, $3"' }
+                ], info: 'Para scripts con argumentos' },
+                
+                { name: '$$', description: 'ID del proceso actual', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "PID: $$"' },
+                    { label: 'Archivo temporal único', code: 'temp="/tmp/temp_$$"; echo "datos" > "$temp"' }
+                ], info: 'Para crear archivos temporales únicos' },
+                
+                { name: '$!', description: 'ID del último proceso en background', examples: [
+                    { label: 'Ejemplo básico', code: 'sleep 10 & echo "PID background: $!"' },
+                    { label: 'Esperar proceso', code: 'comando & pid=$!; wait $pid' }
+                ], info: 'Para gestionar procesos en segundo plano' },
+                
+                { name: '$@', description: 'Todos los parámetros (como lista)', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Todos los params: $@"' },
+                    { label: 'Iterar sobre params', code: 'for param in "$@"; do echo "Procesando: $param"; done' }
+                ], info: 'Mantiene los parámetros separados correctamente' },
+                
+                { name: '$#', description: 'Número de parámetros recibidos', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Número de params: $#"' },
+                    { label: 'Validación', code: 'if [ $# -lt 2 ]; then echo "Faltan parámetros"; exit 1; fi' }
+                ], info: 'Para validar argumentos antes de usarlos' },
+                
+                { name: '$?', description: 'Código de retorno del último comando (0=ok, >0=error)', examples: [
+                    { label: 'Ejemplo básico', code: 'ls archivo.txt; echo "Código: $?"' },
+                    { label: 'Verificación', code: 'comando; if [ $? -eq 0 ]; then echo "OK"; else echo "Error"; fi' }
+                ], info: 'Esencial para control de errores' },
+                
+                { name: 'shift', description: 'Desplaza parámetros ($1=$2, $2=$3, ...)', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Antes: $1 $2"; shift; echo "Después: $1 $2"' },
+                    { label: 'Procesar todos', code: 'while [ $# -gt 0 ]; do echo "$1"; shift; done' }
+                ], info: 'Para procesar parámetros secuencialmente' }
+            ],
+
+            arrays: [
+                { name: 'declare -a ARRAY', description: 'Declaración de array', examples: [
+                    { label: 'Ejemplo básico', code: 'declare -a frutas' },
+                    { label: 'Con valores', code: 'declare -a numeros=(1 2 3 4 5)' }
+                ], info: 'Opcional pero buena práctica para arrays indexados' },
+                
+                { name: 'ARRAY=(valor1 ... valorN)', description: 'Asignación compuesta de array', examples: [
+                    { label: 'Ejemplo básico', code: 'colores=(rojo verde azul)' },
+                    { label: 'Con comandos', code: 'archivos=($(ls *.txt))' },
+                    { label: 'Con bucle', code: 'dias=(lun mar mie jue vie); for dia in "${dias[@]}"; do echo $dia; done' }
+                ], info: 'Forma más común de crear arrays' },
+                
+                { name: 'ARRAY[N]=valorN', description: 'Asignación simple a índice N', examples: [
+                    { label: 'Ejemplo básico', code: 'numeros[0]=10; numeros[1]=20' },
+                    { label: 'Con bucle', code: 'for i in {0..9}; do cuadrados[$i]=$((i*i)); done; echo "${cuadrados[@]}"' }
+                ], info: 'Para modificar o añadir elementos específicos' },
+                
+                { name: 'ARRAY=([N]=valorN valorM [P]=valorP)', description: 'Asignación de celdas específicas', examples: [
+                    { label: 'Ejemplo básico', code: 'datos=([0]=inicio [5]=medio [10]=fin)' },
+                    { label: 'Mezclado', code: 'array=([2]=dos tres [5]=cinco)' }
+                ], info: 'Para arrays dispersos o con índices específicos' },
+                
+                { name: '${ARRAY[N]}', description: 'Valor de la celda N', examples: [
+                    { label: 'Ejemplo básico', code: 'frutas=(manzana pera plátano); echo "${frutas[1]}"' },
+                    { label: 'Último elemento', code: 'echo "${frutas[-1]}"' }
+                ], info: 'Usa llaves para evitar problemas de interpretación' },
+                
+                { name: '${ARRAY[*]}', description: 'Todos los valores del array', examples: [
+                    { label: 'Ejemplo básico', code: 'colores=(rojo verde azul); echo "${colores[*]}"' },
+                    { label: 'Como string', code: 'todos="${colores[*]}"' }
+                ], info: 'Devuelve todos los elementos como una sola palabra' },
+                
+                { name: '${ARRAY[@]}', description: 'Todos los valores del array (preserva espacios)', examples: [
+                    { label: 'Ejemplo básico', code: 'archivos=("file 1.txt" "file 2.txt"); for f in "${archivos[@]}"; do echo "$f"; done' },
+                    { label: 'Contar elementos', code: 'echo "Total: ${#archivos[@]}"' }
+                ], info: 'Preferible a [*] para preservar elementos con espacios' },
+                
+                { name: '${#ARRAY[*]}', description: 'Número de elementos en el array', examples: [
+                    { label: 'Ejemplo básico', code: 'frutas=(manzana pera plátano); echo "Total: ${#frutas[*]}"' },
+                    { label: 'Con bucle', code: 'for i in $(seq 0 $((${#frutas[@]}-1))); do echo "$i: ${frutas[$i]}"; done' }
+                ], info: 'También puedes usar ${#ARRAY[@]}' }
+            ],
+
+            operadores: [
+                { name: '+ - * / %', description: 'Operadores aritméticos básicos', examples: [
+                    { label: 'Ejemplo básico', code: 'echo $((10 + 5))  # 15\necho $((10 - 5))  # 5\necho $((10 * 5))  # 50' },
+                    { label: 'Con bucle', code: 'for i in {1..5}; do echo "$i al cuadrado: $((i * i))"; done' }
+                ], info: 'Usa $(( )) o $[ ] para operaciones aritméticas' },
+                
+                { name: '++ --', description: 'Incremento y decremento', examples: [
+                    { label: 'Pre-incremento', code: 'i=5; echo $((++i))  # 6' },
+                    { label: 'Con bucle while', code: 'i=0; while [ $i -lt 5 ]; do echo $i; ((i++)); done' }
+                ], info: 'Diferencia entre ++i (primero incrementa) e i++ (primero usa)' },
+                
+                { name: '-eq -ne -lt -le -gt -ge', description: 'Comparaciones numéricas', examples: [
+                    { label: 'Igual/Distinto', code: 'if [ 5 -eq 5 ]; then echo "Iguales"; fi\nif [ 5 -ne 3 ]; then echo "Distintos"; fi' },
+                    { label: 'Con bucle', code: 'for i in {1..10}; do if [ $i -ge 5 ]; then echo "$i >= 5"; fi; done' }
+                ], info: 'Solo para números enteros en [ ] o [[ ]]' },
+                
+                { name: '! && ||', description: 'Operadores lógicos (NOT, AND, OR)', examples: [
+                    { label: 'NOT', code: 'if [ ! -f archivo.txt ]; then echo "No existe"; fi' },
+                    { label: 'AND', code: 'if [ -f archivo.txt ] && [ -r archivo.txt ]; then echo "Existe y es legible"; fi' }
+                ], info: 'También puedes usar -a (AND) y -o (OR) dentro de [ ]' },
+                
+                { name: '-e -s -f -d', description: 'Operadores de existencia de ficheros', examples: [
+                    { label: 'Existe', code: 'if [ -e archivo.txt ]; then echo "Existe"; fi' },
+                    { label: 'Con bucle', code: 'for f in *; do if [ -f "$f" ]; then echo "$f es archivo"; elif [ -d "$f" ]; then echo "$f es directorio"; fi; done' }
+                ], info: '-e: existe, -s: no vacío, -f: archivo regular, -d: directorio' },
+                
+                { name: '-r -w -x', description: 'Permisos de lectura, escritura, ejecución', examples: [
+                    { label: 'Ejemplo básico', code: 'if [ -r archivo.txt ]; then cat archivo.txt; fi' },
+                    { label: 'Con bucle', code: 'for script in *.sh; do if [ -x "$script" ]; then echo "$script es ejecutable"; fi; done' }
+                ], info: 'Verifica permisos del usuario actual' },
+                
+                { name: '-O -G', description: 'Propietario y grupo', examples: [
+                    { label: 'Propietario', code: 'if [ -O archivo.txt ]; then echo "Eres el dueño"; fi' },
+                    { label: 'Grupo', code: 'if [ -G archivo.txt ]; then echo "Pertenece a tu grupo"; fi' }
+                ], info: 'Útil para verificar pertenencia' },
+                
+                { name: '-h -L', description: 'Enlaces simbólicos', examples: [
+                    { label: 'Ejemplo básico', code: 'if [ -h enlace ]; then echo "Es enlace simbólico"; fi' },
+                    { label: 'Con bucle', code: 'for item in *; do if [ -h "$item" ]; then echo "$item -> $(readlink "$item")"; fi; done' }
+                ], info: '-h y -L son equivalentes' },
+                
+                { name: '-nt -ot -ef', description: 'Comparaciones de ficheros', examples: [
+                    { label: 'Más nuevo', code: 'if [ archivo1 -nt archivo2 ]; then echo "archivo1 más reciente"; fi' },
+                    { label: 'Con bucle', code: 'for f in *.txt; do if [ "$f" -nt "backup/$f" ]; then echo "$f necesita backup"; fi; done' }
+                ], info: 'Compara timestamps de modificación' },
+                
+                { name: '= == !=', description: 'Comparación de cadenas', examples: [
+                    { label: 'Ejemplo básico', code: 'if [ "$var" = "valor" ]; then echo "Iguales"; fi' },
+                    { label: 'Con ==', code: 'if [[ "$var" == valor* ]]; then echo "Empieza con valor"; fi' }
+                ], info: 'En [[ ]] puedes usar patrones con ==' },
+                
+                { name: '-z -n', description: 'Cadena vacía o no vacía', examples: [
+                    { label: 'Vacía', code: 'if [ -z "$var" ]; then echo "Variable vacía"; fi' },
+                    { label: 'No vacía', code: 'if [ -n "$var" ]; then echo "Variable tiene valor"; fi' }
+                ], info: '-z: zero length, -n: non-zero length' }
+            ],
+
+            entrecomillado: [
+                { name: '#! RUTA', description: 'Shebang - ruta al intérprete', examples: [
+                    { label: 'Bash', code: '#!/bin/bash' },
+                    { label: 'Bash con env', code: '#!/usr/bin/env bash' }
+                ], info: 'Debe ser la primera línea del script' },
+                
+                { name: '\\carácter', description: 'Escape - valor literal del carácter', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Precio: \\$100"' },
+                    { label: 'Múltiples escapes', code: 'echo "Comillas: \\" y backslash: \\\\"' }
+                ], info: 'Evita que caracteres especiales se interpreten' },
+                
+                { name: 'linea1 \\ linea2', description: 'Continuación de línea', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Esta es una línea \\\nmuy larga"' },
+                    { label: 'Comando largo', code: 'ls -la \\\n  --color=auto \\\n  /var/log' }
+                ], info: 'Útil para mantener código legible' },
+                
+                { name: '\'cadena\'', description: 'Comillas simples - valor literal completo', examples: [
+                    { label: 'Ejemplo básico', code: 'echo \'$HOME no se expande\'' },
+                    { label: 'Con bucle', code: 'for msg in \'$USER\' \'$PWD\' \'$HOME\'; do echo "Literal: $msg"; done' }
+                ], info: 'NADA se interpreta dentro de comillas simples' },
+                
+                { name: '"cadena"', description: 'Comillas dobles - expande $, \', \\', examples: [
+                    { label: 'Ejemplo básico', code: 'nombre="Juan"; echo "Hola $nombre"' },
+                    { label: 'Con comandos', code: 'echo "Archivos: $(ls | wc -l)"' }
+                ], info: 'Expande variables pero preserva espacios' }
+            ],
+
+            expansion: [
+                { name: '{cad1,cad2,...,cadN}', description: 'Expansión de llaves (brace expansion)', examples: [
+                    { label: 'Ejemplo básico', code: 'echo archivo{1,2,3}.txt' },
+                    { label: 'Con prefijo/sufijo', code: 'mkdir -p dir_{src,bin,doc}/{main,test}' }
+                ], info: 'Se expande antes de cualquier otra cosa' },
+                
+                { name: '{inicio..fin}', description: 'Secuencias numéricas o alfabéticas', examples: [
+                    { label: 'Números', code: 'echo {1..10}' },
+                    { label: 'Letras', code: 'echo {a..z}' }
+                ], info: 'También funciona con incrementos: {1..10..2}' },
+                
+                { name: '${VARIABLE:-valor}', description: 'Valor por defecto si variable nula', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "${nombre:-Anónimo}"' },
+                    { label: 'Con parámetros', code: 'archivo="${1:-default.txt}"' }
+                ], info: 'No modifica la variable, solo retorna el valor' },
+                
+                { name: '${VARIABLE:=valor}', description: 'Asigna valor si variable nula', examples: [
+                    { label: 'Ejemplo básico', code: ': ${puerto:=8080}; echo $puerto' },
+                    { label: 'Inicialización', code: ': ${DEBUG:=false}; if $DEBUG; then echo "Debug activo"; fi' }
+                ], info: 'SÍ modifica la variable si está vacía' },
+                
+                { name: '${VARIABLE:?mensaje}', description: 'Error y fin si variable nula', examples: [
+                    { label: 'Ejemplo básico', code: ': ${archivo:?"Error: falta archivo"}' },
+                    { label: 'Validación params', code: ': ${1:?"Uso: $0 <archivo>"}' }
+                ], info: 'Útil para validar variables críticas' },
+                
+                { name: '${VARIABLE:inicio:longitud}', description: 'Substring - extrae porción de cadena', examples: [
+                    { label: 'Ejemplo básico', code: 'texto="Hola Mundo"; echo "${texto:0:4}"  # Hola' },
+                    { label: 'Desde posición', code: 'echo "${texto:5}"  # Mundo' }
+                ], info: 'Índices comienzan en 0, longitud opcional' },
+                
+                { name: '${!prefijo*}', description: 'Nombres de variables con prefijo', examples: [
+                    { label: 'Ejemplo básico', code: 'VAR1=a VAR2=b VAR3=c; echo ${!VAR*}' },
+                    { label: 'Iterar', code: 'for var in ${!VAR*}; do echo "$var=${!var}"; done' }
+                ], info: 'Usa @ en lugar de * para lista separada' },
+                
+                { name: '${#VARIABLE}', description: 'Longitud de cadena', examples: [
+                    { label: 'Ejemplo básico', code: 'texto="Hola"; echo "Longitud: ${#texto}"' },
+                    { label: 'Con bucle', code: 'for palabra in gato elefante dinosaurio; do echo "$palabra: ${#palabra} letras"; done' }
+                ], info: 'Cuenta caracteres, no bytes' },
+                
+                { name: '${VARIABLE#patrón}', description: 'Elimina mínimo patrón desde el inicio', examples: [
+                    { label: 'Ejemplo básico', code: 'ruta="/home/user/file.txt"; echo "${ruta#*/}"  # home/user/file.txt' },
+                    { label: 'Extensión', code: 'archivo="documento.tar.gz"; echo "${archivo#*.}"  # tar.gz' }
+                ], info: '# elimina la coincidencia más corta' },
+                
+                { name: '${VARIABLE##patrón}', description: 'Elimina máximo patrón desde el inicio', examples: [
+                    { label: 'Ejemplo básico', code: 'ruta="/home/user/file.txt"; echo "${ruta##*/}"  # file.txt' },
+                    { label: 'Con bucle', code: 'for f in /path/to/*.txt; do echo "Archivo: ${f##*/}"; done' }
+                ], info: '## elimina la coincidencia más larga' },
+                
+                { name: '${VARIABLE%patrón}', description: 'Elimina mínimo patrón desde el final', examples: [
+                    { label: 'Ejemplo básico', code: 'archivo="documento.txt"; echo "${archivo%.*}"  # documento' },
+                    { label: 'Con bucle', code: 'for f in *.txt; do mv "$f" "${f%.txt}.bak"; done' }
+                ], info: '% elimina la coincidencia más corta desde el final' },
+                
+                { name: '${VARIABLE%%patrón}', description: 'Elimina máximo patrón desde el final', examples: [
+                    { label: 'Ejemplo básico', code: 'archivo="doc.tar.gz"; echo "${archivo%%.*}"  # doc' },
+                    { label: 'Con bucle', code: 'for line in "a.b.c" "x.y.z"; do echo "${line%%.*}"; done' }
+                ], info: '%% elimina la coincidencia más larga desde el final' },
+                
+                { name: '${VARIABLE/patrón/reemplazo}', description: 'Reemplaza primera coincidencia', examples: [
+                    { label: 'Ejemplo básico', code: 'texto="foo bar foo"; echo "${texto/foo/baz}"  # baz bar foo' },
+                    { label: 'Con bucle', code: 'for palabra in casa cama capa; do echo "${palabra/ca/za}"; done' }
+                ], info: 'Solo reemplaza la primera ocurrencia' },
+                
+                { name: '${VARIABLE//patrón/reemplazo}', description: 'Reemplaza todas las coincidencias', examples: [
+                    { label: 'Ejemplo básico', code: 'texto="foo bar foo"; echo "${texto//foo/baz}"  # baz bar baz' },
+                    { label: 'Con bucle', code: 'for file in "a-b-c" "x-y-z"; do echo "${file//-/_}"; done' }
+                ], info: 'Reemplaza todas las ocurrencias del patrón' },
+                
+                { name: '$((expresión))', description: 'Evaluación aritmética', examples: [
+                    { label: 'Ejemplo básico', code: 'echo $((5 + 3))  # 8' },
+                    { label: 'Con bucle', code: 'sum=0; for i in {1..10}; do sum=$((sum + i)); done; echo $sum' }
+                ], info: 'Soporta operadores: +, -, *, /, %, ++, --' },
+                
+                { name: '$[expresión]', description: 'Evaluación aritmética (obsoleto)', examples: [
+                    { label: 'Ejemplo básico', code: 'echo $[5 + 3]  # 8' },
+                    { label: 'Con bucle', code: 'for i in {1..5}; do echo $[i * i]; done' }
+                ], info: 'Obsoleto, preferir $(( )) en scripts modernos' }
+            ],
+
+            ejecucion: [
+                { name: './comando', description: 'Ejecuta desde directorio actual', examples: [
+                    { label: 'Ejemplo básico', code: './script.sh' },
+                    { label: 'Con bucle', code: 'for script in *.sh; do echo "Ejecutando $script"; ./"$script"; done' }
+                ], info: 'Requiere permisos de ejecución (chmod +x)' },
+                
+                { name: '$RUTA/comando', description: 'Ejecuta con ruta absoluta', examples: [
+                    { label: 'Ejemplo básico', code: '/usr/bin/python3 script.py' },
+                    { label: 'Con variable', code: 'SCRIPT_DIR=/opt/scripts; $SCRIPT_DIR/backup.sh' }
+                ], info: 'No depende del PATH' },
+                
+                { name: 'comando', description: 'Ejecuta si está en $PATH', examples: [
+                    { label: 'Ejemplo básico', code: 'ls -la' },
+                    { label: 'Con bucle', code: 'for cmd in ls pwd date; do echo "=== $cmd ==="; $cmd; done' }
+                ], info: 'Busca en todos los directorios del PATH' },
+                
+                { name: '. script', description: 'Ejecuta exportando variables (source)', examples: [
+                    { label: 'Ejemplo básico', code: '. config.sh' },
+                    { label: 'Equivalente', code: 'source config.sh' }
+                ], info: 'Las variables quedan en el shell actual' },
+                
+                { name: '$(comando)', description: 'Sustitución de comando (literal)', examples: [
+                    { label: 'Ejemplo básico', code: 'fecha=$(date +%Y%m%d); echo $fecha' },
+                    { label: 'Con bucle', code: 'for user in $(cat users.txt); do echo "Procesando $user"; done' }
+                ], info: 'Preferible a backticks (`), puede anidar' },
+                
+                { name: '`comando`', description: 'Sustitución de comando (backticks - obsoleto)', examples: [
+                    { label: 'Ejemplo básico', code: 'fecha=`date +%Y%m%d`' },
+                    { label: 'Con bucle', code: 'for file in `ls *.txt`; do echo "$file"; done' }
+                ], info: 'Obsoleto, usar $() en su lugar' },
+                
+                { name: 'comando &', description: 'Ejecuta en segundo plano (background)', examples: [
+                    { label: 'Ejemplo básico', code: 'sleep 10 &' },
+                    { label: 'Con bucle', code: 'for i in {1..5}; do (sleep $i; echo "Tarea $i") & done; wait' }
+                ], info: 'El shell no espera a que termine' },
+                
+                { name: 'c1 | c2', description: 'Pipe - salida de c1 a entrada de c2', examples: [
+                    { label: 'Ejemplo básico', code: 'ls -la | grep ".txt"' },
+                    { label: 'Con bucle', code: 'for log in *.log; do cat "$log" | grep ERROR | tee "errors_$log"; done' }
+                ], info: 'Conecta stdout de c1 con stdin de c2' },
+                
+                { name: 'c1 ; c2', description: 'Ejecuta c1 y luego c2 (secuencial)', examples: [
+                    { label: 'Ejemplo básico', code: 'cd /tmp ; ls' },
+                    { label: 'Con bucle', code: 'for dir in dir1 dir2 dir3; do mkdir "$dir" ; cd "$dir" ; touch file.txt ; cd ..; done' }
+                ], info: 'c2 se ejecuta siempre, sin importar si c1 falla' },
+                
+                { name: 'c1 && c2', description: 'Ejecuta c2 solo si c1 tiene éxito', examples: [
+                    { label: 'Ejemplo básico', code: 'mkdir test && cd test' },
+                    { label: 'Con bucle', code: 'for dir in */; do cd "$dir" && git pull && cd ..; done' }
+                ], info: 'Si c1 falla (exit code != 0), c2 no se ejecuta' },
+                
+                { name: 'c1 || c2', description: 'Ejecuta c2 solo si c1 falla', examples: [
+                    { label: 'Ejemplo básico', code: 'comando || echo "Comando falló"' },
+                    { label: 'Con bucle', code: 'for f in *.txt; do cat "$f" || echo "Error en $f"; done' }
+                ], info: 'Si c1 tiene éxito, c2 no se ejecuta' }
+            ],
+
+            argumentos: [
+                { name: 'getopts "opciones" variable', description: 'Procesar opciones de línea de comandos', examples: [
+                    { label: 'Ejemplo completo', code: 'while getopts "hs:" option; do\n  case "$option" in\n    h) echo "Ayuda"; exit 0 ;;\n    s) echo "Buscar: $OPTARG" ;;\n    *) echo "Opción inválida"; exit 1 ;;\n  esac\ndone' },
+                    { label: 'Sin argumento', code: 'while getopts "vd" opt; do\n  case $opt in\n    v) VERBOSE=1 ;;\n    d) DEBUG=1 ;;\n  esac\ndone' }
+                ], info: 'Opciones con : requieren argumento ($OPTARG)' },
+                
+                { name: 'Opciones con argumento', description: 'Opciones que requieren valor -f file', examples: [
+                    { label: 'Ejemplo básico', code: 'while getopts "f:o:" opt; do\n  case $opt in\n    f) INPUT="$OPTARG" ;;\n    o) OUTPUT="$OPTARG" ;;\n  esac\ndone' },
+                    { label: 'Validación', code: 'while getopts "n:" opt; do\n  case $opt in\n    n) if [ "$OPTARG" -gt 0 ]; then NUM=$OPTARG; fi ;;\n  esac\ndone' }
+                ], info: 'El valor está en $OPTARG' },
+                
+                { name: '$OPTIND', description: 'Índice del siguiente argumento', examples: [
+                    { label: 'Ejemplo básico', code: 'while getopts "ab" opt; do :; done\nshift $((OPTIND-1))\necho "Args restantes: $@"' },
+                    { label: 'Con bucle de archivos', code: 'while getopts "f:" opt; do :; done\nshift $((OPTIND-1))\nfor file in "$@"; do echo "Archivo: $file"; done' }
+                ], info: 'Útil para procesar argumentos no-opción después' }
+            ],
+
+            estructuras: [
+                { name: 'if then else fi', description: 'Estructura condicional', examples: [
+                    { label: 'Ejemplo básico', code: 'if [ "$USER" = "root" ]; then\n  echo "Eres root"\nelse\n  echo "No eres root"\nfi' },
+                    { label: 'Con bucle', code: 'for i in {1..10}; do\n  if [ $((i % 2)) -eq 0 ]; then\n    echo "$i es par"\n  else\n    echo "$i es impar"\n  fi\ndone' }
+                ], info: 'Puede tener múltiples elif' },
+                
+                { name: 'case in esac', description: 'Estructura selectiva múltiple', examples: [
+                    { label: 'Ejemplo básico', code: 'case $opcion in\n  1) echo "Opción uno" ;;\n  2) echo "Opción dos" ;;\n  *) echo "Opción inválida" ;;\nesac' },
+                    { label: 'Con bucle', code: 'for file in *; do\n  case "$file" in\n    *.txt) echo "Texto: $file" ;;\n    *.sh) echo "Script: $file" ;;\n    *) echo "Otro: $file" ;;\n  esac\ndone' }
+                ], info: 'Soporta patrones glob: *, ?, [...]' },
+                
+                { name: 'for in do done', description: 'Bucle for con lista', examples: [
+                    { label: 'Lista simple', code: 'for color in rojo verde azul; do\n  echo "Color: $color"\ndone' },
+                    { label: 'Archivos', code: 'for file in *.txt; do\n  echo "Procesando: $file"\n  cat "$file"\ndone' }
+                ], info: 'La variable toma cada valor de la lista' },
+                
+                { name: 'for (( )) do done', description: 'Bucle for estilo C', examples: [
+                    { label: 'Ejemplo básico', code: 'for ((i=0; i<10; i++)); do\n  echo "i = $i"\ndone' },
+                    { label: 'Bucle anidado', code: 'for ((i=1; i<=5; i++)); do\n  for ((j=1; j<=i; j++)); do\n    echo -n "*"\n  done\n  echo\ndone' }
+                ], info: 'Más flexible para iteraciones numéricas' },
+                
+                { name: 'while do done', description: 'Bucle mientras condición sea verdadera', examples: [
+                    { label: 'Ejemplo básico', code: 'contador=0\nwhile [ $contador -lt 5 ]; do\n  echo "Contador: $contador"\n  ((contador++))\ndone' },
+                    { label: 'Leer archivo', code: 'while IFS= read -r linea; do\n  echo "Línea: $linea"\ndone < archivo.txt' }
+                ], info: 'Se ejecuta mientras la condición sea verdadera (exit code 0)' },
+                
+                { name: 'until do done', description: 'Bucle hasta que condición sea verdadera', examples: [
+                    { label: 'Ejemplo básico', code: 'contador=0\nuntil [ $contador -ge 5 ]; do\n  echo "Contador: $contador"\n  ((contador++))\ndone' },
+                    { label: 'Esperar archivo', code: 'until [ -f archivo.txt ]; do\n  echo "Esperando archivo..."\n  sleep 1\ndone' }
+                ], info: 'Opuesto a while: ejecuta mientras sea falso' },
+                
+                { name: 'break y continue', description: 'Control de flujo en bucles', examples: [
+                    { label: 'break', code: 'for i in {1..10}; do\n  if [ $i -eq 5 ]; then\n    break\n  fi\n  echo $i\ndone' },
+                    { label: 'continue', code: 'for i in {1..10}; do\n  if [ $((i % 2)) -eq 0 ]; then\n    continue\n  fi\n  echo "Impar: $i"\ndone' }
+                ], info: 'break N sale de N niveles de bucles' },
+                
+                { name: 'function name() {}', description: 'Definición de función', examples: [
+                    { label: 'Sintaxis 1', code: 'function saludar() {\n  echo "Hola $1"\n}\nsaludar "Mundo"' },
+                    { label: 'Con bucle', code: 'procesar() {\n  for arg in "$@"; do\n    echo "Procesando: $arg"\n  done\n}\nprocesar uno dos tres' }
+                ], info: 'Ambas sintaxis son válidas: function nombre() o nombre()' },
+                
+                { name: 'return', description: 'Retorna código de salida de función', examples: [
+                    { label: 'Ejemplo básico', code: 'validar() {\n  if [ $1 -gt 0 ]; then\n    return 0\n  else\n    return 1\n  fi\n}\nif validar 5; then echo "Válido"; fi' },
+                    { label: 'Con valor', code: 'sumar() {\n  echo $(($1 + $2))\n}\nresultado=$(sumar 3 5)' }
+                ], info: 'return solo puede devolver 0-255. Usa echo para valores' }
+            ],
+
+            interactividad: [
+                { name: 'read variable', description: 'Lee entrada del teclado', examples: [
+                    { label: 'Ejemplo básico', code: 'read nombre\necho "Hola $nombre"' },
+                    { label: 'Con bucle', code: 'for i in {1..3}; do\n  read -p "Valor $i: " val\n  echo "Guardado: $val"\ndone' }
+                ], info: 'Si no se da variable, usa $REPLY' },
+                
+                { name: 'read -p "mensaje"', description: 'Lee con prompt/mensaje', examples: [
+                    { label: 'Ejemplo básico', code: 'read -p "Ingresa tu nombre: " nombre\necho "Hola $nombre"' },
+                    { label: 'Confirmación', code: 'read -p "¿Continuar? (s/n): " resp\nif [ "$resp" = "s" ]; then echo "Continuando..."; fi' }
+                ], info: 'Más limpio que echo + read separados' },
+                
+                { name: 'read opciones avanzadas', description: 'Opciones: -t, -s, -n', examples: [
+                    { label: 'Timeout', code: 'if read -t 5 -p "Responde en 5 seg: " resp; then\n  echo "Dijiste: $resp"\nelse\n  echo "Timeout"\nfi' },
+                    { label: 'Silencioso (password)', code: 'read -s -p "Password: " pass\necho\necho "Password guardado"' },
+                    { label: 'Un solo carácter', code: 'read -n 1 -p "Presiona cualquier tecla..." key\necho\necho "Presionaste: $key"' }
+                ], info: '-s: silencioso, -t: timeout, -n: N caracteres' },
+                
+                { name: 'echo cadena', description: 'Imprime texto en pantalla', examples: [
+                    { label: 'Ejemplo básico', code: 'echo "Hola Mundo"' },
+                    { label: 'Con bucle', code: 'for i in {1..5}; do\n  echo "Línea número $i"\ndone' }
+                ], info: 'Por defecto añade salto de línea' },
+                
+                { name: 'echo -n', description: 'Echo sin salto de línea', examples: [
+                    { label: 'Ejemplo básico', code: 'echo -n "Cargando"\nfor i in {1..3}; do\n  sleep 1\n  echo -n "."\ndone\necho " ¡Listo!"' },
+                    { label: 'Progreso', code: 'for i in {1..10}; do\n  echo -n "#"\n  sleep 0.2\ndone\necho' }
+                ], info: 'Útil para indicadores de progreso' },
+                
+                { name: 'echo -e', description: 'Interpreta caracteres de escape', examples: [
+                    { label: 'Saltos de línea', code: 'echo -e "Línea 1\\nLínea 2\\nLínea 3"' },
+                    { label: 'Tabulaciones', code: 'echo -e "Nombre:\\tJuan\\nEdad:\\t30"' }
+                ], info: 'Soporta \\n \\t \\033 (colores) etc.' },
+                
+                { name: 'printf', description: 'Salida formateada (como C)', examples: [
+                    { label: 'Ejemplo básico', code: 'printf "Nombre: %s\\nEdad: %d\\n" "Juan" 30' },
+                    { label: 'Formato numérico', code: 'printf "%.2f%%\\n" 99.999' }
+                ], info: '%s: string, %d: entero, %f: flotante' },
+                
+                { name: 'select', description: 'Menú interactivo', examples: [
+                    { label: 'Ejemplo básico', code: 'select opcion in "Opción 1" "Opción 2" "Salir"; do\n  case $opcion in\n    "Opción 1") echo "Elegiste 1" ;;\n    "Opción 2") echo "Elegiste 2" ;;\n    "Salir") break ;;\n  esac\ndone' },
+                    { label: 'Con archivos', code: 'select archivo in *.txt; do\n  if [ -n "$archivo" ]; then\n    cat "$archivo"\n    break\n  fi\ndone' }
+                ], info: 'PS3 establece el prompt del select' }
+            ],
+
+            procesos: [
+                { name: 'comando &', description: 'Ejecuta en segundo plano', examples: [
+                    { label: 'Ejemplo básico', code: 'sleep 10 &\necho "Continuando mientras duerme..."' },
+                    { label: 'Con bucle', code: 'for i in {1..5}; do\n  (sleep $i; echo "Tarea $i completada") &\ndone\nwait\necho "Todas completadas"' }
+                ], info: 'El shell continúa sin esperar' },
+                
+                { name: 'bg númeroProceso', description: 'Continúa proceso en background', examples: [
+                    { label: 'Ejemplo básico', code: '# Ctrl+Z suspende proceso actual\nbg %1  # continúa job 1 en background' }
+                ], info: 'Usa jobs para ver números de proceso' },
+                
+                { name: 'fg númeroProceso', description: 'Trae proceso a primer plano', examples: [
+                    { label: 'Ejemplo básico', code: 'sleep 100 &\nfg %1' },
+                    { label: 'Último job', code: 'comando &\nfg  # trae el último job' }
+                ], info: 'Sin argumento, trae el último job' },
+                
+                { name: 'jobs', description: 'Lista procesos en ejecución del shell', examples: [
+                    { label: 'Ejemplo básico', code: 'sleep 30 &\nsleep 60 &\njobs' },
+                    { label: 'Con detalles', code: 'jobs -l  # muestra PIDs' }
+                ], info: '-l: PIDs, -r: running, -s: stopped' },
+                
+                { name: 'kill señal PID', description: 'Envía señal a proceso', examples: [
+                    { label: 'Ejemplo básico', code: 'kill 1234  # SIGTERM (15)' },
+                    { label: 'Forzar', code: 'kill -9 1234  # SIGKILL' }
+                ], info: 'Señales: -15 (TERM), -9 (KILL), -1 (HUP)' },
+                
+                { name: 'trap comando señales', description: 'Ejecuta comando al recibir señal', examples: [
+                    { label: 'Cleanup', code: 'trap "rm -f /tmp/temp$$; exit" INT TERM\ntouch /tmp/temp$$\nsleep 100' },
+                    { label: 'Ignorar Ctrl+C', code: 'trap "" INT\necho "No puedes interrumpir con Ctrl+C"\nsleep 10\ntrap - INT' }
+                ], info: 'Señales comunes: INT(2), TERM(15), EXIT' },
+                
+                { name: 'wait PID', description: 'Espera a que proceso termine', examples: [
+                    { label: 'Ejemplo básico', code: 'sleep 5 &\npid=$!\nwait $pid\necho "Proceso $pid terminado"' },
+                    { label: 'Esperar todos', code: 'for i in {1..5}; do sleep $i & done\nwait\necho "Todos terminados"' }
+                ], info: 'Sin PID, espera a todos los hijos' },
+                
+                { name: 'exit código', description: 'Sale del script con código', examples: [
+                    { label: 'Ejemplo básico', code: 'if [ ! -f archivo.txt ]; then\n  echo "Error: archivo no existe"\n  exit 1\nfi' },
+                    { label: 'Con validación', code: 'if [ $# -eq 0 ]; then\n  echo "Uso: $0 <archivo>"\n  exit 2\nfi' }
+                ], info: '0: éxito, 1-255: error (1 genérico, 2 mal uso)' },
+                
+                { name: 'nice -n prioridad', description: 'Ejecuta con prioridad ajustada', examples: [
+                    { label: 'Ejemplo básico', code: 'nice -n 10 proceso_pesado' },
+                    { label: 'Baja prioridad', code: 'nice -n 19 backup.sh  # mínima prioridad' }
+                ], info: '-20 (máxima) a 19 (mínima). Default: 10' },
+                
+                { name: 'renice -n prioridad PID', description: 'Modifica prioridad de proceso en ejecución', examples: [
+                    { label: 'Ejemplo básico', code: 'renice -n 5 1234' },
+                    { label: 'Por nombre', code: 'renice -n 10 $(pgrep firefox)' }
+                ], info: 'Requiere permisos para bajar la prioridad' }
+            ]
+        };
+
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        function renderCommands() {
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+
+            const sectionsToShow = currentFilter === 'all' 
+                ? Object.keys(commands) 
+                : [currentFilter];
+
+            let hasResults = false;
+
+            sectionsToShow.forEach(sectionKey => {
+                const sectionCommands = commands[sectionKey];
+                const filteredCommands = searchTerm 
+                    ? sectionCommands.filter(cmd => 
+                        cmd.name.toLowerCase().includes(searchTerm) ||
+                        cmd.description.toLowerCase().includes(searchTerm) ||
+                        cmd.examples.some(ex => ex.code.toLowerCase().includes(searchTerm))
+                    )
+                    : sectionCommands;
+
+                if (filteredCommands.length > 0) {
+                    hasResults = true;
+                    const section = document.createElement('div');
+                    section.className = 'section';
+                    section.dataset.section = sectionKey;
+
+                    const sectionTitle = document.createElement('h2');
+                    sectionTitle.className = 'section-title';
+                    sectionTitle.textContent = sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1);
+                    section.appendChild(sectionTitle);
+
+                    filteredCommands.forEach(cmd => {
+                        const commandGroup = document.createElement('div');
+                        commandGroup.className = 'command-group';
+
+                        const header = document.createElement('div');
+                        header.className = 'command-header';
+                        header.innerHTML = `
+                            <div>
+                                <span class="command-name">${highlightSearch(cmd.name)}</span>
+                                <span class="command-description">${highlightSearch(cmd.description)}</span>
+                            </div>
+                            <span class="expand-icon">▶</span>
+                        `;
+
+                        const details = document.createElement('div');
+                        details.className = 'command-details';
+
+                        const cmdContent = document.createElement('div');
+                        cmdContent.className = 'command-content';
+
+                        if (cmd.info) {
+                            const infoBox = document.createElement('div');
+                            infoBox.className = 'info-box';
+                            infoBox.textContent = cmd.info;
+                            cmdContent.appendChild(infoBox);
+                        }
+
+                        cmd.examples.forEach(example => {
+                            const exampleLabel = document.createElement('div');
+                            exampleLabel.className = 'example-label';
+                            exampleLabel.textContent = '📌 ' + example.label;
+                            cmdContent.appendChild(exampleLabel);
+
+                            const codeBlock = document.createElement('div');
+                            codeBlock.className = 'code-block';
+                            codeBlock.innerHTML = `
+                                <code>${highlightSearch(escapeHtml(example.code))}</code>
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            `;
+                            cmdContent.appendChild(codeBlock);
+                        });
+
+                        details.appendChild(cmdContent);
+                        commandGroup.appendChild(header);
+                        commandGroup.appendChild(details);
+                        section.appendChild(commandGroup);
+
+                        header.addEventListener('click', () => {
+                            header.classList.toggle('expanded');
+                            details.classList.toggle('expanded');
+                        });
+                    });
+
+                    content.appendChild(section);
+                }
+            });
+
+            if (!hasResults) {
+                content.innerHTML = '<div class="no-results">No se encontraron comandos que coincidan con tu búsqueda 🔍</div>';
+            }
+        }
+
+        function highlightSearch(text) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function copyCode(button) {
+            const code = button.previousElementSibling.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copiado';
+                button.style.background = 'var(--accent-magenta)';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'var(--accent-cyan)';
+                }, 2000);
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchTerm = e.target.value.toLowerCase();
+            renderCommands();
+        });
+
+        document.getElementById('navTabs').addEventListener('click', (e) => {
+            if (e.target.classList.contains('nav-tab')) {
+                document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.section;
+                renderCommands();
+            }
+        });
+
+        renderCommands();
+    </script>
+</body>
+</html>
