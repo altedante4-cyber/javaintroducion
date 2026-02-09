@@ -31,3 +31,26 @@ document.writeln(saludo("Felix"));
 document.writeln(111 == "111"); // esto devuelve true por que no es un comparador estrictor
 document.writeln(111 === "111") ; // esto devuelv false por que es un comparador estricto 
 
+
+let numero ="Fin";
+
+switch (numero.toLowerCase()){
+
+    case "continua":
+
+    break;
+
+    case "Fin":
+
+    break;
+
+    default :
+
+
+}
+
+let evalue = "";
+
+if(!evalue){
+    document.writeln("prueba2 no puede estar vacia <br>");
+}
