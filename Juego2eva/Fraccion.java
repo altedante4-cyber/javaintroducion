@@ -34,6 +34,8 @@ public class Fraccion {
 
     public Fraccion diviFraccion(Fraccion f2 ){
 
+
+        // otro metodo para hacerlo es de la siguiente manera return new Fraccion(num * f2.dameDenominador() , den * f2.dameNumerador())
          int n = this.numerador*f2.damedenomidor();
         int d =this.denominador*f2.damenumerador();
 
