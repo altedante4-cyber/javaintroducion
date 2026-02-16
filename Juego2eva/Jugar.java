@@ -99,6 +99,42 @@
                         System.out.println("Saliendo ......");
                         break;
 
+      case 4: 
+    System.out.println("--- DUELO AUTOMÁTICO DE ORDENADORES ---");
+    tablero.iniciar(); 
+    
+        boolean turnoJ1s = jugador_aleatorio.nextBoolean(); 
+        System.out.println("Empieza el Ordenador " + (turnoJ1s ? "1 (X)" : "2 (O)"));
+
+    while (tablero.quedanMovimientos() && !tablero.ganajugador1() && !tablero.ganaJugador2()) {
+        if (turnoJ1s) {
+            tablero.mueveOrdenador1();
+            System.out.println("Ordenador 1 mueve:");
+        } else {
+            tablero.mueveOrdenador2();
+            System.out.println("Ordenador 2 mueve:");
+        }
+        
+        tablero.DibujarTablero();
+        System.out.println("*****************");
+
+        // Cambiamos el turno para la siguiente iteración
+        turnoJ1 = !turnoJ1s;
+    }
+
+    // Comprobación de resultados finales
+    if (tablero.ganajugador1()) {
+        System.out.println("¡Victoria para el Ordenador 1!");
+        ganadasJugador1++;
+    } else if (tablero.ganaJugador2()) {
+        System.out.println("¡Victoria para el Ordenador 2!");
+        ganadasJugador2++;
+    } else {
+        System.out.println("¡Empate técnico!");
+        empates++;
+    }
+    break;
+
                     default:
                         System.out.println("Opción no válida.");
                         break;

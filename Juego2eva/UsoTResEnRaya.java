@@ -1,7 +1,9 @@
 package Juego2eva;
-
+import java.util.Random;
+import java.util.Scanner;
 public class UsoTResEnRaya {
 
+    Random random = new Random() ;
     private char tablero[][];
     private int intentos;
 
@@ -189,11 +191,32 @@ public boolean mueveJugador2(int pos) {
     }
 
     public void mueveOrdenador1() {
-        // TODO: Implementar lógica del ordenador
+
+        int pos;
+        do {
+            pos = random.nextInt(9) + 1;
+        } while (!movimientoValido(pos) && quedanMovimientos());
+        if (quedanMovimientos()) mueveJugador1(pos);
+
+    }
+    public boolean quedanMovimientos() {
+      
+        for(int i = 0 ; i < this.tablero.length ; i++ ){
+             
+            for(int j = 0 ; j < this.tablero.length ;j++ ){
+
+                    if(this.tablero[i][j] == '0' ) return true ;
+            }
+        }
+        return false;
     }
 
     public void mueveOrdenador2() {
-        // TODO: Implementar lógica del ordenador
+        int pos;
+        do {
+            pos = random.nextInt(9) + 1;
+        } while (!movimientoValido(pos) && quedanMovimientos());
+        if (quedanMovimientos()) mueveJugador2(pos);
     }
 
     public void iniciar() {
