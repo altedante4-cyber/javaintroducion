@@ -1,0 +1,54 @@
+
+
+def mostrar_clasificacion(liga:list):
+    print("-----------------------------------------------------------------------------------------------")
+    print(f"Competicion: La Liga eaSports - Clasificacion a dia ")
+    print("-----------------------------------------------------------------------------------------------")
+    print(f"{'EQUIPO':25}|{'pTS':^8} |{'PJ':^4} | {'PG':^5} | {'PE':^5}| {'PP':^5}| {'GF':^5}| {'GC':^5}")
+    print("-----------------------------------------------------------------------------------------------")
+
+def actualizarGOles(equipo,afavor,encontra):
+    liga[equipo][6] += afavor
+    liga[equipo][7] +=encontra
+def haGanado(equipo):
+    liga[equipo][2] += 1
+    liga[equipo][3] +=1 
+    liga[equipo][1] += 3 
+
+
+def haPerdido(equipo):
+    liga[equipo][2] += 1
+    
+def resultadorPartido(local,visitante,goleslocal,golesVisitante):
+    posicion = 0 
+    while posicion < len(liga):
+        if liga[posicion][0] ==visitante:
+           equipoLocal  = posicion 
+        elif liga[posicion][0] == visitante:
+            equipoVisitante = posicion 
+        
+        posicion += 1 
+    print(liga[equipoLocal])
+    print(liga[equipoVisitante])
+    actualizarGoles(equipoLocal,golesLocal,golesVisitante)
+    actualizarGoles(equipoVisitante,golesVisitante, golesLocal)
+    
+    if golesLocal > golesVisitante:
+        haGanado(equipoLocal)
+        haPerdido(equipoVisitante)
+    elif golesLocal < golesVisitante:
+        haGanado(equipoVisitante)
+        haPerdido(equipoLocal)
+    else:
+        hanEmpatado(equipoLocal , equipoVisitante)
+
+liga = [["Atletico de Madrid" , 0 , 0 , 0 , 0 ,0,0,0],
+        ["Real Betis CF", 0, 0, 0, 0, 0, 0, 0],
+        ["Sevilla", 0, 0, 0, 0, 0, 0, 0],
+        ["Barcelona FC", 0, 0, 0, 0, 0, 0, 0],
+        ["Rayo Vallecano", 0, 0, 0, 0, 0, 0, 0],
+        ["Real Madrid FC", 0, 0, 0, 0, 0, 0, 0],
+        ]
+
+resultadorPartido("Atletico de Madrid","Real Betis CF",2,3)
+

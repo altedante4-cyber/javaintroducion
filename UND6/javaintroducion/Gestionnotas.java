@@ -9,6 +9,7 @@ public class Gestionnotas {
 
     // necesitamos inicialisar el consturctor   
 
+
     public Gestionnotas(){
 
         this.misalumnos = new Alumno[20];
@@ -134,7 +135,6 @@ public class Gestionnotas {
          
     }
     
-
 
 
 

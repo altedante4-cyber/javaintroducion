@@ -1,0 +1,20 @@
+diccionario = {}
+diccionario2 = dict()
+liga = {'equipo1':34 , 'equipo2':45 , 'equipo3':14 } 
+print(liga['equipo1'])
+
+print(liga.get('equipo2'))
+
+print(liga.get('equipo22' , 'Esa clave no existe')) #con esto nos ahorramos poner  condicionales 
+
+#esto imprimer solo los valores del diccionario 
+for elemento in liga:
+    print(elemento)
+
+#esto imprimer los valores que tienes asignado cada valor 
+for elemento in liga:
+    print(liga[elemento])
+# PARA IMPRIMIR CLAVE VALOR 
+
+for clave,valor in liga.items():
+    print(clave,"puntos " , valor)  
