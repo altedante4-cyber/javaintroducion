@@ -1,4 +1,4 @@
-package Ejercicio3;
+
 
 public class Personal  extends Persona {
 
