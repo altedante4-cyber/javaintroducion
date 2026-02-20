@@ -1,0 +1,61 @@
+
+diccionario = {}
+diccionario2 = dict()
+liga = {'equipo1':34 , 'equipo2':45 , 'equipo3':14 } 
+print(liga['equipo1'])
+
+print(liga.get('equipo2'))
+
+print(liga.get('equipo22' , 'Esa clave no existe')) #con esto nos ahorramos poner  condicionales 
+
+#esto imprimer solo los valores del diccionario 
+for elemento in liga:
+    print(elemento)
+
+#esto imprimer los valores que tienes asignado cada valor 
+for elemento in liga:
+    print(liga[elemento])
+# PARA IMPRIMIR CLAVE VALOR 
+
+for clave,valor in liga.items():
+    print(clave,"puntos " , valor)  
+
+
+#agregar valores en diccionarios
+liga["equipo4"] = 77
+liga["equio2"]= 22 
+print(liga
+)
+
+persona = {24993444:"michael" , 242434:"manuel", 23424:"michael"} 
+persona[24993444] = "ines"
+persona[242433] = "ANTONIO"
+print(persona)
+
+#liga.clear() #elimina el diccionario compeltamente 
+print(liga) 
+
+#el metodo pop localisa un elemento primero y luego lo elimina 
+valor = liga.pop("equipo2")
+print(valor)
+print(liga)
+
+#ponemos una clave que no existe nos da una excepcion 
+
+valor = liga.pop("equipo22","ese equipo no existe") #esto devuelve la lista por que le pasamos un segundo parametro peroo si solo le pasos un parameto es decir euipo22  nos provoca una excepsion que no queremos que nos provoque 
+
+#devuelve el ultimo elemento introducido
+
+valor = liga.popitem()  #borra el ultimoelemento
+valor = liga.popitem() 
+print(liga) 
+
+supercopa = {'equipo6':11 , 'equipo1':55,'equipo4':33}
+nuevoDiccionario = liga.copy()
+nuevoDiccionario.update(supercopa)
+print(liga)
+print(supercopa)
+print(nuevoDiccionario) 
+
+
+liga ={'equipo1':[0,0,0,0,0,0,0]} 

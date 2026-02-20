@@ -1,0 +1,98 @@
+
+
+def mostrar_clasificacion(liga:list):
+    print("-----------------------------------------------------------------------------------------------")
+    print(f"Competicion: La Liga eaSports - Clasificacion a dia ")
+    print("-----------------------------------------------------------------------------------------------")
+    print(f"{'EQUIPO':25}|{'pTS':^8} |{'PJ':^4} | {'PG':^5} | {'PE':^5}| {'PP':^5}| {'GF':^5}| {'GC':^5}")
+    print("-----------------------------------------------------------------------------------------------")
+
+
+
+  
+def resultado_equipo(equipo1 , equipo2 , goleseq1 , goleseq2 ):
+  
+  posicion1 = 0 
+  posicion2 = 0 
+  for i in range(len(liga)):
+      
+       a = liga[i][0]
+
+
+       if a == equipo1:
+          
+          posicion1 = i
+  for i in range(len(liga)):
+       a = liga[i][0]
+
+       if a == equipo2 :
+        posicion2 = i 
+
+
+  if goleseq1 > goleseq2 :
+      liga[posicion1][6] += goleseq1 #GF  goles a favor 
+      liga[posicion1][1] += 1 #puntos
+      liga[posicion1][7] += goleseq2
+      liga[posicion1][3] += 3 # partido ganado 
+      liga[posicion1][2] += 1 #partido jugado
+      #resultado del otro equipo
+      liga[posicion2][6] += goleseq2 #GF  goles a favor 
+      liga[posicion2][1] += 0 #puntos
+      liga[posicion2][7] += goleseq1 #goles encontra  goles que recibio del otro equipo 
+      liga[posicion2][3] += 0 # partido ganado 
+      liga[posicion2][2] += 1 #partido jugado 
+   
+  elif  goleseq2 > goleseq1:
+      
+
+      liga[posicion2][6] += goleseq2 #GF  goles a favor 
+      liga[posicion2][1] += 1 #puntos
+      liga[posicion2][7] += goleseq1 #goles encontra  goles que recibio del otro equipo 
+      liga[posicion2][3] += 1 # partido ganado 
+      liga[posicion2][2] += 1 #partido jugado
+
+      #resultado del otro equipo 
+      liga[posicion1][6] += goleseq1 #GF  goles a favor 
+      liga[posicion1][1] += 0 #puntos
+      liga[posicion1][7] += goleseq2
+      liga[posicion1][3] += 0 # partido ganado 
+      liga[posicion1][2] += 1 #partido jugado
+  
+  else:
+      empate = True 
+  
+
+   
+
+
+   
+
+def mostrar_tabla(liga:list):
+    
+  lista_auxi = []
+  for i in range(len(liga)):
+      #ordenaro por  puntos el de mayor puntaje en la cima y en caso de empate poniendo arriba el que tenga una mayor diferencia de goles (Goles a favor - Goles en Contra)
+      #sabemos que la poscion de puntos es de 1 
+      lista_auxi.append(liga[i][1])
+
+
+  print(sorted(lista_auxi))
+  
+   
+     
+
+
+
+liga = [["Atletico de Madrid" , 0 , 0 , 0 , 0 ,0,0,0],
+        ["Real Betis CF", 0, 0, 0, 0, 0, 0, 0],
+        ["Sevilla", 0, 0, 0, 0, 0, 0, 0],
+        ["Barcelona FC", 0, 0, 0, 0, 0, 0, 0],
+        ["Rayo Vallecano", 0, 0, 0, 0, 0, 0, 0],
+        ["Real Madrid FC", 0, 0, 0, 0, 0, 0, 0],
+        ]
+
+mostrar_clasificacion(liga)
+resultado_equipo("Atletico de Madrid","Real Betis CF",2,1)
+resultado_equipo("Sevilla","Barcelona FC",4,1)
+
+print(mostrar_tabla(liga))

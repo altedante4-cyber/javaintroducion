@@ -1,0 +1,6 @@
+lista = orden = si , duplicados = si , modificacbles = si
+tuples = orden si , tuples = si , tuples = no 
+sets = orden no , duplicados = no , modificables = si 
+d ct = orden no , duplicados = no , modificables = si ;
+
+
