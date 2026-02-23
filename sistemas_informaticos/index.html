@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test – Comandos Básicos de Linux · 1º ASIR</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;--accent:#58a6ff;--accent-dim:#1a2f4a;--green:#3fb950;--green-dim:#1a3a22;--red:#f85149;--red-dim:#3a1a1a;--yellow:#e3b341;--text:#e6edf3;--text2:#8b949e;--mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;--r:12px}
+.light{--bg:#f0f4f8;--surface:#fff;--surface2:#e8edf2;--border:#d0d7de;--accent:#0969da;--accent-dim:#dbeafe;--green:#1a7f37;--green-dim:#d4edda;--red:#cf222e;--red-dim:#fce8e8;--text:#1f2328;--text2:#57606a}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;line-height:1.6}
+.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:11px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;gap:10px;flex-wrap:wrap}
+.hdr-left{display:flex;align-items:center;gap:10px}
+.logo{font-family:var(--mono);font-weight:700;font-size:1rem;color:var(--accent);background:var(--accent-dim);padding:3px 10px;border-radius:6px}
+.hdr h1{font-size:.95rem;font-weight:600}
+.hdr-right{display:flex;gap:8px;align-items:center}
+.ico-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 13px;border-radius:6px;cursor:pointer;font-family:var(--sans);font-size:.82rem;transition:all .15s}
+.ico-btn:hover{background:var(--border)}
+.timer{font-family:var(--mono);font-size:.82rem;color:var(--yellow);background:var(--surface2);padding:4px 11px;border-radius:6px;border:1px solid var(--border)}
+.timer.urgent{color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.wrap{max-width:820px;margin:0 auto;padding:26px 18px 70px}
+.prog-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 17px;margin-bottom:18px}
+.prog-meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text2);margin-bottom:7px;font-family:var(--mono)}
+.prog-bg{background:var(--surface2);border-radius:99px;height:7px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:99px;transition:width .4s ease}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:18px;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.q-cat{display:inline-block;font-family:var(--mono);font-size:.7rem;background:var(--accent-dim);color:var(--accent);padding:3px 10px;border-radius:99px;margin-bottom:12px;letter-spacing:.4px}
+.q-num{font-family:var(--mono);font-size:.78rem;color:var(--text2);margin-bottom:5px}
+.q-text{font-size:1.08rem;font-weight:600;margin-bottom:20px;line-height:1.5}
+.q-text code{font-family:var(--mono);background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.93em;color:var(--yellow)}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:flex-start;gap:11px;padding:13px 15px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .18s;background:var(--surface2);font-size:.93rem}
+.opt:hover:not(.locked){border-color:var(--accent);background:var(--accent-dim)}
+.opt.sel{border-color:var(--accent);background:var(--accent-dim)}
+.opt.ok{border-color:var(--green)!important;background:var(--green-dim)!important}
+.opt.ko{border-color:var(--red)!important;background:var(--red-dim)!important}
+.opt.locked{cursor:default}
+.opt-ltr{font-family:var(--mono);font-weight:700;font-size:.83rem;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:6px;width:27px;height:27px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
+.opt.ok .opt-ltr{background:var(--green);color:#fff;border-color:var(--green)}
+.opt.ko .opt-ltr{background:var(--red);color:#fff;border-color:var(--red)}
+.opt.sel .opt-ltr{background:var(--accent);color:#fff;border-color:var(--accent)}
+.opt-txt{flex:1;line-height:1.4}
+.opt-txt code{font-family:var(--mono);background:rgba(255,255,255,.07);padding:1px 5px;border-radius:4px;font-size:.88em}
+.light .opt-txt code{background:rgba(0,0,0,.07)}
+.exp{margin-top:14px;padding:13px 15px;border-radius:var(--r);font-size:.88rem;border-left:4px solid var(--green);background:var(--green-dim);display:none;line-height:1.5;animation:fadeUp .3s}
+.exp.show{display:block}
+.exp.bad{border-color:var(--red);background:var(--red-dim)}
+.exp strong{color:var(--green)}
+.exp.bad strong{color:var(--red)}
+.nav{display:flex;gap:9px;flex-wrap:wrap;justify-content:space-between}
+.btn{font-family:var(--sans);font-size:.88rem;font-weight:600;padding:10px 20px;border-radius:var(--r);border:none;cursor:pointer;transition:all .18s;flex:1;min-width:90px}
+.btn:active{transform:scale(.97)}
+.btn-prev{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-prev:hover{background:var(--border)}
+.btn-next{background:var(--accent);color:#fff}
+.btn-next:hover{filter:brightness(1.15)}
+.btn-fin{background:var(--yellow);color:#0d1117}
+.btn-fin:hover{filter:brightness(1.08)}
+.btn-restart{background:var(--green);color:#fff;margin-top:16px;width:100%;padding:13px;font-size:.98rem}
+.btn-restart:hover{filter:brightness(1.1)}
+.results{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:34px 26px;text-align:center;animation:fadeUp .4s}
+.results h2{font-size:1.75rem;font-weight:800;margin-bottom:5px}
+.score-ring{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:150px;height:150px;border-radius:50%;border:6px solid var(--accent);margin:22px auto;background:var(--surface2)}
+.score-ring.great{border-color:var(--green)}.score-ring.ok{border-color:var(--yellow)}.score-ring.bad{border-color:var(--red)}
+.s-num{font-family:var(--mono);font-size:2.3rem;font-weight:700}
+.s-lbl{font-size:.75rem;color:var(--text2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:11px;margin:22px 0}
+.stat{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:14px 11px}
+.stat .sv{font-family:var(--mono);font-size:1.55rem;font-weight:700}
+.stat .sd{font-size:.76rem;color:var(--text2);margin-top:2px}
+.stat.sc .sv{color:var(--green)}.stat.sw .sv{color:var(--red)}.stat.sp .sv{color:var(--accent)}.stat.sn .sv{color:var(--yellow)}
+.cat-sec{margin:18px 0;text-align:left}
+.cat-sec h3{font-size:.95rem;color:var(--text2);margin-bottom:10px}
+.cat-row{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.cat-name{flex:1;font-family:var(--mono);font-size:.72rem;color:var(--text)}
+.cat-bg{flex:2;height:7px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.cat-fill{height:100%;border-radius:99px;background:var(--accent)}
+.cat-score{font-family:var(--mono);font-size:.72rem;color:var(--text2);width:45px;text-align:right}
+.start{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:38px 26px;text-align:center;animation:fadeUp .4s}
+.start h2{font-size:1.85rem;font-weight:800;margin-bottom:9px}
+.start p{color:var(--text2);margin-bottom:22px;font-size:.93rem}
+.badges{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-bottom:26px}
+.badge{font-family:var(--mono);font-size:.7rem;padding:3px 11px;border-radius:99px;border:1px solid var(--border);color:var(--text2);background:var(--surface2)}
+.btn-start{background:var(--accent);color:#fff;font-family:var(--sans);font-weight:700;font-size:1.02rem;padding:13px 38px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s}
+.btn-start:hover{filter:brightness(1.15);transform:translateY(-1px)}
+@media(max-width:600px){.hdr{padding:9px 12px}.wrap{padding:14px 11px 60px}.card{padding:16px 13px}.q-text{font-size:1rem}.results,.start{padding:22px 13px}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><span class="logo">$ bash</span><h1>Test Comandos Linux · 1º ASIR</h1></div>
+  <div class="hdr-right">
+    <div class="timer" id="timerEl">⏱ 00:00</div>
+    <button class="ico-btn" onclick="toggleTheme()">☀️ Tema</button>
+  </div>
+</header>
+<main class="wrap" id="app">
+  <div class="start" id="startScreen">
+    <h2>🐧 Test de Comandos Básicos de Linux</h2>
+    <p>Basado en el documento oficial <em>"Comandos Básicos de Linux – 1º ASIR"</em> de <strong>Enrique Laín</strong>.<br>Las preguntas se mezclan aleatoriamente en cada intento.</p>
+    <div class="badges">
+      <span class="badge">125 preguntas</span><span class="badge">Consola &amp; Shell</span><span class="badge">ls / cd / pwd</span>
+      <span class="badge">mkdir / rm</span><span class="badge">chmod / chown</span><span class="badge">cp / mv</span>
+      <span class="badge">cat / echo / grep</span><span class="badge">find / sed</span><span class="badge">wc / cut / sort</span>
+      <span class="badge">gzip / tar</span><span class="badge">write / wall / shutdown</span><span class="badge">Usuarios &amp; Grupos</span>
+      <span class="badge">su / sudo / id</span><span class="badge">ping / ifconfig</span><span class="badge">apt-get / dpkg</span>
+      <span class="badge">Compilación / alien</span><span class="badge">Metacaracteres</span><span class="badge">Expresiones Regulares</span>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">▶ Comenzar test</button>
+  </div>
+  <div class="prog-wrap" id="progWrap" style="display:none">
+    <div class="prog-meta"><span id="progLabel">Pregunta 1 de 125</span><span id="progPct">0%</span></div>
+    <div class="prog-bg"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+  <div class="card" id="qCard" style="display:none">
+    <span class="q-cat" id="qCat">Categoría</span>
+    <div class="q-num" id="qNum">Pregunta 1</div>
+    <div class="q-text" id="qText">…</div>
+    <div class="opts" id="optsEl"></div>
+    <div class="exp" id="expEl"></div>
+  </div>
+  <div class="nav" id="navEl" style="display:none">
+    <button class="btn btn-prev" id="btnPrev" onclick="navigate(-1)">← Anterior</button>
+    <button class="btn btn-fin" onclick="confirmFinish()">Finalizar test</button>
+    <button class="btn btn-next" id="btnNext" onclick="navigate(1)">Siguiente →</button>
+  </div>
+  <div class="results" id="resultsEl" style="display:none"></div>
+</main>
+<script>
+/* ===================================================================
+   BANCO DE 125 PREGUNTAS
+   Basadas EXCLUSIVAMENTE en el PDF:
+   "Comandos Básicos de Linux - 1º ASIR" de Enrique Laín
+=================================================================== */
+const Q=[
+/* --- CONSOLA & SHELL --- */
+{c:"Consola &amp; Shell",q:"¿Cómo se llama el entorno de texto desde el que se introducen comandos y que es capaz de interpretar scripts?",o:["Kernel","Shell","Daemon","Terminal virtual"],a:1,e:"El PDF define: «Este entorno de texto donde nos encontramos y que nos permite introducir comandos se conoce como <strong>Shell</strong>, siendo capaz de interpretar comandos, sentencias y lenguaje de programación mediante scripts.»"},
+{c:"Consola &amp; Shell",q:"¿Cuál es el Shell más utilizado en Linux según el documento?",o:["csh","zsh","ksh","bash"],a:3,e:"El PDF indica: «El Shell que más se usa es conocido como <strong>bash</strong>, aunque existen otros: csh, ksh, etc.»"},
+{c:"Consola &amp; Shell",q:"En el prompt, ¿qué símbolo indica que somos el usuario <strong>root</strong>?",o:["$","~","@","#"],a:3,e:"El PDF indica que <strong>#</strong> señala el superusuario root. El signo $ indica usuario normal."},
+{c:"Consola &amp; Shell",q:"En el prompt, ¿qué símbolo indica que somos un usuario normal (no root)?",o:["#","~","$","@"],a:2,e:"El PDF indica que <strong>$</strong> indica que somos un usuario normal."},
+{c:"Consola &amp; Shell",q:"En <code>asir@ubuntu:~$</code>, ¿qué representa el símbolo <code>~</code>?",o:["Usuario root","Directorio raíz","Directorio home del usuario","Sesión remota"],a:2,e:"El PDF aclara: «<strong>~</strong> indica que estamos en el directorio home/asir.»"},
+{c:"Consola &amp; Shell",q:"¿Con qué combinación de teclas se cambia entre consolas virtuales en Ubuntu (sin VirtualBox)?",o:["Alt+Fx","Ctrl+Fx","Ctrl+Alt+Fx","Ctrl+Shift+Fx"],a:2,e:"El PDF indica: «El cambio de una consola a otra se realiza mediante <strong>Ctrl+Alt+Fx</strong> (F1 hasta F6).»"},
+{c:"Consola &amp; Shell",q:"¿Qué combinación de teclas muestra la consola gráfica en Ubuntu (sin VirtualBox)?",o:["Ctrl+Alt+F1","Ctrl+Alt+F8","Ctrl+Alt+F7","Ctrl+Alt+F6"],a:2,e:"El PDF indica que <strong>Ctrl+Alt+F7</strong> muestra la consola gráfica."},
+{c:"Consola &amp; Shell",q:"En VirtualBox, ¿qué combinación se usa para cambiar de consola?",o:["Ctrl+Alt+Fx","Ctrl+Fx","Ctrl+Shift+Fx","Alt+Fx"],a:1,e:"El PDF aclara: en VirtualBox se usa <strong>Ctrl+Fx</strong> (sin Alt) para cambiar de consola."},
+{c:"Consola &amp; Shell",q:"¿Qué hace el comando <code>man mkdir</code>?",o:["Crea el directorio man","Muestra un manual completo sobre mkdir","Busca comandos relacionados con mkdir","Ejecuta mkdir con privilegios"],a:1,e:"El PDF indica: «<strong>man</strong> muestra un manual completo sobre algún comando.»"},
+{c:"Consola &amp; Shell",q:"¿Qué hace el comando <code>apropos mkdir</code>?",o:["Abre el manual de mkdir","Busca comandos relacionados con la palabra mkdir","Ejecuta mkdir en modo ayuda","Lista las opciones de mkdir"],a:1,e:"El PDF indica: «Con <strong>apropos</strong>, dada una palabra, busca los comandos relacionados sobre ella.»"},
+{c:"Consola &amp; Shell",q:"¿Cuál es una forma válida de pedir ayuda sobre un comando?",o:["comando --ayuda","comando --help","comando -manual","comando /?"],a:1,e:"El PDF muestra: <code>mkdir --help</code>. La forma correcta es <strong>nombre_comando --help</strong>."},
+{c:"Consola &amp; Shell",q:"¿Qué hace <code>info cat</code>?",o:["Lista el contenido de cat","Muestra información sobre el comando cat","Crea el fichero info","Ejecuta cat con depuración"],a:1,e:"El PDF incluye <code>info nombre_comando</code> como forma de obtener ayuda (ej: <code>info cat</code>)."},
+/* --- ls --- */
+{c:"Comando ls",q:"¿Para qué sirve el comando <code>ls</code>?",o:["Cambiar de directorio","Crear directorios","Listar el contenido de un directorio","Mostrar la ruta actual"],a:2,e:"El PDF define: «El comando <strong>ls</strong> permite listar el contenido de un directorio.»"},
+{c:"Comando ls",q:"¿Qué opción de <code>ls</code> muestra la salida en formato largo?",o:["-a","-R","-l","-h"],a:2,e:"El PDF indica que <strong>-l</strong> muestra la salida en formato largo."},
+{c:"Comando ls",q:"¿Qué opción de <code>ls</code> lista también los ficheros ocultos?",o:["-h","-i","-a","-R"],a:2,e:"El PDF indica que <strong>-a</strong> lista además los ficheros ocultos (los que empiezan por punto)."},
+{c:"Comando ls",q:"¿Qué opción de <code>ls</code> lista el directorio recursivamente?",o:["-r","-R","-l","-h"],a:1,e:"El PDF indica que <strong>-R</strong> lista recursivamente un directorio."},
+{c:"Comando ls",q:"¿Qué opción de <code>ls</code> muestra tamaños en formato legible (ej. 16M, 4k)?",o:["-l","-s","-h","-a"],a:2,e:"El PDF define <strong>-h</strong>: muestra el tamaño de los ficheros en forma más legible."},
+{c:"Comando ls",q:"¿Qué opción de <code>ls</code> muestra el identificador del i-nodo?",o:["-i","-n","-I","-id"],a:0,e:"El PDF indica que <strong>-i</strong> muestra el identificador del i-nodo asociado a cada elemento."},
+{c:"Comando ls",q:"¿Qué hace <code>ls -al</code>?",o:["Lista solo archivos ocultos","Muestra contenido actual en formato largo e incluye ficheros ocultos","Lista recursivamente en formato largo","Muestra i-nodo y formato largo"],a:1,e:"El PDF muestra: <code>ls -al</code> → contenido del directorio actual en formato largo y ficheros ocultos."},
+{c:"Comando ls",q:"¿Qué hace <code>ls -R /usr</code>?",o:["Lista /usr en formato largo","Muestra recursivamente el contenido de cada directorio de /usr","Lista ficheros ocultos de /usr","Muestra los i-nodos de /usr"],a:1,e:"El PDF muestra: <code>ls -R /usr</code> → muestra de forma recursiva el contenido de cada directorio de /usr."},
+{c:"Comando ls",q:"¿Qué hace <code>ls -hl /etc</code>?",o:["Lista /etc de forma recursiva","Muestra contenido de /etc en formato largo con tamaños legibles","Lista ficheros ocultos de /etc","Muestra el i-nodo de cada fichero en /etc"],a:1,e:"El PDF muestra: <code>ls -hl /etc</code> → contenido de /etc en formato largo y tamaño legible."},
+/* --- cd --- */
+{c:"Comando cd",q:"¿Qué hace <code>cd ..</code>?",o:["Nos lleva al directorio raíz","Sube un nivel en el árbol de directorios","Nos lleva al home","Cambia al directorio anterior"],a:1,e:"El PDF define: <code>cd ..</code> sube un nivel en el árbol de directorios."},
+{c:"Comando cd",q:"¿Qué hace <code>cd</code> sin argumentos?",o:["Nos lleva al raíz","Sube un nivel","Nos lleva al home del usuario","Muestra el directorio actual"],a:2,e:"El PDF indica: <code>cd</code> sin argumentos nos lleva al directorio home del usuario."},
+{c:"Comando cd",q:"¿Qué hace <code>cd /</code>?",o:["Cambia al home","Nos lleva al directorio raíz","Sube un nivel","Cambia al directorio anterior"],a:1,e:"El PDF establece: <code>cd /</code> nos lleva al directorio raíz."},
+{c:"Comando cd",q:"¿Qué significa <code>~</code> en bash?",o:["El directorio raíz","El directorio anterior","El directorio home del usuario actual","El directorio del sistema"],a:2,e:"El PDF aclara: «El símbolo <strong>~</strong> se entiende en bash como el directorio home del usuario.»"},
+/* --- pwd --- */
+{c:"Comando pwd",q:"¿Qué hace el comando <code>pwd</code>?",o:["Muestra usuarios conectados","Indica el camino absoluto del directorio actual","Lista ficheros del directorio actual","Cambia la contraseña"],a:1,e:"El PDF define: «<strong>pwd</strong> indica el camino absoluto del directorio en el que nos encontramos actualmente.»"},
+/* --- mkdir --- */
+{c:"Comando mkdir",q:"¿Para qué sirve el comando <code>mkdir</code>?",o:["Eliminar directorios","Mover directorios","Crear directorios","Listar directorios"],a:2,e:"El PDF define: «<strong>mkdir</strong> se utiliza para crear directorios.»"},
+{c:"Comando mkdir",q:"¿Qué opción de <code>mkdir</code> crea los directorios intermedios inexistentes?",o:["-r","-i","-p","-f"],a:2,e:"El PDF muestra: <code>mkdir -p casa/techo/paredes/sillas</code> — con <strong>-p</strong> se crean los directorios intermedios."},
+{c:"Comando mkdir",q:"¿Qué hace <code>mkdir cartas facturas datos</code>?",o:["Crea un directorio 'cartas facturas datos'","Crea los tres directorios en el directorio actual","Mueve tres directorios","Crea una estructura anidada"],a:1,e:"El PDF muestra: <code>mkdir cartas facturas datos</code> crea los tres directorios en el directorio actual."},
+{c:"Comando mkdir",q:"¿Qué comando permite ver la estructura de directorios en forma de árbol (puede requerir instalación)?",o:["ls -R","find","tree","du -h"],a:2,e:"El PDF indica: «Para ver la estructura completa de un directorio se puede usar el comando <strong>tree</strong>.»"},
+/* --- rmdir / rm --- */
+{c:"rmdir / rm",q:"¿Qué requisito tiene <code>rmdir</code> para eliminar un directorio?",o:["El directorio debe existir","El directorio debe estar vacío","Ser root","Tener permisos 777"],a:1,e:"El PDF indica: «<strong>rmdir</strong> se utiliza para eliminar directorios <em>vacíos</em>. Si no están vacíos, hay que eliminar primero los contenidos.»"},
+{c:"rmdir / rm",q:"¿Qué hace la opción <code>-r</code> en <code>rm</code>?",o:["Borra forzosamente","Borra interactivamente","Borra recursivamente un directorio","Muestra lo que se borra"],a:2,e:"El PDF indica: <strong>-r</strong> en rm borra recursivamente un directorio."},
+{c:"rmdir / rm",q:"¿Qué hace la opción <code>-f</code> en <code>rm</code>?",o:["Borra recursivamente","Borra interactivamente","Borra forzosamente sin pedir permiso de escritura","Lista antes de borrar"],a:2,e:"El PDF define <strong>-f</strong>: borra forzosamente en caso de que no se tenga permiso de escritura."},
+{c:"rmdir / rm",q:"¿Qué hace la opción <code>-i</code> en <code>rm</code>?",o:["Borra recursivamente","Borra forzosamente","Ejecuta de forma interactiva (pide confirmación)","Muestra el i-nodo"],a:2,e:"El PDF indica que <strong>-i</strong> ejecuta el comando de forma interactiva."},
+{c:"rmdir / rm",q:"¿Qué hace <code>rm -ri casa</code>?",o:["Elimina casa forzosamente","Elimina la estructura casa recursivamente pidiendo confirmación","Elimina solo ficheros vacíos","Lista y elimina solo directorios"],a:1,e:"El PDF muestra: <code>rm -ri casa</code> → elimina la estructura casa de forma recursiva y pidiendo confirmación."},
+/* --- chmod --- */
+{c:"Comando chmod",q:"¿Para qué sirve el comando <code>chmod</code>?",o:["Cambiar el propietario","Cambiar los permisos de directorios o archivos","Copiar con permisos","Mostrar permisos"],a:1,e:"El PDF define: «<strong>chmod</strong> se utiliza para cambiar los permisos a directorios o archivos.»"},
+{c:"Comando chmod",q:"¿Qué hace <code>chmod 777 Prueba</code>?",o:["Asigna rwx rwx rwx a Prueba","Asigna rw- rw- rw-","Quita todos los permisos","Solo asigna permisos al propietario"],a:0,e:"El PDF indica: <code>chmod 777 Prueba</code> → asigna los permisos <strong>rwx rwx rwx</strong>."},
+{c:"Comando chmod",q:"¿Qué opción de <code>chmod</code> cambia permisos de forma recursiva?",o:["-c","-v","-R","-f"],a:2,e:"El PDF indica: <strong>-R / --recursive</strong> cambia recursivamente los permisos de directorios y sus contenidos."},
+{c:"Comando chmod",q:"¿Qué representa la letra <code>u</code> en la notación simbólica de permisos de <code>chmod</code>?",o:["Grupo","Otros","Usuario (propietario)","Universal"],a:2,e:"El PDF aclara: en la notación de letras <strong>u</strong> = usuario, g = grupo, o = otros."},
+{c:"Comando chmod",q:"¿Qué hace <code>chmod u=rwx,g=rw,o=r Prueba</code>?",o:["Asigna 777 a Prueba","Asigna rwx al usuario, rw al grupo y r a otros","Solo asigna permisos a root","Elimina todos los permisos"],a:1,e:"El PDF muestra este ejemplo como forma alternativa de expresar permisos con letras."},
+{c:"Comando chmod",q:"¿Qué opción de <code>chmod</code> muestra mensajes solo si los permisos cambian realmente?",o:["-v","-f","-c","-R"],a:2,e:"El PDF define <strong>-c / --changes</strong>: muestra mensaje mencionando solo los ficheros cuyos permisos cambian."},
+/* --- chown --- */
+{c:"Comando chown",q:"¿Para qué sirve el comando <code>chown</code>?",o:["Cambiar permisos","Cambiar propietario y grupo de un fichero","Crear grupos","Mostrar propietario"],a:1,e:"El PDF define: «<strong>chown</strong> se utiliza para cambiar el propietario y el grupo de un fichero.»"},
+{c:"Comando chown",q:"¿Quién puede cambiar el dueño de un fichero?",o:["Cualquier usuario","El propio dueño","Solo root","Dueño y miembros del grupo"],a:2,e:"El PDF indica: «El dueño de un fichero solo lo puede cambiar el usuario <strong>root</strong>.»"},
+{c:"Comando chown",q:"¿Qué hace <code>sudo chown pepe.pepe proyecto/</code>?",o:["Cambia permisos de proyecto/ a pepe","Otorga la propiedad del directorio proyecto/ al usuario pepe y al grupo pepe","Crea el usuario pepe","Elimina pepe de proyecto/"],a:1,e:"El PDF muestra: <code>sudo chown pepe.pepe proyecto/</code> → otorga la propiedad al usuario pepe y al grupo pepe."},
+{c:"Comando chown",q:"¿Qué hace la opción <code>-R</code> en <code>chown</code>?",o:["Solo cambia el grupo","Cambia dueño y/o grupo recursivamente","Muestra los cambios","Solo aplica si el fichero está vacío"],a:1,e:"El PDF indica: «-R en los directorios cambia el dueño y/o el grupo recursivamente.»"},
+{c:"Comando chown",q:"¿Qué hace <code>sudo chgrp ftp /usr/ftp</code>?",o:["Crea el grupo ftp","Otorga al grupo ftp la propiedad de /usr/ftp","Cambia el propietario a ftp","Lista grupos de /usr/ftp"],a:1,e:"El PDF muestra: <code>sudo chgrp ftp /usr/ftp</code> → otorga al grupo ftp la propiedad de /usr/ftp."},
+/* --- cp --- */
+{c:"Comando cp",q:"¿Para qué sirve el comando <code>cp</code>?",o:["Mover ficheros","Comprimir ficheros","Copiar ficheros o directorios","Crear ficheros vacíos"],a:2,e:"El PDF indica que <strong>cp</strong> copia el contenido de un fichero origen en un destino."},
+{c:"Comando cp",q:"¿Qué hace la opción <code>-i</code> en <code>cp</code>?",o:["Copia recursivamente","Ignora ficheros existentes","Pide confirmación si el destino ya existe","Muestra el i-nodo"],a:2,e:"El PDF define: <strong>-i</strong> en cp pide confirmación antes de sobrescribir si el fichero destino ya existe."},
+{c:"Comando cp",q:"¿Qué hace la opción <code>-r</code> en <code>cp</code>?",o:["Copia solo el directorio vacío","Copia directorio junto con ficheros y subdirectorios","Elimina el origen tras copiar","Pide confirmación"],a:1,e:"El PDF indica: <strong>-r</strong> en cp copia un directorio junto con sus ficheros y subdirectorios. Si el destino no existe, lo crea."},
+{c:"Comando cp",q:"¿Qué hace <code>cp coches ejercicios/cars</code>?",o:["Mueve coches al directorio ejercicios","Copia coches al directorio ejercicios con el nombre cars","Renombra coches a cars","Crea un enlace"],a:1,e:"El PDF explica: <code>cp coches ejercicios/cars</code> → copia el fichero coches al directorio ejercicios con el nombre cars."},
+{c:"Comando cp",q:"Cuando se especifican varios ficheros origen en <code>cp</code>, ¿qué debe ser el destino?",o:["Otro fichero","Un directorio","Un enlace simbólico","Un dispositivo"],a:1,e:"El PDF aclara: «Cuando se utilizan varios ficheros para copiar, el destino tiene que ser un <strong>directorio</strong>.»"},
+/* --- mv --- */
+{c:"Comando mv",q:"¿Para qué sirve el comando <code>mv</code>?",o:["Solo mover ficheros","Solo renombrar ficheros","Mover y/o renombrar ficheros y directorios","Crear ficheros vacíos"],a:2,e:"El PDF indica que <strong>mv</strong> sirve para renombrar y también para mover ficheros y directorios."},
+{c:"Comando mv",q:"¿Qué hace <code>mv coches carros</code>?",o:["Copia coches como carros","Mueve coches al directorio carros","Cambia el nombre de coches por carros","Borra coches y crea carros"],a:2,e:"El PDF incluye: <code>mv coches carros</code> → cambia el nombre del fichero coches por carros."},
+{c:"Comando mv",q:"¿Qué hace la opción <code>-f</code> en <code>mv</code>?",o:["Mueve recursivamente","Pide confirmación","Sobrescribe sin pedir confirmación","Muestra lo que se mueve"],a:2,e:"El PDF define: <strong>-f</strong> en mv — si el fichero existe, lo sobrescribe sin pedir confirmación."},
+{c:"Comando mv",q:"¿Qué hace <code>mv linux w7 S_operativos</code>?",o:["Renombra linux a w7","Mueve los ficheros linux y w7 al directorio S_operativos","Crea el directorio S_operativos","Fusiona linux y w7"],a:1,e:"El PDF muestra: <code>mv linux w7 S_operativos</code> → mueve los ficheros linux y w7 al directorio S_operativos."},
+/* --- Editores --- */
+{c:"Editores de texto",q:"¿Cuál es el editor vi mejorado que proporciona Ubuntu?",o:["nano","gedit","vim","emacs"],a:2,e:"El PDF indica: «<strong>Vim</strong> es el editor vi mejorado que proporciona Ubuntu.»"},
+{c:"Editores de texto",q:"¿En qué se basa principalmente el manejo del editor <strong>vi</strong>?",o:["Menús gráficos","Combinaciones de teclas","Comandos precedidos por :","El ratón"],a:1,e:"El PDF define: «Vi — editor cuyo manejo se basa en <strong>combinaciones de teclas</strong>.»"},
+{c:"Editores de texto",q:"¿Qué editor de Ubuntu tiene un manejo más sencillo que vi?",o:["emacs","vim","nano","gedit"],a:2,e:"El PDF indica: «<strong>nano</strong> es otro editor cuyo manejo resulta más sencillo que el vi.»"},
+/* --- more / less / echo / cat --- */
+{c:"more / less / cat / echo",q:"¿Qué hacen los comandos <code>more</code> y <code>less</code>?",o:["Comprimen ficheros","Muestran ficheros de forma paginada","Copian ficheros","Filtran líneas"],a:1,e:"El PDF define: «<strong>more</strong> y <strong>less</strong> muestran por pantalla uno o varios ficheros de forma paginada.»"},
+{c:"more / less / cat / echo",q:"¿Cuál de los dos termina automáticamente al llegar al final del fichero?",o:["less","more","Ambos","Ninguno"],a:1,e:"El PDF indica: «Cuando se alcanza el final, <strong>more</strong> termina automáticamente, no así less.»"},
+{c:"more / less / cat / echo",q:"Dentro de <code>more</code> o <code>less</code>, ¿qué tecla permite salir?",o:["Esc","x","q","Ctrl+C"],a:2,e:"El PDF indica que la tecla <strong>q</strong> permite interrumpir y salir."},
+{c:"more / less / cat / echo",q:"Dentro de <code>more</code> o <code>less</code>, ¿cómo se busca el patrón p?",o:["find p","/p","Ctrl+F y p","search p"],a:1,e:"El PDF indica: «<strong>/p</strong> realiza búsquedas del patrón p dentro del texto.»"},
+{c:"more / less / cat / echo",q:"¿Qué hace el comando <code>echo</code>?",o:["Lee ficheros","Escribe en la salida estándar (pantalla)","Copia texto entre ficheros","Busca patrones"],a:1,e:"El PDF define: «<strong>echo</strong> nos permite escribir algo directamente por la salida estándar.»"},
+{c:"more / less / cat / echo",q:"¿Qué argumento de <code>echo</code> inserta una nueva línea?",o:["\\t","\\r","\\n","\\v"],a:2,e:"El PDF indica que <strong>\\n</strong> inserta una nueva línea en echo."},
+{c:"more / less / cat / echo",q:"¿Qué argumento de <code>echo</code> inserta un tabulador horizontal?",o:["\\n","\\t","\\r","\\v"],a:1,e:"El PDF indica que <strong>\\t</strong> inserta un tabulador horizontal en echo."},
+{c:"more / less / cat / echo",q:"¿Qué hace la opción <code>-n</code> de <code>echo</code>?",o:["Inserta nueva línea","No agrega el carácter de fin de línea","Muestra número de caracteres","Ignora escapes"],a:1,e:"El PDF define: <strong>-n</strong> — No agrega el carácter de fin de línea."},
+{c:"more / less / cat / echo",q:"¿Qué hace el comando <code>cat</code>?",o:["Comprime ficheros","Lista y puede concatenar contenido de ficheros","Busca patrones","Muestra solo el final del fichero"],a:1,e:"El PDF define: «<strong>cat</strong> lista el contenido de un fichero; permite concatenar uno o más archivos de texto.»"},
+{c:"more / less / cat / echo",q:"¿Qué hace <code>cat archivo1.txt archivo2.txt > contenido.txt</code>?",o:["Muestra los dos ficheros por pantalla","Concatena ambos y guarda el resultado en contenido.txt","Copia solo archivo1","Añade contenido al final de archivo1"],a:1,e:"El PDF muestra este ejemplo: concatena archivo1.txt y archivo2.txt guardando el resultado en contenido.txt."},
+{c:"more / less / cat / echo",q:"¿Qué hace <code>cat > saludo.txt</code>?",o:["Muestra saludo.txt","Crea saludo.txt con lo que se teclee hasta Ctrl+C","Añade texto al final","Elimina saludo.txt"],a:1,e:"El PDF indica: <code>cat > saludo.txt</code> → permite crear el fichero con lo que tecleemos hasta Ctrl+C."},
+/* --- grep --- */
+{c:"Comando grep",q:"¿Qué hace el comando <code>grep</code>?",o:["Busca ficheros por nombre","Devuelve líneas que cumplen un patrón en uno o varios ficheros","Filtra usuarios","Comprime según un patrón"],a:1,e:"El PDF define: «<strong>grep</strong> devuelve todas las líneas que cumplen un patrón determinado en uno o varios ficheros.»"},
+{c:"Comando grep",q:"¿Qué opción de <code>grep</code> devuelve solo la cantidad de líneas con el patrón?",o:["-n","-l","-c","-H"],a:2,e:"El PDF indica: <strong>-c</strong> devuelve sólo la cantidad de líneas que contienen al patrón."},
+{c:"Comando grep",q:"¿Qué opción de <code>grep</code> ignora mayúsculas y minúsculas?",o:["-v","-H","-n","-i"],a:3,e:"El PDF indica: <strong>-i</strong> ignora las diferencias entre mayúsculas y minúsculas."},
+{c:"Comando grep",q:"¿Qué opción de <code>grep</code> devuelve las líneas que NO contienen el patrón?",o:["-n","-v","-H","-l"],a:1,e:"El PDF indica: <strong>-v</strong> devuelve las líneas que no contienen el patrón."},
+{c:"Comando grep",q:"¿Qué opción de <code>grep</code> busca recursivamente en un directorio?",o:["-R o -r","-H","-n","-l"],a:0,e:"El PDF indica: <strong>-r</strong> busca en un directorio de forma recursiva."},
+{c:"Comando grep",q:"¿Qué opción de <code>grep</code> imprime el número de línea con el resultado?",o:["-H","-l","-c","-n"],a:3,e:"El PDF define: <strong>-n</strong> imprime el número de cada línea que contiene al patrón."},
+{c:"Comando grep",q:"¿Qué opción de <code>grep</code> muestra solo los nombres de ficheros con el patrón?",o:["-H","-l","-c","-v"],a:1,e:"El PDF indica: <strong>-l</strong> solo muestra los nombres de los ficheros donde se encontró el patrón."},
+{c:"Comando grep",q:"¿Qué hace <code>grep -i pepe /etc/passwd</code>?",o:["Busca 'pepe' exactamente","Busca 'pepe' sin distinción mayúsculas/minúsculas","Cuenta cuántas veces aparece pepe","Muestra solo el nombre del fichero"],a:1,e:"El PDF muestra este ejemplo: <code>grep -i pepe /etc/passwd</code> → busca ignorando mayúsculas/minúsculas."},
+/* --- find --- */
+{c:"Comando find",q:"¿Para qué sirve el comando <code>find</code>?",o:["Buscar texto en ficheros","Buscar recursivamente ficheros según condiciones (nombre, tamaño, permisos…)","Encontrar usuarios","Buscar paquetes"],a:1,e:"El PDF define: «<strong>find</strong> permite buscar de forma recursiva en un directorio todos los ficheros que cumplan ciertas condiciones.»"},
+{c:"Comando find",q:"¿Qué opción de <code>find</code> especifica patrones para el nombre del fichero?",o:["-type","-size","-name","-perm"],a:2,e:"El PDF indica: <strong>-name &lt;expresión&gt;</strong> permite especificar patrones para los nombres de los ficheros."},
+{c:"Comando find",q:"¿Qué hace <code>find /etc -name '*.conf'</code>?",o:["Busca ficheros .txt en /etc","Busca ficheros con extensión .conf en /etc","Lista directorios de /etc","Busca el fichero exacto *.conf"],a:1,e:"El PDF muestra: <code>find /etc -name '*.conf'</code> → busca en /etc todos los ficheros con extensión .conf."},
+{c:"Comando find",q:"¿Qué hace <code>find / -size +10240k -size -20480k</code>?",o:["Busca ficheros de más de 20MB","Busca ficheros cuyo tamaño esté entre 10M y 20M","Busca directorios de exactamente 10M","Elimina ficheros entre 10M y 20M"],a:1,e:"El PDF muestra: <code>find / -size +10240k -size -20480k</code> → ficheros entre 10M y 20M."},
+{c:"Comando find",q:"¿Qué permite la opción <code>-exec</code> en <code>find</code>?",o:["Ejecutar find como root","Definir un comando a ejecutar por cada resultado encontrado","Excluir ciertos ficheros","Exportar resultados a fichero"],a:1,e:"El PDF indica: <strong>-exec &lt;comando&gt; ;</strong> permite definir un comando que se ejecuta para cada resultado de la búsqueda."},
+{c:"Comando find",q:"En <code>find / -name core -exec rm -i \"{}\" \";\"</code>, ¿qué representa <code>{}</code>?",o:["Un directorio vacío","El nombre de cada fichero encontrado","El directorio actual","Los permisos del fichero"],a:1,e:"El PDF indica: «La cadena <strong>{}</strong> se sustituye por el nombre de los ficheros encontrados.»"},
+/* --- stat / sort / tail / head / wc / cut --- */
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué muestra el comando <code>stat</code>?",o:["Estado de servicios","Características de un fichero: nombre, permisos, tamaño, i-nodo, fechas…","Usuarios conectados","Espacio disponible en disco"],a:1,e:"El PDF define: «<strong>stat</strong> muestra las características de un fichero: nombre, permisos, tamaño, i-nodo, fechas, tipo, dueño, grupo, etc.»"},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué hace el comando <code>sort</code>?",o:["Cuenta las líneas de un fichero","Ordena las líneas de un fichero mostrándolas por la salida estándar","Filtra líneas","Busca patrones"],a:1,e:"El PDF define: «<strong>sort</strong> ordena las líneas de un fichero mostrándolas por la salida estándar.»"},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué opción de <code>sort</code> ordena en orden inverso?",o:["-f","-r","-n","-u"],a:1,e:"El PDF indica: <strong>-r</strong> en sort ordena al revés."},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Cuántas líneas muestra <code>tail</code> por defecto?",o:["5","20","10","1"],a:2,e:"El PDF indica: «<strong>tail</strong> muestra el final (10 líneas por defecto) de uno o varios ficheros.»"},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Cuántas líneas muestra <code>head</code> por defecto?",o:["5","20","10","1"],a:2,e:"El PDF indica: «<strong>head</strong> muestra el comienzo (10 líneas por defecto) de uno o varios ficheros.»"},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué hace la opción <code>-f</code> en <code>tail</code>?",o:["Muestra las primeras líneas","Fuerza la lectura","Continúa visualizando el final del fichero hasta Ctrl+C","Formato legible"],a:2,e:"El PDF indica: <strong>-f</strong> en tail — se continúa visualizando el final del fichero hasta que se interrumpa el proceso (Ctrl+C)."},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué significa la sigla <strong>wc</strong>?",o:["Write Command","Word Count","Working Copy","Write Content"],a:1,e:"El PDF indica: «El comando <strong>wc</strong> (Word Count) imprime el número de líneas, palabras y bytes.»"},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué opción de <code>wc</code> cuenta solo líneas?",o:["-c","-w","-l","-b"],a:2,e:"El PDF define: <strong>-l</strong> en wc solo cuenta líneas."},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué opción de <code>wc</code> cuenta solo palabras?",o:["-l","-w","-c","-n"],a:1,e:"El PDF define: <strong>-w</strong> en wc solo cuenta palabras."},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué opción de <code>wc</code> cuenta solo bytes?",o:["-l","-w","-c","-b"],a:2,e:"El PDF define: <strong>-c</strong> en wc solo cuenta bytes."},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Para qué sirve el comando <code>cut</code>?",o:["Dividir ficheros en partes iguales","Cortar caracteres y campos para extraer partes seleccionadas de cada fichero","Eliminar líneas","Copiar secciones del texto"],a:1,e:"El PDF define: «<strong>cut</strong> tiene la característica de poder cortar caracteres y campos para extraer las partes seleccionadas.»"},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué opción de <code>cut</code> especifica un delimitador diferente al tabulador?",o:["-b","-c","-f","-d"],a:3,e:"El PDF indica: <strong>-d / --delimiter=DELIM</strong> usa DELIM en vez de tabulación para delimitar campos."},
+{c:"stat / sort / tail / head / wc / cut",q:"¿Qué hace <code>echo \"Esto es una prueba, 1 2 3, probando\" | cut -d \",\" -f 3</code>?",o:["Muestra 'Esto es una prueba'","Muestra '1 2 3'","Muestra ' probando'","Muestra todos los campos"],a:2,e:"El PDF muestra este ejemplo: con delimitador coma y campo -f 3 se obtiene el tercer campo: ' probando'."},
+/* --- sed --- */
+{c:"Comando sed",q:"¿Qué es <code>sed</code>?",o:["Un comando de búsqueda de ficheros","Un editor de textos para uso en línea de comandos","Un compresor de texto","Un paginador"],a:1,e:"El PDF define: «<strong>sed</strong> no es un comando, sino un editor de textos diseñado para ser usado desde línea de comandos.»"},
+{c:"Comando sed",q:"¿Qué hace <code>echo \"Hola mundo azul\" | sed -e \"s/mundo/amigo/\"</code>?",o:["Elimina 'mundo'","Muestra 'Hola amigo azul'","Imprime solo 'mundo'","Busca 'amigo'"],a:1,e:"El PDF muestra este ejemplo exacto: <code>s/mundo/amigo/</code> sustituye 'mundo' por 'amigo'."},
+{c:"Comando sed",q:"En sed, ¿qué indica la opción <code>-e</code>?",o:["Expresiones regulares extendidas","Que se quiere ejecutar el siguiente comando","Que la salida se guarda en fichero externo","Modo interactivo"],a:1,e:"El PDF indica: <strong>-e</strong> indica que queremos ejecutar el siguiente comando."},
+{c:"Comando sed",q:"En sed, ¿qué hace el subcomando <code>s</code>?",o:["Imprime texto","Borra texto","Sustituye texto","Muestra el fichero sin todas las líneas"],a:2,e:"El PDF indica que el subcomando <strong>s</strong> en sed sustituye texto."},
+{c:"Comando sed",q:"¿Qué hace <code>sed -e \"1,10d\" /home/joancadi/carta.txt</code>?",o:["Muestra las líneas 1 a 10","Borra las líneas 1 a 10 del fichero","Sustituye en las líneas 1 a 10","Imprime de la línea 1 a la 10"],a:1,e:"El PDF muestra este ejemplo: el subcomando <strong>d</strong> borra; <code>1,10d</code> borra las líneas 1 a 10."},
+{c:"Comando sed",q:"¿Qué hace <code>sed -ne \"4,20p\" /etc/services</code>?",o:["Borra de la línea 4 a la 20","Muestra de la línea 4 a la 20 del fichero services","Sustituye el patrón entre líneas 4 y 20","Cuenta las líneas entre 4 y 20"],a:1,e:"El PDF explica: <code>sed -ne \"4,20p\"</code> muestra de la línea 4 a la 20 del fichero services."},
+/* --- gzip / gunzip / tar --- */
+{c:"gzip / gunzip / tar",q:"¿Qué hacen <code>gzip</code> y <code>gunzip</code>?",o:["Agrupar sin comprimir","Comprimir y descomprimir ficheros respectivamente","Empaquetar en tar","Mostrar tamaño de ficheros comprimidos"],a:1,e:"El PDF define: «<strong>gzip</strong> y <strong>gunzip</strong> permiten compactar y descompactar (comprimir y descomprimir) respectivamente.»"},
+{c:"gzip / gunzip / tar",q:"¿Qué opción de <code>gzip</code> produce la mayor compresión?",o:["-1","-5","-9","-r"],a:2,e:"El PDF indica: de <strong>-1</strong> (menor, más rápida) a <strong>-9</strong> (mayor, más lenta)."},
+{c:"gzip / gunzip / tar",q:"¿Para qué sirve <code>tar</code>?",o:["Comprimir ficheros","Agrupar varios ficheros en uno solo sin comprimirlos","Encriptar ficheros","Comparar directorios"],a:1,e:"El PDF indica: «<strong>tar</strong> agrupa varios ficheros en otro fichero. No comprime; se limita a agrupar.»"},
+{c:"gzip / gunzip / tar",q:"¿Qué opción de <code>tar</code> crea (empaqueta) un fichero?",o:["-x","-t","-c","-z"],a:2,e:"El PDF indica: <strong>-c</strong> permite crear (empaquetar)."},
+{c:"gzip / gunzip / tar",q:"¿Qué opción de <code>tar</code> extrae (desempaqueta)?",o:["-c","-t","-f","-x"],a:3,e:"El PDF indica: <strong>-x</strong> permite extraer (desempaquetar)."},
+{c:"gzip / gunzip / tar",q:"¿Qué opción de <code>tar</code> comprime/descomprime con gzip automáticamente?",o:["-c","-v","-f","-z"],a:3,e:"El PDF indica: <strong>-z</strong> compacta o descompacta el fichero resultante usando gzip/gunzip."},
+{c:"gzip / gunzip / tar",q:"¿Qué hace <code>tar cvfz /tmp/etc.tgz /etc</code>?",o:["Extrae /tmp/etc.tgz en /etc","Empaqueta y comprime /etc en /tmp/etc.tgz","Lista etc.tgz","Mueve /etc a /tmp/etc.tgz"],a:1,e:"El PDF muestra: <code>tar cvfz /tmp/etc.tgz /etc</code> → crea (-c), verbose (-v), en fichero (-f), con gzip (-z), el directorio /etc."},
+{c:"gzip / gunzip / tar",q:"¿Qué opción de <code>tar</code> lista el contenido de un fichero empaquetado?",o:["-c","-x","-t","-v"],a:2,e:"El PDF indica: <strong>-t</strong> lista el contenido de un fichero resultado de un agrupamiento."},
+/* --- write / wall / shutdown --- */
+{c:"write / wall / shutdown",q:"¿Para qué sirve el comando <code>write</code>?",o:["Escribir en un fichero","Enviar un mensaje a un usuario conectado","Enviar mensajes a todos los usuarios","Editar ficheros"],a:1,e:"El PDF define: «<strong>write</strong> se utiliza para enviar un mensaje a un usuario conectado al sistema.»"},
+{c:"write / wall / shutdown",q:"¿Para qué sirve el comando <code>wall</code>?",o:["Enviar mensaje a un usuario específico","Enviar mensaje a todos los usuarios conectados con mesg y activo","Mostrar el muro de mensajes","Habilitar recepción de mensajes"],a:1,e:"El PDF define: «<strong>wall</strong> se emplea para enviar un mensaje a todos los usuarios conectados que tengan habilitada la posibilidad de recibirlos.»"},
+{c:"write / wall / shutdown",q:"¿Qué hace <code>mesg n</code>?",o:["Habilita la recepción de mensajes","Deshabilita la recepción de mensajes","Muestra el estado actual","Envía un mensaje del sistema"],a:1,e:"El PDF indica: <code>mesg n</code> deshabilita la posibilidad de recibir mensajes."},
+{c:"write / wall / shutdown",q:"¿Qué hace <code>mesg y</code>?",o:["Deshabilita la recepción","Muestra mensajes recibidos","Habilita la posibilidad de recibir mensajes","Envía un mensaje de confirmación"],a:2,e:"El PDF indica: <code>mesg y</code> habilita la posibilidad de recibir mensajes."},
+{c:"write / wall / shutdown",q:"¿Para qué sirve el comando <code>shutdown</code>?",o:["Para hacer logout","Para apagar el sistema totalmente","Para reiniciar el shell","Para cerrar la sesión gráfica"],a:1,e:"El PDF indica: «El comando <strong>shutdown</strong> sirve para apagar el sistema totalmente.»"},
+{c:"write / wall / shutdown",q:"¿Qué hace <code>shutdown -h now</code>?",o:["Reinicia inmediatamente","Apaga el sistema ahora","Apaga en 1 hora","Muestra tiempo restante"],a:1,e:"El PDF muestra: <code>shutdown -h now</code> apaga el sistema ahora."},
+{c:"write / wall / shutdown",q:"¿Qué hace <code>sudo shutdown -r -g5</code>?",o:["Apaga en 5 segundos","Reinicia en 5 minutos","Apaga en 5 horas","Reinicia inmediatamente"],a:1,e:"El PDF indica: <code>shutdown -r -g5</code> → el sistema se reiniciará (-r) en 5 minutos (-g5)."},
+{c:"write / wall / shutdown",q:"¿Qué hace el comando <code>logout</code>?",o:["Termina el shell actual","Se desconecta del sistema desde un login shell","Apaga el sistema","Cambia a root"],a:1,e:"El PDF define: «<strong>logout</strong> permite desconectarse del sistema a partir de un login shell.»"},
+{c:"write / wall / shutdown",q:"¿Qué hace el comando <code>exit</code>?",o:["Apaga el sistema","Solo cierra el login shell","Termina el shell actual; si es único equivale a logout","Cierra todos los shells abiertos"],a:2,e:"El PDF indica: «<strong>exit</strong> permite terminar el shell actual. Si se tiene un único shell es equivalente a desconectarse.»"},
+/* --- Usuarios --- */
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Para qué sirve <code>adduser</code>?",o:["Eliminar usuarios","Añadir nuevos usuarios al sistema","Modificar contraseñas","Mostrar información de usuarios"],a:1,e:"El PDF define: «<strong>adduser</strong> permite añadir nuevos usuarios al sistema.»"},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Qué hace <code>adduser pedro amigos</code>?",o:["Crea pedro con grupo amigos","Añade a pedro (ya existente) al grupo amigos","Crea el grupo amigos y asigna a pedro","Elimina pedro del grupo amigos"],a:1,e:"El PDF muestra: <code>adduser pedro amigos</code> → añade a pedro (que ya existe) al grupo amigos existente."},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Qué hace <code>userdel -r pepe</code>?",o:["Elimina pepe manteniendo su directorio","Elimina pepe y su directorio personal","Bloquea la cuenta de pepe","Elimina pepe solo si está desconectado"],a:1,e:"El PDF indica: <code>userdel -r pepe</code> → elimina al usuario pepe y su directorio personal."},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Qué hace <code>userdel juan</code> (sin opciones)?",o:["Elimina juan y su directorio","Elimina juan pero mantiene su directorio personal","Bloquea a juan","Deshabilita la cuenta"],a:1,e:"El PDF indica: <code>userdel juan</code> elimina al usuario juan, pero mantiene su directorio personal."},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Qué hace <code>passwd</code> sin argumentos?",o:["Cambia la contraseña de root","Muestra política de contraseñas","Cambia la contraseña del usuario actual","Lista usuarios con contraseña"],a:2,e:"El PDF indica: «<strong>passwd</strong> si se invoca sin argumentos se asume el usuario actual.»"},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Qué hace <code>passwd -l pepe</code>?",o:["Elimina la contraseña de pepe","Bloquea la cuenta de pepe poniendo ! delante en /etc/shadow","Desbloquea la cuenta","Lista intentos de acceso"],a:1,e:"El PDF indica: <code>passwd -l pepe</code> → bloquea la cuenta de pepe poniendo un ! delante de su password en /etc/shadow."},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Qué hace <code>passwd -u pepe</code>?",o:["Deshabilita la cuenta","Bloquea la cuenta","Desbloquea la cuenta de pepe","Actualiza contraseña"],a:2,e:"El PDF indica: <code>passwd -u pepe</code> desbloquea la cuenta del usuario pepe."},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Para qué sirve <code>usermod</code>?",o:["Crear nuevos usuarios","Eliminar usuarios","Modificar propiedades de usuarios existentes","Mostrar información de usuarios"],a:2,e:"El PDF define: «<strong>usermod</strong> se emplea para modificar propiedades de los usuarios: login, directorio base, shell, grupos, fecha de expiración, etc.»"},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Qué hace <code>usermod -s /bin/csh pepe</code>?",o:["Cambia el shell de pepe a csh","Cambia la contraseña","Asigna csh como grupo","Bloquea con csh"],a:0,e:"El PDF muestra: <code>usermod -s /bin/csh pepe</code> coloca el shell csh para el usuario pepe."},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Qué hace <code>usermod -e 2001-10-20 pepe</code>?",o:["Cambia la fecha de creación","Indica que la cuenta de pepe expirará el 20-10-2001","Establece el último acceso","Bloquea hasta esa fecha"],a:1,e:"El PDF muestra: <code>usermod -e 2001-10-20 pepe</code> → la cuenta de pepe expirará el 20 de octubre del 2001."},
+{c:"Usuarios: adduser/userdel/passwd/usermod",q:"¿Dónde almacena la información de contacto el comando <code>chfn</code>?",o:["/etc/shadow","/etc/group","/etc/passwd","/etc/finger"],a:2,e:"El PDF indica: «<strong>chfn</strong> permite cambiar la información de contacto de un usuario. Se almacena en <strong>/etc/passwd</strong>.»"},
+/* --- Grupos --- */
+{c:"Grupos: addgroup/groupdel/gpasswd",q:"¿Qué hace <code>addgroup equipo</code>?",o:["Elimina el grupo equipo","Agrega un nuevo grupo llamado equipo al sistema","Añade el usuario al grupo equipo","Lista miembros del grupo"],a:1,e:"El PDF muestra: <code>addgroup equipo</code> agrega un nuevo grupo al sistema."},
+{c:"Grupos: addgroup/groupdel/gpasswd",q:"¿Qué hace <code>groupdel equipo</code>?",o:["Crea el grupo equipo","Modifica el grupo equipo","Elimina el grupo equipo del sistema","Lista los grupos"],a:2,e:"El PDF muestra: <code>groupdel equipo</code> elimina el grupo equipo del sistema."},
+{c:"Grupos: addgroup/groupdel/gpasswd",q:"¿Qué hace <code>groupmod -n usuarios users</code>?",o:["Cambia el gid de users","Cambia el nombre del grupo users por usuarios","Crea usuarios a partir de users","Elimina el grupo users"],a:1,e:"El PDF muestra: <code>groupmod -n usuarios users</code> cambia el nombre del grupo users por usuarios."},
+{c:"Grupos: addgroup/groupdel/gpasswd",q:"¿Para qué sirve <code>gpasswd</code>?",o:["Cambiar la contraseña del sistema","Administrar grupos: añadir/eliminar usuarios, asignar administrador y password","Mostrar información de grupos","Crear grupos"],a:1,e:"El PDF define: «<strong>gpasswd</strong> permite administrar los grupos: añadir y eliminar usuarios, señalar un administrador e indicar un password de grupo.»"},
+{c:"Grupos: addgroup/groupdel/gpasswd",q:"¿Qué hace <code>gpasswd -a joe admin</code>?",o:["Señala a joe como administrador de admin","Elimina a joe de admin","Añade al usuario joe al grupo admin","Cambia la contraseña de joe en admin"],a:2,e:"El PDF muestra: <code>gpasswd -a joe admin</code> → añade el usuario joe al grupo admin."},
+{c:"Grupos: addgroup/groupdel/gpasswd",q:"¿Qué hace <code>gpasswd -A pepe admin</code>?",o:["Añade a pepe a admin","Señala a pepe como administrador del grupo admin","Elimina a pepe de admin","Cambia contraseña de admin"],a:1,e:"El PDF muestra: <code>gpasswd -A pepe admin</code> → señala a pepe como administrador del grupo admin."},
+/* --- su / sudo / id --- */
+{c:"su / sudo / id",q:"¿Qué hace <code>su -</code>?",o:["Cambia al usuario anterior","Ejecuta un shell como login shell de root","Lista usuarios con privilegios","Desactiva root temporalmente"],a:1,e:"El PDF indica: <code>su -</code> ejecuta el shell como un login shell del usuario root."},
+{c:"su / sudo / id",q:"¿Qué hace <code>su pepe</code>?",o:["Elimina a pepe","Ejecuta un shell con el usuario pepe","Muestra información de pepe","Crea al usuario pepe"],a:1,e:"El PDF muestra: <code>su pepe</code> ejecuta un shell con el usuario pepe."},
+{c:"su / sudo / id",q:"Si se usa <code>su</code> sin especificar usuario, ¿qué usuario se asume?",o:["El último conectado","El usuario anterior","root","El propietario del proceso"],a:2,e:"El PDF indica: «Si no se especifica el login del usuario se asume <strong>root</strong>.»"},
+{c:"su / sudo / id",q:"¿Qué permite hacer <code>sudo</code>?",o:["Cambiar de usuario permanentemente","Ejecutar programas con privilegios de otro usuario (normalmente root) de forma segura","Ver privilegios de todos los usuarios","Deshabilitar root"],a:1,e:"El PDF define: «<strong>sudo</strong> permite a los usuarios ejecutar programas con los privilegios de seguridad de otro usuario de manera segura.»"},
+{c:"su / sudo / id",q:"¿En qué fichero se configura qué usuarios pueden ejecutar qué comandos con sudo?",o:["/etc/passwd","/etc/shadow","/etc/sudoers","/etc/group"],a:2,e:"El PDF indica: «El archivo de configuración <strong>/etc/sudoers</strong> especifica qué usuarios pueden ejecutar qué comandos en nombre de qué otros usuarios.»"},
+{c:"su / sudo / id",q:"¿Qué muestra el comando <code>id</code>?",o:["El ID del proceso","Los identificadores uid y gid del usuario indicado y sus grupos","El ID del sistema","El ID de la terminal"],a:1,e:"El PDF define: «<strong>id</strong> muestra, dado un usuario, sus identificadores de usuario (uid) y de grupo principal (gid) así como del resto de los grupos.»"},
+/* --- tty / du / who / w / finger --- */
+{c:"tty / du / who / w / finger",q:"¿Qué hace el comando <code>tty</code>?",o:["Muestra usuarios conectados","Imprime el dispositivo de carácter de la terminal actual","Muestra tiempo de inactividad","Lista terminales disponibles"],a:1,e:"El PDF define: «<strong>tty</strong> imprime el dispositivo de carácter asociado a la terminal en la que se está trabajando.»"},
+{c:"tty / du / who / w / finger",q:"¿Para qué sirve el comando <code>du</code>?",o:["Mostrar uso de CPU","Conocer la longitud (KB por defecto) de una jerarquía de ficheros","Mostrar espacio libre","Listar directorios de usuarios"],a:1,e:"El PDF define: «<strong>du</strong> permite conocer la longitud (expresada en kilobytes por defecto) de una jerarquía de ficheros.»"},
+{c:"tty / du / who / w / finger",q:"¿Qué opción de <code>du</code> imprime unidades legibles (M, G, K)?",o:["-s","-c","-h","-r"],a:2,e:"El PDF indica: <strong>-h</strong> (human readable) en du imprime las unidades de la forma más representativa."},
+{c:"tty / du / who / w / finger",q:"¿Qué hace el comando <code>who</code>?",o:["Muestra procesos en ejecución","Muestra los usuarios conectados al sistema local o remotamente","Muestra información del SO","Lista grupos"],a:1,e:"El PDF define: «<strong>who</strong> muestra los usuarios conectados al sistema ya sea local o remotamente.»"},
+{c:"tty / du / who / w / finger",q:"¿Qué opción de <code>who</code> muestra si está activa la recepción de mensajes de cada usuario?",o:["-H","-q","-i","-w"],a:3,e:"El PDF indica: <strong>-w</strong> indica si está activada o no la posibilidad de recibir mensajes de cada usuario conectado."},
+{c:"tty / du / who / w / finger",q:"¿Qué información adicional muestra <code>w</code> respecto a <code>who</code>?",o:["Los grupos de cada usuario","Los procesos que ejecutan y otras informaciones (JCPU, PCPU, carga del sistema…)","Solo la hora de inicio","Los ficheros abiertos"],a:1,e:"El PDF indica: «<strong>w</strong> muestra también los usuarios conectados además de lo que están haciendo y otras informaciones.»"},
+{c:"tty / du / who / w / finger",q:"¿Qué muestra <code>finger</code> para cada usuario?",o:["Solo login y terminal","Login, nombre, directorio base, shell, oficina, teléfono, terminales, correo, fichero .plan, etc.","Solo el proceso activo","La contraseña cifrada"],a:1,e:"El PDF describe en detalle que <strong>finger</strong> muestra login, nombre, directorio base, shell, oficina, teléfono, terminales, buzón de correo y contenido del fichero .plan."},
+/* --- ping / ifconfig --- */
+{c:"ping / ifconfig",q:"¿Para qué sirve <code>ping</code>?",o:["Configurar interfaces de red","Comprobar si existe conexión con otro equipo en la red","Mostrar conexiones activas","Asignar IP"],a:1,e:"El PDF define: «<strong>ping</strong> permite comprobar si existe conexión con otro equipo o dispositivo conectado a la red.»"},
+{c:"ping / ifconfig",q:"¿Qué opción de <code>ping</code> envía exactamente n paquetes?",o:["-s","-i","-q","-c"],a:3,e:"El PDF indica: <strong>-c &lt;n&gt;</strong> en ping envía n paquetes exactamente."},
+{c:"ping / ifconfig",q:"¿Qué opción de <code>ping</code> muestra solo el sumario final?",o:["-c","-i","-s","-q"],a:3,e:"El PDF indica: <strong>-q</strong> en ping solo despliega el sumario final."},
+{c:"ping / ifconfig",q:"¿Para qué sirve <code>ifconfig</code>?",o:["Comprobar conectividad","Configurar interfaces de red (root) y mostrar información sobre ellas","Listar usuarios de red","Reiniciar servicios de red"],a:1,e:"El PDF define: «<strong>ifconfig</strong> permite configurar las interfaces de red e informar sobre su estado.»"},
+{c:"ping / ifconfig",q:"¿Qué hace <code>ifconfig eth0 down</code>?",o:["Activa eth0","Asigna IP 0.0.0.0 a eth0","Apaga/baja la interfaz eth0","Muestra el estado de eth0"],a:2,e:"El PDF muestra: <code>ifconfig eth0 down</code> permite \"apagar\" o bajar la interfaz de red eth0."},
+{c:"ping / ifconfig",q:"¿Qué fichero modifica realmente <code>ifconfig</code>?",o:["/etc/hosts","/etc/resolv.conf","/etc/networking/interfaces","/etc/network/config"],a:2,e:"El PDF indica: «ifconfig realmente modifica el fichero <strong>/etc/networking/interfaces</strong>.»"},
+/* --- apt-get / aptitude --- */
+{c:"apt-get / aptitude",q:"¿Qué hace <code>apt-get update</code>?",o:["Actualiza el sistema operativo","Actualiza los repositorios de Ubuntu","Instala actualizaciones disponibles","Busca nuevos paquetes"],a:1,e:"El PDF indica: <code>apt-get update</code> actualiza los repositorios de Ubuntu."},
+{c:"apt-get / aptitude",q:"¿Qué hace <code>apt-get install tree</code>?",o:["Instala tree sin dependencias","Elimina tree","Instala tree y sus dependencias","Busca tree en repositorios"],a:2,e:"El PDF indica: <code>apt-get install &lt;paquete&gt;</code> instala el paquete y sus dependencias."},
+{c:"apt-get / aptitude",q:"¿Qué hace <code>apt-get remove --purge &lt;paquete&gt;</code>?",o:["Elimina sin tocar configuración","Elimina incluyendo archivos de configuración","Elimina solo dependencias","Purga la caché"],a:1,e:"El PDF indica: <code>apt-get remove --purge</code> elimina el paquete indicado, incluyendo los archivos de configuración."},
+{c:"apt-get / aptitude",q:"¿Cuál es la diferencia principal entre <code>apt-get remove</code> y <code>aptitude remove</code>?",o:["No hay diferencia","aptitude también elimina las dependencias ya no necesarias; apt-get no","apt-get es más rápido","aptitude borra ficheros de configuración"],a:1,e:"El PDF indica: «<strong>aptitude</strong> recuerda las dependencias y las borra al desinstalar (si no las usan otros). <strong>apt-get</strong> solo borra el paquete especificado.»"},
+/* --- dpkg / .bin / .run / compilación / alien --- */
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Con qué opción de <code>dpkg</code> se instala un paquete .deb?",o:["dpkg -r","dpkg -l","dpkg -i","dpkg -p"],a:2,e:"El PDF indica: <code>dpkg -i &lt;nombre.deb&gt;</code> instala el paquete .deb."},
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Con qué opción de <code>dpkg</code> se desinstala un paquete .deb?",o:["dpkg -i","dpkg -r","dpkg -d","dpkg -x"],a:1,e:"El PDF indica: <code>dpkg -r &lt;nombre.deb&gt;</code> desinstala el paquete."},
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Qué aplicación gráfica instala paquetes .deb buscando dependencias al hacer doble clic?",o:["Synaptic","gdebi","aptitude","dpkg-gui"],a:1,e:"El PDF indica: «al hacer doble clic sobre un .deb se lanzará automáticamente la aplicación <strong>gdebi</strong>.»"},
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Qué pasos se siguen para instalar un paquete .bin?",o:["Descomprimir y ejecutar make install","Dar permisos de ejecución (chmod +x) y luego ejecutarlo (./nombre.bin)","Ejecutar dpkg -i y configure","Ejecutar sh .run y make"],a:1,e:"El PDF indica: a) <code>sudo chmod +x [nombre].bin</code> y b) <code>sudo ./[nombre].bin</code>."},
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Cómo se instala un paquete .run?",o:["chmod +x && ./.run","sh ./[archivo].run","dpkg -i archivo.run","tar xf archivo.run && ./configure"],a:1,e:"El PDF indica: <code>sh ./[archivo].run</code>"},
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Qué metapaquete hay que instalar en Ubuntu para compilar código fuente?",o:["gcc-tools","dev-tools","build-essential","compile-tools"],a:2,e:"El PDF indica: «Lo primero es instalar el meta-paquete llamado <strong>build-essential</strong>.»"},
+{c:"dpkg / .bin / .run / compilación / alien",q:"En la compilación, ¿qué hace el script <code>configure</code>?",o:["Compila el código","Instala la aplicación","Comprueba características del sistema y crea el makefile","Descarga dependencias"],a:2,e:"El PDF indica: «<strong>configure</strong> comprueba las características del sistema que afectan a la compilación y crea el archivo makefile.»"},
+{c:"dpkg / .bin / .run / compilación / alien",q:"En la compilación, ¿qué hace el comando <code>make</code>?",o:["Crea el makefile","Se encarga de la compilación","Instala la aplicación","Descomprime el código fuente"],a:1,e:"El PDF indica: «El comando <strong>make</strong> es el encargado de la compilación.»"},
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Para qué sirve la herramienta <code>alien</code>?",o:["Instalar paquetes .bin","Convertir paquetes .rpm a .deb para instalarlos en Ubuntu","Compilar código fuente","Administrar repositorios externos"],a:1,e:"El PDF indica: «Para instalar paquetes .rpm en Ubuntu es preciso convertirlos al formato .deb usando la aplicación <strong>alien</strong>.»"},
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Qué distribuciones usan paquetes .rpm según el PDF?",o:["Ubuntu y Debian","Red-Hat y Mandriva","Arch y Gentoo","Fedora y Ubuntu"],a:1,e:"El PDF indica: «Distribuciones como <strong>Red-Hat</strong> y <strong>Mandriva</strong> usan paquetes .rpm.»"},
+{c:"dpkg / .bin / .run / compilación / alien",q:"¿Qué ventaja tiene usar <code>checkinstall</code> en lugar de <code>sudo make install</code>?",o:["Es más rápido","Crea un paquete .deb permitiendo que el sistema lo controle y facilite la desinstalación","No requiere compilación","Instala dependencias automáticamente"],a:1,e:"El PDF indica: «<strong>checkinstall</strong> crea un paquete .deb de forma que el sistema tendrá constancia, facilitando también su desinstalación.»"},
+/* --- METACARACTERES --- */
+{c:"Metacaracteres",q:"¿Qué son los metacaracteres?",o:["Caracteres para nombrar ficheros","Caracteres interpretados con significado especial, no literal, en la shell o expresiones regulares","Variables del sistema","Comandos especiales del shell"],a:1,e:"El PDF define: «Los metacaracteres son caracteres que, en una expresión regular, son interpretados en su significado especial y no como los caracteres que normalmente representan.»"},
+{c:"Metacaracteres",q:"¿Qué representa el metacaracter <code>*</code> en la shell?",o:["Exactamente un carácter","Cero o más caracteres","Un conjunto de caracteres","Inicio de línea"],a:1,e:"El PDF indica: <strong>*</strong> representa 0 ó más caracteres (ej: chap*.ps)."},
+{c:"Metacaracteres",q:"¿Qué representa el metacaracter <code>?</code> en la shell?",o:["Cero o más caracteres","Carácter especial de preguntas","Un único carácter","Un carácter opcional"],a:2,e:"El PDF indica: el metacaracter <strong>?</strong> representa un único carácter (ej: lab?)."},
+{c:"Metacaracteres",q:"¿Qué representa <code>[a-s]</code>?",o:["Los caracteres a, s y el guión","Un conjunto de caracteres de la a a la s","El carácter exacto 'a-s'","Cero o más letras entre a y s"],a:1,e:"El PDF indica: <strong>[ ]</strong> representa un conjunto de caracteres; [a-s] engloba las letras de la a a la s."},
+{c:"Metacaracteres",q:"¿Qué hace <code>^</code> dentro de corchetes, como en <code>[^3-8]</code>?",o:["Inicio de expresión","Negación: excluye esos caracteres","Eleva al cuadrado el rango","Fin del patrón"],a:1,e:"El PDF indica: <strong>^</strong> dentro de corchetes es el signo de negación."},
+{c:"Metacaracteres",q:"¿Qué hace el metacaracter <code>$</code> en la shell?",o:["Fin de línea","Indica root","Devuelve el contenido de una variable","Separador de comandos"],a:2,e:"El PDF indica: el metacaracter <strong>$</strong> devuelve el contenido de una variable (ej: $USER)."},
+{c:"Metacaracteres",q:"¿Qué hace el metacaracter <code>;</code>?",o:["Inicia un comentario","Permite separar órdenes de forma secuencial","Fin de script","Delimitador de campos"],a:1,e:"El PDF indica: <strong>;</strong> sirve para separar órdenes de forma secuencial (ej: echo $USER;ls)."},
+{c:"Metacaracteres",q:"¿Para qué sirve la barra invertida <code>\\</code> en la shell?",o:["Indica ruta absoluta","Inicia un comentario","Permite continuar en nueva línea o escapar un metacaracter","Redirecciona la salida"],a:2,e:"El PDF indica: <strong>\\</strong> se usa para nueva línea (continuar orden) o para escapar un metacaracter (ej: \\* evita que * sea interpretado como metacaracter)."},
+{c:"Metacaracteres",q:"¿Qué diferencia hay entre <code>\"\"</code> y <code>''</code> en la shell?",o:["No hay diferencia","Las dobles permiten sustitución de variables; las simples las tratan como cadena literal","Las simples permiten sustitución; las dobles no","Ambas permiten sustitución de variables"],a:1,e:"El PDF indica: <strong>\"\"</strong> permiten sustitución de variables; <strong>''</strong> representan cadena literal."},
+{c:"Metacaracteres",q:"¿Qué listará <code>ls dos?</code> si existen dos3, dos4, dosa, dosb?",o:["Todos los ficheros que empiecen por 'dos'","Exactamente esos cuatro ficheros (4 caracteres, empezando por 'dos')","Solo el fichero 'dos?'","Todos los ficheros con cualquier número de caracteres tras 'dos'"],a:1,e:"El PDF indica que <strong>?</strong> representa un único carácter, por lo que <code>ls dos?</code> lista ficheros con exactamente un carácter adicional tras 'dos'."},
+{c:"Metacaracteres",q:"¿Qué secuencia de escape inserta un espacio en blanco con echo/sed?",o:["\\n","\\t","\\b","\\r"],a:2,e:"El PDF indica: <strong>\\b</strong> representa un espacio en blanco al usarse como secuencia de escape."},
+/* --- EXPRESIONES REGULARES --- */
+{c:"Expresiones Regulares",q:"¿Qué es una expresión regular?",o:["Un tipo de variable en bash","Una expresión formada por caracteres y operadores para filtrar/buscar patrones","Un comando especial del shell","Un tipo de permiso en Linux"],a:1,e:"El PDF define: «Una Expresión Regular está formada por caracteres combinados con operadores. Comandos como grep y sed permiten su uso para formar patrones de filtro/búsqueda.»"},
+{c:"Expresiones Regulares",q:"En expresiones regulares, ¿qué significa el operador <code>.</code>?",o:["El carácter punto literal","El directorio actual","Cualquier carácter excepto salto de línea","El fin de la expresión"],a:2,e:"El PDF indica: el operador <strong>.</strong> representa cualquier carácter, excepto salto de línea (ej: L..a puede ser Lana, Losa, Luna)."},
+{c:"Expresiones Regulares",q:"En expresiones regulares, ¿qué indica <code>^x</code>?",o:["Una línea que termina en x","El carácter x repetido","Una línea que empieza por x","La negación de x"],a:2,e:"El PDF indica: <strong>^x</strong> (principio de línea) → una línea que empieza por x."},
+{c:"Expresiones Regulares",q:"En expresiones regulares, ¿qué indica <code>x$</code>?",o:["Una línea que empieza por x","El valor de la variable x","Una línea que acaba en x","x repetido indefinidamente"],a:2,e:"El PDF indica: <strong>x$</strong> (fin de línea) → una línea que acaba en x."},
+{c:"Expresiones Regulares",q:"En expresiones regulares extendidas, ¿qué hace el operador <code>+</code>?",o:["0 ó más repeticiones del elemento precedente","1 ó más repeticiones del elemento precedente","El elemento precedente es opcional","Agrupa elementos"],a:1,e:"El PDF indica: <strong>+</strong> (extendido) — repetición (1 ó más) del elemento precedente (ej: xy+ → xy, xyy, xyyy,…)."},
+{c:"Expresiones Regulares",q:"¿Qué representa <code>xy*</code> en expresiones regulares?",o:["x ó y","x seguido de 0 ó más y: x, xy, xyy, xyyy…","Requiere al menos una y","Repite x y"],a:1,e:"El PDF indica: <strong>*</strong> — repetición (0 ó más) del elemento precedente. xy* puede ser: x, xy, xyy, xyyy,…"},
+{c:"Expresiones Regulares",q:"¿Qué representa la expresión <code>[0-9]{5}</code>?",o:["Un número de exactamente 5 dígitos","Un número con al menos 5 dígitos","Un número entre 0 y 5","Un rango de 5 caracteres"],a:0,e:"El PDF indica: <code>[0-9]{5}</code> — el elemento precedente se repite n (5) veces: sirve para representar un número de 5 dígitos."},
+{c:"Expresiones Regulares",q:"¿Qué representa <code>[0-9]{3,}</code>?",o:["Exactamente 3 dígitos","Entre 3 y 9 dígitos","Un número con al menos 3 dígitos","Un número de como máximo 3 dígitos"],a:2,e:"El PDF indica: <code>[0-9]{3,}</code> — el elemento precedente se repite al menos 3 veces: representa un número con al menos 3 dígitos."},
+{c:"Expresiones Regulares",q:"¿Qué representa <code>[a-zA-Z]{2,4}</code>?",o:["Exactamente 3 letras","Entre 2 y 4 letras (mayúsculas o minúsculas)","Al menos 4 letras","Un rango variable de letras"],a:1,e:"El PDF indica: <code>[a-zA-Z]{2,4}</code> — el elemento precedente se repite entre n (2) y m (4) veces: una palabra con entre dos y cuatro caracteres."},
+{c:"Expresiones Regulares",q:"¿Con qué opción de <code>grep</code> o <code>sed</code> se usan expresiones regulares extendidas?",o:["grep -r / sed -e","grep -E / sed -r","grep -x / sed -x","grep -P / sed -E"],a:1,e:"El PDF indica que los operadores extendidos (|, +, ?, grupos ()) son «sólo disponibles con <strong>sed -r</strong> y <strong>grep -E</strong>»."},
+{c:"Expresiones Regulares",q:"¿Qué representa el operador <code>|</code> en expresiones regulares extendidas?",o:["La tubería (pipe) de bash","El alternativo: x|y|z significa x ó y ó z","La concatenación de patrones","El operador de fin de expresión"],a:1,e:"El PDF indica: el operador <strong>|</strong> (Alternativo) — x|y|z significa x ó y ó z."},
+{c:"Expresiones Regulares",q:"¿Qué hace <code>(xy)+</code> en expresiones regulares extendidas?",o:["x seguido de una o más y","Coincide con xy, xyxy, xyxyxy… (grupo repetido 1 o más veces)","x o y","Exactamente xy"],a:1,e:"El PDF indica: <code>(xy)+</code> con agrupamiento () y repetición + → xy, xyxy, xyxyxy,…"},
+{c:"Expresiones Regulares",q:"¿Qué representa <code>[^A-KM-Z]ove</code>?",o:["Cualquier letra seguida de 'ove'","Cualquier carácter NO contenido entre A-K y M-Z seguido de 'ove' (ej: Love)","Solo la cadena 'ove'","Cualquier vocal seguida de 'ove'"],a:1,e:"El PDF indica: <code>[^]</code> es cualquier carácter no contenido. Ejemplo: [^A-KM-Z]ove → Love (L no está en A-K ni M-Z)."},
+/* --- Escenarios prácticos --- */
+{c:"Escenarios prácticos",q:"Quieres ver las últimas 20 líneas de /var/log/secure. ¿Qué comando usas?",o:["head -20 /var/log/secure","cat -20 /var/log/secure","tail -20 /var/log/secure","more -20 /var/log/secure"],a:2,e:"El PDF muestra el ejemplo exacto: <code># tail -20 /var/log/secure</code>."},
+{c:"Escenarios prácticos",q:"Necesitas empaquetar y comprimir /etc en /tmp/etc.tgz. ¿Qué comando usas?",o:["gzip -r /etc > /tmp/etc.tgz","tar xvfz /tmp/etc.tgz /etc","tar cvfz /tmp/etc.tgz /etc","zip -r /tmp/etc.tgz /etc"],a:2,e:"El PDF muestra el ejemplo exacto: <code>tar cvfz /tmp/etc.tgz /etc</code>."},
+{c:"Escenarios prácticos",q:"Quieres buscar todos los ficheros llamados 'core' en el sistema y borrarlos de forma interactiva.",o:["grep -r core / | rm -i","rm -ri core","find / -name core -exec rm -i '{}' ';'","find / -name core -delete"],a:2,e:"El PDF muestra: <code>find / -name core -exec rm -i \"{}\" \";\"</code> — busca ficheros core y los borra interactivamente."},
+{c:"Escenarios prácticos",q:"Quieres contar cuántas líneas tiene /etc/passwd. ¿Qué comando usas?",o:["cat -l /etc/passwd","grep -c '' /etc/passwd","wc -l /etc/passwd","sort -c /etc/passwd"],a:2,e:"El PDF muestra el ejemplo: <code>wc -l /etc/passwd</code> — cuenta solo las líneas del fichero."},
+{c:"Escenarios prácticos",q:"Quieres crear la estructura <code>casa/techo/paredes/sillas</code> de una sola vez. ¿Qué comando usas?",o:["mkdir casa techo paredes sillas","mkdir -r casa/techo/paredes/sillas","mkdir -p casa/techo/paredes/sillas","mkdir --all casa/techo/paredes/sillas"],a:2,e:"El PDF muestra el ejemplo exacto: <code>mkdir -p casa/techo/paredes/sillas</code> crea los directorios intermedios con -p."},
+{c:"Escenarios prácticos",q:"Como administrador, quieres enviar un aviso de apagado a TODOS los usuarios conectados. ¿Qué comando usas?",o:["write all","mesg y","wall","write * tty"],a:2,e:"El PDF define que <strong>wall</strong> envía un mensaje a todos los usuarios conectados con mesg y activo."},
+{c:"Escenarios prácticos",q:"Quieres ver el contenido de /etc/services de la línea 4 a la 20. ¿Qué comando usas?",o:["cat -n 4,20 /etc/services","head -20 | tail -17 /etc/services","sed -ne \"4,20p\" /etc/services","grep -n '4,20' /etc/services"],a:2,e:"El PDF muestra el ejemplo exacto: <code>sed -ne \"4,20p\" /etc/services</code>."},
+{c:"Escenarios prácticos",q:"Quieres ver en tiempo real cómo crece /var/log/messages. ¿Qué comando usas?",o:["cat -f /var/log/messages","less /var/log/messages","tail -f /var/log/messages","head -f /var/log/messages"],a:2,e:"El PDF muestra el ejemplo: <code>tail -f /var/log/messages</code> — continúa visualizando el final del fichero hasta Ctrl+C."},
+{c:"Escenarios prácticos",q:"Quieres instalar un paquete .rpm en Ubuntu. ¿Qué herramienta usas?",o:["dpkg --convert","rpm2deb","alien","aptitude install"],a:2,e:"El PDF indica que la herramienta <strong>alien</strong> convierte paquetes .rpm al formato .deb para poder instalarlos en Ubuntu."}
+];
+
+/* ===================================================================
+   MOTOR DEL QUIZ
+=================================================================== */
+let qs=[],cur=0,ans=[],timerSec=0,timerInt=null;
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function toggleTheme(){document.body.classList.toggle('light')}
+
+function startTimer(){timerSec=0;timerInt=setInterval(()=>{timerSec++;const m=String(Math.floor(timerSec/60)).padStart(2,'0'),s=String(timerSec%60).padStart(2,'0');const el=document.getElementById('timerEl');el.textContent=`⏱ ${m}:${s}`;el.classList.toggle('urgent',timerSec>5400)},1000)}
+function stopTimer(){clearInterval(timerInt)}
+
+function startQuiz(){
+  qs=shuffle(Q);ans=new Array(qs.length).fill(-1);cur=0;
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('progWrap').style.display='block';
+  document.getElementById('qCard').style.display='block';
+  document.getElementById('navEl').style.display='flex';
+  document.getElementById('resultsEl').style.display='none';
+  startTimer();render();
+}
+
+function render(){
+  const q=qs[cur],tot=qs.length,pct=Math.round(((cur+1)/tot)*100);
+  document.getElementById('progLabel').textContent=`Pregunta ${cur+1} de ${tot}`;
+  document.getElementById('progPct').textContent=pct+'%';
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('qCat').textContent=q.c;
+  document.getElementById('qNum').textContent=`Pregunta ${cur+1}`;
+  document.getElementById('qText').innerHTML=q.q;
+  const ltrs=['A','B','C','D'];
+  const oc=document.getElementById('optsEl');oc.innerHTML='';
+  q.o.forEach((opt,i)=>{
+    const d=document.createElement('div');d.className='opt';d.dataset.i=i;
+    d.innerHTML=`<span class="opt-ltr">${ltrs[i]}</span><span class="opt-txt">${opt}</span>`;
+    d.addEventListener('click',()=>pick(i));oc.appendChild(d);
+  });
+  const exp=document.getElementById('expEl');exp.className='exp';exp.innerHTML='';
+  if(ans[cur]!==-1)applyStyles(ans[cur],false);
+  document.getElementById('btnPrev').disabled=cur===0;
+  document.getElementById('btnNext').textContent=cur===tot-1?'Ver resultados →':'Siguiente →';
+}
+
+function pick(i){
+  if(ans[cur]!==-1)return;ans[cur]=i;applyStyles(i,true);
+}
+
+function applyStyles(sel,anim){
+  const q=qs[cur];
+  document.querySelectorAll('.opt').forEach(d=>{
+    d.classList.add('locked');
+    const i=parseInt(d.dataset.i);
+    if(i===q.a)d.classList.add('ok');
+    else if(i===sel&&sel!==q.a)d.classList.add('ko');
+  });
+  const exp=document.getElementById('expEl');
+  exp.innerHTML=`<strong>${sel===q.a?'✅ ¡Correcto!':'❌ Incorrecto'}</strong> ${q.e}`;
+  exp.className=`exp show${sel===q.a?'':' bad'}`;
+}
+
+function navigate(d){
+  const n=cur+d;if(n>=qs.length){showResults();return}if(n<0)return;cur=n;render();window.scrollTo(0,0);
+}
+
+function confirmFinish(){
+  const rem=ans.filter(a=>a===-1).length;
+  if(rem>0&&!confirm(`Tienes ${rem} pregunta(s) sin responder. ¿Finalizar de todas formas?`))return;
+  showResults();
+}
+
+function showResults(){
+  stopTimer();
+  document.getElementById('progWrap').style.display='none';
+  document.getElementById('qCard').style.display='none';
+  document.getElementById('navEl').style.display='none';
+  const tot=qs.length;let correct=0;
+  const cs={};
+  qs.forEach((q,i)=>{
+    if(!cs[q.c])cs[q.c]={t:0,c:0};cs[q.c].t++;
+    if(ans[i]===q.a){correct++;cs[q.c].c++;}
+  });
+  const wrong=ans.filter(a=>a!==-1).length-correct;
+  const pct=Math.round(correct/tot*100);
+  const nota=(correct/tot*10).toFixed(1);
+  const mm=String(Math.floor(timerSec/60)).padStart(2,'0'),ss=String(timerSec%60).padStart(2,'0');
+  const cls=pct>=75?'great':pct>=50?'ok':'bad';
+  const emoji=pct>=75?'🎉':pct>=50?'👍':'💪';
+  let catH='';
+  Object.entries(cs).forEach(([cat,d])=>{
+    const p=Math.round(d.c/d.t*100);
+    catH+=`<div class="cat-row"><span class="cat-name">${cat}</span><div class="cat-bg"><div class="cat-fill" style="width:${p}%"></div></div><span class="cat-score">${d.c}/${d.t}</span></div>`;
+  });
+  const r=document.getElementById('resultsEl');
+  r.innerHTML=`
+    <h2>${emoji} Resultados del test</h2>
+    <p style="color:var(--text2);margin-bottom:8px">Tiempo total: <strong>${mm}:${ss}</strong></p>
+    <div class="score-ring ${cls}">
+      <span class="s-num" style="color:${pct>=75?'var(--green)':pct>=50?'var(--yellow)':'var(--red)'}">${pct}%</span>
+      <span class="s-lbl">Puntuación</span>
+    </div>
+    <div class="stats">
+      <div class="stat sc"><div class="sv">${correct}</div><div class="sd">Aciertos</div></div>
+      <div class="stat sw"><div class="sv">${wrong}</div><div class="sd">Fallos</div></div>
+      <div class="stat sp"><div class="sv">${ans.filter(a=>a!==-1).length}</div><div class="sd">Respondidas</div></div>
+      <div class="stat sn"><div class="sv">${nota}</div><div class="sd">Nota / 10</div></div>
+    </div>
+    <div class="cat-sec"><h3>📊 Resultados por categoría</h3>${catH}</div>
+    <button class="btn btn-restart" onclick="restartQuiz()">🔄 Reiniciar test</button>`;
+  r.style.display='block';window.scrollTo(0,0);
+}
+
+function restartQuiz(){
+  document.getElementById('resultsEl').style.display='none';
+  document.getElementById('startScreen').style.display='block';
+}
+</script>
+</body>
+</html>
