@@ -1,14 +1,5 @@
 
 
-def mostrar_clasificacion(liga:list):
-    print("-----------------------------------------------------------------------------------------------")
-    print(f"Competicion: La Liga eaSports - Clasificacion a dia ")
-    print("-----------------------------------------------------------------------------------------------")
-    print(f"{'EQUIPO':25}|{'pTS':^8} |{'PJ':^4} | {'PG':^5} | {'PE':^5}| {'PP':^5}| {'GF':^5}| {'GC':^5}")
-    print("-----------------------------------------------------------------------------------------------")
-
-
-
   
 def resultado_equipo(equipo1 , equipo2 , goleseq1 , goleseq2 ):
   
@@ -62,22 +53,57 @@ def resultado_equipo(equipo1 , equipo2 , goleseq1 , goleseq2 ):
       empate = True 
   
 
-   
 
-
-   
-
-def mostrar_tabla(liga:list):
+def mostrar_clasificacion(liga: list):
     
-  lista_auxi = []
-  for i in range(len(liga)):
-      #ordenaro por  puntos el de mayor puntaje en la cima y en caso de empate poniendo arriba el que tenga una mayor diferencia de goles (Goles a favor - Goles en Contra)
-      #sabemos que la poscion de puntos es de 1 
-      lista_auxi.append(liga[i][1])
+
+    for i in range(len(liga)):
+
+        for j in range(0,len(liga) - 1 ):
 
 
-  print(sorted(lista_auxi))
-  
+            equipo_actual = liga[j]
+            equipo_siguiente = liga[j + 1]
+
+            pts_actual = equipo_actual[1]
+            dif_actual = equipo_actual[6] - equipo_actual[7]
+
+            pts_siguiente = equipo_siguiente[1]
+            dif_siguiente = equipo_siguiente[6] - equipo_siguiente[7]
+
+
+            intercambiar = False
+
+            if  pts_siguiente > pts_actual:
+                intercambiar = True 
+
+            elif pts_siguiente == pts_actual and dif_siguiente > dif_actual :
+                intercambiar = True 
+
+
+            if intercambiar :
+
+                liga[j] = equipo_siguiente
+                liga[j+1] = equipo_actual
+        
+    
+
+
+
+    # --- DISEÑO DE LA TABLA ---
+    from datetime import date
+    fecha = date.today().strftime("%d-%m-%y")
+
+    print("-" * 95)
+    print(f"Competicion: La Liga eaSports - Clasificacion a dia {fecha}")
+    print("-" * 95)
+    print(f"{'EQUIPO':25}|{'pTS':^8} |{'PJ':^4} | {'PG':^5} | {'PE':^5}| {'PP':^5}| {'GF':^5}| {'GC':^5}")
+    print("-" * 95)
+
+    for i in range(len(liga)):
+        print(f"{liga[i][0]:25}|{liga[i][1]:^8} |{liga[i][2]:^4} | {liga[i][3]:^5} | {liga[i][4]:^5}| {liga[i][5]:^5}| {liga[i][6]:^5}| {liga[i][7]:^5}")
+   
+
    
      
 
@@ -91,8 +117,7 @@ liga = [["Atletico de Madrid" , 0 , 0 , 0 , 0 ,0,0,0],
         ["Real Madrid FC", 0, 0, 0, 0, 0, 0, 0],
         ]
 
-mostrar_clasificacion(liga)
 resultado_equipo("Atletico de Madrid","Real Betis CF",2,1)
 resultado_equipo("Sevilla","Barcelona FC",4,1)
+mostrar_clasificacion(liga)
 
-print(mostrar_tabla(liga))
