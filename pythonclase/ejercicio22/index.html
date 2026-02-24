@@ -1,0 +1,2565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicios de Programación</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #161920;
+    --surface2: #1e2230;
+    --border: #2a2f42;
+    --accent: #f0c040;
+    --accent2: #4cf0a0;
+    --accent3: #f06090;
+    --text: #e8eaf0;
+    --muted: #6b7494;
+    --easy: #4cf0a0;
+    --medium: #f0c040;
+    --hard: #f06090;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(240,192,64,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,192,64,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    position: relative;
+    z-index: 10;
+    padding: 2rem 3rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(13,15,20,0.9);
+    backdrop-filter: blur(10px);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo-icon {
+    width: 42px; height: 42px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: #000;
+    font-size: 1.1rem;
+  }
+
+  .logo-text h1 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .logo-text span {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .header-tags {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .tag-easy { background: rgba(76,240,160,0.12); color: var(--easy); border: 1px solid rgba(76,240,160,0.3); }
+  .tag-medium { background: rgba(240,192,64,0.12); color: var(--medium); border: 1px solid rgba(240,192,64,0.3); }
+  .tag-hard { background: rgba(240,96,144,0.12); color: var(--hard); border: 1px solid rgba(240,96,144,0.3); }
+
+  /* ===== MAIN ===== */
+  main {
+    position: relative;
+    z-index: 5;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  /* ===== INTRO / DASHBOARD ===== */
+  #dashboard {
+    animation: fadeIn 0.5s ease;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(240,192,64,0.1);
+    border: 1px solid rgba(240,192,64,0.3);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hero h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .hero h2 span { color: var(--accent); }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* TOPIC CARDS */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .topic-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--card-color, var(--accent));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+  }
+
+  .topic-card:hover { 
+    border-color: rgba(240,192,64,0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+
+  .topic-card:hover::before { transform: scaleX(1); }
+
+  .topic-card.selected {
+    border-color: var(--card-color, var(--accent));
+    background: rgba(240,192,64,0.05);
+  }
+
+  .topic-card.selected::before { transform: scaleX(1); }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .card-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .topic-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .topic-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .card-tag {
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    background: var(--surface2);
+    color: var(--muted);
+  }
+
+  /* FILTERS */
+  .filters-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filters-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .filter-btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .filter-btn.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+
+  .filter-btn.active-easy { background: var(--easy); color: #000; border-color: var(--easy); font-weight:700; }
+  .filter-btn.active-medium { background: var(--medium); color: #000; border-color: var(--medium); font-weight:700; }
+  .filter-btn.active-hard { background: var(--hard); color: #fff; border-color: var(--hard); font-weight:700; }
+
+  /* START BTN */
+  .start-section {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .btn-start {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 2.5rem;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(240,192,64,0.4);
+  }
+
+  .btn-start:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ===== EXERCISE VIEW ===== */
+  #exercise-view {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  /* TOP BAR */
+  .exercise-topbar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-back {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-back:hover { border-color: var(--text); color: var(--text); }
+
+  .ex-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+  }
+
+  .ex-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    min-width: 100px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .difficulty-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* EXERCISE CARD */
+  .exercise-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .exercise-card-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--surface2);
+  }
+
+  .ex-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+  }
+
+  .ex-topic {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .exercise-card-body {
+    padding: 2rem;
+  }
+
+  .exercise-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .exercise-desc {
+    font-size: 0.95rem;
+    color: #c0c4d6;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  /* EXAMPLE BOX */
+  .example-box {
+    background: #0a0c10;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .example-box-header {
+    padding: 0.6rem 1rem;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-red { background: #f06060; }
+  .dot-yellow { background: #f0c040; }
+  .dot-green { background: #4cf0a0; }
+
+  .example-box pre {
+    padding: 1.2rem;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: #a0e4c0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  /* HINTS */
+  .hints-box {
+    background: rgba(76,240,160,0.05);
+    border: 1px solid rgba(76,240,160,0.2);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hints-box h4 {
+    font-size: 0.8rem;
+    color: var(--accent2);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+
+  .hints-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .hints-box li {
+    font-size: 0.85rem;
+    color: #8ab4a0;
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .hints-box li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent2);
+    font-size: 0.75rem;
+  }
+
+  /* REQUIREMENTS */
+  .requirements {
+    background: rgba(240,192,64,0.05);
+    border: 1px solid rgba(240,192,64,0.2);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .requirements h4 {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+
+  .req-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.4rem 0;
+  }
+
+  .req-check {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .req-check.checked {
+    background: var(--accent2);
+    border-color: var(--accent2);
+  }
+
+  .req-check.checked::after {
+    content: '✓';
+    font-size: 0.7rem;
+    color: #000;
+    font-weight: 900;
+  }
+
+  .req-text {
+    font-size: 0.85rem;
+    color: #c0c4d6;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .req-text.done { 
+    color: var(--muted); 
+    text-decoration: line-through; 
+  }
+
+  /* SOLUTION toggle */
+  .solution-section {
+    margin-top: 1.5rem;
+  }
+
+  .btn-solution {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: 1px dashed var(--border);
+    color: var(--muted);
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-solution:hover { border-color: var(--accent3); color: var(--accent3); }
+
+  .solution-code {
+    display: none;
+    margin-top: 1rem;
+    background: #0a0c10;
+    border: 1px solid rgba(240,96,144,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .solution-code.visible { display: block; animation: fadeIn 0.3s ease; }
+
+  .solution-header {
+    padding: 0.6rem 1rem;
+    background: rgba(240,96,144,0.1);
+    border-bottom: 1px solid rgba(240,96,144,0.2);
+    font-size: 0.7rem;
+    color: var(--accent3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .solution-code pre {
+    padding: 1.2rem;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: #e8d0e0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  /* NAVIGATION */
+  .nav-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-nav {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-nav:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .btn-nav-primary {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+
+  .btn-nav-primary:hover:not(:disabled) { 
+    box-shadow: 0 4px 20px rgba(240,192,64,0.4);
+    transform: translateY(-1px);
+    color: #000;
+  }
+
+  /* RANDOM button */
+  .btn-random {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-random:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* ===== MINI MODAL ===== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+  }
+
+  .modal h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .modal p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+  .modal-btns { display: flex; gap: 1rem; justify-content: center; }
+
+  /* ANIMATIONS */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header { padding: 1rem 1.5rem; }
+    main { padding: 2rem 1rem; }
+    .header-tags { display: none; }
+    .exercise-card-body { padding: 1.2rem; }
+    .nav-buttons { flex-wrap: wrap; }
+  }
+
+  /* SYNTAX HIGHLIGHT colors */
+  .kw { color: #f06090; }
+  .fn { color: #4cf0a0; }
+  .str { color: #f0c040; }
+  .cm { color: #555c80; font-style: italic; }
+  .num { color: #90c0f0; }
+  .cls { color: #a0d0ff; }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+  }
+
+  .stat-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .shuffle-indicator {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .topic-selector-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .select-all-btn {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">&lt;/&gt;</div>
+    <div class="logo-text">
+      <h1>DevExercises</h1>
+      <span>Boletines 21 &amp; 22</span>
+    </div>
+  </div>
+  <div class="header-tags">
+    <span class="tag tag-easy">Básico</span>
+    <span class="tag tag-medium">Intermedio</span>
+    <span class="tag tag-hard">Avanzado</span>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+    <div class="hero">
+      <div class="hero-badge">📚 BOLETINES 21 &amp; 22</div>
+      <h2>Practica con<br><span>ejercicios reales</span></h2>
+      <p>Ejercicios de todos los niveles sobre fechas/horas, listas, salida formateada y estructuras de datos.</p>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-dot" style="background:var(--easy)"></div><span id="count-easy">0</span>&nbsp;básicos</div>
+      <div class="stat"><div class="stat-dot" style="background:var(--medium)"></div><span id="count-medium">0</span>&nbsp;intermedios</div>
+      <div class="stat"><div class="stat-dot" style="background:var(--hard)"></div><span id="count-hard">0</span>&nbsp;avanzados</div>
+      <div class="stat" style="margin-left:auto;"><span id="count-total">0</span>&nbsp;ejercicios en total</div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters-row">
+      <span class="filters-label">Nivel:</span>
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">Todos</button>
+      <button class="filter-btn" data-filter="easy" onclick="setFilter('easy',this)">Básico</button>
+      <button class="filter-btn" data-filter="medium" onclick="setFilter('medium',this)">Intermedio</button>
+      <button class="filter-btn" data-filter="hard" onclick="setFilter('hard',this)">Avanzado</button>
+    </div>
+
+    <!-- TOPIC CARDS -->
+    <span class="topic-selector-label">Selecciona temario: <button class="select-all-btn" onclick="selectAllTopics()">Seleccionar todos</button></span>
+    <div class="topics-grid" id="topics-grid"></div>
+
+    <div class="start-section">
+      <button class="btn-start" id="btn-start" onclick="startExercises()">
+        ⚡ Empezar ejercicios
+      </button>
+      <p style="color:var(--muted);font-size:0.8rem;margin-top:0.8rem;" id="start-hint">Selecciona al menos un tema para comenzar</p>
+    </div>
+  </div>
+
+  <!-- EXERCISE VIEW -->
+  <div id="exercise-view">
+    <div class="exercise-topbar">
+      <button class="btn-back" onclick="backToDashboard()">← Volver</button>
+      <div class="ex-meta">
+        <span class="ex-counter" id="ex-counter">1 / 10</span>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="difficulty-badge" id="diff-badge"></div>
+      <button class="btn-random" onclick="goRandom()" title="Ejercicio aleatorio">🎲 Random</button>
+    </div>
+
+    <div class="exercise-card" id="exercise-card">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" id="btn-prev" onclick="navigate(-1)">← Anterior</button>
+      <button class="btn-nav btn-nav-primary" id="btn-next" onclick="navigate(1)">Siguiente →</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">¡Fin de los ejercicios!</h3>
+    <p id="modal-msg">Has completado todos los ejercicios seleccionados.</p>
+    <div class="modal-btns">
+      <button class="btn-nav" onclick="closeModal()">Cerrar</button>
+      <button class="btn-nav btn-nav-primary" onclick="restartExercises()">🔄 Reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// BANCO DE EJERCICIOS
+// ============================================================
+const EXERCISES = [
+
+  // ==================== TEMA: FECHAS Y HORAS ====================
+
+  {
+    id: 1,
+    topic: 'Fechas y Horas',
+    topicKey: 'fechas',
+    difficulty: 'easy',
+    title: 'Fecha y hora actual',
+    description: 'Escribe un programa que obtenga y muestre la fecha y hora actuales del sistema en un formato legible. La salida debería ser algo como: "Hoy es 04 del 02 de 2026 a las 17:47".',
+    example: `# Salida esperada:
+Hoy es 04 del 02 de 2026 a las 17:47`,
+    hints: [
+      'Usa la librería datetime de Python (from datetime import datetime)',
+      'El método datetime.now() te da la fecha y hora actuales',
+      'Usa strftime() para formatear la salida',
+    ],
+    requirements: [
+      'Importar la librería datetime',
+      'Obtener la fecha/hora actual con datetime.now()',
+      'Formatear y mostrar la fecha de forma legible',
+    ],
+    solution: `from datetime import datetime
+
+ahora = datetime.now()
+print(f"Hoy es {ahora.day:02d} del {ahora.month:02d} de {ahora.year} a las {ahora.hour:02d}:{ahora.minute:02d}")`,
+  },
+
+  {
+    id: 2,
+    topic: 'Fechas y Horas',
+    topicKey: 'fechas',
+    difficulty: 'easy',
+    title: 'Sumar días a una fecha',
+    description: 'Dada una fecha cualquiera, escribe un programa que calcule y muestre qué fecha será 200 días después.',
+    example: `# Entrada:
+fecha = date(2026, 2, 4)
+
+# Salida esperada:
+200 días después será: 23/08/2026`,
+    hints: [
+      'Usa timedelta para sumar días: timedelta(days=200)',
+      'Puedes importar: from datetime import date, timedelta',
+      'Accede al resultado directamente con fecha + timedelta(days=200)',
+    ],
+    requirements: [
+      'Definir una fecha inicial',
+      'Crear un timedelta de 200 días',
+      'Sumar y mostrar el resultado',
+    ],
+    solution: `from datetime import date, timedelta
+
+fecha = date(2026, 2, 4)
+nueva_fecha = fecha + timedelta(days=200)
+print(f"200 días después será: {nueva_fecha.day:02d}/{nueva_fecha.month:02d}/{nueva_fecha.year}")`,
+  },
+
+  {
+    id: 3,
+    topic: 'Fechas y Horas',
+    topicKey: 'fechas',
+    difficulty: 'medium',
+    title: 'Citas del taller (Boletín 21 - Ejercicio 1)',
+    description: 'Programa para un taller de coches. Una vez que se realiza una revisión, se deben programar las 6 siguientes citas con un intervalo de 200 días entre cada una. La primera cita es la fecha y hora actuales.',
+    example: `# Salida esperada:
+Registro y primera cita: 4 del 02 de 2026 a las 17:47
+Siguientes citas:
+1 - 23 del 08 de 2026
+2 – 11 del 03 de 2027
+3 – 27 del 09 de 2027
+4 – 14 del 04 de 2028
+5 – 31 del 10 de 2028
+6 – 19 del 05 de 2029`,
+    hints: [
+      'La fecha de registro es datetime.now()',
+      'Usa un bucle for de 1 a 6 para generar las siguientes citas',
+      'Suma 200 * i días a la fecha de registro para cada cita i',
+      'Muestra la primera cita con hora, el resto solo con fecha',
+    ],
+    requirements: [
+      'Obtener fecha/hora actual como primera cita',
+      'Mostrar la primera cita con hora incluida',
+      'Generar y mostrar 6 citas adicionales cada 200 días',
+      'Formatear correctamente la salida',
+    ],
+    solution: `from datetime import datetime, timedelta
+
+ahora = datetime.now()
+print(f"Registro y primera cita: {ahora.day} del {ahora.month:02d} de {ahora.year} a las {ahora.hour:02d}:{ahora.minute:02d}")
+print("Siguientes citas:")
+
+for i in range(1, 7):
+    siguiente = ahora + timedelta(days=200 * i)
+    print(f"{i} - {siguiente.day} del {siguiente.month:02d} de {siguiente.year}")`,
+  },
+
+  {
+    id: 4,
+    topic: 'Fechas y Horas',
+    topicKey: 'fechas',
+    difficulty: 'medium',
+    title: 'Validar fechas con excepciones (Boletín 21 - Ejercicio 2)',
+    description: 'Dada una lista con cadenas de texto que deberían ser fechas en formato dd/mm/yy, usa excepciones para separar las que son fechas válidas de las que no lo son. Muestra por separado las correctas y las incorrectas.',
+    example: `# Lista de prueba:
+["13/02/25", "hola carmela", "12 34 56", "14/06/2026", "bra, bra", "56/13/26"]
+
+# Salida esperada:
+Fechas correctas:
+  "13/02/25"
+  "14/06/2026"
+
+Fechas incorrectas:
+  "hola carmela"
+  "12 34 56"
+  "bra, bra"
+  "56/13/26"`,
+    hints: [
+      'Usa datetime.strptime(cadena, "%d/%m/%y") para parsear',
+      'Prueba también con el formato "%d/%m/%Y" (año de 4 dígitos)',
+      'Envuelve el parseo en try/except ValueError',
+      'Guarda los resultados en dos listas: correctas e incorrectas',
+    ],
+    requirements: [
+      'Definir la lista de cadenas',
+      'Intentar parsear cada cadena como fecha',
+      'Clasificar en correctas e incorrectas usando excepciones',
+      'Mostrar cada grupo por separado',
+    ],
+    solution: `from datetime import datetime
+
+cadenas = ["13/02/25", "hola carmela", "12 34 56", "14/06/2026", "bra, bra", "56/13/26"]
+
+correctas = []
+incorrectas = []
+
+for c in cadenas:
+    parseado = False
+    for fmt in ["%d/%m/%y", "%d/%m/%Y"]:
+        try:
+            datetime.strptime(c, fmt)
+            correctas.append(c)
+            parseado = True
+            break
+        except ValueError:
+            pass
+    if not parseado:
+        incorrectas.append(c)
+
+print("Fechas correctas:")
+for f in correctas:
+    print(f'  "{f}"')
+
+print("\\nFechas incorrectas:")
+for f in incorrectas:
+    print(f'  "{f}"')`,
+  },
+
+  {
+    id: 5,
+    topic: 'Fechas y Horas',
+    topicKey: 'fechas',
+    difficulty: 'hard',
+    title: 'Fechas anteriores y posteriores a hoy (Boletín 21 - Ejercicio 3)',
+    description: 'Partiendo del ejercicio anterior (validación de fechas), separa las fechas correctas en dos grupos: las que son anteriores a hoy y las que son posteriores a hoy. Muéstralas por consola con indicación clara de cada grupo.',
+    example: `# Salida esperada (ejemplo con fecha actual 04/02/2026):
+Fechas anteriores a hoy (04/02/2026):
+  "13/02/25"
+
+Fechas posteriores a hoy (04/02/2026):
+  "14/06/2026"`,
+    hints: [
+      'Primero valida las fechas como en el ejercicio anterior',
+      'Compara cada fecha válida con datetime.now() o date.today()',
+      'Usa < y > para comparar objetos datetime',
+      'Necesitarás guardar tanto la cadena como el objeto fecha parseado',
+    ],
+    requirements: [
+      'Reutilizar la lógica de validación del ejercicio 2',
+      'Obtener la fecha actual para comparar',
+      'Clasificar las fechas válidas en anteriores y posteriores',
+      'Mostrar los tres grupos: anteriores, posteriores, incorrectas',
+    ],
+    solution: `from datetime import datetime
+
+cadenas = ["13/02/25", "hola carmela", "12 34 56", "14/06/2026", "bra, bra", "56/13/26"]
+
+hoy = datetime.now()
+anteriores = []
+posteriores = []
+incorrectas = []
+
+for c in cadenas:
+    parseado = None
+    for fmt in ["%d/%m/%y", "%d/%m/%Y"]:
+        try:
+            parseado = datetime.strptime(c, fmt)
+            break
+        except ValueError:
+            pass
+    if parseado is None:
+        incorrectas.append(c)
+    elif parseado < hoy:
+        anteriores.append(c)
+    else:
+        posteriores.append(c)
+
+print(f"Fechas anteriores a hoy ({hoy.strftime('%d/%m/%Y')}):")
+for f in anteriores: print(f'  "{f}"')
+
+print(f"\\nFechas posteriores a hoy ({hoy.strftime('%d/%m/%Y')}):")
+for f in posteriores: print(f'  "{f}"')
+
+print("\\nFechas incorrectas:")
+for f in incorrectas: print(f'  "{f}"')`,
+  },
+
+  {
+    id: 6,
+    topic: 'Fechas y Horas',
+    topicKey: 'fechas',
+    difficulty: 'easy',
+    title: 'Diferencia entre dos fechas',
+    description: 'Escribe un programa que calcule cuántos días han pasado entre dos fechas dadas. Por ejemplo, entre el 1 de enero de 2025 y hoy.',
+    example: `# Ejemplo de salida:
+Desde el 01/01/2025 hasta hoy han pasado 34 días.`,
+    hints: [
+      'Crea dos objetos date() o datetime()',
+      'Réstalos directamente: diferencia = fecha2 - fecha1',
+      'El resultado es un timedelta; accede a .days para los días',
+    ],
+    requirements: [
+      'Definir fecha de inicio',
+      'Obtener fecha actual',
+      'Calcular la diferencia',
+      'Mostrar el resultado en días',
+    ],
+    solution: `from datetime import date
+
+inicio = date(2025, 1, 1)
+hoy = date.today()
+diferencia = hoy - inicio
+print(f"Desde el 01/01/2025 hasta hoy han pasado {diferencia.days} días.")`,
+  },
+
+  {
+    id: 7,
+    topic: 'Fechas y Horas',
+    topicKey: 'fechas',
+    difficulty: 'medium',
+    title: 'Nombre del día de la semana',
+    description: 'Dado un año, mes y día, muestra qué día de la semana cae esa fecha. Por ejemplo: "El 4 de febrero de 2026 es un Miércoles".',
+    example: `# Ejemplo de entrada:
+año = 2026, mes = 2, día = 4
+
+# Salida:
+El 4 de febrero de 2026 es un Miércoles`,
+    hints: [
+      'Usa date(year, month, day).strftime("%A") para el nombre del día en inglés',
+      'O usa .weekday() que devuelve 0=lunes...6=domingo y crea un diccionario de nombres',
+      'Los nombres de días en español los defines tú manualmente',
+    ],
+    requirements: [
+      'Pedir o definir una fecha concreta',
+      'Calcular qué día de la semana es',
+      'Mostrar el nombre del día en español',
+    ],
+    solution: `from datetime import date
+
+dias = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+meses = ['','enero','febrero','marzo','abril','mayo','junio',
+         'julio','agosto','septiembre','octubre','noviembre','diciembre']
+
+año, mes, dia = 2026, 2, 4
+fecha = date(año, mes, dia)
+print(f"El {dia} de {meses[mes]} de {año} es un {dias[fecha.weekday()]}")`,
+  },
+
+  {
+    id: 8,
+    topic: 'Fechas y Horas',
+    topicKey: 'fechas',
+    difficulty: 'hard',
+    title: 'Agenda de citas con formato personalizado',
+    description: 'Crea un programa que genere una agenda de N citas a partir de una fecha de inicio, con un intervalo configurable de días. Las citas deben mostrarse numeradas y con el nombre del día de la semana en español.',
+    example: `# Ejemplo (inicio: hoy, N=4, intervalo=7 días):
+Agenda de citas:
+1 - Miércoles 04 de febrero de 2026
+2 - Miércoles 11 de febrero de 2026
+3 - Miércoles 18 de febrero de 2026
+4 - Miércoles 25 de febrero de 2026`,
+    hints: [
+      'Combina timedelta con un bucle for',
+      'Crea listas con nombres de días y meses en español',
+      'Usa strftime o accede directamente a .day, .month, .year',
+    ],
+    requirements: [
+      'Definir fecha de inicio, número de citas e intervalo',
+      'Generar N fechas incrementando el intervalo',
+      'Mostrar el día de la semana en español',
+      'Mostrar el mes en español',
+    ],
+    solution: `from datetime import datetime, timedelta
+
+dias = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+meses = ['','enero','febrero','marzo','abril','mayo','junio',
+         'julio','agosto','septiembre','octubre','noviembre','diciembre']
+
+inicio = datetime.now()
+n_citas = 4
+intervalo = 7
+
+print("Agenda de citas:")
+for i in range(1, n_citas + 1):
+    cita = inicio + timedelta(days=intervalo * i)
+    dia_sem = dias[cita.weekday()]
+    print(f"{i} - {dia_sem} {cita.day:02d} de {meses[cita.month]} de {cita.year}")`,
+  },
+
+  // ==================== TEMA: LISTAS ====================
+
+  {
+    id: 9,
+    topic: 'Manejo de Listas',
+    topicKey: 'listas',
+    difficulty: 'easy',
+    title: 'Crear e inicializar una lista de equipos',
+    description: 'Crea una lista para representar un equipo de fútbol según el formato del Boletín 22. Cada equipo es una lista con: nombre, puntos, PJ, PG, PE, PP, GF, GC. Todos los valores numéricos empiezan en 0.',
+    example: `# Formato de cada equipo:
+equipo = ["Nombre Equipo", Pts, PJ, PG, PE, PP, GF, GC]
+
+# Ejemplo:
+["Real Madrid FC", 0, 0, 0, 0, 0, 0, 0]`,
+    hints: [
+      'Una lista en Python se define con []',
+      'Los elementos se separan por comas',
+      'El primer elemento es string, el resto números enteros',
+    ],
+    requirements: [
+      'Crear al menos 6 equipos en formato lista',
+      'Almacenar todos en una lista de listas llamada "liga"',
+      'Todos los valores numéricos inicializados a 0',
+    ],
+    solution: `liga = [
+    ["Real Betis CF",       0, 0, 0, 0, 0, 0, 0],
+    ["Atlético de Madrid",  0, 0, 0, 0, 0, 0, 0],
+    ["Sevilla",             0, 0, 0, 0, 0, 0, 0],
+    ["Barcelona FC",        0, 0, 0, 0, 0, 0, 0],
+    ["Rayo Vallecano",      0, 0, 0, 0, 0, 0, 0],
+    ["Real Madrid FC",      0, 0, 0, 0, 0, 0, 0],
+]
+
+print("Liga inicializada con", len(liga), "equipos")`,
+  },
+
+  {
+    id: 10,
+    topic: 'Manejo de Listas',
+    topicKey: 'listas',
+    difficulty: 'easy',
+    title: 'Buscar un equipo en la lista',
+    description: 'Dada la lista de la liga (lista de listas), escribe una función que reciba un nombre de equipo y devuelva su sublista completa, o None si no existe.',
+    example: `# Llamada:
+buscarEquipo("Sevilla")
+
+# Salida:
+["Sevilla", 1, 1, 0, 1, 0, 2, 2]`,
+    hints: [
+      'Itera sobre la lista con un bucle for',
+      'El nombre del equipo es el índice [0] de cada sublista',
+      'Usa return para devolver el equipo encontrado',
+    ],
+    requirements: [
+      'Definir la función buscarEquipo(nombre)',
+      'Recorrer la lista de listas',
+      'Comparar el nombre con el índice [0]',
+      'Devolver el equipo o None si no se encuentra',
+    ],
+    solution: `liga = [
+    ["Real Betis CF",       3, 1, 1, 0, 0, 3, 0],
+    ["Atlético de Madrid",  3, 1, 1, 0, 0, 1, 0],
+    ["Sevilla",             1, 1, 0, 1, 0, 2, 2],
+]
+
+def buscarEquipo(nombre):
+    for equipo in liga:
+        if equipo[0] == nombre:
+            return equipo
+    return None
+
+print(buscarEquipo("Sevilla"))`,
+  },
+
+  {
+    id: 11,
+    topic: 'Manejo de Listas',
+    topicKey: 'listas',
+    difficulty: 'medium',
+    title: 'Función resultadoPartido (Boletín 22 - Ejercicio 1)',
+    description: 'Crea una función resultadosPartido(equipo1, equipo2, goles1, goles2) que actualice la tabla de clasificación. La función debe actualizar puntos, partidos jugados, ganados, empatados, perdidos, goles a favor y goles en contra de ambos equipos.',
+    example: `# Llamada:
+resultadosPartido("Sevilla", "Barcelona FC", 1, 1)
+
+# Resultado para Sevilla:
+["Sevilla", 1, 1, 0, 1, 0, 2, 2]  # 1pto, 1PJ, 0PG, 1PE, 0PP, 2GF, 2GC`,
+    hints: [
+      'Índices: [0]=nombre,[1]=pts,[2]=PJ,[3]=PG,[4]=PE,[5]=PP,[6]=GF,[7]=GC',
+      'Busca cada equipo por nombre en la lista de listas',
+      'Si goles1 > goles2: equipo1 gana (3 pts), equipo2 pierde',
+      'Si goles1 == goles2: empate (1 punto para cada uno)',
+    ],
+    requirements: [
+      'Recibir nombres de dos equipos y sus goles',
+      'Actualizar PJ (+1 para ambos)',
+      'Actualizar GF y GC para ambos',
+      'Asignar puntos según el resultado (victoria=3, empate=1, derrota=0)',
+      'Actualizar PG, PE o PP según corresponda',
+    ],
+    solution: `liga = [
+    ["Real Betis CF",       0, 0, 0, 0, 0, 0, 0],
+    ["Atlético de Madrid",  0, 0, 0, 0, 0, 0, 0],
+    ["Sevilla",             0, 0, 0, 0, 0, 0, 0],
+    ["Barcelona FC",        0, 0, 0, 0, 0, 0, 0],
+    ["Rayo Vallecano",      0, 0, 0, 0, 0, 0, 0],
+    ["Real Madrid FC",      0, 0, 0, 0, 0, 0, 0],
+]
+
+def buscarEquipo(nombre):
+    for e in liga:
+        if e[0] == nombre:
+            return e
+    return None
+
+def resultadosPartido(nombre1, nombre2, goles1, goles2):
+    e1 = buscarEquipo(nombre1)
+    e2 = buscarEquipo(nombre2)
+    if not e1 or not e2:
+        print("Equipo no encontrado")
+        return
+    # PJ
+    e1[2] += 1; e2[2] += 1
+    # GF y GC
+    e1[6] += goles1; e1[7] += goles2
+    e2[6] += goles2; e2[7] += goles1
+    # Resultado
+    if goles1 > goles2:
+        e1[1] += 3; e1[3] += 1; e2[5] += 1
+    elif goles1 < goles2:
+        e2[1] += 3; e2[3] += 1; e1[5] += 1
+    else:
+        e1[1] += 1; e2[1] += 1
+        e1[4] += 1; e2[4] += 1
+
+resultadosPartido("Sevilla", "Barcelona FC", 2, 2)
+resultadosPartido("Real Betis CF", "Real Madrid FC", 3, 0)
+print(buscarEquipo("Sevilla"))`,
+  },
+
+  {
+    id: 12,
+    topic: 'Manejo de Listas',
+    topicKey: 'listas',
+    difficulty: 'medium',
+    title: 'Ordenar la clasificación',
+    description: 'Crea una función que ordene la lista de la liga por puntos (descendente), y en caso de empate de puntos, por diferencia de goles (GF - GC) también de forma descendente.',
+    example: `# Antes de ordenar:
+["Real Madrid FC", 0, ...], ["Real Betis CF", 3, ...], ...
+
+# Después de ordenar:
+["Real Betis CF", 3, ...], ["Atlético de Madrid", 3, ...], ...`,
+    hints: [
+      'Usa liga.sort(key=lambda x: ...) o sorted()',
+      'La diferencia de goles es x[6] - x[7]',
+      'Para orden descendente usa reverse=True o multiplica por -1 en la key',
+      'Puedes usar una tupla como key: key=lambda x: (x[1], x[6]-x[7])',
+    ],
+    requirements: [
+      'Ordenar por puntos de mayor a menor',
+      'En caso de empate, ordenar por diferencia de goles',
+      'La función modifica la lista original o devuelve una nueva',
+    ],
+    solution: `def ordenarLiga():
+    liga.sort(key=lambda x: (x[1], x[6] - x[7]), reverse=True)
+
+ordenarLiga()
+for e in liga:
+    print(e)`,
+  },
+
+  {
+    id: 13,
+    topic: 'Manejo de Listas',
+    topicKey: 'listas',
+    difficulty: 'hard',
+    title: 'Clasificación completa (Boletín 22 - Ejercicio completo)',
+    description: 'Implementa el programa completo de clasificación de la liga: inicializa la lista, registra los partidos con la función resultadosPartido(), ordena la clasificación y muestra la tabla formateada como en el ejemplo del boletín.',
+    example: `# Salida esperada:
+-----------------------------------------------------------------
+ Competición: La Liga eaSports - Clasificación a día 11-02-26
+-----------------------------------------------------------------
+ EQUIPO          | Pts | PJ | PG | PE | PP | GF | GC
+-----------------------------------------------------------------
+Real Betis CF    |  3  |  1 |  1 |  0 |  0 |  3 |  0
+Atlético de Mad. |  3  |  1 |  1 |  0 |  0 |  1 |  0`,
+    hints: [
+      'Usa str.ljust(n) o f-strings con :<n para alinear texto a la izquierda',
+      'Usa f-strings con :>n o :^n para centrar o alinear a la derecha',
+      'Define el ancho de cada columna como constante',
+      'La fecha del encabezado se obtiene con datetime.now()',
+    ],
+    requirements: [
+      'Inicializar los 6 equipos del ejemplo',
+      'Registrar todos los partidos con resultadosPartido()',
+      'Ordenar la clasificación antes de mostrarla',
+      'Mostrar la tabla correctamente formateada con separadores',
+      'Incluir la fecha actual en el encabezado',
+    ],
+    solution: `from datetime import datetime
+
+liga = [
+    ["Real Betis CF",      0,0,0,0,0,0,0],
+    ["Atlético de Madrid", 0,0,0,0,0,0,0],
+    ["Sevilla",            0,0,0,0,0,0,0],
+    ["Barcelona FC",       0,0,0,0,0,0,0],
+    ["Rayo Vallecano",     0,0,0,0,0,0,0],
+    ["Real Madrid FC",     0,0,0,0,0,0,0],
+]
+
+def buscarEquipo(nombre):
+    for e in liga:
+        if e[0] == nombre: return e
+    return None
+
+def resultadosPartido(n1, n2, g1, g2):
+    e1, e2 = buscarEquipo(n1), buscarEquipo(n2)
+    e1[2]+=1; e2[2]+=1
+    e1[6]+=g1; e1[7]+=g2; e2[6]+=g2; e2[7]+=g1
+    if g1>g2:   e1[1]+=3; e1[3]+=1; e2[5]+=1
+    elif g2>g1: e2[1]+=3; e2[3]+=1; e1[5]+=1
+    else:       e1[1]+=1; e2[1]+=1; e1[4]+=1; e2[4]+=1
+
+def mostrarClasificacion():
+    liga.sort(key=lambda x:(x[1], x[6]-x[7]), reverse=True)
+    hoy = datetime.now().strftime("%d-%m-%y")
+    sep = "-" * 65
+    print(sep)
+    print(f" Competición: La Liga eaSports - Clasificación a día {hoy}")
+    print(sep)
+    print(f" {'EQUIPO':<22}| Pts | PJ | PG | PE | PP | GF | GC")
+    print(sep)
+    for e in liga:
+        print(f"{e[0]:<23}| {e[1]:^3} | {e[2]:^2} | {e[3]:^2} | {e[4]:^2} | {e[5]:^2} | {e[6]:^2} | {e[7]:^2}")
+
+resultadosPartido("Real Betis CF", "Real Madrid FC", 3, 0)
+resultadosPartido("Atlético de Madrid", "Rayo Vallecano", 1, 0)
+resultadosPartido("Sevilla", "Barcelona FC", 2, 2)
+mostrarClasificacion()`,
+  },
+
+  {
+    id: 14,
+    topic: 'Manejo de Listas',
+    topicKey: 'listas',
+    difficulty: 'easy',
+    title: 'Acceder a elementos de una lista',
+    description: 'Dada la lista de un equipo de fútbol con el formato del boletín, escribe código para mostrar cada dato individualmente (nombre, puntos, partidos jugados, etc.) accediendo a los índices correctos.',
+    example: `equipo = ["Sevilla", 1, 1, 0, 1, 0, 2, 2]
+
+# Salida esperada:
+Nombre: Sevilla
+Puntos: 1
+Partidos jugados: 1
+Ganados: 0
+Empatados: 1
+Perdidos: 0
+Goles a favor: 2
+Goles en contra: 2`,
+    hints: [
+      'Los índices empiezan en 0',
+      'equipo[0] es el nombre, equipo[1] son los puntos, etc.',
+    ],
+    requirements: [
+      'Definir la lista del equipo',
+      'Acceder a cada índice correctamente',
+      'Mostrar todos los datos etiquetados',
+    ],
+    solution: `equipo = ["Sevilla", 1, 1, 0, 1, 0, 2, 2]
+
+print(f"Nombre: {equipo[0]}")
+print(f"Puntos: {equipo[1]}")
+print(f"Partidos jugados: {equipo[2]}")
+print(f"Ganados: {equipo[3]}")
+print(f"Empatados: {equipo[4]}")
+print(f"Perdidos: {equipo[5]}")
+print(f"Goles a favor: {equipo[6]}")
+print(f"Goles en contra: {equipo[7]}")`,
+  },
+
+  {
+    id: 15,
+    topic: 'Manejo de Listas',
+    topicKey: 'listas',
+    difficulty: 'medium',
+    title: 'Filtrar equipos por criterio',
+    description: 'Dada la lista de la liga, escribe una función que devuelva todos los equipos que tengan más de N puntos, o que hayan ganado al menos M partidos.',
+    example: `# Llamada:
+equiposConPuntos(liga, min_puntos=2)
+
+# Salida (con los datos del ejemplo del boletín):
+Real Betis CF: 3 puntos
+Atlético de Madrid: 3 puntos`,
+    hints: [
+      'Usa comprensión de listas: [e for e in liga if e[1] > n]',
+      'O usa un bucle for con un if',
+      'Los puntos están en el índice [1]',
+    ],
+    requirements: [
+      'Definir la función con el parámetro de mínimo de puntos',
+      'Filtrar la lista correctamente',
+      'Devolver o mostrar los equipos filtrados',
+    ],
+    solution: `def equiposConPuntos(liga, min_puntos):
+    filtrados = [e for e in liga if e[1] >= min_puntos]
+    for e in filtrados:
+        print(f"{e[0]}: {e[1]} puntos")
+    return filtrados`,
+  },
+
+  // ==================== TEMA: SALIDA FORMATEADA ====================
+
+  {
+    id: 16,
+    topic: 'Salida Formateada',
+    topicKey: 'formato',
+    difficulty: 'easy',
+    title: 'Alineación de texto con f-strings',
+    description: 'Practica el uso de especificadores de formato en f-strings. Muestra una tabla sencilla con nombres de personas y sus edades, alineando correctamente el texto.',
+    example: `# Salida esperada:
+NOMBRE               | EDAD
+---------------------------
+Ana García           |   25
+Roberto Martínez     |   42
+Lucía                |    8`,
+    hints: [
+      'Usa {texto:<20} para alinear a la izquierda con ancho 20',
+      'Usa {numero:>4} para alinear a la derecha con ancho 4',
+      'Usa {texto:^10} para centrar',
+    ],
+    requirements: [
+      'Definir al menos 3 personas como lista o diccionario',
+      'Mostrar encabezado con separador',
+      'Alinear nombre a la izquierda y edad a la derecha',
+    ],
+    solution: `personas = [
+    ("Ana García", 25),
+    ("Roberto Martínez", 42),
+    ("Lucía", 8),
+]
+
+print(f"{'NOMBRE':<20} | {'EDAD':>4}")
+print("-" * 27)
+for nombre, edad in personas:
+    print(f"{nombre:<20} | {edad:>4}")`,
+  },
+
+  {
+    id: 17,
+    topic: 'Salida Formateada',
+    topicKey: 'formato',
+    difficulty: 'easy',
+    title: 'Tabla con separadores',
+    description: 'Crea una función que imprima una línea separadora de un ancho determinado. Úsala para construir el esqueleto de una tabla con encabezado, separador y filas.',
+    example: `# Salida esperada:
+========================
+|  PRODUCTO  |  PRECIO  |
+========================
+| Manzanas   |   1.50 € |
+| Pan        |   0.80 € |
+========================`,
+    hints: [
+      'Usa "=" * n para repetir el carácter n veces',
+      'Puedes guardar el ancho total en una variable',
+      'Usa format o f-strings para alinear las columnas',
+    ],
+    requirements: [
+      'Función para imprimir línea separadora',
+      'Mostrar encabezado centrado o alineado',
+      'Al menos 2-3 filas de datos',
+      'Repetir el separador al final',
+    ],
+    solution: `def separador(ancho=24):
+    print("=" * ancho)
+
+productos = [
+    ("Manzanas", 1.50),
+    ("Pan", 0.80),
+    ("Leche", 1.20),
+]
+
+separador()
+print(f"| {'PRODUCTO':<10} | {'PRECIO':>7} |")
+separador()
+for nombre, precio in productos:
+    print(f"| {nombre:<10} | {precio:>6.2f} € |")
+separador()`,
+  },
+
+  {
+    id: 18,
+    topic: 'Salida Formateada',
+    topicKey: 'formato',
+    difficulty: 'medium',
+    title: 'Tabla de clasificación de fútbol (Boletín 22)',
+    description: 'Implementa exclusivamente la función de visualización de la clasificación de la liga tal y como aparece en el boletín 22. La tabla debe tener el encabezado con la fecha actual, separadores y columnas bien alineadas.',
+    example: `# Salida esperada:
+-----------------------------------------------------------------
+ Competición: La Liga eaSports - Clasificación a día 11-02-26
+-----------------------------------------------------------------
+ EQUIPO          | Pts | PJ | PG | PE | PP | GF | GC
+-----------------------------------------------------------------
+Real Betis CF    |  3  |  1 |  1 |  0 |  0 |  3 |  0`,
+    hints: [
+      'El ancho total del separador debe estar coordinado con el de las columnas',
+      'Usa f-strings con :^n para centrar números en columnas cortas',
+      'La fecha del encabezado: datetime.now().strftime("%d-%m-%y")',
+    ],
+    requirements: [
+      'Mostrar encabezado con nombre de la competición y fecha',
+      'Mostrar fila de títulos de columnas',
+      'Separadores con guiones entre secciones',
+      'Datos de cada equipo correctamente alineados',
+    ],
+    solution: `from datetime import datetime
+
+liga = [
+    ["Real Betis CF",      3,1,1,0,0,3,0],
+    ["Atlético de Madrid", 3,1,1,0,0,1,0],
+    ["Sevilla",            1,1,0,1,0,2,2],
+    ["Barcelona FC",       1,1,0,1,0,2,2],
+    ["Rayo Vallecano",     0,1,0,0,1,0,1],
+    ["Real Madrid FC",     0,1,0,0,1,0,3],
+]
+
+def mostrarClasificacion():
+    hoy = datetime.now().strftime("%d-%m-%y")
+    sep = "-" * 65
+    print(sep)
+    print(f" Competición: La Liga eaSports - Clasificación a día {hoy}")
+    print(sep)
+    print(f" {'EQUIPO':<22}| Pts | PJ | PG | PE | PP | GF | GC")
+    print(sep)
+    for e in liga:
+        print(f"{e[0]:<23}|{e[1]:^5}|{e[2]:^4}|{e[3]:^4}|{e[4]:^4}|{e[5]:^4}|{e[6]:^4}|{e[7]:^4}")
+
+mostrarClasificacion()`,
+  },
+
+  {
+    id: 19,
+    topic: 'Salida Formateada',
+    topicKey: 'formato',
+    difficulty: 'medium',
+    title: 'Formato de números decimales y moneda',
+    description: 'Crea una pequeña aplicación de ticket de compra que muestre los productos con sus precios alineados, el subtotal, IVA y total al final. Los precios deben mostrarse con 2 decimales y símbolo de euro.',
+    example: `# Salida esperada:
+==============================
+         TICKET DE COMPRA
+==============================
+Pan integral          1.20 €
+Leche entera          0.95 €
+Queso manchego        4.75 €
+------------------------------
+Subtotal:             6.90 €
+IVA (21%):            1.45 €
+TOTAL:                8.35 €
+==============================`,
+    hints: [
+      'Usa {precio:>8.2f} para alinear precios a la derecha con 2 decimales',
+      'Calcula subtotal con sum() o sumando manualmente',
+      'El IVA se calcula como subtotal * 0.21',
+    ],
+    requirements: [
+      'Lista de productos con nombre y precio',
+      'Mostrar cada producto alineado',
+      'Calcular y mostrar subtotal',
+      'Calcular y mostrar IVA (21%)',
+      'Mostrar total final',
+    ],
+    solution: `productos = [
+    ("Pan integral", 1.20),
+    ("Leche entera", 0.95),
+    ("Queso manchego", 4.75),
+]
+
+sep = "=" * 30
+sep2 = "-" * 30
+subtotal = sum(p[1] for p in productos)
+iva = subtotal * 0.21
+total = subtotal + iva
+
+print(sep)
+print("      TICKET DE COMPRA")
+print(sep)
+for nombre, precio in productos:
+    print(f"{nombre:<20}{precio:>8.2f} €")
+print(sep2)
+print(f"{'Subtotal:':<20}{subtotal:>8.2f} €")
+print(f"{'IVA (21%):':<20}{iva:>8.2f} €")
+print(f"{'TOTAL:':<20}{total:>8.2f} €")
+print(sep)`,
+  },
+
+  {
+    id: 20,
+    topic: 'Salida Formateada',
+    topicKey: 'formato',
+    difficulty: 'hard',
+    title: 'Reporte dinámico con anchos variables',
+    description: 'Crea una función genérica que reciba una lista de datos y una lista de encabezados, calcule automáticamente el ancho óptimo de cada columna según el contenido, y muestre la tabla bien formateada.',
+    example: `# Llamada:
+encabezados = ["Nombre", "Ciudad", "Edad"]
+datos = [["Ana", "Madrid", 25], ["Roberto Martínez", "Barcelona", 42]]
+mostrarTabla(encabezados, datos)
+
+# Salida:
+Nombre           | Ciudad    | Edad
+-----------------+-----------+-----
+Ana              | Madrid    |   25
+Roberto Martínez | Barcelona |   42`,
+    hints: [
+      'Calcula el ancho de cada columna como max(len(str(v)) for v in columna)',
+      'Usa zip() para iterar en paralelo encabezados y anchos',
+      'El separador se puede construir con anchos + "+" + "-"*n',
+    ],
+    requirements: [
+      'Calcular anchos automáticamente (incluyendo encabezados)',
+      'Función reutilizable con cualquier dato',
+      'Separadores entre encabezado y filas',
+      'Alineación correcta numérica vs texto',
+    ],
+    solution: `def mostrarTabla(encabezados, datos):
+    # Calcular anchos
+    anchos = []
+    for i, enc in enumerate(encabezados):
+        max_ancho = len(str(enc))
+        for fila in datos:
+            max_ancho = max(max_ancho, len(str(fila[i])))
+        anchos.append(max_ancho)
+
+    # Encabezado
+    fila_enc = " | ".join(f"{enc:<{anchos[i]}}" for i, enc in enumerate(encabezados))
+    print(fila_enc)
+
+    # Separador
+    sep = "-+-".join("-" * a for a in anchos)
+    print(sep)
+
+    # Filas
+    for fila in datos:
+        partes = []
+        for i, val in enumerate(fila):
+            if isinstance(val, int):
+                partes.append(f"{val:>{anchos[i]}}")
+            else:
+                partes.append(f"{str(val):<{anchos[i]}}")
+        print(" | ".join(partes))
+
+encabezados = ["Nombre", "Ciudad", "Edad"]
+datos = [["Ana", "Madrid", 25], ["Roberto Martínez", "Barcelona", 42]]
+mostrarTabla(encabezados, datos)`,
+  },
+
+  // ==================== TEMA: EXCEPCIONES ====================
+
+  {
+    id: 21,
+    topic: 'Manejo de Excepciones',
+    topicKey: 'excepciones',
+    difficulty: 'easy',
+    title: 'Try/except básico',
+    description: 'Escribe un programa que pida al usuario un número entero. Si el usuario introduce algo que no es un número, captura la excepción y muestra un mensaje de error amigable.',
+    example: `# Si el usuario escribe "hola":
+Error: "hola" no es un número válido. Por favor introduce un entero.
+
+# Si el usuario escribe "42":
+El número introducido es: 42`,
+    hints: [
+      'Usa int(input(...)) para pedir el número',
+      'Envuelve en try/except ValueError',
+      'En el except accede al mensaje con except ValueError as e',
+    ],
+    requirements: [
+      'Pedir número al usuario con input()',
+      'Intentar convertir a int()',
+      'Capturar ValueError si falla',
+      'Mostrar mensaje de error descriptivo',
+    ],
+    solution: `try:
+    numero = int(input("Introduce un número entero: "))
+    print(f"El número introducido es: {numero}")
+except ValueError as e:
+    print(f'Error: el valor introducido no es un número válido.')`,
+  },
+
+  {
+    id: 22,
+    topic: 'Manejo de Excepciones',
+    topicKey: 'excepciones',
+    difficulty: 'medium',
+    title: 'Validar lista de valores mixtos',
+    description: 'Dada una lista con valores mixtos (cadenas, números, fechas...), usa excepciones para clasificar cada elemento como "número entero", "número decimal", "fecha" u "otro".',
+    example: `# Lista de entrada:
+valores = ["42", "3.14", "hola", "13/02/25", "99", "abc", "01/01/2030"]
+
+# Salida:
+"42" → Número entero
+"3.14" → Número decimal
+"hola" → Otro
+"13/02/25" → Fecha
+"99" → Número entero
+"abc" → Otro
+"01/01/2030" → Fecha`,
+    hints: [
+      'Prueba int() primero, luego float(), luego datetime.strptime()',
+      'Usa bloques try/except anidados o en secuencia',
+      'El orden importa: int antes que float',
+    ],
+    requirements: [
+      'Probar conversión a int',
+      'Si falla, probar float',
+      'Si falla, probar fecha con strptime',
+      'Si todo falla, clasificar como "Otro"',
+    ],
+    solution: `from datetime import datetime
+
+valores = ["42", "3.14", "hola", "13/02/25", "99", "abc", "01/01/2030"]
+
+for v in valores:
+    try:
+        int(v)
+        tipo = "Número entero"
+    except ValueError:
+        try:
+            float(v)
+            tipo = "Número decimal"
+        except ValueError:
+            tipo = "Otro"
+            for fmt in ["%d/%m/%y", "%d/%m/%Y"]:
+                try:
+                    datetime.strptime(v, fmt)
+                    tipo = "Fecha"
+                    break
+                except ValueError:
+                    pass
+    print(f'"{v}" → {tipo}')`,
+  },
+
+  {
+    id: 23,
+    topic: 'Manejo de Excepciones',
+    topicKey: 'excepciones',
+    difficulty: 'hard',
+    title: 'Validador robusto de fechas (Boletín 21 - Ampliación)',
+    description: 'Crea un validador de fechas completo que, además de detectar si el formato es correcto, indique el tipo de error: formato incorrecto, día fuera de rango, mes fuera de rango, o fecha válida pero en el pasado/futuro.',
+    example: `# Resultados:
+"13/02/25" → ✓ Fecha válida (pasado)
+"56/13/26" → ✗ Error: día/mes fuera de rango
+"hola"     → ✗ Error: formato incorrecto
+"14/06/26" → ✓ Fecha válida (futuro)`,
+    hints: [
+      'Primero verifica que tiene el formato correcto con strptime',
+      'Luego compara con hoy para saber si es pasado o futuro',
+      'Los errores de rango (día 56, mes 13) también los captura ValueError',
+      'Puedes pre-analizar el texto antes de hacer strptime para dar más detalle',
+    ],
+    requirements: [
+      'Validar formato dd/mm/yy o dd/mm/YYYY',
+      'Indicar si la fecha es correcta',
+      'Si es correcta, indicar si es pasado o futuro',
+      'Si es incorrecta, dar un mensaje descriptivo del tipo de error',
+    ],
+    solution: `from datetime import datetime
+
+def validarFecha(cadena):
+    partes = cadena.split("/")
+    if len(partes) != 3:
+        return f"✗ '{cadena}': formato incorrecto (debe ser dd/mm/aa)"
+    
+    parseado = None
+    for fmt in ["%d/%m/%y", "%d/%m/%Y"]:
+        try:
+            parseado = datetime.strptime(cadena, fmt)
+            break
+        except ValueError:
+            pass
+    
+    if parseado is None:
+        return f"✗ '{cadena}': valores fuera de rango (día/mes inválido)"
+    
+    hoy = datetime.now()
+    estado = "pasado" if parseado < hoy else "futuro"
+    return f"✓ '{cadena}': fecha válida ({estado})"
+
+cadenas = ["13/02/25", "56/13/26", "hola", "14/06/26", "99/99/99"]
+for c in cadenas:
+    print(validarFecha(c))`,
+  },
+
+  // ==================== TEMA: FUNCIONES ====================
+
+  {
+    id: 24,
+    topic: 'Funciones',
+    topicKey: 'funciones',
+    difficulty: 'easy',
+    title: 'Función con parámetros para calcular goles',
+    description: 'Crea una función calcularDiferenciaGoles(goles_favor, goles_contra) que devuelva la diferencia de goles. Pruébala con varios equipos.',
+    example: `# Llamadas:
+calcularDiferenciaGoles(3, 0)  # → 3
+calcularDiferenciaGoles(2, 2)  # → 0
+calcularDiferenciaGoles(0, 3)  # → -3`,
+    hints: [
+      'Una función se define con def nombre(parametros):',
+      'Usa return para devolver el resultado',
+      'La diferencia es simplemente goles_favor - goles_contra',
+    ],
+    requirements: [
+      'Definir la función con dos parámetros',
+      'Calcular y devolver la diferencia',
+      'Probarla con al menos 3 casos diferentes',
+    ],
+    solution: `def calcularDiferenciaGoles(goles_favor, goles_contra):
+    return goles_favor - goles_contra
+
+print(calcularDiferenciaGoles(3, 0))  # 3
+print(calcularDiferenciaGoles(2, 2))  # 0
+print(calcularDiferenciaGoles(0, 3))  # -3`,
+  },
+
+  {
+    id: 25,
+    topic: 'Funciones',
+    topicKey: 'funciones',
+    difficulty: 'medium',
+    title: 'Función con parámetros por defecto',
+    description: 'Crea una función generarCitas(fecha_inicio, n_citas=6, intervalo=200) que genere una lista de citas a partir de los parámetros dados, usando valores por defecto como en el Boletín 21.',
+    example: `# Usando valores por defecto:
+generarCitas(datetime.now())
+# → lista con 6 citas, cada 200 días
+
+# Personalizando:
+generarCitas(datetime.now(), n_citas=3, intervalo=30)
+# → lista con 3 citas, cada 30 días`,
+    hints: [
+      'Los parámetros con valor por defecto van al final: def f(a, b=3)',
+      'Usa timedelta(days=intervalo * i) para cada cita',
+      'Guarda las citas en una lista y devuélvela con return',
+    ],
+    requirements: [
+      'Definir la función con parámetros por defecto',
+      'Generar la lista de citas en un bucle',
+      'Devolver la lista de fechas',
+      'Demostrar el uso con y sin parámetros por defecto',
+    ],
+    solution: `from datetime import datetime, timedelta
+
+def generarCitas(fecha_inicio, n_citas=6, intervalo=200):
+    citas = []
+    for i in range(1, n_citas + 1):
+        citas.append(fecha_inicio + timedelta(days=intervalo * i))
+    return citas
+
+# Uso con valores por defecto
+citas = generarCitas(datetime.now())
+for i, c in enumerate(citas, 1):
+    print(f"{i} - {c.day}/{c.month:02d}/{c.year}")
+
+# Uso personalizado
+print("\\n-- Citas semanales --")
+citas2 = generarCitas(datetime.now(), n_citas=3, intervalo=7)
+for i, c in enumerate(citas2, 1):
+    print(f"{i} - {c.day}/{c.month:02d}/{c.year}")`,
+  },
+
+  {
+    id: 26,
+    topic: 'Funciones',
+    topicKey: 'funciones',
+    difficulty: 'hard',
+    title: 'Función lambda y sorted avanzado',
+    description: 'Usa funciones lambda con sorted() para ordenar la lista de equipos de múltiples formas: por nombre, por puntos, por goles a favor, y por diferencia de goles. Crea una función de ordenación generalizada.',
+    example: `# Diferentes ordenaciones:
+por_nombre    = sorted(liga, key=lambda e: e[0])
+por_puntos    = sorted(liga, key=lambda e: e[1], reverse=True)
+por_goles     = sorted(liga, key=lambda e: e[6], reverse=True)
+por_diferencia = sorted(liga, key=lambda e: e[6]-e[7], reverse=True)`,
+    hints: [
+      'lambda e: expresion crea una función anónima inline',
+      'sorted() no modifica la lista original, devuelve una nueva',
+      'liga.sort() modifica in-place',
+      'Puedes usar tuplas en la key para ordenar por múltiples criterios',
+    ],
+    requirements: [
+      'Ordenar por al menos 3 criterios distintos',
+      'Mostrar el resultado de cada ordenación',
+      'Crear una función que acepte el criterio como parámetro',
+    ],
+    solution: `liga = [
+    ["Real Betis CF",      3,1,1,0,0,3,0],
+    ["Atlético de Madrid", 3,1,1,0,0,1,0],
+    ["Sevilla",            1,1,0,1,0,2,2],
+    ["Barcelona FC",       1,1,0,1,0,2,2],
+    ["Rayo Vallecano",     0,1,0,0,1,0,1],
+    ["Real Madrid FC",     0,1,0,0,1,0,3],
+]
+
+criterios = {
+    "nombre":     (lambda e: e[0],      False),
+    "puntos":     (lambda e: e[1],      True),
+    "goles":      (lambda e: e[6],      True),
+    "diferencia": (lambda e: e[6]-e[7], True),
+}
+
+def ordenar(liga, criterio):
+    key_fn, desc = criterios[criterio]
+    return sorted(liga, key=key_fn, reverse=desc)
+
+for c in criterios:
+    print(f"\\n--- Por {c} ---")
+    for e in ordenar(liga, c):
+        print(f"  {e[0]}: pts={e[1]}, GF={e[6]}, GC={e[7]}")`,
+  },
+
+  // ==================== TEMA: AMPLIACIONES ====================
+
+  {
+    id: 27,
+    topic: 'Proyectos Combinados',
+    topicKey: 'proyectos',
+    difficulty: 'medium',
+    title: 'Estadísticas de la liga',
+    description: 'Crea una función que, a partir de la lista de equipos, calcule y muestre estadísticas generales de la liga: equipo con más puntos, máximo goleador, equipo menos goleado, y total de goles marcados.',
+    example: `# Salida esperada:
+=== ESTADÍSTICAS DE LA LIGA ===
+Líder de la clasificación: Real Betis CF (3 pts)
+Máximo goleador: Real Betis CF (3 goles a favor)
+Menos goleado: Real Betis CF (0 goles en contra)
+Total de goles en la liga: 7`,
+    hints: [
+      'Usa max(liga, key=lambda e: e[1]) para el equipo con más puntos',
+      'max(liga, key=lambda e: e[6]) para más goles a favor',
+      'min(liga, key=lambda e: e[7]) para menos goles en contra',
+      'sum(e[6] for e in liga) para el total de goles',
+    ],
+    requirements: [
+      'Calcular el líder de la clasificación',
+      'Calcular el máximo goleador',
+      'Calcular el equipo menos goleado',
+      'Calcular el total de goles en la liga',
+    ],
+    solution: `liga = [
+    ["Real Betis CF",      3,1,1,0,0,3,0],
+    ["Atlético de Madrid", 3,1,1,0,0,1,0],
+    ["Sevilla",            1,1,0,1,0,2,2],
+    ["Barcelona FC",       1,1,0,1,0,2,2],
+    ["Rayo Vallecano",     0,1,0,0,1,0,1],
+    ["Real Madrid FC",     0,1,0,0,1,0,3],
+]
+
+def estadisticasLiga():
+    lider = max(liga, key=lambda e: e[1])
+    goleador = max(liga, key=lambda e: e[6])
+    menos_gol = min(liga, key=lambda e: e[7])
+    total_goles = sum(e[6] for e in liga)
+    
+    print("=== ESTADÍSTICAS DE LA LIGA ===")
+    print(f"Líder de la clasificación: {lider[0]} ({lider[1]} pts)")
+    print(f"Máximo goleador: {goleador[0]} ({goleador[6]} goles a favor)")
+    print(f"Menos goleado: {menos_gol[0]} ({menos_gol[7]} goles en contra)")
+    print(f"Total de goles en la liga: {total_goles}")
+
+estadisticasLiga()`,
+  },
+
+  {
+    id: 28,
+    topic: 'Proyectos Combinados',
+    topicKey: 'proyectos',
+    difficulty: 'hard',
+    title: 'Temporizador de citas con alertas',
+    description: 'Crea una versión extendida del programa de citas del taller (Boletín 21) que, además de mostrar las citas futuras, indique cuántos días faltan para cada una y marque con ⚠️ las que están en los próximos 30 días.',
+    example: `# Salida esperada:
+Registro y primera cita: 4 del 02 de 2026 a las 17:47
+
+Siguientes citas:
+1 - 23 del 08 de 2026 (faltan 200 días)
+2 – 11 del 03 de 2027 (faltan 400 días)
+...
+⚠️  PRÓXIMA: cita 1 en 200 días`,
+    hints: [
+      'Calcula la diferencia: (cita - datetime.now()).days',
+      'Usa un condicional para detectar si faltan ≤ 30 días',
+      'Guarda las citas en una lista para luego filtrarlas',
+    ],
+    requirements: [
+      'Mostrar todas las citas con días restantes',
+      'Marcar con ⚠️ las citas próximas (≤ 30 días)',
+      'Indicar cuál es la próxima cita',
+    ],
+    solution: `from datetime import datetime, timedelta
+
+ahora = datetime.now()
+print(f"Registro y primera cita: {ahora.day} del {ahora.month:02d} de {ahora.year} a las {ahora.hour:02d}:{ahora.minute:02d}")
+print("\\nSiguientes citas:")
+
+citas = []
+for i in range(1, 7):
+    cita = ahora + timedelta(days=200 * i)
+    dias_restantes = (cita - ahora).days
+    citas.append((i, cita, dias_restantes))
+    alerta = " ⚠️ PRÓXIMA" if dias_restantes <= 30 else ""
+    print(f"{i} - {cita.day} del {cita.month:02d} de {cita.year} (faltan {dias_restantes} días){alerta}")
+
+proxima = min(citas, key=lambda x: x[2])
+print(f"\\n⚠️  PRÓXIMA: cita {proxima[0]} en {proxima[2]} días ({proxima[1].day}/{proxima[1].month:02d}/{proxima[1].year})")`,
+  },
+
+  {
+    id: 29,
+    topic: 'Proyectos Combinados',
+    topicKey: 'proyectos',
+    difficulty: 'hard',
+    title: 'Sistema completo de liga con historial',
+    description: 'Amplía el sistema de clasificación para que también guarde el historial de partidos jugados. Crea una función mostrarHistorial() que muestre todos los enfrentamientos registrados con su fecha y resultado.',
+    example: `# Salida esperada de mostrarHistorial():
+=== HISTORIAL DE PARTIDOS ===
+11/02/2026  Real Betis CF       3 - 0  Real Madrid FC
+11/02/2026  Atlético de Madrid  1 - 0  Rayo Vallecano
+11/02/2026  Sevilla             2 - 2  Barcelona FC`,
+    hints: [
+      'Crea una lista global "historial = []"',
+      'En la función resultadosPartido(), añade la tupla (fecha, e1, g1, g2, e2)',
+      'Muestra el historial iterando y formateando cada elemento',
+    ],
+    requirements: [
+      'Lista global de historial',
+      'Guardar cada partido en el historial al registrarlo',
+      'Función mostrarHistorial() bien formateada',
+      'Incluir fecha del partido en el historial',
+    ],
+    solution: `from datetime import datetime
+
+liga = [
+    ["Real Betis CF",      0,0,0,0,0,0,0],
+    ["Atlético de Madrid", 0,0,0,0,0,0,0],
+    ["Sevilla",            0,0,0,0,0,0,0],
+    ["Barcelona FC",       0,0,0,0,0,0,0],
+    ["Rayo Vallecano",     0,0,0,0,0,0,0],
+    ["Real Madrid FC",     0,0,0,0,0,0,0],
+]
+historial = []
+
+def buscarEquipo(nombre):
+    for e in liga:
+        if e[0] == nombre: return e
+
+def resultadosPartido(n1, n2, g1, g2):
+    e1, e2 = buscarEquipo(n1), buscarEquipo(n2)
+    e1[2]+=1; e2[2]+=1
+    e1[6]+=g1; e1[7]+=g2; e2[6]+=g2; e2[7]+=g1
+    if g1>g2:   e1[1]+=3; e1[3]+=1; e2[5]+=1
+    elif g2>g1: e2[1]+=3; e2[3]+=1; e1[5]+=1
+    else:       e1[1]+=1; e2[1]+=1; e1[4]+=1; e2[4]+=1
+    historial.append((datetime.now(), n1, g1, g2, n2))
+
+def mostrarHistorial():
+    print("=== HISTORIAL DE PARTIDOS ===")
+    for h in historial:
+        fecha, n1, g1, g2, n2 = h
+        print(f"{fecha.strftime('%d/%m/%Y')}  {n1:<22} {g1} - {g2}  {n2}")
+
+resultadosPartido("Real Betis CF", "Real Madrid FC", 3, 0)
+resultadosPartido("Atlético de Madrid", "Rayo Vallecano", 1, 0)
+resultadosPartido("Sevilla", "Barcelona FC", 2, 2)
+mostrarHistorial()`,
+  },
+
+  {
+    id: 30,
+    topic: 'Proyectos Combinados',
+    topicKey: 'proyectos',
+    difficulty: 'medium',
+    title: 'Generar informe combinado fecha + liga',
+    description: 'Crea un programa que genere un informe combinando los dos boletines: muestra la fecha actual, la clasificación de la liga y, al final, calcula cuántos días quedan para el final de la temporada (fija el final en el 30 de junio del año en curso).',
+    example: `# Salida esperada:
+Informe generado el: Miércoles 04 de febrero de 2026
+
+=== CLASIFICACIÓN ===
+[tabla de clasificación]
+
+=== FINAL DE TEMPORADA ===
+Quedan 146 días para el final de la temporada (30/06/2026)`,
+    hints: [
+      'Combina datetime.now() con los elementos del boletín 22',
+      'Calcula la diferencia de días para el final: (fin_temp - hoy).days',
+      'La fecha fin puede ser date(año_actual, 6, 30)',
+    ],
+    requirements: [
+      'Mostrar fecha actual formateada con día de la semana',
+      'Mostrar la tabla de clasificación',
+      'Calcular y mostrar días restantes para el final de temporada',
+    ],
+    solution: `from datetime import datetime, date, timedelta
+
+dias_sem = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+meses_nom = ['','enero','febrero','marzo','abril','mayo','junio',
+             'julio','agosto','septiembre','octubre','noviembre','diciembre']
+
+ahora = datetime.now()
+hoy = date.today()
+fin_temp = date(hoy.year, 6, 30)
+dias_restantes = (fin_temp - hoy).days
+
+print(f"Informe generado el: {dias_sem[ahora.weekday()]} {ahora.day} de {meses_nom[ahora.month]} de {ahora.year}")
+print()
+print("=== CLASIFICACIÓN ===")
+print("[... tabla de clasificación ...]")
+print()
+print("=== FINAL DE TEMPORADA ===")
+print(f"Quedan {dias_restantes} días para el final de la temporada (30/06/{hoy.year})")`,
+  },
+
+];
+
+// ============================================================
+// ESTADO DE LA APP
+// ============================================================
+let currentFilter = 'all';
+let selectedTopics = new Set();
+let activeExercises = [];
+let currentIndex = 0;
+
+const TOPICS = [
+  {
+    key: 'fechas',
+    name: 'Fechas y Horas',
+    icon: '📅',
+    desc: 'Manejo de datetime, timedelta, strftime y cálculo de citas (Boletín 21)',
+    color: 'var(--accent)',
+    tags: ['datetime', 'timedelta', 'strftime', 'date'],
+  },
+  {
+    key: 'listas',
+    name: 'Manejo de Listas',
+    icon: '📋',
+    desc: 'Listas de listas, búsqueda, actualización y ordenación (Boletín 22)',
+    color: 'var(--accent2)',
+    tags: ['list', 'sort', 'lambda', 'index'],
+  },
+  {
+    key: 'formato',
+    name: 'Salida Formateada',
+    icon: '🖨️',
+    desc: 'f-strings, alineación de columnas, tablas y separadores (Boletín 22)',
+    color: 'var(--accent3)',
+    tags: ['f-string', 'ljust', 'rjust', 'format'],
+  },
+  {
+    key: 'excepciones',
+    name: 'Manejo de Excepciones',
+    icon: '⚠️',
+    desc: 'try/except, ValueError, validación de datos (Boletín 21)',
+    color: '#90c0f0',
+    tags: ['try', 'except', 'ValueError', 'raise'],
+  },
+  {
+    key: 'funciones',
+    name: 'Funciones',
+    icon: '⚙️',
+    desc: 'Definición, parámetros por defecto, lambda, return',
+    color: '#d090f0',
+    tags: ['def', 'return', 'lambda', 'params'],
+  },
+  {
+    key: 'proyectos',
+    name: 'Proyectos Combinados',
+    icon: '🚀',
+    desc: 'Ejercicios que combinan todos los conceptos de ambos boletines',
+    color: '#f09040',
+    tags: ['completo', 'liga', 'taller', 'ampliación'],
+  },
+];
+
+// ============================================================
+// INICIALIZACIÓN
+// ============================================================
+function init() {
+  // Contar ejercicios
+  const easy = EXERCISES.filter(e => e.difficulty === 'easy').length;
+  const medium = EXERCISES.filter(e => e.difficulty === 'medium').length;
+  const hard = EXERCISES.filter(e => e.difficulty === 'hard').length;
+  document.getElementById('count-easy').textContent = easy;
+  document.getElementById('count-medium').textContent = medium;
+  document.getElementById('count-hard').textContent = hard;
+  document.getElementById('count-total').textContent = EXERCISES.length;
+
+  // Render topic cards
+  renderTopicCards();
+}
+
+function renderTopicCards() {
+  const grid = document.getElementById('topics-grid');
+  grid.innerHTML = '';
+
+  TOPICS.forEach(topic => {
+    const exercises = getFilteredByTopic(topic.key);
+    if (exercises.length === 0) return;
+
+    const easy = exercises.filter(e => e.difficulty === 'easy').length;
+    const medium = exercises.filter(e => e.difficulty === 'medium').length;
+    const hard = exercises.filter(e => e.difficulty === 'hard').length;
+
+    const isSelected = selectedTopics.has(topic.key);
+
+    const card = document.createElement('div');
+    card.className = `topic-card ${isSelected ? 'selected' : ''}`;
+    card.style.setProperty('--card-color', topic.color);
+    card.onclick = () => toggleTopic(topic.key);
+
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="card-icon">${topic.icon}</div>
+        <span class="card-count">${exercises.length} ejercicios</span>
+      </div>
+      <h3>${topic.name}</h3>
+      <p>${topic.desc}</p>
+      <div class="card-tags">
+        ${easy > 0 ? `<span class="tag tag-easy">${easy} básico</span>` : ''}
+        ${medium > 0 ? `<span class="tag tag-medium">${medium} medio</span>` : ''}
+        ${hard > 0 ? `<span class="tag tag-hard">${hard} avanzado</span>` : ''}
+        ${topic.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+function getFilteredByTopic(topicKey) {
+  return EXERCISES.filter(e => {
+    const topicMatch = e.topicKey === topicKey;
+    const diffMatch = currentFilter === 'all' || e.difficulty === currentFilter;
+    return topicMatch && diffMatch;
+  });
+}
+
+function toggleTopic(key) {
+  if (selectedTopics.has(key)) {
+    selectedTopics.delete(key);
+  } else {
+    selectedTopics.add(key);
+  }
+  renderTopicCards();
+  updateStartButton();
+}
+
+function selectAllTopics() {
+  TOPICS.forEach(t => selectedTopics.add(t.key));
+  renderTopicCards();
+  updateStartButton();
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.className = 'filter-btn';
+  });
+  btn.className = `filter-btn active${filter !== 'all' ? '-' + filter : ''}`;
+  renderTopicCards();
+  updateStartButton();
+}
+
+function updateStartButton() {
+  const btn = document.getElementById('btn-start');
+  const hint = document.getElementById('start-hint');
+  const count = getActiveCount();
+  btn.disabled = count === 0;
+  hint.textContent = count > 0 ? `${count} ejercicios seleccionados` : 'Selecciona al menos un tema para comenzar';
+}
+
+function getActiveCount() {
+  return EXERCISES.filter(e => {
+    const topicMatch = selectedTopics.has(e.topicKey);
+    const diffMatch = currentFilter === 'all' || e.difficulty === currentFilter;
+    return topicMatch && diffMatch;
+  }).length;
+}
+
+function startExercises() {
+  activeExercises = EXERCISES.filter(e => {
+    const topicMatch = selectedTopics.has(e.topicKey);
+    const diffMatch = currentFilter === 'all' || e.difficulty === currentFilter;
+    return topicMatch && diffMatch;
+  });
+
+  // Shuffle
+  activeExercises = activeExercises.sort(() => Math.random() - 0.5);
+  currentIndex = 0;
+
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('exercise-view').style.display = 'block';
+
+  renderExercise();
+}
+
+function backToDashboard() {
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('exercise-view').style.display = 'none';
+}
+
+// ============================================================
+// RENDER EXERCISE
+// ============================================================
+function renderExercise() {
+  const ex = activeExercises[currentIndex];
+  const total = activeExercises.length;
+
+  // Progress
+  document.getElementById('ex-counter').textContent = `${currentIndex + 1} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${((currentIndex + 1) / total) * 100}%`;
+
+  // Difficulty badge
+  const badge = document.getElementById('diff-badge');
+  const diffLabels = { easy: 'Básico', medium: 'Intermedio', hard: 'Avanzado' };
+  const diffColors = { easy: 'var(--easy)', medium: 'var(--medium)', hard: 'var(--hard)' };
+  badge.textContent = diffLabels[ex.difficulty];
+  badge.style.background = `${diffColors[ex.difficulty]}22`;
+  badge.style.color = diffColors[ex.difficulty];
+  badge.style.border = `1px solid ${diffColors[ex.difficulty]}55`;
+
+  // Nav buttons
+  document.getElementById('btn-prev').disabled = currentIndex === 0;
+  document.getElementById('btn-next').textContent = currentIndex === total - 1 ? '¡Fin! 🎉' : 'Siguiente →';
+
+  // Build card
+  const reqs = ex.requirements.map((r, i) => `
+    <div class="req-item">
+      <div class="req-check" id="req-${i}" onclick="toggleReq(${i})"></div>
+      <span class="req-text" id="req-text-${i}" onclick="toggleReq(${i})">${r}</span>
+    </div>
+  `).join('');
+
+  const hints = ex.hints.map(h => `<li>${h}</li>`).join('');
+
+  const card = document.getElementById('exercise-card');
+  card.innerHTML = `
+    <div class="exercise-card-header">
+      <span class="ex-number">EJ-${String(ex.id).padStart(3,'0')}</span>
+      <span class="ex-topic">${ex.topic}</span>
+    </div>
+    <div class="exercise-card-body">
+      <h2 class="exercise-title">${ex.title}</h2>
+      <p class="exercise-desc">${ex.description}</p>
+
+      <div class="example-box">
+        <div class="example-box-header">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span style="margin-left:0.5rem">Ejemplo / Salida esperada</span>
+        </div>
+        <pre>${escapeHtml(ex.example)}</pre>
+      </div>
+
+      <div class="requirements">
+        <h4>📌 Requisitos del ejercicio</h4>
+        ${reqs}
+      </div>
+
+      <div class="hints-box">
+        <h4>💡 Pistas</h4>
+        <ul>${hints}</ul>
+      </div>
+
+      <div class="solution-section">
+        <button class="btn-solution" onclick="toggleSolution(this)">
+          👁️ Ver solución de referencia
+        </button>
+        <div class="solution-code" id="solution-code">
+          <div class="solution-header">
+            <span>🔍 Solución de referencia — intenta resolverlo antes</span>
+          </div>
+          <pre>${escapeHtml(ex.solution)}</pre>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleReq(i) {
+  const check = document.getElementById(`req-${i}`);
+  const text = document.getElementById(`req-text-${i}`);
+  check.classList.toggle('checked');
+  text.classList.toggle('done');
+}
+
+function toggleSolution(btn) {
+  const sol = document.getElementById('solution-code');
+  const visible = sol.classList.toggle('visible');
+  btn.textContent = visible ? '🙈 Ocultar solución' : '👁️ Ver solución de referencia';
+}
+
+function navigate(dir) {
+  const newIndex = currentIndex + dir;
+  if (newIndex < 0) return;
+  if (newIndex >= activeExercises.length) {
+    showModal();
+    return;
+  }
+  currentIndex = newIndex;
+  renderExercise();
+}
+
+function goRandom() {
+  currentIndex = Math.floor(Math.random() * activeExercises.length);
+  renderExercise();
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function showModal() {
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function restartExercises() {
+  closeModal();
+  currentIndex = 0;
+  activeExercises = activeExercises.sort(() => Math.random() - 0.5);
+  renderExercise();
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+// ============================================================
+// START
+// ============================================================
+init();
+</script>
+</body>
+</html>

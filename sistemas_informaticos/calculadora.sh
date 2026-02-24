@@ -13,7 +13,7 @@ if [[ "$opcion" == "+" ]]; then
     resultado=$((num1 + num2))
     echo "El resultado de la suma es: $resultado"
 
-# --- RESTA ---
+# --- RESTA --- 
 elif [[ "$opcion" == "-" ]]; then
     echo -n "Seleccione el primer operando: "
     read num1
