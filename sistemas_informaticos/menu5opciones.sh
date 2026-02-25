@@ -2,7 +2,7 @@
 
 opcion=0
 
-until [ $opcion -eq 5]; do 
+until [ $opcion -eq 5 ]; do 
     echo -e "\n--- MENU DE GESTIÓN ---"
     echo "1.- Crear directorio" 
     echo "2.- Borrar directorio" 
