@@ -378,3 +378,1943 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
+            background: var(--secondary);
+        }
+
+        .copy-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.12);
+            color: var(--text-primary);
+        }
+
+        .copy-btn.copied {
+            background: rgba(74, 222, 128, 0.2);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        code.inline {
+            background: rgba(48, 105, 152, 0.15);
+            color: var(--secondary);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .alert {
+            padding: 18px 22px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: rgba(96, 165, 250, 0.1);
+            border-color: var(--info);
+        }
+
+        .alert-warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: var(--warning);
+        }
+
+        .alert-error {
+            background: rgba(248, 113, 113, 0.1);
+            border-color: var(--error);
+        }
+
+        .alert-success {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: var(--accent);
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-info .alert-title { color: var(--info); }
+        .alert-warning .alert-title { color: var(--warning); }
+        .alert-error .alert-title { color: var(--error); }
+        .alert-success .alert-title { color: var(--accent); }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--bg-sidebar);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, rgba(48, 105, 152, 0.1), rgba(255, 212, 59, 0.05));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .example-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .example-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .output-block {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px 18px;
+            margin-top: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+
+        .output-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .output-content {
+            color: #4ade80;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 50px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 80px 20px 40px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .subsection-title {
+                font-size: 18px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            pre {
+                font-size: 12px;
+                padding: 15px;
+            }
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">Py</div>
+                    <span class="logo-text">Python</span>
+                </div>
+                <p class="sidebar-subtitle">Guía Completa de Programación</p>
+            </div>
+
+            <nav>
+                <div class="nav-section">
+                    <h3 class="nav-title">Contenido</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#inicio" class="nav-link active">Inicio</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title">Librerías</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#datetime" class="nav-link">datetime</a></li>
+                        <li class="nav-item"><a href="#datetime-date" class="nav-link sub">date</a></li>
+                        <li class="nav-item"><a href="#datetime-time" class="nav-link sub">time</a></li>
+                        <li class="nav-item"><a href="#datetime-datetime" class="nav-link sub">datetime</a></li>
+                        <li class="nav-item"><a href="#datetime-timedelta" class="nav-link sub">timedelta</a></li>
+                        <li class="nav-item"><a href="#datetime-timezone" class="nav-link sub">timezone</a></li>
+                        <li class="nav-item"><a href="#datetime-formato" class="nav-link sub">Formato y Parsing</a></li>
+                        <li class="nav-item"><a href="#datetime-operaciones" class="nav-link sub">Operaciones</a></li>
+                        <li class="nav-item"><a href="#datetime-casos" class="nav-link sub">Casos de Uso</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title">Funciones y Salida</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#print" class="nav-link">print() Avanzado</a></li>
+                        <li class="nav-item"><a href="#print-basico" class="nav-link sub">Básico</a></li>
+                        <li class="nav-item"><a href="#print-fstrings" class="nav-link sub">f-strings</a></li>
+                        <li class="nav-item"><a href="#print-format" class="nav-link sub">format()</a></li>
+                        <li class="nav-item"><a href="#print-tablas" class="nav-link sub">Tablas</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title">Estructuras de Datos</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#diccionarios" class="nav-link">Diccionarios</a></li>
+                        <li class="nav-item"><a href="#listas" class="nav-link">Listas</a></li>
+                        <li class="nav-item"><a href="#tuplas" class="nav-link">Tuplas</a></li>
+                        <li class="nav-item"><a href="#sets" class="nav-link">Sets</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title">Control y Funciones</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#excepciones" class="nav-link">Excepciones</a></li>
+                        <li class="nav-item"><a href="#funciones" class="nav-link">Funciones</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section id="inicio" class="hero">
+                <h1>Guía Completa de Python</h1>
+                <p>Documentación profesional con ejemplos prácticos y explicaciones detalladas. Desde conceptos básicos hasta técnicas avanzadas.</p>
+            </section>
+
+            <section id="datetime" class="section">
+                <div class="section-header">
+                    <div class="section-icon datetime">📅</div>
+                    <div>
+                        <h2 class="section-title">Librería datetime</h2>
+                        <p class="section-subtitle">Manejo completo de fechas y tiempos en Python</p>
+                    </div>
+                </div>
+
+                <p>La librería <code class="inline">datetime</code> es un módulo incorporado en Python que proporciona clases para manipular fechas y tiempos.</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                    </div>
+                    <pre><code class="language-python"># Importar el módulo completo
+import datetime
+
+# Importar clases específicas
+from datetime import date, time, datetime, timedelta, timezone
+
+# Fecha y hora actual
+ahora = datetime.now()
+print(f"Fecha y hora actual: {ahora}")</code></pre>
+                </div>
+
+                <div id="datetime-date" class="subsection">
+                    <h3 class="subsection-title">Clase date</h3>
+                    <p>La clase <code class="inline">date</code> representa una fecha (año, mes, día) sin información de hora.</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">from datetime import date
+
+# Crear una fecha específica
+fecha = date(2024, 12, 25)
+print(f"Fecha: {fecha}")  # 2024-12-25
+
+# Fecha actual
+hoy = date.today()
+print(f"Hoy: {hoy}")
+
+# Acceder a componentes
+print(f"Año: {hoy.year}")
+print(f"Mes: {hoy.month}")
+print(f"Día: {hoy.day}")
+
+# Fecha desde timestamp
+import time
+ts = time.time()
+fecha_desde_ts = date.fromtimestamp(ts)</code></pre>
+                    </div>
+                </div>
+
+                <div id="datetime-time" class="subsection">
+                    <h3 class="subsection-title">Clase time</h3>
+                    <p>La clase <code class="inline">time</code> representa una hora del día sin información de fecha.</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">from datetime import time
+
+# Crear hora específica
+hora = time(14, 30, 45)
+print(f"Hora: {hora}")  # 14:30:45
+
+# Solo horas y minutos
+hora_simple = time(9, 0)  # 09:00:00
+
+# Acceder a componentes
+t = time(14, 30, 45, 123456)
+print(f"Hora: {t.hour}")        # 14
+print(f"Minuto: {t.minute}")    # 30
+print(f"Segundo: {t.second}")   # 45
+print(f"Microsegundo: {t.microsecond}")  # 123456
+
+# Con zona horaria
+from datetime import timezone, timedelta
+tz = timezone(timedelta(hours=2))
+hora_tz = time(14, 30, tzinfo=tz)</code></pre>
+                    </div>
+                </div>
+
+                <div id="datetime-datetime" class="subsection">
+                    <h3 class="subsection-title">Clase datetime</h3>
+                    <p>La clase <code class="inline">datetime</code> combina fecha y hora en un solo objeto.</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">from datetime import datetime, timezone
+
+# Crear datetime específico
+dt = datetime(2024, 12, 25, 14, 30, 45)
+
+# Fecha y hora actual
+ahora = datetime.now()
+
+# Datetime actual en UTC
+utc_now = datetime.now(timezone.utc)
+
+# Combinar date y time
+from datetime import date, time
+d = date(2024, 12, 25)
+t = time(14, 30)
+dt_combinado = datetime.combine(d, t)
+
+# Desde timestamp
+import time
+ts = time.time()
+dt_ts = datetime.fromtimestamp(ts)
+
+# Extraer fecha y hora
+fecha = ahora.date()
+hora = ahora.time()</code></pre>
+                    </div>
+                </div>
+
+                <div id="datetime-timedelta" class="subsection">
+                    <h3 class="subsection-title">Clase timedelta</h3>
+                    <p>La clase <code class="inline">timedelta</code> representa una duración o diferencia entre dos fechas.</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">from datetime import datetime, timedelta
+
+# Crear duraciones
+dias = timedelta(days=5)
+horas = timedelta(hours=3, minutes=30)
+semanas = timedelta(weeks=2)
+
+# Sumar días a una fecha
+hoy = datetime.now()
+manana = hoy + timedelta(days=1)
+proxima_semana = hoy + timedelta(weeks=1)
+
+# Restar días
+ayer = hoy - timedelta(days=1)
+
+# Diferencia entre fechas
+fecha1 = datetime(2024, 1, 1)
+fecha2 = datetime(2024, 12, 31)
+diferencia = fecha2 - fecha1
+print(f"Días: {diferencia.days}")
+print(f"Segundos totales: {diferencia.total_seconds()}")
+
+# Multiplicar y dividir
+doble_dia = timedelta(days=1) * 2
+media_hora = timedelta(hours=1) / 2</code></pre>
+                    </div>
+                </div>
+
+                <div id="datetime-timezone" class="subsection">
+                    <h3 class="subsection-title">Zonas Horarias</h3>
+                    <p>Manejo de zonas horarias con <code class="inline">timezone</code> y <code class="inline">zoneinfo</code>.</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">from datetime import datetime, timezone, timedelta
+
+# Zona horaria UTC
+utc = timezone.utc
+
+# Crear zona horaria con offset
+tz_madrid = timezone(timedelta(hours=2), name="Madrid")
+
+# Crear datetime con zona horaria
+ahora_utc = datetime.now(utc)
+ahora_madrid = ahora_utc.astimezone(tz_madrid)
+
+# Usando zoneinfo (Python 3.9+)
+from zoneinfo import ZoneInfo
+
+madrid = ZoneInfo("Europe/Madrid")
+new_york = ZoneInfo("America/New_York")
+
+dt_madrid = datetime(2024, 6, 15, 12, 0, tzinfo=madrid)
+dt_ny = dt_madrid.astimezone(new_york)</code></pre>
+                    </div>
+                </div>
+
+                <div id="datetime-formato" class="subsection">
+                    <h3 class="subsection-title">Formatear y Parsear Fechas</h3>
+                    <p>Convertir fechas a texto (<code class="inline">strftime</code>) y texto a fechas (<code class="inline">strptime</code>).</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">from datetime import datetime
+
+# strftime: datetime -> string
+ahora = datetime.now()
+print(ahora.strftime("%Y-%m-%d"))           # 2024-01-15
+print(ahora.strftime("%d/%m/%Y"))           # 15/01/2024
+print(ahora.strftime("%H:%M:%S"))           # 14:30:45
+print(ahora.strftime("%I:%M %p"))           # 02:30 PM
+print(ahora.strftime("%A, %d %B %Y"))       # lunes, 15 enero 2024
+
+# strptime: string -> datetime
+fecha_str = "2024-12-25 14:30:00"
+fecha_dt = datetime.strptime(fecha_str, "%Y-%m-%d %H:%M:%S")
+
+# Códigos comunes:
+# %Y = año (2024), %y = año (24)
+# %m = mes (01-12), %B = mes nombre, %b = mes abreviado
+# %d = día (01-31)
+# %H = hora 24h, %I = hora 12h, %M = minutos, %S = segundos
+# %p = AM/PM</code></pre>
+                    </div>
+                </div>
+
+                <div id="datetime-operaciones" class="subsection">
+                    <h3 class="subsection-title">Operaciones con Fechas</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">from datetime import datetime, timedelta, date
+
+# Comparaciones
+fecha1 = date(2024, 6, 15)
+fecha2 = date(2024, 12, 25)
+print(fecha1 < fecha2)    # True
+print(fecha1 > fecha2)    # False
+print(fecha1 == fecha2)   # False
+
+# Verificar rango
+if fecha1 <= fecha2:
+    print("fecha1 es anterior o igual a fecha2")
+
+# Primer día del mes
+hoy = date.today()
+primer_dia = hoy.replace(day=1)
+
+# Último día del mes
+import calendar
+_, ultimo_dia = calendar.monthrange(hoy.year, hoy.month)
+ultimo = hoy.replace(day=ultimo_dia)
+
+# Días hábiles
+def dias_habiles(inicio, fin):
+    dias = 0
+    actual = inicio
+    while actual <= fin:
+        if actual.weekday() < 5:  # 0-4 = lunes a viernes
+            dias += 1
+        actual += timedelta(days=1)
+    return dias</code></pre>
+                    </div>
+                </div>
+
+                <div id="datetime-casos" class="subsection">
+                    <h3 class="subsection-title">Casos de Uso Reales</h3>
+                    <div class="example-box">
+                        <div class="example-title">Calculadora de Edad</div>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">Python</span>
+                                <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                            </div>
+                            <pre><code class="language-python">from datetime import date
+
+def calcular_edad(fecha_nacimiento):
+    hoy = date.today()
+    anos = hoy.year - fecha_nacimiento.year
+    if (hoy.month, hoy.day) < (fecha_nacimiento.month, fecha_nacimiento.day):
+        anos -= 1
+    return anos
+
+# Uso
+nacimiento = date(1990, 5, 15)
+edad = calcular_edad(nacimiento)
+print(f"Tienes {edad} años")</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="print" class="section">
+                <div class="section-header">
+                    <div class="section-icon print">🖨️</div>
+                    <div>
+                        <h2 class="section-title">print() Avanzado</h2>
+                        <p class="section-subtitle">Técnicas elaboradas para formatear salidas</p>
+                    </div>
+                </div>
+
+                <div id="print-basico" class="subsection">
+                    <h3 class="subsection-title">Parámetros sep y end</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Parámetro sep: cambia separador
+print("a", "b", "c")              # a b c
+print("a", "b", "c", sep="-")     # a-b-c
+print("2024", "01", "15", sep="/")  # 2024/01/15
+
+# Parámetro end: cambia final
+print("Cargando", end=" ")
+print("...", end=" ")
+print("¡Listo!")  # Cargando ... ¡Listo!
+
+# Sin salto de línea
+for i in range(5):
+    print(i, end=" ")  # 0 1 2 3 4</code></pre>
+                    </div>
+                </div>
+
+                <div id="print-fstrings" class="subsection">
+                    <h3 class="subsection-title">f-strings</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">nombre = "Ana"
+edad = 28
+print(f"Hola, {nombre}. Tienes {edad} años.")
+
+# Expresiones dentro de f-strings
+a, b = 5, 3
+print(f"{a} + {b} = {a + b}")
+
+# Formateo de números
+pi = 3.14159265359
+print(f"Pi: {pi:.2f}")       # 3.14
+print(f"Pi: {pi:10.2f}")     # '      3.14'
+
+# Separadores de miles
+salario = 50000
+print(f"Salario: ${salario:,}")  # $50,000
+
+# Porcentajes
+tasa = 0.8567
+print(f"Tasa: {tasa:.1%}")   # 85.7%
+
+# Alineación
+texto = "Python"
+print(f"|{texto:<10}|")  # |Python    |
+print(f"|{texto:>10}|")  # |    Python|
+print(f"|{texto:^10}|")  # |  Python  |</code></pre>
+                    </div>
+                </div>
+
+                <div id="print-format" class="subsection">
+                    <h3 class="subsection-title">format() y % formatting</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Método format()
+print("{} tiene {} años".format("Ana", 25))
+print("{0} {1} {0}".format("hola", "mundo"))
+print("{nombre} vive en {ciudad}".format(nombre="Luis", ciudad="Madrid"))
+
+# Formateo de números
+print("{:.2f}".format(3.14159))   # 3.14
+print("{:>10}".format("texto"))   # '     texto'
+print("{:,}".format(1000000))     # 1,000,000
+
+# % formatting (estilo antiguo)
+print("Hola, %s" % "mundo")
+print("%s tiene %d años" % ("Pedro", 35))
+print("Pi = %.2f" % 3.14159)</code></pre>
+                    </div>
+                </div>
+
+                <div id="print-tablas" class="subsection">
+                    <h3 class="subsection-title">Tablas Formateadas</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Tabla con f-strings
+productos = [
+    {"nombre": "Laptop", "precio": 999.99, "stock": 15},
+    {"nombre": "Mouse", "precio": 29.99, "stock": 150},
+    {"nombre": "Teclado", "precio": 79.99, "stock": 75},
+]
+
+print("=" * 50)
+print(f"{'PRODUCTO':<15} {'PRECIO':>12} {'STOCK':>10}")
+print("-" * 50)
+for p in productos:
+    print(f"{p['nombre']:<15} ${p['precio']:>10.2f} {p['stock']:>10}")
+print("=" * 50)
+
+# Barra de progreso
+def barra_progreso(actual, total, ancho=30):
+    porcentaje = actual / total
+    completado = int(ancho * porcentaje)
+    restante = ancho - completado
+    barra = "█" * completado + "░" * restante
+    print(f"\r|{barra}| {porcentaje*100:.1f}%", end="", flush=True)</code></pre>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="diccionarios" class="section">
+                <div class="section-header">
+                    <div class="section-icon dict">📚</div>
+                    <div>
+                        <h2 class="section-title">Diccionarios</h2>
+                        <p class="section-subtitle">Estructuras de datos clave-valor en Python</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Crear y Acceder</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Crear diccionarios
+persona = {"nombre": "Ana", "edad": 28, "ciudad": "Madrid"}
+persona2 = dict(nombre="Luis", edad=35, ciudad="Barcelona")
+
+# Acceder a valores
+nombre = persona["nombre"]          # "Ana"
+edad = persona.get("edad")          # 28
+email = persona.get("email", "N/A")  # "N/A" (valor por defecto)
+
+# Verificar existencia
+if "nombre" in persona:
+    print("La clave existe")
+
+# Obtener claves, valores e items
+print(persona.keys())     # dict_keys(['nombre', 'edad', 'ciudad'])
+print(persona.values())   # dict_values(['Ana', 28, 'Madrid'])
+print(persona.items())    # dict_items([('nombre', 'Ana'), ...])</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Modificar Diccionarios</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">persona = {"nombre": "Ana", "edad": 28}
+
+# Agregar o modificar
+persona["ciudad"] = "Madrid"
+persona["edad"] = 29
+
+# update() - actualizar múltiples
+persona.update({"email": "ana@email.com", "telefono": "123456789"})
+persona.update(pais="España")
+
+# Eliminar
+ciudad = persona.pop("ciudad")      # Elimina y devuelve
+ultimo = persona.popitem()          # Elimina último item
+del persona["telefono"]             # Elimina sin retornar
+persona.clear()                     # Vacía todo</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Métodos de Diccionarios</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr><th>Método</th><th>Descripción</th><th>Ejemplo</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code class="inline">get(k, d)</code></td><td>Valor de k o d</td><td><code class="inline">d.get("x", 0)</code></td></tr>
+                                <tr><td><code class="inline">keys()</code></td><td>Vista de claves</td><td><code class="inline">list(d.keys())</code></td></tr>
+                                <tr><td><code class="inline">values()</code></td><td>Vista de valores</td><td><code class="inline">list(d.values())</code></td></tr>
+                                <tr><td><code class="inline">items()</code></td><td>Vista de pares</td><td><code class="inline">for k, v in d.items()</code></td></tr>
+                                <tr><td><code class="inline">update(d2)</code></td><td>Actualiza con d2</td><td><code class="inline">d.update({"x": 1})</code></td></tr>
+                                <tr><td><code class="inline">pop(k)</code></td><td>Elimina y devuelve</td><td><code class="inline">v = d.pop("x")</code></td></tr>
+                                <tr><td><code class="inline">popitem()</code></td><td>Elimina último</td><td><code class="inline">k, v = d.popitem()</code></td></tr>
+                                <tr><td><code class="inline">setdefault(k, d)</code></td><td>get() o crea</td><td><code class="inline">d.setdefault("x", [])</code></td></tr>
+                                <tr><td><code class="inline">clear()</code></td><td>Vacía</td><td><code class="inline">d.clear()</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Recorrer Diccionarios</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">persona = {"nombre": "Ana", "edad": 28, "ciudad": "Madrid"}
+
+# Iterar sobre claves
+for clave in persona:
+    print(clave)
+
+# Iterar sobre pares clave-valor
+for clave, valor in persona.items():
+    print(f"{clave} = {valor}")
+
+# Ordenar por clave
+for clave in sorted(persona.keys()):
+    print(f"{clave}: {persona[clave]}")
+
+# Ordenar por valor
+puntuaciones = {"Ana": 85, "Luis": 92, "María": 78}
+for nombre in sorted(puntuaciones, key=puntuaciones.get, reverse=True):
+    print(f"{nombre}: {puntuaciones[nombre]}")</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Diccionarios Anidados</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">empresa = {
+    "nombre": "TechCorp",
+    "empleados": {
+        "E001": {"nombre": "Ana", "departamento": "Dev", "salario": 50000},
+        "E002": {"nombre": "Luis", "departamento": "Diseño", "salario": 45000},
+    },
+    "departamentos": ["Dev", "Diseño", "Marketing"]
+}
+
+# Acceder a datos anidados
+print(empresa["empleados"]["E001"]["nombre"])
+
+# Modificar
+empresa["empleados"]["E001"]["salario"] = 52000
+
+# Agregar nuevo
+empresa["empleados"]["E003"] = {"nombre": "María", "departamento": "Dev"}</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Comprensiones de Diccionario</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># {clave: valor for item in iterable if condicion}
+
+# Cuadrados de 0-9
+cuadrados = {n: n**2 for n in range(10)}
+
+# Solo pares
+pares = {x: x**2 for x in range(20) if x % 2 == 0}
+
+# Invertir diccionario
+original = {"a": 1, "b": 2, "c": 3}
+invertido = {v: k for k, v in original.items()}
+
+# Transformar valores
+precios = {"manzana": 1.5, "banana": 0.8}
+precios_iva = {k: round(v * 1.21, 2) for k, v in precios.items()}
+
+# Filtrar
+ventas = {"Enero": 5000, "Febrero": 3500, "Marzo": 7000}
+meses_fuertes = {m: v for m, v in ventas.items() if v > 4000}
+
+# Desde dos listas
+claves = ["nombre", "edad"]
+valores = ["Ana", 28]
+persona = {k: v for k, v in zip(claves, valores)}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="listas" class="section">
+                <div class="section-header">
+                    <div class="section-icon list">📋</div>
+                    <div>
+                        <h2 class="section-title">Listas</h2>
+                        <p class="section-subtitle">Colecciones ordenadas y mutables</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Crear y Acceder</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Crear listas
+lista_vacia = []
+numeros = [1, 2, 3, 4, 5]
+frutas = ["manzana", "banana", "cereza"]
+mixta = [1, "dos", 3.0, True]
+
+# List comprehension
+pares = [x for x in range(10) if x % 2 == 0]
+
+# Acceso por índice
+print(frutas[0])    # manzana
+print(frutas[-1])   # cereza (último)
+print(frutas[1:4])  # ['banana', 'cereza', 'durazno']
+print(frutas[::2])  # cada 2 elementos
+print(frutas[::-1]) # lista invertida
+
+# Verificar existencia
+if "banana" in frutas:
+    print("¡Tenemos bananas!")
+
+print(len(frutas))  # 5</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Métodos de Listas</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr><th>Método</th><th>Descripción</th><th>Ejemplo</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code class="inline">append(x)</code></td><td>Agrega al final</td><td><code class="inline">[1,2].append(3)</code></td></tr>
+                                <tr><td><code class="inline">insert(i, x)</code></td><td>Inserta en i</td><td><code class="inline">[1,3].insert(1,2)</code></td></tr>
+                                <tr><td><code class="inline">extend(iter)</code></td><td>Extiende</td><td><code class="inline">[1].extend([2,3])</code></td></tr>
+                                <tr><td><code class="inline">remove(x)</code></td><td>Elimina primera x</td><td><code class="inline">[1,2,1].remove(1)</code></td></tr>
+                                <tr><td><code class="inline">pop([i])</code></td><td>Elimina y devuelve</td><td><code class="inline">[1,2].pop()</code></td></tr>
+                                <tr><td><code class="inline">clear()</code></td><td>Vacía</td><td><code class="inline">[1,2].clear()</code></td></tr>
+                                <tr><td><code class="inline">index(x)</code></td><td>Índice de x</td><td><code class="inline">[1,2,3].index(2)</code></td></tr>
+                                <tr><td><code class="inline">count(x)</code></td><td>Cuenta x</td><td><code class="inline">[1,1,2].count(1)</code></td></tr>
+                                <tr><td><code class="inline">sort()</code></td><td>Ordena in-place</td><td><code class="inline">[3,1].sort()</code></td></tr>
+                                <tr><td><code class="inline">reverse()</code></td><td>Invierte</td><td><code class="inline">[1,2].reverse()</code></td></tr>
+                                <tr><td><code class="inline">copy()</code></td><td>Copia</td><td><code class="inline">[1,2].copy()</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Modificar Listas</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">frutas = ["manzana", "banana"]
+
+# Agregar
+frutas.append("cereza")
+frutas.insert(1, "arándano")
+frutas.extend(["durazno", "fresa"])
+
+# Eliminar
+frutas.remove("banana")
+ultima = frutas.pop()
+segunda = frutas.pop(1)
+del frutas[0]
+del frutas[1:3]
+frutas.clear()
+
+# Ordenar
+nums = [3, 1, 4, 1, 5]
+nums.sort()
+nums.sort(reverse=True)
+nums.sort(key=len)  # por longitud
+
+# Ordenar sin modificar original
+original = [3, 1, 4]
+ordenada = sorted(original)
+
+# Invertir
+nums.reverse()
+
+# Copiar
+import copy
+copia = original.copy()
+copia_profunda = copy.deepcopy(original)</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">List Comprehensions</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># [expresion for item in iterable if condicion]
+
+# Cuadrados
+cuadrados = [x**2 for x in range(10)]
+
+# Solo pares
+pares = [x for x in range(20) if x % 2 == 0]
+
+# Con if-else
+valores = [x if x > 0 else 0 for x in [-2, -1, 0, 1, 2]]
+
+# Múltiples bucles
+colores = ["rojo", "verde"]
+tallas = ["S", "M", "L"]
+combinaciones = [f"{c}-{t}" for c in colores for t in tallas]
+
+# Aplanar matriz
+matriz = [[1, 2, 3], [4, 5, 6]]
+aplanada = [num for fila in matriz for num in fila]
+
+# Matriz identidad
+identidad = [[1 if i == j else 0 for j in range(3)] for i in range(3)]</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Ordenamiento Avanzado</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Ordenar con key
+palabras = ["Python", "es", "increíble"]
+palabras.sort(key=len)
+
+# Ignorar mayúsculas
+nombres = ["ana", "Luis", "MARÍA"]
+nombres.sort(key=str.lower)
+
+# Ordenar diccionarios
+usuarios = [
+    {"nombre": "Ana", "edad": 28},
+    {"nombre": "Luis", "edad": 35},
+]
+por_edad = sorted(usuarios, key=lambda u: u["edad"])
+por_puntos = sorted(usuarios, key=lambda u: u["puntuacion"], reverse=True)
+
+# Múltiples criterios
+ordenado = sorted(usuarios, key=lambda u: (u["edad"], -u["puntuacion"]))
+
+# Usando itemgetter
+from operator import itemgetter
+por_edad = sorted(usuarios, key=itemgetter("edad"))</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tuplas" class="section">
+                <div class="section-header">
+                    <div class="section-icon tuple">🎯</div>
+                    <div>
+                        <h2 class="section-title">Tuplas</h2>
+                        <p class="section-subtitle">Colecciones ordenadas e inmutables</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Crear y Usar Tuplas</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Crear tuplas
+tupla_vacia = ()
+numeros = (1, 2, 3, 4, 5)
+numeros2 = 1, 2, 3, 4, 5  # Sin paréntesis
+
+# Tupla de un elemento (¡necesita la coma!)
+singleton = (42,)
+
+# Desde iterable
+tupla_lista = tuple([1, 2, 3])
+tupla_string = tuple("Python")
+
+# Acceso (igual que listas)
+coordenadas = (10, 20, 30)
+print(coordenadas[0])     # 10
+print(coordenadas[-1])    # 30
+print(coordenadas[1:4])   # (20, 30)
+
+# Inmutabilidad
+t = (1, 2, 3)
+# t[0] = 10  # ❌ Error
+
+# PERO elementos mutables SÍ se pueden modificar
+t_mixta = (1, [2, 3], 4)
+t_mixta[1].append(5)  # ✅ (1, [2, 3, 5], 4)</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Métodos y Operaciones</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">t = (1, 2, 3, 2, 4, 2, 5)
+
+# count() - cuenta ocurrencias
+print(t.count(2))   # 3
+
+# index() - índice de primera ocurrencia
+print(t.index(3))   # 2
+print(t.index(2, 2))  # busca desde índice 2
+
+# Concatenación
+t1 = (1, 2)
+t2 = (3, 4)
+t3 = t1 + t2  # (1, 2, 3, 4)
+
+# Repetición
+t4 = t1 * 3  # (1, 2, 1, 2, 1, 2)
+
+# Comparación
+print((1, 2, 3) < (1, 2, 4))  # True
+
+# Funciones útiles
+print(min(t))   # 1
+print(max(t))   # 5
+print(sum(t))   # 19
+print(sorted(t))  # [1, 2, 2, 2, 3, 4, 5] (lista)</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Desempaquetado</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Desempaquetado básico
+punto = (3, 4)
+x, y = punto
+
+# Intercambiar variables
+a, b = 10, 20
+a, b = b, a  # ¡Sin variable temporal!
+
+# * para capturar múltiples elementos
+nums = (1, 2, 3, 4, 5)
+primero, *resto = nums
+*inicio, ultimo = nums
+primero, *medio, ultimo = nums
+
+# Ignorar valores con _
+nombre, _, edad = ("Ana", "García", 28)
+
+# Ignorar múltiples
+primero, *_, ultimo = (1, 2, 3, 4, 5, 6, 7)
+
+# En bucles
+estudiantes = [("Ana", 20, 85), ("Luis", 22, 92)]
+for nombre, edad, nota in estudiantes:
+    print(f"{nombre}: {nota}")
+
+# Con enumerate
+for i, fruta in enumerate(["manzana", "banana"], 1):
+    print(f"{i}. {fruta}")
+
+# Con zip
+nombres = ["Ana", "Luis"]
+edades = [25, 30]
+for nombre, edad in zip(nombres, edades):
+    print(f"{nombre}: {edad}")</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Named Tuples</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">from collections import namedtuple
+
+# Crear tipo
+Punto = namedtuple('Punto', ['x', 'y'])
+Persona = namedtuple('Persona', 'nombre edad ciudad')
+
+# Usar
+p = Punto(3, 4)
+print(p.x, p.y)       # 3 4
+print(p[0], p[1])     # 3 4
+
+persona = Persona("Ana", 28, "Madrid")
+print(f"{persona.nombre} vive en {persona.ciudad}")
+
+# Convertir
+persona_dict = persona._asdict()
+nueva = Persona(**persona_dict)
+
+# Reemplazar campos
+persona2 = persona._replace(edad=29)</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sets" class="section">
+                <div class="section-header">
+                    <div class="section-icon set">🔢</div>
+                    <div>
+                        <h2 class="section-title">Sets</h2>
+                        <p class="section-subtitle">Colecciones desordenadas de elementos únicos</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Crear y Modificar</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Crear sets
+vacio = set()  # {} crea diccionario
+numeros = {1, 2, 3, 4, 5}
+
+# Desde iterable
+unicos = set([1, 2, 2, 3, 3, 3])  # {1, 2, 3}
+letras = set("banana")  # {'b', 'a', 'n'}
+
+# Set comprehension
+cuadrados = {x**2 for x in range(10)}
+
+# Agregar
+s = {1, 2, 3}
+s.add(4)
+s.update([5, 6, 7])
+s.update((8, 9))
+
+# Eliminar
+s.remove(3)      # Error si no existe
+s.discard(4)     # No error si no existe
+s.pop()          # Elimina uno al azar
+s.clear()        # Vacía</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Operaciones de Conjuntos</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">A = {1, 2, 3, 4, 5}
+B = {4, 5, 6, 7, 8}
+
+# Unión: A | B
+print(A | B)            # {1, 2, 3, 4, 5, 6, 7, 8}
+print(A.union(B))
+
+# Intersección: A & B
+print(A & B)            # {4, 5}
+print(A.intersection(B))
+
+# Diferencia: A - B
+print(A - B)            # {1, 2, 3}
+print(A.difference(B))
+
+# Diferencia simétrica: A ^ B
+print(A ^ B)            # {1, 2, 3, 6, 7, 8}
+print(A.symmetric_difference(B))
+
+# Modificar in-place
+C = {1, 2, 3}
+C.update({3, 4, 5})           # C |= {3,4,5}
+C.intersection_update({2, 3}) # C &= {2,3}
+C.difference_update({3})      # C -= {3}</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Relaciones entre Conjuntos</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">X = {1, 2}
+Y = {1, 2, 3, 4}
+Z = {5, 6}
+
+# Subconjunto
+print(X.issubset(Y))      # True: X ⊆ Y
+print(X <= Y)             # True
+print(X < Y)              # True: X ⊂ Y (propio)
+
+# Superconjunto
+print(Y.issuperset(X))    # True: Y ⊇ X
+print(Y >= X)             # True
+
+# Disjuntos (sin elementos en común)
+print(X.isdisjoint(Z))    # True
+print(X.isdisjoint(Y))    # False
+
+# Igualdad
+print({1, 2, 3} == {3, 2, 1})  # True</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Casos Prácticos</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Eliminar duplicados manteniendo orden
+def unicos_ordenados(lista):
+    return list(dict.fromkeys(lista))
+
+# Contar elementos únicos
+def contar_unicos(iterable):
+    return len(set(iterable))
+
+# Palabras comunes entre textos
+def palabras_comunes(texto1, texto2):
+    palabras1 = set(texto1.lower().split())
+    palabras2 = set(texto2.lower().split())
+    return palabras1 & palabras2
+
+# Validar opciones
+OPCIONES_VALIDAS = {"si", "no", "s", "n"}
+def validar_respuesta(respuesta):
+    return respuesta.lower().strip() in OPCIONES_VALIDAS
+
+# Coordenadas válidas
+COORDENADAS = {(0, 0), (0, 1), (1, 0), (1, 1)}
+def es_valida(x, y):
+    return (x, y) in COORDENADAS</code></pre>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="excepciones" class="section">
+                <div class="section-header">
+                    <div class="section-icon exception">⚠️</div>
+                    <div>
+                        <h2 class="section-title">Manejo de Excepciones</h2>
+                        <p class="section-subtitle">Control de errores en Python</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">try-except básico</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Estructura básica
+try:
+    resultado = 10 / 0
+except:
+    print("¡Ocurrió un error!")
+
+# Capturar errores específicos
+try:
+    numero = int(input("Número: "))
+    resultado = 100 / numero
+except ValueError:
+    print("Debes ingresar un número válido")
+except ZeroDivisionError:
+    print("No puedes dividir por cero")
+except Exception as e:
+    print(f"Error inesperado: {e}")
+
+# Múltiples excepciones
+try:
+    valor = int("abc")
+except (ValueError, TypeError) as e:
+    print(f"Error de conversión: {e}")</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">else y finally</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python">try:
+    archivo = open("datos.txt", "r")
+    contenido = archivo.read()
+except FileNotFoundError:
+    print("Archivo no encontrado")
+else:
+    # Se ejecuta SI NO hay error
+    print(f"Leído: {len(contenido)} caracteres")
+finally:
+    # Se ejecuta SIEMPRE
+    print("Limpiando...")
+    try:
+        archivo.close()
+    except NameError:
+        pass
+
+# Usar with (mejor que try-finally)
+with open("archivo.txt", "r") as f:
+    contenido = f.read()
+# f se cierra automáticamente</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Excepciones Personalizadas</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Crear excepciones personalizadas
+class ErrorDeValidacion(Exception):
+    """Excepción base para errores de validación"""
+    pass
+
+class CampoRequeridoError(ErrorDeValidacion):
+    def __init__(self, campo):
+        self.campo = campo
+        super().__init__(f"El campo '{campo}' es requerido")
+
+class RangoInvalidoError(ErrorDeValidacion):
+    def __init__(self, campo, minimo, maximo):
+        super().__init__(f"'{campo}' debe estar entre {minimo} y {maximo}")
+
+# Usar
+import re
+
+def validar_email(email):
+    if not email:
+        raise CampoRequeridoError("email")
+    if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
+        raise ErrorDeValidacion("Formato de email inválido")
+
+def validar_edad(edad):
+    if edad is None:
+        raise CampoRequeridoError("edad")
+    if not (0 <= edad <= 150):
+        raise RangoInvalidoError("edad", 0, 150)</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">raise y raise from</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Lanzar excepción
+raise ValueError("Valor inválido")
+
+# Re-lanzar excepción
+try:
+    operacion_riesgosa()
+except ValueError:
+    print("Error capturado")
+    raise  # Re-lanza la misma excepción
+
+# raise from - encadenar excepciones
+def cargar_configuracion(ruta):
+    try:
+        with open(ruta) as f:
+            return json.load(f)
+    except FileNotFoundError as e:
+        raise ConfigError(f"No se encontró {ruta}") from e
+    except json.JSONDecodeError as e:
+        raise ConfigError(f"JSON inválido") from e</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Buenas Prácticas</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># ✅ Ser específico con las excepciones
+# ❌ Mal:
+try:
+    resultado = 10 / numero
+except:  # Captura TODO
+    pass
+
+# ✅ Bien:
+try:
+    resultado = 10 / numero
+except ZeroDivisionError:
+    print("No puedes dividir por cero")
+
+# ✅ No usar excepciones para control de flujo
+# ❌ Mal:
+def encontrar_indice(lista, elemento):
+    try:
+        return lista.index(elemento)
+    except ValueError:
+        return -1
+
+# ✅ Bien:
+def encontrar_indice(lista, elemento):
+    if elemento in lista:
+        return lista.index(elemento)
+    return -1
+
+# ✅ Documentar excepciones que lanza tu función
+def dividir(a, b):
+    """
+    Divide a entre b.
+    
+    Raises:
+        ZeroDivisionError: Si b es cero
+        TypeError: Si a o b no son números
+    """
+    return a / b</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="funciones" class="section">
+                <div class="section-header">
+                    <div class="section-icon func">⚙️</div>
+                    <div>
+                        <h2 class="section-title">Funciones en Python</h2>
+                        <p class="section-subtitle">Definición y técnicas avanzadas</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Definir Funciones</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Función básica
+def saludar():
+    print("¡Hola, mundo!")
+
+# Con parámetros
+def saludar_persona(nombre):
+    print(f"¡Hola, {nombre}!")
+
+# Con retorno
+def sumar(a, b):
+    return a + b
+
+resultado = sumar(5, 3)  # 8
+
+# Múltiples retornos
+def calcular(a, b):
+    return a + b, a - b, a * b
+
+s, r, p = calcular(10, 3)
+
+# Docstrings
+def calcular_area(base, altura):
+    """
+    Calcula el área de un rectángulo.
+    
+    Args:
+        base (float): La base
+        altura (float): La altura
+    
+    Returns:
+        float: El área
+    
+    Raises:
+        ValueError: Si dimensiones negativas
+    """
+    if base < 0 or altura < 0:
+        raise ValueError("Dimensiones deben ser positivas")
+    return base * altura</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Parámetros Avanzados</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Parámetros por defecto
+def saludar(nombre, mensaje="Hola", signo="!"):
+    print(f"{mensaje}, {nombre}{signo}")
+
+saludar("Ana")                      # Hola, Ana!
+saludar("Luis", "Buenos días")      # Buenos días, Luis!
+
+# ⚠️ Cuidado con valores mutables por defecto
+# ✅ Bien:
+def agregar_item(item, lista=None):
+    if lista is None:
+        lista = []
+    lista.append(item)
+    return lista
+
+# *args - argumentos variables
+def sumar_todos(*numeros):
+    return sum(numeros)
+
+sumar_todos(1, 2, 3)     # 6
+sumar_todos(10, 20)      # 30
+
+# **kwargs - argumentos nombrados variables
+def crear_perfil(**kwargs):
+    return kwargs
+
+crear_perfil(nombre="Ana", edad=28)
+
+# Combinar todo
+def funcion_completa(a, b, *args, c=10, **kwargs):
+    print(f"a={a}, b={b}")
+    print(f"args={args}")
+    print(f"c={c}")
+    print(f"kwargs={kwargs}")
+
+funcion_completa(1, 2, 3, 4, c=20, x=100)</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Funciones Lambda</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Sintaxis: lambda argumentos: expresion
+
+cuadrado = lambda x: x ** 2
+print(cuadrado(5))  # 25
+
+sumar = lambda a, b: a + b
+print(sumar(3, 4))  # 7
+
+# Con valor por defecto
+saludar = lambda nombre, msg="Hola": f"{msg}, {nombre}!"
+
+# Uso común: como argumento
+palabras = ["Python", "es", "increíble"]
+palabras.sort(key=lambda p: len(p))
+
+# filter
+numeros = [1, 2, 3, 4, 5, 6]
+pares = list(filter(lambda x: x % 2 == 0, numeros))
+
+# map
+cuadrados = list(map(lambda x: x ** 2, numeros))
+
+# reduce
+from functools import reduce
+producto = reduce(lambda a, b: a * b, [1, 2, 3, 4, 5])
+
+# Closures
+def multiplicador(n):
+    return lambda x: x * n
+
+doble = multiplicador(2)
+triple = multiplicador(3)
+print(doble(5))   # 10
+print(triple(5))  # 15</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Funciones Recursivas</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Factorial
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+# Fibonacci con memoización
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fibonacci(n):
+    if n <= 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+# Suma anidada
+def suma_anidada(objeto):
+    if isinstance(objeto, (int, float)):
+        return objeto
+    if isinstance(objeto, (list, tuple)):
+        return sum(suma_anidada(item) for item in objeto)
+    if isinstance(objeto, dict):
+        return sum(suma_anidada(v) for v in objeto.values())
+    return 0
+
+# Búsqueda binaria
+def busqueda_binaria(lista, objetivo, inicio=0, fin=None):
+    if fin is None:
+        fin = len(lista) - 1
+    if inicio > fin:
+        return -1
+    
+    medio = (inicio + fin) // 2
+    if lista[medio] == objetivo:
+        return medio
+    elif lista[medio] < objetivo:
+        return busqueda_binaria(lista, objetivo, medio + 1, fin)
+    else:
+        return busqueda_binaria(lista, objetivo, inicio, medio - 1)</code></pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Decoradores</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">Python</span>
+                            <button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Decorador básico
+def mi_decorador(funcion):
+    def wrapper(*args, **kwargs):
+        print(f"→ Antes de {funcion.__name__}")
+        resultado = funcion(*args, **kwargs)
+        print(f"← Después de {funcion.__name__}")
+        return resultado
+    return wrapper
+
+@mi_decorador
+def saludar(nombre):
+    print(f"¡Hola, {nombre}!")
+
+# Decorador con parámetros
+def repetir(n):
+    def decorador(funcion):
+        def wrapper(*args, **kwargs):
+            for i in range(n):
+                funcion(*args, **kwargs)
+        return wrapper
+    return decorador
+
+@repetir(3)
+def contar():
+    print("Contando...")
+
+# Medir tiempo
+import time
+
+def medir_tiempo(funcion):
+    def wrapper(*args, **kwargs):
+        inicio = time.time()
+        resultado = funcion(*args, **kwargs)
+        print(f"⏱️ {funcion.__name__}: {time.time() - inicio:.4f}s")
+        return resultado
+    return wrapper
+
+# Preservar metadatos
+from functools import wraps
+
+def decorador_propio(funcion):
+    @wraps(funcion)
+    def wrapper(*args, **kwargs):
+        return funcion(*args, **kwargs)
+    return wrapper</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <p>Guía Completa de Python © 2024</p>
+                <p>Documentación creada con ❤️ para la comunidad</p>
+                <p style="margin-top: 10px;">
+                    <a href="#inicio">Volver al inicio</a>
+                </p>
+            </footer>
+        </main>
+    </div>
+
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block').querySelector('code');
+            const text = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copiado';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const sidebar = document.getElementById('sidebar');
+                    if (sidebar.classList.contains('open')) {
+                        toggleSidebar();
+                    }
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.section, .subsection');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function updateActiveNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
