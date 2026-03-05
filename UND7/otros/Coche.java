@@ -1,4 +1,4 @@
-package UND7;
+package otros;
 
 public class Coche extends  Vehiculo  {
 

@@ -1,0 +1,98 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "PruebaInmobiliaria",
+            "request": "launch",
+            "mainClass": "Poo_ejercicio2_5.PruebaInmobiliaria",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "PruebaHerencia",
+            "request": "launch",
+            "mainClass": "Poo_ejerciio2_repasoEJ1.PruebaHerencia",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "GestionEmpresa",
+            "request": "launch",
+            "mainClass": "Sistemadegestiondeempeladosdeunamultitatarea.GestionEmpresa",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "EjercicioC",
+            "request": "launch",
+            "mainClass": "matriz.EjercicioC",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "EjercicioB",
+            "request": "launch",
+            "mainClass": "matriz.EjercicioB",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "ejercicio1",
+            "request": "launch",
+            "mainClass": "matriz.ejercicio1",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "MainVehiculoa",
+            "request": "launch",
+            "mainClass": "Sistemadegestiondealquiler.MainVehiculoa",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "ProbarCaja",
+            "request": "launch",
+            "mainClass": "Sistemademaquinaexpendedora.ProbarCaja",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "UsoTresEnRaya",
+            "request": "launch",
+            "mainClass": "UsoTresEnRaya",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "Juego",
+            "request": "launch",
+            "mainClass": "The_Arena_Master.Juego",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "Jugar",
+            "request": "launch",
+            "mainClass": "Battle_Arena_2D.Jugar",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "PruebaEmpleados",
+            "request": "launch",
+            "mainClass": "poo_ejerccios2_repasoss.PruebaEmpleados",
+            "projectName": "UND7_de181d57"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}
