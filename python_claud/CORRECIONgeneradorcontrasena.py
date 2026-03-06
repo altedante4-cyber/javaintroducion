@@ -41,7 +41,7 @@ def evaluar_fortaleza(password):
     tiene_nums = any(c.isdigit() for c in password )
     tiene_esps = any(c in string.punctuation for c in password )
 # piensa en any() como un operador or gigantee que conecta a todos los elementos 
-    #logica de puntuciono
+    #logica de puntuciono devuelve true si encnetra almenos uno 
 
     puntos = sum([tiene_mayus + tiene_nums + tiene_esps])
     if n >= 12 and puntos >= 2 :
