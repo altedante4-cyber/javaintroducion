@@ -1,4 +1,4 @@
-package EJERCICOI2_8;
+package Ejercio28;
 
 public class Bebida extends ItemMenu {
 
@@ -9,6 +9,8 @@ public class Bebida extends ItemMenu {
     public Bebida(String nombre , String descripcion , double precioBase , String tamano ){
         super(nombre, descripcion, precioBase);
         this.tamanao = tamano ; 
+        this.tieneAlcohol = false ;
+    
     }
 
     @Override

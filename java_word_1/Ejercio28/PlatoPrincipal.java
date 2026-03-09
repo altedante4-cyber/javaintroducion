@@ -1,4 +1,4 @@
-package EJERCICOI2_8;
+package Ejercio28;
 
 public class PlatoPrincipal extends ItemMenu{
 
