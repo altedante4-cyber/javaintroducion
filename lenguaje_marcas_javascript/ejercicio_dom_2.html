@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio DOM - Lista de Tareas</title>
+</head>
+<body>
+    <!--
+    EJERCICIO: Lista de Tareas Interactiva
+    
+    Crea una página web que gestione una lista de tareas con las siguientes funcionalidades:
+    
+    1. Un campo de texto donde el usuario pueda escribir una nueva tarea
+    2. Un botón para agregar la tarea a la lista
+    3. La tarea debe aparecer como un elemento de lista (<li>)
+    4. Cada tarea debe tener un botón para eliminarla
+    5. Un contador que muestre el número total de tareas pendientes
+    6. El botón "Enter" en el teclado debe agregar la tarea (igual que el botón)
+    7. Si el campo está vacío, mostrar un aviso (alert)
+    
+    REQUISITOS TÉCNICOS:
+    - Usa document.getElementById() para seleccionar elementos
+    - Usa document.createElement() para crear nuevos elementos
+    - Usa appendChild() para agregar elementos al DOM
+    - Usa addEventListener() para manejar eventos
+    - Usa textContent para obtener/modificar texto
+    - No modifies el HTML, todo debe hacerse desde JavaScript
+    -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f0f0f0;
+            margin: 5px 0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        .delete-btn:hover {
+            background-color: #da190b;
+        }
+        .contador {
+            margin-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tareas</h1>
+    
+    <div class="input-group">
+        <input type="text" id="tareaInput" placeholder="Escribe una tarea...">
+        <button id="agregarBtn">Agregar</button>
+    </div>
+    
+    <ul id="listaTareas"></ul>
+    
+    <p class="contador">Tareas pendientes: <span id="contador">0</span></p>
+
+    <script>
+        // Seleccionar elementos del DOM
+        const input = document.getElementById('tareaInput');
+        const botonAgregar = document.getElementById('agregarBtn');
+        const lista = document.getElementById('listaTareas');
+        const contador = document.getElementById('contador');
+
+        // Función para agregar tarea
+        function agregarTarea() {
+            const texto = input.value.trim();
+            
+            if (texto === '') {
+                alert('Por favor, escribe una tarea');
+                return;
+            }
+
+            // Crear nuevo elemento li
+            const nuevaTarea = document.createElement('li');
+            nuevaTarea.textContent = texto;
+
+            // Crear botón de eliminar
+            const botonEliminar = document.createElement('button');
+            botonEliminar.textContent = 'Eliminar';
+            botonEliminar.className = 'delete-btn';
+            
+            // Agregar evento al botón de eliminar
+            botonEliminar.addEventListener('click', function() {
+                lista.removeChild(nuevaTarea);
+                actualizarContador();
+            });
+
+            // Agregar botón a la tarea
+            nuevaTarea.appendChild(botonEliminar);
+
+            // Agregar tarea a la lista
+            lista.appendChild(nuevaTarea);
+
+            // Limpiar input
+            input.value = '';
+            input.focus();
+
+            // Actualizar contador
+            actualizarContador();
+        }
+
+        // Función para actualizar contador
+        function actualizarContador() {
+            const totalTareas = lista.children.length;
+            contador.textContent = totalTareas;
+        }
+
+        // Evento click en botón agregar
+        botonAgregar.addEventListener('click', agregarTarea);
+
+        // Evento enter en input
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                agregarTarea();
+            }
+        });
+    </script>
+</body>
+</html>

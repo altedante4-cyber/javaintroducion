@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.contenedor {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    width: 500px;
+    text-align: center;
+}
+
+h1 {
+    color: #1a1a2e;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.cita-container {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#cita-texto {
+    font-size: 22px;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+#cita-autor {
+    font-size: 16px;
+    color: #666;
+    font-weight: bold;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 16px;
+    background-color: #e94560;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+button:hover {
+    background-color: #d63850;
+}
+
+button:active {
+    transform: scale(0.98);
+}

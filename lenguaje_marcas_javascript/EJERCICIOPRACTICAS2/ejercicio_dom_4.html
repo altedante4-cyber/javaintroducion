@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio DOM - Cambiador de Colores y Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            transition: background-color 0.3s;
+        }
+        .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 2px solid #333;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #textoInput {
+            padding: 10px;
+            width: 200px;
+        }
+        #parrafosContainer {
+            margin-top: 20px;
+        }
+        p {
+            padding: 10px;
+            background: #f0f0f0;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    EJERCICIO: Cambiador de Colores y Texto
+    
+    1. Un botón que cambie el color de fondo de la página (al menos 4 colores distintos)
+    2. Un campo de texto y un botón para agregar un nuevo párrafo con ese texto
+    3. Un botón que reorganice aleatoriamente el orden de los párrafos creados
+    4. Un contador que muestre cuántos párrafos se han creado
+    5. Un botón para eliminar el último párrafo creado
+    
+    REQUISITOS TÉCNICOS:
+    - document.body.style.backgroundColor para cambiar colores
+    - createElement(), appendChild() y removeChild()
+    - Math.random() para la reorganización aleatoria
+    - children o childNodes para acceder a elementos
+    - addEventListener() para todos los eventos
+    -->
+
+    <h1>Cambiador de Colores y Texto</h1>
+
+    <div class="controls">
+        <h3>Control de Color</h3>
+        <button id="cambiarColorBtn">Cambiar Color de Fondo</button>
+    </div>
+
+    <div class="controls">
+        <h3>Gestión de Párrafos</h3>
+        <input type="text" id="textoInput" placeholder="Escribe un texto...">
+        <button id="agregarParrafoBtn">Agregar Párrafo</button>
+        <button id="reordenarBtn">Reordenar Aleatoriamente</button>
+        <button id="eliminarUltimoBtn">Eliminar Último</button>     
+        <p>Párrafos creados: <span id="contador">0</span></p>
+    </div>
+
+    <div id="parrafosContainer"></div>
+
+    <script src="ejercicio_dom_4.js">
+       
+    </script>
+</body>
+</html>
