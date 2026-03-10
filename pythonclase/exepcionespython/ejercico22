@@ -1,3 +1,4 @@
+from datetime import date
 
 
   
@@ -90,8 +91,6 @@ def mostrar_clasificacion(liga: list):
 
 
 
-    # --- DISEÑO DE LA TABLA ---
-    from datetime import date
     fecha = date.today().strftime("%d-%m-%y")
 
     print("-" * 95)

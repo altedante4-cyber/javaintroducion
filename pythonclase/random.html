@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FacturaGen · Generador de Facturas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════════════════════════
+   FACTURA GEN — Design System
+   Estética: Luxury Editorial · Cream + Ink + Copper
+════════════════════════════════════════════════════════════ */
+:root {
+  --ink:        #1a1208;
+  --ink2:       #2d2416;
+  --ink3:       #3d3420;
+  --paper:      #f5f0e8;
+  --paper2:     #ede6d6;
+  --paper3:     #e4dbc8;
+  --copper:     #b5621e;
+  --copper-lt:  #d4834a;
+  --copper-dim: rgba(181,98,30,.15);
+  --gold:       #c9962a;
+  --teal:       #1a6b5a;
+  --teal-lt:    #d0ede8;
+  --red:        #8b2020;
+  --border:     rgba(26,18,8,.15);
+  --border2:    rgba(26,18,8,.08);
+  --shadow:     0 4px 32px rgba(26,18,8,.12);
+  --shadow-lg:  0 16px 64px rgba(26,18,8,.18);
+  --mono:       'IBM Plex Mono', monospace;
+  --serif:      'Fraunces', serif;
+  --r:          6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(201,150,42,.08) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='60' height='60' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+}
+
+/* ── LAYOUT ──────────────────────────────────────────────── */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+/* ── HEADER ──────────────────────────────────────────────── */
+.header {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  background: rgba(245,240,232,.85);
+  backdrop-filter: blur(16px);
+  position: sticky; top: 0; z-index: 200;
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  display: flex; align-items: baseline; gap: 10px;
+}
+.logo-mark {
+  font-family: var(--serif); font-size: 1.6rem;
+  font-weight: 900; font-style: italic;
+  color: var(--copper); letter-spacing: -.04em;
+}
+.logo-sub {
+  font-family: var(--mono); font-size: .65rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink3); border-left: 1px solid var(--border);
+  padding-left: 10px; margin-left: 2px;
+}
+.header-badges { display: flex; gap: 8px; }
+.badge {
+  font-family: var(--mono); font-size: .65rem; letter-spacing: .1em;
+  text-transform: uppercase; padding: 4px 12px; border-radius: 100px;
+  border: 1px solid var(--border); color: var(--ink3);
+  background: var(--paper2);
+}
+.badge--copper { color: var(--copper); border-color: var(--copper-dim); background: rgba(181,98,30,.06); }
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero {
+  padding: 72px 0 56px; text-align: center;
+  border-bottom: 1px solid var(--border2);
+}
+.hero-eyebrow {
+  font-family: var(--mono); font-size: .7rem; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--copper);
+  margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; width: 40px; height: 1px; background: var(--copper);
+}
+.hero-title {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 900; line-height: 1.0;
+  letter-spacing: -.04em;
+  margin-bottom: 20px;
+}
+.hero-title em { font-style: italic; color: var(--copper); }
+.hero-desc {
+  font-family: var(--mono); font-size: .8rem; color: var(--ink3);
+  margin-bottom: 40px; line-height: 1.8;
+}
+.hero-desc span { color: var(--copper); }
+
+.btn-hero {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--serif); font-weight: 700; font-size: 1rem;
+  letter-spacing: -.01em;
+  padding: 16px 40px; border-radius: 100px;
+  background: var(--ink); color: var(--paper);
+  border: none; cursor: pointer;
+  box-shadow: 0 2px 0 var(--copper), 0 6px 32px rgba(26,18,8,.25);
+  transition: all .25s cubic-bezier(.34,1.56,.64,1);
+  position: relative; overflow: hidden;
+}
+.btn-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(181,98,30,.3), transparent);
+  opacity: 0; transition: opacity .3s;
+}
+.btn-hero:hover { transform: translateY(-3px); box-shadow: 0 4px 0 var(--copper), 0 12px 40px rgba(26,18,8,.3); }
+.btn-hero:hover::before { opacity: 1; }
+.btn-hero:active { transform: translateY(0); }
+.btn-hero.spinning .btn-icon { animation: spin .7s linear infinite; }
+.btn-icon { font-size: 1.1rem; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── MAIN GRID ───────────────────────────────────────────── */
+.main { padding: 48px 0 80px; }
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 28px; align-items: start;
+}
+@media (max-width: 920px) { .content-grid { grid-template-columns: 1fr; } }
+
+/* ── CARDS ───────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: fadeSlide .5s ease both;
+}
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card:nth-child(2) { animation-delay: .08s; }
+.card:nth-child(3) { animation-delay: .16s; }
+.card:nth-child(4) { animation-delay: .24s; }
+
+.card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--paper2);
+  border-bottom: 1px solid var(--border2);
+}
+.card-label {
+  font-family: var(--mono); font-size: .67rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink3);
+  display: flex; align-items: center; gap: 8px;
+}
+.card-label::before {
+  content: '';
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--copper); flex-shrink: 0;
+}
+.card-label.blue::before  { background: var(--teal); }
+.card-label.gold::before  { background: var(--gold); }
+.card-label.ink::before   { background: var(--ink); }
+.invoice-num {
+  font-family: var(--mono); font-size: .72rem;
+  color: var(--copper); background: var(--copper-dim);
+  padding: 3px 10px; border-radius: 4px;
+  border: 1px solid rgba(181,98,30,.25);
+}
+
+/* ── TERMINAL / INVOICE PRINT ────────────────────────────── */
+.terminal-body {
+  background: var(--ink);
+  padding: 28px;
+  overflow-x: auto;
+}
+.terminal-text {
+  font-family: var(--mono); font-size: .78rem;
+  line-height: 1.75; color: #e8d9be;
+  white-space: pre; margin: 0;
+}
+.terminal-text .t-head  { color: #f0c070; }
+.terminal-text .t-sep   { color: #5a4e38; }
+.terminal-text .t-total { color: #6fc; font-weight: 600; }
+.terminal-text .t-label { color: #a89060; }
+
+/* ── RIGHT COLUMN ────────────────────────────────────────── */
+.right-col { display: flex; flex-direction: column; gap: 24px; }
+
+/* Summary stats */
+.stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+}
+.stat {
+  background: #fff; padding: 22px 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.stat-lbl {
+  font-family: var(--mono); font-size: .65rem;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--ink3);
+}
+.stat-val {
+  font-family: var(--serif); font-size: 1.4rem;
+  font-weight: 900; letter-spacing: -.03em; color: var(--ink);
+}
+.stat-val.copper { color: var(--copper); }
+.stat-val.sm { font-size: .95rem; }
+
+/* Items table */
+.tbl-wrap { overflow-x: auto; }
+.items-tbl {
+  width: 100%; border-collapse: collapse;
+  font-size: .78rem; font-family: var(--mono);
+}
+.items-tbl th {
+  padding: 10px 14px; text-align: right;
+  background: var(--paper2); color: var(--ink3);
+  font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.items-tbl th:first-child { text-align: left; }
+.items-tbl td {
+  padding: 12px 14px; text-align: right;
+  border-bottom: 1px solid var(--border2); vertical-align: top;
+}
+.items-tbl td:first-child { text-align: left; }
+.items-tbl tr:last-child td { border-bottom: none; }
+.items-tbl tr:hover td { background: var(--paper); }
+.prod-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
+.prod-cat  { font-size: .65rem; color: var(--ink3); letter-spacing: .05em; }
+.dto-pill {
+  background: rgba(201,150,42,.12); color: var(--gold);
+  padding: 1px 7px; border-radius: 3px; font-size: .7rem;
+  border: 1px solid rgba(201,150,42,.25);
+}
+.total-cell { color: var(--copper); font-weight: 600; }
+
+/* ── PATTERNS SECTION ────────────────────────────────────── */
+.patterns-tabs {
+  display: flex; overflow-x: auto; gap: 4px;
+  padding: 12px 16px; background: var(--paper2);
+  border-bottom: 1px solid var(--border2);
+}
+.tab {
+  font-family: var(--mono); font-size: .65rem; letter-spacing: .1em;
+  text-transform: uppercase; padding: 6px 14px; border-radius: 4px;
+  border: 1px solid transparent; background: transparent;
+  color: var(--ink3); cursor: pointer; transition: all .2s; white-space: nowrap;
+}
+.tab:hover  { background: var(--paper3); border-color: var(--border); }
+.tab.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.pattern-wrap { background: var(--ink); padding: 0; }
+.pattern-pre {
+  display: none;
+  font-family: var(--mono); font-size: .85rem; line-height: 1.6;
+  color: #e8c87a; padding: 28px; text-align: center;
+  white-space: pre; background: var(--ink);
+  min-height: 160px;
+}
+.pattern-pre.active { display: block; animation: fadeSlide .3s ease both; }
+
+/* ── TECH CARDS ──────────────────────────────────────────── */
+.tech-section { padding: 56px 0 80px; border-top: 1px solid var(--border); }
+.section-eyebrow {
+  font-family: var(--mono); font-size: .68rem; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--copper);
+  text-align: center; margin-bottom: 12px;
+}
+.section-title {
+  font-size: 2.2rem; font-weight: 900; letter-spacing: -.04em;
+  text-align: center; margin-bottom: 40px; font-style: italic;
+}
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.tech-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--r); padding: 28px 22px;
+  box-shadow: 0 2px 8px rgba(26,18,8,.06);
+  transition: transform .25s, box-shadow .25s;
+}
+.tech-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.tech-icon { font-size: 1.8rem; margin-bottom: 14px; }
+.tech-card h3 { font-size: .95rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -.01em; }
+.tech-card p  { font-family: var(--mono); font-size: .72rem; color: var(--ink3); line-height: 1.6; }
+.tech-card code {
+  background: var(--copper-dim); color: var(--copper);
+  padding: 1px 5px; border-radius: 3px;
+}
+
+/* ── ORNAMENTAL DIVIDER ──────────────────────────────────── */
+.ornament {
+  text-align: center; padding: 24px 0;
+  font-family: var(--mono); font-size: .72rem;
+  color: var(--border); letter-spacing: .3em;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border); padding: 28px;
+  text-align: center;
+  font-family: var(--mono); font-size: .7rem; color: var(--ink3);
+  background: var(--paper2);
+}
+
+/* ── LOADING ─────────────────────────────────────────────── */
+.loading-wrap {
+  display: none; flex-direction: column; align-items: center;
+  gap: 20px; padding: 100px 0; color: var(--ink3);
+  font-family: var(--mono); font-size: .8rem;
+}
+.loading-wrap.show { display: flex; }
+.spinner {
+  width: 36px; height: 36px;
+  border: 2px solid var(--border);
+  border-top-color: var(--copper);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────── -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo">
+      <span class="logo-mark">FacturaGen</span>
+      <span class="logo-sub">HTML · CSS · JS</span>
+    </div>
+    <div class="header-badges">
+      <span class="badge">Sin backend</span>
+      <span class="badge badge--copper">100% cliente</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO ────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Generador de Facturas Profesional</p>
+    <h1 class="hero-title">Facturas<br><em>Aleatorias</em><br>al Instante</h1>
+    <p class="hero-desc">
+      Lógica <span>Python → JavaScript</span> · Patrones impresos · Datos con <span>Math.random()</span><br>
+      Bucles for/while · Formato de moneda · Columnas alineadas
+    </p>
+    <button class="btn-hero" id="btn-gen" onclick="generarFactura()">
+      <span class="btn-icon" id="btn-icon">◈</span>
+      Generar Nueva Factura
+    </button>
+  </div>
+</section>
+
+<!-- ── MAIN ────────────────────────────────────────────────── -->
+<main class="main container">
+
+  <div class="loading-wrap" id="loading">
+    <div class="spinner"></div>
+    <span>Calculando factura...</span>
+  </div>
+
+  <div id="invoice-grid" style="display:none">
+    <div class="content-grid">
+
+      <!-- COLUMNA IZQUIERDA: Terminal -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-label">Terminal · Salida Formateada</span>
+          <span class="invoice-num" id="inv-num">—</span>
+        </div>
+        <div class="terminal-body">
+          <pre class="terminal-text" id="terminal"></pre>
+        </div>
+      </div>
+
+      <!-- COLUMNA DERECHA -->
+      <div class="right-col">
+
+        <!-- Stats -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-label blue">Resumen de Factura</span>
+          </div>
+          <div class="stats-grid">
+            <div class="stat">
+              <span class="stat-lbl">Total</span>
+              <span class="stat-val copper" id="s-total">—</span>
+            </div>
+            <div class="stat">
+              <span class="stat-lbl">Productos</span>
+              <span class="stat-val" id="s-items">—</span>
+            </div>
+            <div class="stat">
+              <span class="stat-lbl">IVA 21%</span>
+              <span class="stat-val" id="s-iva">—</span>
+            </div>
+            <div class="stat">
+              <span class="stat-lbl">Cliente</span>
+              <span class="stat-val sm" id="s-cliente">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Items table -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-label gold">Líneas de Pedido</span>
+          </div>
+          <div class="tbl-wrap">
+            <table class="items-tbl">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Uds</th>
+                  <th>Precio</th>
+                  <th>Dto</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="items-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Patterns -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-label ink">Patrones · Iteraciones Python/JS</span>
+          </div>
+          <div class="patterns-tabs">
+            <button class="tab active" onclick="tab(this,'p-piramide')">▲ Pirámide</button>
+            <button class="tab" onclick="tab(this,'p-diamante')">◆ Diamante</button>
+            <button class="tab" onclick="tab(this,'p-numerico')"># Numérico</button>
+            <button class="tab" onclick="tab(this,'p-random')">✦ Aleatorio</button>
+          </div>
+          <div class="pattern-wrap">
+            <pre class="pattern-pre active" id="p-piramide"></pre>
+            <pre class="pattern-pre" id="p-diamante"></pre>
+            <pre class="pattern-pre" id="p-numerico"></pre>
+            <pre class="pattern-pre" id="p-random"></pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ── TECH SECTION ─────────────────────────────────────────── -->
+<section class="tech-section">
+  <div class="container">
+    <p class="section-eyebrow">Anatomía del código</p>
+    <h2 class="section-title">Qué demuestra este proyecto</h2>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-icon">🔄</div>
+        <h3>Bucles for / while</h3>
+        <p>Pirámide con <code>for</code> ascendente. Diamante inferior con <code>while</code> decremental. Triángulo Floyd con <code>for</code> anidado.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🎲</div>
+        <h3>Datos aleatorios</h3>
+        <p>Equivalente a <code>random.choice</code>, <code>random.sample</code> y <code>random.randint</code>. Productos, clientes y descuentos únicos cada vez.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">📐</div>
+        <h3>Formato factura</h3>
+        <p>Alineación <code>padStart/End</code>. Separadores <code>═─·</code>. Formato monetario <code>Intl.NumberFormat</code>. Columnas fijas.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">⬡</div>
+        <h3>Patrones print()</h3>
+        <p>Pirámide, diamante, Floyd's triangle y patrón de símbolos aleatorios. Todos construidos con iteraciones.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">📦</div>
+        <h3>Funciones puras</h3>
+        <p>Cada responsabilidad en su función: <code>genPiramide()</code>, <code>genItems()</code>, <code>formatFactura()</code>. Bien separadas y comentadas.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🌐</div>
+        <h3>Sin dependencias</h3>
+        <p>100% HTML · CSS · JS nativo. Un solo archivo. Sin framework, sin npm, sin backend. Abre y funciona.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  FacturaGen · HTML + CSS + JavaScript puro · Lógica Python portada al cliente · 2025
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   FACTURA GEN — JavaScript
+   Lógica equivalente al backend Python, portada al cliente.
+   Secciones:
+   1. Datos de muestra
+   2. Utilidades random (equivalente a módulo random de Python)
+   3. Generadores de patrones (for / while / anidados)
+   4. Generador de datos de factura
+   5. Formateador de factura tipo terminal (print con alineación)
+   6. Renderizadores DOM
+   7. Controlador principal
+════════════════════════════════════════════════════════════ */
+
+// ── 1. DATOS DE MUESTRA ──────────────────────────────────────
+
+const PRODUCTOS = [
+  { nombre: 'MacBook Pro 14"',         precio: 1999.99, cat: 'Electrónica'    },
+  { nombre: 'Monitor LG 27" 4K',        precio:  449.99, cat: 'Electrónica'    },
+  { nombre: 'Teclado Mecánico RGB',     precio:   89.99, cat: 'Periféricos'    },
+  { nombre: 'Mouse Inalámbrico Pro',    precio:   59.99, cat: 'Periféricos'    },
+  { nombre: 'Webcam HD 1080p',          precio:   79.99, cat: 'Accesorios'     },
+  { nombre: 'Auriculares Sony XM5',     precio:  349.99, cat: 'Audio'          },
+  { nombre: 'SSD NVMe 1TB',             precio:  119.99, cat: 'Almacenamiento' },
+  { nombre: 'Hub USB-C 7 puertos',      precio:   49.99, cat: 'Accesorios'     },
+  { nombre: 'Alfombrilla XL Gaming',    precio:   34.99, cat: 'Periféricos'    },
+  { nombre: 'Lámpara LED Escritorio',   precio:   29.99, cat: 'Mobiliario'     },
+  { nombre: 'Silla Ergonómica Premium', precio:  599.99, cat: 'Mobiliario'     },
+  { nombre: 'Micrófono Blue Yeti',      precio:  129.99, cat: 'Audio'          },
+  { nombre: 'Cable HDMI 4K 2m',         precio:   14.99, cat: 'Cables'         },
+  { nombre: 'Regleta 8 tomas surge',    precio:   39.99, cat: 'Accesorios'     },
+  { nombre: 'Soporte para Laptop',      precio:   44.99, cat: 'Mobiliario'     },
+];
+
+const CLIENTES = [
+  { nombre: 'Ana García López',       dir: 'Calle Gran Vía 42',    ciudad: 'Madrid',          cp: '28013' },
+  { nombre: 'Carlos Martínez Ruiz',   dir: 'Av. Diagonal 350',     ciudad: 'Barcelona',       cp: '08037' },
+  { nombre: 'Laura Sánchez Pérez',    dir: 'C/ Sierpes 77',        ciudad: 'Sevilla',         cp: '41004' },
+  { nombre: 'Javier Torres Vidal',    dir: 'C/ Colón 15',          ciudad: 'Valencia',        cp: '46004' },
+  { nombre: 'María Fernández Gómez',  dir: 'Paseo de la Concha 8', ciudad: 'San Sebastián',   cp: '20003' },
+  { nombre: 'Roberto Díaz Castro',    dir: 'Gran Vía 1',           ciudad: 'Bilbao',          cp: '48001' },
+];
+
+const EMPRESAS = [
+  { nombre: 'TechSolutions S.L.',  cif: 'B-12345678', email: 'tech@solutions.es'     },
+  { nombre: 'InnovateTech S.A.',   cif: 'A-87654321', email: 'info@innovate.es'       },
+  { nombre: 'DigitalWave Corp.',   cif: 'B-11223344', email: 'contact@digitalwave.es' },
+  { nombre: 'NextGen Systems',     cif: 'A-44332211', email: 'hello@nextgen.es'       },
+];
+
+const SIMBOLOS = ['▓','▒','░','█','▌','▐','▄','▀','■','●','◆','★','✦','◈','⬡'];
+const DESCUENTOS = [0, 0, 0, 5, 10, 15, 20]; // 0 más probable
+
+// ── 2. UTILIDADES RANDOM (≈ módulo random de Python) ─────────
+
+/** Equivale a random.randint(a, b) */
+const randInt = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+
+/** Equivale a random.choice(arr) */
+const choice = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+/** Equivale a random.sample(arr, n) — sin repetición */
+function sample(arr, n) {
+  const copia = [...arr];
+  const result = [];
+  // Bucle WHILE — extrae n elementos únicos
+  while (result.length < n) {
+    const idx = randInt(0, copia.length - 1);
+    result.push(copia.splice(idx, 1)[0]);
+  }
+  return result;
+}
+
+/** Genera número de factura tipo FAC-2025-A3847 */
+function genNumFactura() {
+  const año    = new Date().getFullYear();
+  const letra  = String.fromCharCode(65 + randInt(0, 25)); // A-Z
+  const sufijo = randInt(1000, 9999);
+  return `FAC-${año}-${letra}${sufijo}`;
+}
+
+/** Genera fecha formateada DD/MM/YYYY */
+function genFecha(diasOffset = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + diasOffset);
+  return d.toLocaleDateString('es-ES', { day:'2-digit', month:'2-digit', year:'numeric' });
+}
+
+/** Formateador de moneda (≈ formato de moneda en Python) */
+const eur = (n) => new Intl.NumberFormat('es-ES', { style:'currency', currency:'EUR' }).format(n);
+
+// ── 3. GENERADORES DE PATRONES ───────────────────────────────
+
+/**
+ * PIRÁMIDE — usa bucle FOR ascendente
+ * Equivale a la función generar_piramide() en Python
+ */
+function genPiramide(altura) {
+  const lineas = [];
+  const ancho  = 2 * altura - 1;
+
+  // FOR ascendente — típico de pirámides
+  for (let i = 1; i <= altura; i++) {
+    const estrellas = '*'.repeat(2 * i - 1);
+    lineas.push(estrellas.padStart((ancho + estrellas.length) / 2).padEnd(ancho));
+  }
+  return lineas;
+}
+
+/**
+ * DIAMANTE — mitad superior FOR, mitad inferior WHILE
+ * Equivale a generar_diamante() en Python
+ */
+function genDiamante(size) {
+  const lineas = [];
+  const ancho  = 2 * size - 1;
+
+  // Mitad superior — bucle FOR
+  for (let i = 1; i <= size; i++) {
+    const s = '*'.repeat(2 * i - 1);
+    lineas.push(s.padStart((ancho + s.length) / 2).padEnd(ancho));
+  }
+
+  // Mitad inferior — bucle WHILE (decremento manual)
+  let i = size - 1;
+  while (i >= 1) {
+    const s = '*'.repeat(2 * i - 1);
+    lineas.push(s.padStart((ancho + s.length) / 2).padEnd(ancho));
+    i--; // decremento explícito, característico del while
+  }
+
+  return lineas;
+}
+
+/**
+ * TRIÁNGULO NUMÉRICO (Floyd's Triangle) — FOR anidado
+ * Equivale a generar_patron_numerico() en Python
+ */
+function genNumerico(filas) {
+  const lineas = [];
+  let num = 1;
+
+  for (let i = 1; i <= filas; i++) {
+    const fila = [];
+    for (let j = 0; j < i; j++) { // FOR anidado
+      fila.push(String(num++).padStart(3));
+    }
+    lineas.push(fila.join(' '));
+  }
+  return lineas;
+}
+
+/**
+ * PATRÓN ALEATORIO — FOR + Math.random()
+ * Equivale a generar_patron_aleatorio() en Python
+ */
+function genAleatorio(filas) {
+  const lineas = [];
+  const ancho  = filas * 3;
+
+  for (let i = 1; i <= filas; i++) {
+    const fila = Array.from({ length: i }, () => choice(SIMBOLOS)).join(' ');
+    // Centrar manualmente (equivale a str.center() de Python)
+    const pad = Math.floor((ancho - fila.length) / 2);
+    lineas.push(' '.repeat(pad) + fila);
+  }
+  return lineas;
+}
+
+// ── 4. GENERADOR DE ÍTEMS DE FACTURA ────────────────────────
+
+/**
+ * Genera entre 3 y 7 productos sin repetición.
+ * Equivale a generar_items_factura() en Python.
+ */
+function genItems() {
+  const cantidad  = randInt(3, 7);
+  const prods     = sample(PRODUCTOS, cantidad);
+  const items     = [];
+
+  // FOR sobre productos seleccionados
+  for (const prod of prods) {
+    const uds       = randInt(1, 5);
+    const dto       = choice(DESCUENTOS);
+    const subtotal  = +(uds * prod.precio).toFixed(2);
+    const dtoMonto  = +(subtotal * dto / 100).toFixed(2);
+    const total     = +(subtotal - dtoMonto).toFixed(2);
+
+    items.push({
+      nombre:   prod.nombre,
+      cat:      prod.cat,
+      uds,
+      precio:   prod.precio,
+      dto,
+      subtotal,
+      dtoMonto,
+      total,
+    });
+  }
+  return items;
+}
+
+// ── 5. FORMATEADOR DE FACTURA TIPO TERMINAL ──────────────────
+
+/**
+ * Genera la factura formateada con:
+ *   - padEnd/padStart   → ljust/rjust de Python
+ *   - .repeat()         → separadores
+ *   - Intl.NumberFormat → format de moneda
+ * Equivale a formatear_factura_terminal() en Python.
+ */
+function formatFactura(fac) {
+  const W   = 68; // ancho total de la factura
+  const SEP = '─'.repeat(W);
+  const DBL = '═'.repeat(W);
+  const DOT = '·'.repeat(W);
+
+  // Helpers de alineación (≈ ljust / rjust / center de Python)
+  const l = (s, n)  => String(s).padEnd(n);
+  const r = (s, n)  => String(s).padStart(n);
+  const c = (s)     => {
+    const pad = Math.floor((W - s.length) / 2);
+    return ' '.repeat(Math.max(0, pad)) + s;
+  };
+
+  const lines = [];
+
+  // Encabezado
+  lines.push(DBL);
+  lines.push(c('FACTURA ELECTRÓNICA'));
+  lines.push(DBL);
+
+  // Empresa
+  lines.push(`  ${l('Empresa:', 16)} ${fac.empresa.nombre}`);
+  lines.push(`  ${l('CIF:', 16)} ${fac.empresa.cif}`);
+  lines.push(`  ${l('Email:', 16)} ${fac.empresa.email}`);
+  lines.push(SEP);
+
+  // Número y fechas — dos columnas
+  lines.push(
+    `  ${l('Nº Factura:', 20)} ${l(fac.numero, 22)}  ${l('Fecha:', 8)} ${fac.fechaEmision}`
+  );
+  lines.push(
+    `  ${l('Estado:', 20)} ${l('✓ EMITIDA', 22)}  ${l('Vence:', 8)} ${fac.fechaVence}`
+  );
+  lines.push(SEP);
+
+  // Cliente
+  lines.push('  FACTURAR A');
+  lines.push(`  ${l('Nombre:', 16)} ${fac.cliente.nombre}`);
+  lines.push(`  ${l('Dirección:', 16)} ${fac.cliente.dir}`);
+  lines.push(`  ${l('Ciudad:', 16)} ${fac.cliente.ciudad} (${fac.cliente.cp})`);
+  lines.push(SEP);
+
+  // Cabecera tabla
+  lines.push(
+    `  ${l('DESCRIPCIÓN', 28)} ${r('CANT', 4)}  ${r('P.UNIT', 9)}  ${r('DTO', 5)}  ${r('TOTAL', 10)}`
+  );
+  lines.push(DOT);
+
+  // Ítems — bucle FOR con formato de columnas
+  for (const item of fac.items) {
+    const dtoStr = item.dto > 0 ? `${item.dto}%` : '—';
+    lines.push(
+      `  ${l(item.nombre, 28)} ${r(item.uds, 4)}  ${r(item.precio.toFixed(2) + '€', 9)}  ${r(dtoStr, 5)}  ${r(item.total.toFixed(2) + '€', 10)}`
+    );
+  }
+
+  // Totales
+  lines.push(DOT);
+  lines.push(`  ${l('Subtotal:', 46)} ${r(fac.totales.subtotal.toFixed(2) + '€', 10)}`);
+  if (fac.totales.dtoTotal > 0) {
+    lines.push(`  ${l('Descuentos:', 46)}-${r(fac.totales.dtoTotal.toFixed(2) + '€', 9)}`);
+  }
+  lines.push(`  ${l('Base imponible:', 46)} ${r(fac.totales.base.toFixed(2) + '€', 10)}`);
+  lines.push(`  ${l('IVA (21%):', 46)} ${r(fac.totales.iva.toFixed(2) + '€', 10)}`);
+  lines.push(SEP);
+  lines.push(`  ${l('TOTAL A PAGAR:', 46)} ${r(fac.totales.total.toFixed(2) + '€', 10)}`);
+  lines.push(DBL);
+  lines.push('  Gracias por su confianza. Pago por transferencia bancaria.');
+  lines.push('  Ref: ES91 2100 0418 4502 0005 1332  ·  BIC: CAIXESBBXXX');
+  lines.push(DBL);
+
+  return lines;
+}
+
+// ── 6. GENERADOR PRINCIPAL ───────────────────────────────────
+
+/**
+ * Orquesta la creación de una factura completa.
+ * Equivale a generar_factura_completa() en Python.
+ */
+function generarFacturaData() {
+  const items = genItems();
+
+  // Cálculo de totales — bucle FOR
+  let subtotalBruto = 0;
+  let dtoTotal      = 0;
+  for (const item of items) {
+    subtotalBruto += item.subtotal;
+    dtoTotal      += item.dtoMonto;
+  }
+  const base  = +(subtotalBruto - dtoTotal).toFixed(2);
+  const iva   = +(base * 0.21).toFixed(2);
+  const total = +(base + iva).toFixed(2);
+
+  const diasAtras = randInt(0, 30);
+  const diasVence = choice([15, 30, 45, 60]);
+
+  return {
+    numero:        genNumFactura(),
+    fechaEmision:  genFecha(-diasAtras),
+    fechaVence:    genFecha(-diasAtras + diasVence),
+    empresa:       choice(EMPRESAS),
+    cliente:       choice(CLIENTES),
+    items,
+    totales: { subtotal: +subtotalBruto.toFixed(2), dtoTotal: +dtoTotal.toFixed(2), base, iva, total },
+    // Patrones
+    piramide:  genPiramide(randInt(4, 6)),
+    diamante:  genDiamante(randInt(3, 5)),
+    numerico:  genNumerico(6),
+    aleatorio: genAleatorio(5),
+  };
+}
+
+// ── 7. RENDERIZADORES DOM ────────────────────────────────────
+
+/** Renderiza la salida terminal */
+function renderTerminal(fac) {
+  const lineas = formatFactura(fac);
+  document.getElementById('terminal').textContent = lineas.join('\n');
+}
+
+/** Renderiza las tarjetas de resumen */
+function renderStats(fac) {
+  document.getElementById('inv-num').textContent   = fac.numero;
+  document.getElementById('s-total').textContent   = eur(fac.totales.total);
+  document.getElementById('s-items').textContent   = fac.items.length;
+  document.getElementById('s-iva').textContent     = eur(fac.totales.iva);
+  document.getElementById('s-cliente').textContent = fac.cliente.nombre.split(' ').slice(0,2).join(' ');
+}
+
+/** Renderiza la tabla de ítems */
+function renderItems(items) {
+  const tbody = document.getElementById('items-tbody');
+  tbody.innerHTML = '';
+
+  // FOR sobre ítems — construye filas dinámicamente
+  for (const item of items) {
+    const tr  = document.createElement('tr');
+    const dto = item.dto > 0
+      ? `<span class="dto-pill">-${item.dto}%</span>`
+      : `<span style="color:var(--border)">—</span>`;
+
+    tr.innerHTML = `
+      <td><span class="prod-name">${item.nombre}</span><span class="prod-cat">${item.cat}</span></td>
+      <td>${item.uds}</td>
+      <td>${eur(item.precio)}</td>
+      <td>${dto}</td>
+      <td class="total-cell">${eur(item.total)}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+/** Renderiza los patrones en sus tabs */
+function renderPatrones(fac) {
+  document.getElementById('p-piramide').textContent  = fac.piramide.join('\n');
+  document.getElementById('p-diamante').textContent  = fac.diamante.join('\n');
+  document.getElementById('p-numerico').textContent  = fac.numerico.join('\n');
+  document.getElementById('p-random').textContent    = fac.aleatorio.join('\n');
+}
+
+// ── SISTEMA DE TABS ──────────────────────────────────────────
+function tab(btn, id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.pattern-pre').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// ── CONTROLADOR PRINCIPAL ────────────────────────────────────
+
+/**
+ * Punto de entrada: genera y renderiza una factura.
+ * Simula un pequeño delay para el efecto de carga.
+ */
+function generarFactura() {
+  const btn     = document.getElementById('btn-gen');
+  const icon    = document.getElementById('btn-icon');
+  const loading = document.getElementById('loading');
+  const grid    = document.getElementById('invoice-grid');
+
+  // UI: estado cargando
+  btn.disabled = true;
+  btn.classList.add('spinning');
+  loading.classList.add('show');
+  grid.style.display = 'none';
+
+  // Timeout para efecto visual (equivaldría al tiempo de respuesta del servidor)
+  setTimeout(() => {
+    const fac = generarFacturaData();
+
+    renderTerminal(fac);
+    renderStats(fac);
+    renderItems(fac.items);
+    renderPatrones(fac);
+
+    // Resetear tabs al primer panel
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === 0));
+    document.querySelectorAll('.pattern-pre').forEach((p, i) => p.classList.toggle('active', i === 0));
+
+    loading.classList.remove('show');
+    grid.style.display = 'block';
+    btn.disabled = false;
+    btn.classList.remove('spinning');
+  }, 350);
+}
+
+// Auto-generar al cargar la página
+window.addEventListener('DOMContentLoaded', generarFactura);
+</script>
+</body>
+</html>

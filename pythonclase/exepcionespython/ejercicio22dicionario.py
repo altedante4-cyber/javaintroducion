@@ -1,0 +1,122 @@
+from datetime import date
+
+
+  
+def resultado_equipo(equipo1 , equipo2 , goleseq1 , goleseq2 ):
+  
+  posicion1 = 0 
+  posicion2 = 0 
+  for i in range(len(liga)):
+      
+       a = liga[i][0]
+
+
+       if a == equipo1:
+          
+          posicion1 = i
+  for i in range(len(liga)):
+       a = liga[i][0]
+
+       if a == equipo2 :
+        posicion2 = i 
+
+
+  if goleseq1 > goleseq2 :
+      liga[posicion1][6] += goleseq1 #GF  goles a favor 
+      liga[posicion1][1] += 1 #puntos
+      liga[posicion1][7] += goleseq2
+      liga[posicion1][3] += 3 # partido ganado 
+      liga[posicion1][2] += 1 #partido jugado
+      #resultado del otro equipo
+      liga[posicion2][6] += goleseq2 #GF  goles a favor 
+      liga[posicion2][1] += 0 #puntos
+      liga[posicion2][7] += goleseq1 #goles encontra  goles que recibio del otro equipo 
+      liga[posicion2][3] += 0 # partido ganado 
+      liga[posicion2][2] += 1 #partido jugado 
+   
+  elif  goleseq2 > goleseq1:
+      
+
+      liga[posicion2][6] += goleseq2 #GF  goles a favor 
+      liga[posicion2][1] += 1 #puntos
+      liga[posicion2][7] += goleseq1 #goles encontra  goles que recibio del otro equipo 
+      liga[posicion2][3] += 1 # partido ganado 
+      liga[posicion2][2] += 1 #partido jugado
+
+      #resultado del otro equipo 
+      liga[posicion1][6] += goleseq1 #GF  goles a favor 
+      liga[posicion1][1] += 0 #puntos
+      liga[posicion1][7] += goleseq2
+      liga[posicion1][3] += 0 # partido ganado 
+      liga[posicion1][2] += 1 #partido jugado
+  
+  else:
+      empate = True 
+  
+
+
+def mostrar_clasificacion(liga: list):
+    
+
+    for i in range(len(liga)):
+
+        for j in range(0,len(liga) - 1 ):
+
+
+            equipo_actual = liga[j]
+            equipo_siguiente = liga[j + 1]
+
+            pts_actual = equipo_actual[1]
+            dif_actual = equipo_actual[6] - equipo_actual[7]
+
+            pts_siguiente = equipo_siguiente[1]
+            dif_siguiente = equipo_siguiente[6] - equipo_siguiente[7]
+
+
+            intercambiar = False
+
+            if  pts_siguiente > pts_actual:
+                intercambiar = True 
+
+            elif pts_siguiente == pts_actual and dif_siguiente > dif_actual :
+                intercambiar = True 
+
+
+            if intercambiar :
+
+                liga[j] = equipo_siguiente
+                liga[j+1] = equipo_actual
+        
+    
+
+
+
+    fecha = date.today().strftime("%d-%m-%y")
+
+    print("-" * 95)
+    print(f"Competicion: La Liga eaSports - Clasificacion a dia {fecha}")
+    print("-" * 95)
+    print(f"{'EQUIPO':25}|{'pTS':^8} |{'PJ':^4} | {'PG':^5} | {'PE':^5}| {'PP':^5}| {'GF':^5}| {'GC':^5}")
+    print("-" * 95)
+
+    for i in range(len(liga)):
+        print(f"{liga[i][0]:25}|{liga[i][1]:^8} |{liga[i][2]:^4} | {liga[i][3]:^5} | {liga[i][4]:^5}| {liga[i][5]:^5}| {liga[i][6]:^5}| {liga[i][7]:^5}")
+   
+
+   
+     
+
+
+
+liga = [["Atletico de Madrid" , 0 , 0 , 0 , 0 ,0,0,0],
+        ["Real Betis CF", 0, 0, 0, 0, 0, 0, 0],
+        ["Sevilla", 0, 0, 0, 0, 0, 0, 0],
+        ["Barcelona FC", 0, 0, 0, 0, 0, 0, 0],
+        ["Rayo Vallecano", 0, 0, 0, 0, 0, 0, 0],
+        ["Real Madrid FC", 0, 0, 0, 0, 0, 0, 0],
+        ]
+
+resultado_equipo("Atletico de Madrid","Real Betis CF",2,1)
+resultado_equipo("Sevilla","Barcelona FC",4,1)
+mostrar_clasificacion(liga)
+
