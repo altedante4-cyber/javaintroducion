@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+         body{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin:0;
+            background-color: #f4f4f4;
+            font-family: Arial, Helvetica, sans-serif;
+         }
+
+         #contenedor-principal{
+             border:2px solid #555;
+             padding:10px;
+             background-color: white;
+             width: 600px;
+         }
+
+
+         #segundo-contenedor{
+            border: 1px solid black;
+            padding: 20px;
+            text-align: center;
+         }
+
+         h1{
+             border: 2px solid black ;
+             padding:10px ;
+             margin-top:0;
+             letter-spacing: 2px ;
+         }
+
+         .menu-lista{
+             margin: 20px 0 ;
+         }
+         .opcion{
+            margin: 5px 0 ;
+            padding: 5px ;
+            transition: all 0.2s;
+            text-transform: uppercase;
+         }
+
+         .activa{
+            background-color: red;
+            color: white;
+            border: 2px solid black ;
+         }
+
+         .divisor-rojo{
+             height: 8px;
+             background-color: red;
+             border: none;
+             margin: 15px 0 ;
+         }
+
+         #contenedor-controles{
+            display: flex ;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px ;
+         }
+
+         .btn-flecha{
+            width: 60px;
+            height: 60px;
+            border: 2px solid black ;
+            background-color: white;
+            cursor: pointer;
+            font-size: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+
+         btn-flecha:active {
+            background-color: #ddd;
+        }
+
+        #input-numero {
+            width: 120px;
+            height: 40px;
+            font-size: 24px;
+            text-align: center;
+            border: 1px solid #999;
+        }
+
+        #btn-calcular {
+            padding: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #e0e0e0;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+
+        #btn-calcular:hover {
+            background-color: #ccc;
+        }
+
+        #cuadro-resultado {
+            border: 2px solid black;
+            min-height: 40px;
+            padding: 10px;
+            font-size: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div id="contenedor-principal">
+
+         <div id="segundo-contenedor">
+              <h1>MENU SELECCIONABLE</h1>
+
+              <div class="menu-lista">
+                   <h2 class="opcion" data-op="par">EL NÚMERO ES PAR  </h2>
+                    <h2 class="opcion" data-op="impar">EL NÚMERO ES IMPAR</h2>
+                    <h2 class="opcion" data-op="primo">EL NUMERO ES PRIMO</h2>
+                     <h2 class="opcion" data-op="divisores"> OBTENER DIVISORES</h2>                
+                </div>
+
+
+                <hr class="divisor-rojo">
+         
+                <div id="contenedor-controles">
+                    <button class="btn-flecha" id="arriba">i </button>
+                    <button class="btn-flecha" id="abajo">j</button>
+                    <input type="number" id="input-numero" placeholder="0" >
+
+                    <button id="btn-calcular">CALCULAR</button>
+                </div>
+
+
+                <hr class="divisor-rojo">
+
+                <div id="cuadro-resultado">
+                     <span id="texto-res"> ESPERANDO NÚMERO...</span>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        // referencias al dom
+
+        const opciones = document.querySelectorAll('.opcion')
+        const btnArriba = document.getElementById('arriba')
+        const btnAbajo = document.getElementById('abajo')
+        const btnCalcular = document.getElementById('btn-calcular')
+        const inputNum=document.getElementById('input-numero')
+        const textRest = document.getElementById('texto-res')
+
+        let indexActual = 0 ; 
+
+        // logica de navegacion del menu 
+
+        function moverSeleccion(direccion){
+             opciones[indexActual].classList.remove('activa')
+
+             indexActual += direccion;
+
+             // evitar que se salga de los limites
+
+             if (indexActual < 0 ) indexActual = 0 ;
+             if(indexActual >= opciones.length ) indexActual = opciones.length - 1 ;
+
+             opciones[indexActual].classList.add('activa');
+        }
+
+
+        btnArriba.addEventListener('click',() => moverSeleccion(-1));
+        btnAbajo.addEventListener('click', () => moverSeleccion(1))
+
+
+   // logica de caclculos matematicos
+
+   btnCalcular.addEventListener('click', () => {
+        const n = parseInt(inputNum.value)
+
+        if (isNaN(n)){
+             textoRes.textContent = "INGRESA EL NUMERO";
+             return 
+        }
+
+        const operacion = opciones[indexActual].getAttribute('data-op')
+
+        let resultado =""
+        switch(operacion){
+
+             case 'par':  resultado = (n%2 === 0 ) ? "SI ES PAR" : "NO ES PAR"; break ; 
+             case 'impar': resultado = (n % 2 !== 0 ) ? "SI ES IMPAR" : "NO ES IMPAR" ; break ;
+             case 'primo': resultado = esPrimo(n) ? "SI es PRIMO" : "NO es primo" ; break ; 
+             case 'divisores' : resultado = "DIVISORES" + obtenerDivisores(n).join(", "); break ; 
+            
+        
+            }
+            textRest.textContent = resultado ; 
+   })
+
+
+   // funciones de apoyo
+
+   function esPrimo(num){
+      if(num <=1 ) return false ;
+      for (let i = 2 ; i <=Math.sqrt(num) ; i++ ) {
+           if (num % i === 0 ) return false ;
+      }
+
+      return true ; 
+   }
+
+
+   function obtenerDivisores(num){
+     let div= []
+
+     for(let i = 1 ; i <= Math.abs(num) ; i++ ){
+         if(num % i === 0 ) div.push(i);
+
+     }
+     return div; 
+   }
+</script>
+    
+</body>
+</html>
