@@ -1,11 +1,14 @@
+import java.util.ArrayList;
+
 public class Baraja {
 
-    private Carta [] lista_cartas ; 
+    private ArrayList<Carta> cartas  ; 
 
 
     public Baraja(){
-      
-        this.lista_cartas = new Carta[2];
+    
+            cartas = new ArrayList<>():
+
     }
 
     public Baraja(int tipobaraja){
