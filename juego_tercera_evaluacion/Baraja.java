@@ -1,13 +1,13 @@
 import java.util.ArrayList;
-
+import java.util.Random;
 public class Baraja {
 
-    private ArrayList<Carta> cartas  ; 
+    private ArrayList<Carta> baraja ; 
 
 
     public Baraja(){
     
-            cartas = new ArrayList<>():
+            baraja  = new ArrayList<>();
 
     }
 
@@ -38,8 +38,7 @@ public class Baraja {
             case 1:
                  
                  Carta bajara11= new Carta(40,0);
-                 if barajar:
-                    Barajar();                
+                                
                 break;
         
             case 2;
@@ -52,7 +51,14 @@ public class Baraja {
 
     public void Barajar(){
 
-         
+        Random rd = new Random();
+        int obtener_carta = rd.nextInt(baraja.size());
+        // esto teva a devolver un objeto carta y ese objeto carta 
+
+        Carta n 0 baraja[obtener_carta];
+
+    }
+        
     }
     
 }
