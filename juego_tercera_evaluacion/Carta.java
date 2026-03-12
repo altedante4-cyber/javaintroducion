@@ -54,11 +54,6 @@ public class Carta {
         }
 
 
-    public static void main(String[] args) {
-            Carta c1 = new Carta(8, 2);
-
-        System.out.println(c1.NombreCarta());
-    }
     }
 
     
