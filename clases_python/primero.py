@@ -20,6 +20,9 @@ class Alumno:
     def edad(self):
          return self.__edad
 
+    @clasmethod
+    @staticmethod 
+
 # utilizando el doble subrallado  es para proteger 
 
 trista = Alumno("Leadron",33,"13442")

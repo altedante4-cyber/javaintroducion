@@ -9,18 +9,18 @@ class Cuenta:
     
     def depositar(self, cantidad):
 
-        if cantidad <  0 : return 
-
-
-        
-        return self.__saldo + cantidad
+        if cantidad > 0:
+            self.__saldo += cantidad
+            print(f"Depósito de {cantidad} realizado. Nuevo saldo: {self.__saldo}")
          
     
     def retirar(self, cantidad):
 
-        if self.__saldo < 0 : return 
-
-        return self.__saldo - cantidad
+        if cantidad > 0 and self.__saldo >= cantidad:
+            self.__saldo -= cantidad
+            print(f"Retiro de {cantidad} realizado. Nuevo saldo: {self.__saldo}")
+        else:
+            print("Saldo insuficiente o cantidad inválida")
 
 
         

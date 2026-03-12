@@ -24,3 +24,9 @@ class pokemon:
 
         print(f"Tipo(s) {self.__tipos}")
 
+
+class PokemonLegendar(pokemon):
+
+    def __init__(self,numero , nombre,*tipos):
+        super().__init__(numero,nombre,*tipos)
+        
