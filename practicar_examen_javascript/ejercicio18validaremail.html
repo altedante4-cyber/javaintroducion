@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="email" placeholder="correo@ejemplo.com">
+<button id="btn-validar">Validar Email</button>
+<p id="resultado-email"></p>
+
+
+<script>
+      const input_email =document.getElementById('email')
+       const resultado_contenido=document.getElementById('resultado-email')
+    document.getElementById('btn-validar').addEventListener('click',function()  {
+
+         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+         // validamos que no este vacia el email 
+
+         if(input_email.value.trim() === "") {
+             resultado_contenido.textContent = "Error: tiene que contener valor";
+         } else if (regex.test(input_email.value.trim())) {
+             resultado_contenido.textContent = "Contenido válido";
+         } else {
+             resultado_contenido.textContent = "Error: formato de email inválido";
+         }
+    })
+
+
+</script>
+</body>
+</html>
