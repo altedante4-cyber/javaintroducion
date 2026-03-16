@@ -22,85 +22,48 @@
     </form>
 
     <script>
-        const formulario = document.getElementById('form-registro')
-        const input_formulario = formulario.querySelectorAll('input')
+        const formulario = document.getElementById('form-registro');
 
-        formulario.addEventListener('submit',function(e) {
-             e.preventDefault()
-             let correcto = true;
+        const campos = [
+            {
+                selector: '#nombre',
+                error: '#error-nombre',
+                mensaje: 'Error: el nombre no puede estar vacío o contener números',
+                validar: v => v !== '' && !/\d/.test(v)
+            },
+            {
+                selector: '#correo',
+                error: '#error-correo',
+                mensaje: 'Email inválido',
+                validar: v => v !== ''
+            },
+            {
+                selector: '#pass',
+                error: '#error-pass',
+                mensaje: 'El password es inválido',
+                validar: v => v !== ''
+            }
+        ];
 
-            input_formulario.forEach((elemento) => {
-                if(elemento.type === "text"){
-                    const nombre_validar = document.getElementById('error-nombre')
+        formulario.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let correcto = true;
 
-                    if(!validar_nombre(elemento)){
-                        nombre_validar.textContent = "Error: el nombre no puede estar vacío o contener números"
-                        correcto = false;
-                    } else {
-                        nombre_validar.textContent = ""
-                    }
+            campos.forEach((campo) => {
+                const input = document.querySelector(campo.selector);
+                const error = document.querySelector(campo.error);
+                const valor = input.value.trim();
 
-                } else if (elemento.type === "email"){
-                    const email_validar = document.getElementById('error-correo')
-
-                    if(!validar_email(elemento)){
-                        email_validar.textContent = "Email inválido"
-                        correcto = false;
-                    } else {
-                        email_validar.textContent = ""
-                    }
-
-                } else if (elemento.type === "password"){
-                    const passwor_validar = document.getElementById('error-pass')
-
-                    if(!validar_contrasena(elemento)){
-                        passwor_validar.textContent = "El password es inválido"
-                        correcto = false;
-                    } else {
-                        passwor_validar.textContent = ""
-                    }
+                if (!campo.validar(valor)) {
+                    error.textContent = campo.mensaje;
+                    correcto = false;
+                } else {
+                    error.textContent = '';
                 }
-            })
+            });
 
-            if(correcto){
-                alert("CORRECTO")
-            }
-        })
-    
-        function validar_nombre(nombre){
-             const valor = nombre.value.trim();
-
-             if (valor === "" || Number(valor)){
-
-                return false;
-            }
-
-             return true ; 
-             
-        }
-
-        function validar_email(email){
-            const email_corre= email.value.trim()
-
-            if(email_corre === "" ){
-                 return false ; 
-            }
-
-            return true ; 
-             
-        }
-
-        function validar_contrasena(password){
-             const password_validar = password.value.trim();
-
-             if(password_validar === ""){
-                return false ;
-             }
-
-             return true ; 
-        }
-
-         
+            if (correcto) alert('CORRECTO');
+        });
     </script>
 </body>
 </html>
