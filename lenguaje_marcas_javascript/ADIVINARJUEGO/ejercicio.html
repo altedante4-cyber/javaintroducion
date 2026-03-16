@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+     #contenedor-principal{
+         border: 1px solid black ;
+         padding: 10px;
+        }
+
+     #contenedor-titulo{
+         border: 1px solid black ;
+        background-color: blueviolet;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    #pantalla{
+        border: 1px solid black ;
+         padding: 10px;
+         align-items: center;
+         text-align: center;
+        }
+
+    #intentos{
+         margin-left: 80px;
+         width: 400px;
+         align-items: center;
+         text-align: center;
+    }
+
+    #texqui{
+
+
+    }
+
+    #number{
+
+
+    }
+
+    #fallos > table {
+
+        align-items: center;
+        text-align: center;
+        margin-left: 400px;
+        width: 500px;
+
+    }
+
+</style>
+
+</head>
+<body>
+    
+
+    <div id="contenedor-principal">
+         <div id="contenedor-titulo">ADIVINA EL NUMERO </div>
+         <div id="pantalla">
+                <label for="">Numero:</label>
+                <input type="number" id="numero">
+                <button id="jugar">Jugar</button>
+                <input type="text" id="validacion"> <br>
+                <input type="text"  id="intentos" value="INTENTOS: "  >
+                
+         </div>
+
+         <div id="fallos">
+
+              <table border="1px">
+                    <tr id="number">
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>10</td>
+                    
+                    </tr>
+
+                    <tr id="texqui">
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+
+                    </tr>
+              </table>
+         </div>
+      
+
+         
+    </div>
+
+
+    <script>
+
+        const opcion_usuario = document.getElementById('numero') 
+        const validacion_mostrar = document.getElementById('validacion')
+        const boton_jugar = document.getElementById('jugar')
+        const td_segunda_tabla_x =  document.querySelectorAll('#texqui td ')
+        const intentos = document.getElementById('intentos')
+    
+        
+
+        let numero_jugar = Math.floor(Math.random() * 100  );
+
+        let array_numeros_usuario = []
+
+        let contador = 1 ;
+           boton_jugar.addEventListener("click",function() {
+         
+            if(opcion_usuario.value != numero_jugar ){
+                array_numeros_usuario.push(opcion_usuario.value)
+                validacion_mostrar.style.background="red";
+                validacion_mostrar.value  = "INCORRECTO" + numero_jugar 
+                intentos.value ="INTENTOS : " + contador
+                td_segunda_tabla_x[contador -1 ].style.background="green"
+
+                contador += 1  ; 
+            }else{
+                 intentos.value = "INTENTOS REALIZADOS : "
+                array_numeros_usuario.forEach((elemento) => {
+                      intentos.value += elemento + " "
+                })
+                validacion_mostrar.style.background = "green"
+                validacion_mostrar.value = "CORRECTO HA GANADO"
+            }
+   if(contador === 11 ){
+        validacion_mostrar.style.background="yellow"
+        validacion_mostrar.value="HAS PERDIDO"
+        resetGame()
+
+        }
+        })
+
+        function resetGame() {
+    // 1. Resetear variables
+    numero_jugar = Math.floor(Math.random() * 100);
+    contador = 1;
+    array_numeros_usuario = [];
+
+    // 2. Limpiar inputs
+    opcion_usuario.value = "";
+    validacion_mostrar.value = "";
+    validacion_mostrar.style.background = "white"; // O el color original
+    intentos.value = "INTENTOS: ";
+
+    // 3. Limpiar la tabla (bucle para quitar el color a todas las celdas)
+    td_segunda_tabla_x.forEach((celda) => {
+        celda.style.background = "transparent"; // O el color original
+    });
+}
+
+
+     
+            
+
+    
+
+
+         
+    </script>
+</body>
+</html>

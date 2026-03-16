@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<style>
+     form {
+         display: grid;
+         gap: 5px;
+         border: 1px solid black;
+            width: 500px;
+            padding: 20px;
+    }
+    input{
+        padding: 10px;
+    }
+
+    textarea{
+        width: 500px;
+        height: 100px;
+    }
+    .no-mostrar{
+         display: none;
+    }
+    .no-mostrar[input]{
+         border: 1px solid red;
+    }
+</style>
+</head>
+<body>
+
+    <form action="">
+        <h1>Solicitud de informacion</h1>
+
+        <label for="name">Nombre</label>
+        <input type="text" name="" id="name">
+        <label for="email">Email</label>
+        <input type="email" id="email">
+         <select name="asutno" id="asunto">
+              <option value="uno" >Pedir informacion </option>
+              <option value="dos">Estado de una solicitud </option>
+              <option value="tres">Otros</option>
+         </select>
+
+             <label for="" class="no-mostrar">N Solicitud:</label>
+              <input type="text" name="" class="no-mostrar" placeholder="Escribe el numero de solicitud">
+         
+         <label for="mensaje">Escribe un mensaje </label>
+         <textarea name="tarea" id="mensaje"></textarea>
+         
+         <button >Enviar</button>
+    </form>
+
+
+<script>
+    const nombre = document.getElementById('name')
+    const email = document.getElementById('email')
+    const contenedor_estado_solicitud = document.getElementById('estado-solicitud')
+    const obtener_asunto = document.getElementById('asunto')
+   const mostrar_contenido = document.getElementsByClassName('no-mostrar')
+    obtener_asunto.addEventListener('change' ,(event) => {
+        
+            const estadosolicituda = obtener_asunto.value ==="dos"; 
+        for(let i = 0 ; i < mostrar_contenido.length ; i++ ){
+
+                  if(estadosolicituda) {
+                   mostrar_contenido[i].style.display="block";
+
+                  }else{
+                     
+                     // si elige cualquier otra cosa lo volvemos a ocultar 
+
+                     mostrar_contenido[i].style.display="none";
+                  }
+            }
+
+                
+             
+         
+    })
+     
+</script>
+
+
+</body>
+</html>

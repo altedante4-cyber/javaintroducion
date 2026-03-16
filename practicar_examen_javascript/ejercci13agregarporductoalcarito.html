@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="productos">
+    <button class="btn-producto" data-nombre="Camisa" data-precio="25">Camisa - $25</button>
+    <button class="btn-producto" data-nombre="Pantalón" data-precio="40">Pantalón - $40</button>
+</div>
+<h3>Carrito</h3>
+<div id="carrito"></div>
+<p>Total: $<span id="total-carrito">0</span></p>
+
+
+<script>
+      const productos = document.querySelectorAll('.btn-producto')
+      const carrito_compra =document.getElementById('carrito')
+      const total_carrito = document.getElementById('total-carrito')
+
+      let html=""
+      let total=0
+      productos.forEach((elemento ) => {
+          
+           elemento.addEventListener("click" , function() {
+                 const nombre = this.dataset.nombre 
+                 const precio = this.dataset.precio
+            
+                 html +=`<p>${nombre},${precio}</p> `
+                total += Number(precio)
+                 carrito_compra.innerHTML=html
+                 total_carrito.innerHTML=total
+            })
+      })
+
+      
+</script>
+
+
+</body>
+</html>

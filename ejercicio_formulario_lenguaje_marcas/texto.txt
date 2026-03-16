@@ -1,0 +1,107 @@
+Validación de formularios
+
+1. Valida el siguiente formulario utilizando Javascript, teniendo en cuenta que:
+a. Todos los campos son obligatorios
+b. El usuario debe ser mayor de edad
+c. El campo nombre debe tener al menos 2 caracteres
+d. El campo apellido debe tener al menos 10 caracteres
+e. Se deben aceptar las condiciones para poder continuar
+f. Si la validación del formulario no es correcta, se mostrará un el mensaje “error”
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ejercicio 1</title>
+<style>
+*{
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+form {
+width: 450px;
+border: 1px solid;
+border-radius: 5px;
+}
+div {
+padding: 5px;
+margin: 10px;
+}
+label {
+display: block;
+}
+input, select {
+height: 25px;
+border-radius: 5px;
+}
+button {
+color: white;
+border-color: #0c8f1b;
+border-radius: 5px;
+background-color: #0c8f1b;
+padding: 5px;
+margin: 10px;
+}
+#error{
+display: none;
+color: rgb(237, 68, 68);
+}
+</style>
+</head>
+
+<body>
+<h1>Formulario de registro</h1>
+<form name="form1" onsubmit='return validar();'>
+<div>
+<label for='nombre'>Nombre *</label>
+<input type='text' name='nombre' id='nombre' />
+</div>
+<div>
+<label for='direccion'>Direccion *</label>
+<input type='text' name='direccion' id='direccion' />
+</div>
+<div>
+<label for='edad'>Edad *</label>
+<input type='text' name='edad' id='edad' />
+</div>
+<div>
+<label for='estudios'>Nivel de Estudios *</label>
+<select id='estudios' name='estudios' />
+<option value=''>Selecciona</option>
+<option>Ninguno</option>
+<option>Primarios</option>
+<option>Bachiller</option>
+<option>Grado</option>
+<option>Master</option>
+</select>
+</div>
+<div>
+<label>
+<input type='checkbox' value='SI' id='acepto' />
+He leido y acepto las condiciones.
+</label>
+</div>
+<div>
+<span id="error">Algunos campos no son correctos, revísalos</span>
+</div>
+<button>Registrarse</button>
+</form>
+</body>
+</html>
+
+2. Añade al HTML anterior un campo para introducir una contraseña(debe constar de al
+menos 8 caracteres) y otra para repetirla.
+
+Crea una función de Javascript que valide que las dos contraseñas son iguales y añádela a
+la validación del formulario.
+
+3. Una empresa de telefonía necesita crear un formulario web para que sus clientes puedan ponerse
+en contacto con ellos. Ese formulario debe pedir el nombre, email y un asunto.
+
+El asunto debe ser seleccionable entre las opciones “Pedir información”, “Estado de una solicitud”,
+“Otros”. Todos los campos son obligatorios, por lo que se debe validar que todos los campos se han
+rellenado antes de enviar el formulario.
+
+Cuando se seleccione la opción “Estado de una solicitud” automáticamente se mostrará una caja
+de texto que pedirá explícitamente al usuario que indique el número de la solicitud. Esta caja llevará
+un texto que indique que se debe escribir el nº solicitud y tendrá un borde de color rojo.
+
+

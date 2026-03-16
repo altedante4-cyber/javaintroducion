@@ -1,0 +1,118 @@
+<!-- 
+EJERCICIO 2: Formulario de Reserva de Hotel
+
+Crea la lógica JavaScript para validar un formulario de reserva de hotel con los siguientes requisitos:
+
+1. Nombre del cliente: obligatorio, mínimo 2 caracteres
+2. Fecha de entrada: obligatoria, debe ser hoy o posterior
+3. Fecha de salida: obligatoria, debe ser posterior a la fecha de entrada
+4. Número de noches: automático (calculado entre fechas), mínimo 1 noche
+5. Número de huéspedes: obligatorio, entre 1 y 6
+6. Tipo de habitación: obligatorio, seleccionar una opción
+7. Email: obligatorio, formato válido
+8. Solicitudes especiales: opcional, máximo 200 caracteres
+
+La fecha de salida debe ser al menos 1 día después de la fecha de entrada.
+Calcula automáticamente el número de noches cuando cambien las fechas.
+
+Muestra errores específicos bajo cada campo y prevent el envío si hay errores.
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2 - Validación Reserva Hotel</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="email"], input[type="date"], input[type="number"], select, textarea {
+            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .error { color: red; font-size: 12px; display: none; margin-top: 5px; }
+        input.error, select.error { border-color: red; }
+        .noches { background: #e7f3ff; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h2>Reserva de Hotel</h2>
+    <form id="reservaForm" novalidate>
+        <div class="form-group">
+            <label for="nombre">Nombre del cliente</label>
+            <input type="text" id="nombre" name="nombre">
+            <div class="error" id="error-nombre"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+            <div class="error" id="error-email"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="fechaEntrada">Fecha de entrada</label>
+            <input type="date" id="fechaEntrada" name="fechaEntrada">
+            <div class="error" id="error-fechaEntrada"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="fechaSalida">Fecha de salida</label>
+            <input type="date" id="fechaSalida" name="fechaSalida">
+            <div class="error" id="error-fechaSalida"></div>
+        </div>
+
+        <div class="noches">
+            <strong>Número de noches:</strong> <span id="numNoches">0</span>
+        </div>
+
+        <div class="form-group">
+            <label for="huespedes">Número de huéspedes</label>
+            <input type="number" id="huespedes" name="huespedes" min="1" max="6">
+            <div class="error" id="error-huespedes"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="habitacion">Tipo de habitación</label>
+            <select id="habitacion" name="habitacion">
+                <option value="">Selecciona una opción</option>
+                <option value="individual">Individual</option>
+                <option value="doble">Doble</option>
+                <option value="suite">Suite</option>
+                <option value="familiar">Familiar</option>
+            </select>
+            <div class="error" id="error-habitacion"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="solicitudes">Solicitudes especiales (opcional)</label>
+            <textarea id="solicitudes" name="solicitudes" rows="3" maxlength="200"></textarea>
+            <div class="error" id="error-solicitudes"></div>
+        </div>
+
+        <button type="submit">Reservar</button>
+    </form>
+
+    <script>
+        // ============================================
+        // ESPACIO PARA EL ESTUDIANTE: escribir lógica JS aquí
+        // ============================================
+
+        const form = document.getElementById('reservaForm');
+        const fechaEntrada = document.getElementById('fechaEntrada');
+        const fechaSalida = document.getElementById('fechaSalida');
+        const numNoches = document.getElementById('numNoches');
+
+        // Evento para calcular noches automáticamente
+        // Tu código aquí para calcular noches cuando cambien las fechas
+
+        form.addEventListener('submit', function(e) {
+            // Tu código aquí
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="checkbox" name="hobby" value="deporte"> Deporte
+<input type="checkbox" name="hobby" value="musica"> Música
+<input type="checkbox" name="hobby" value="lectura"> Lectura
+<button id="btn-obtener">Obtener seleccionados</button>
+<p id="seleccionados"></p>
+
+<script>
+      const boton = document.getElementById('btn-obtener')
+      const input  = document.querySelectorAll('input[type="checkbox"]')
+      const mostrar_valores =document.getElementById('seleccionados')
+
+      boton.addEventListener("click",function() {
+            let mostrar= ""
+            for(let i = 0 ; i < input.length ; i++ ){
+                 
+                  if(input[i].checked){
+                     mostrar  += input[i].value + ","
+                  }
+            }
+
+            mostrar_valores.innerHTML = mostrar
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+// CREAR
+HashSet<String> set = new HashSet<>();
+
+// AGREGAR
+set.add("elemento");
+
+// VERIFICAR EXISTENCIA
+set.contains("elemento"); // true/false
+set.isEmpty();
+set.size();
+
+// ELIMINAR
+set.remove("elemento");
+
+// ITERAR (bucle for-each)
+for (String s : set) {
+    System.out.println(s);
+}
+
+// CONTAR elementos con condicion
+int conteo = 0;
+for (String s : set) {
+    conteo++;
+}
+
+// BUSCAR si existe un elemento que cumpla condicion
+String buscado = "valor";
+boolean encontrado = false;
+for (String s : set) {
+    if (s.equals(buscado)) {
+        encontrado = true;
+        break;
+    }
+}
+
+// ENCONTRAR un elemento que cumpla condicion
+String resultado = null;
+for (String s : set) {
+    if (s.startsWith("a")) {
+        resultado = s;
+        break;
+    }
+}
+
+// CONTAR elementos que cumplen condicion
+int contador = 0;
+for (String s : set) {
+    if (s.length() > 3) {
+        contador++;
+    }
+}
+
+// ELIMINAR elementos que cumplen condicion (usando iterator)
+Iterator<String> it = set.iterator();
+while (it.hasNext()) {
+    String s = it.next();
+    if (s.length() < 3) {
+        it.remove();
+    }
+}
+
+// COPIAR a otro HashSet
+HashSet<String> copia = new HashSet<>();
+for (String s : set) {
+    copia.add(s);
+}
+
+// SUMAR todos los numeros (si es HashSet<Integer>)
+HashSet<Integer> numeros = new HashSet<>();
+numeros.add(1);
+numeros.add(2);
+numeros.add(3);
+int suma = 0;
+for (Integer n : numeros) {
+    suma += n;
+}
+
+// MAYOR/MENOR valor
+int mayor = Integer.MIN_VALUE;
+for (Integer n : numeros) {
+    if (n > mayor) {
+        mayor = n;
+    }
+}
+
+// VERIFICAR si TODOS cumplen una condicion
+boolean todos = true;
+for (String s : set) {
+    if (!s.startsWith("a")) {
+        todos = false;
+        break;
+    }
+}
+
+// VERIFICAR si ALGUNO cumple una condicion
+boolean alguno = false;
+for (String s : set) {
+    if (s.startsWith("a")) {
+        alguno = true;
+        break;
+    }
+}
+
+// CONVERTIR a array
+String[] array = new String[set.size()];
+int i = 0;
+for (String s : set) {
+    array[i] = s;
+    i++;
+}

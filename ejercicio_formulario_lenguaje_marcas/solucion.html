@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Citas</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+               min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        h1 { color: white; text-align: center; margin-bottom: 30px; font-size: 2.5rem; }
+        
+        .card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px;
+                        font-size: 16px; transition: border-color 0.3s; }
+        input:focus, select:focus { border-color: #667eea; outline: none; }
+        
+        button { background: #667eea; color: white; padding: 12px 25px; border: none; 
+                 border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600;
+                 transition: transform 0.2s, background 0.2s; }
+        button:hover { background: #5568d3; transform: translateY(-2px); }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        button.favorito { background: #f59e0b; }
+        button.favorito:hover { background: #d97706; }
+        
+        .cita-display { text-align: center; padding: 30px; background: #f8f9fa; 
+                       border-radius: 10px; margin: 20px 0; min-height: 150px;
+                       display: flex; flex-direction: column; justify-content: center; }
+        .cita-texto { font-size: 1.4rem; font-style: italic; color: #333; margin-bottom: 15px; }
+        .cita-autor { font-size: 1rem; color: #666; font-weight: 600; }
+        .cita-categoria { display: inline-block; background: #e0e7ff; color: #4338ca;
+                          padding: 5px 15px; border-radius: 20px; margin-top: 10px;
+                          font-size: 0.85rem; }
+        
+        .historial { margin-top: 20px; }
+        .historial h3 { color: #333; margin-bottom: 15px; }
+        .historial-item { background: #f1f5f9; padding: 10px 15px; margin-bottom: 10px;
+                          border-radius: 8px; border-left: 4px solid #667eea; }
+        .historial-empty { color: #888; font-style: italic; }
+        
+        .favoritos h3 { color: #333; margin-bottom: 15px; }
+        .favorito-item { background: #fffbeb; padding: 15px; margin-bottom: 10px;
+                         border-radius: 8px; border-left: 4px solid #f59e0b; 
+                         display: flex; justify-content: space-between; align-items: center; }
+        .favorito-info { flex: 1; }
+        .btn-eliminar { background: #ef4444; padding: 8px 15px; font-size: 14px; }
+        .btn-eliminar:hover { background: #dc2626; }
+        
+        .error { color: #ef4444; font-size: 14px; margin-top: 5px; display: none; }
+        input.error { border-color: #ef4444; }
+        
+        .stats { display: flex; gap: 20px; justify-content: center; margin-top: 15px; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 1.5rem; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 0.85rem; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Generador de Citas</h1>
+        
+        <div class="card">
+            <form id="citaForm">
+                <div class="form-group">
+                    <label for="nombre">Tu nombre</label>
+                    <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+                    <div class="error" id="error-nombre"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select id="categoria">
+                        <option value="">Todas las categorías</option>
+                        <option value="motivación">Motivación</option>
+                        <option value="éxito">Éxito</option>
+                        <option value="vida">Vida</option>
+                        <option value="sabiduría">Sabiduría</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="btnGenerar">Generar Cita</button>
+                <button type="button" id="btnFavorito" class="favorito" disabled>❤️ Guardar a Favoritos</button>
+            </form>
+            
+            <div class="cita-display" id="citaDisplay">
+                <p style="color: #888;">Completa el formulario y genera una cita</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="totalGeneradas">0</div>
+                    <div class="stat-label">Citas generadas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="totalFavoritos">0</div>
+                    <div class="stat-label">Favoritos</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card historial">
+            <h3>📜 Historial (últimas 5)</h3>
+            <div id="historialContent">
+                <p class="historial-empty">No hay citas en el historial</p>
+            </div>
+        </div>
+        
+        <div class="card favoritos">
+            <h3>⭐ Citas Favoritas</h3>
+            <div id="favoritosContent">
+                <p class="historial-empty">No hay favoritos guardados</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // ESPACIO PARA EL ESTUDIANTE
+        // Completar la lógica JavaScript
+        // ============================================
+
+        // 1. Array de citas (mínimo 15 citas con texto, autor, categoría)
+        const citas = [
+            { texto: "El éxito es la suma de pequeños esfuerzos que se repetirán día tras día.", autor: "Robert Collier", categoria: "éxito" },
+            { texto: "La única forma de hacer un gran trabajo es amar lo que haces.", autor: "Steve Jobs", categoria: "motivación" },
+            { texto: "La vida es lo que sucede cuando estás ocupado haciendo otros planes.", autor: "John Lennon", categoria: "vida" },
+            { texto: "La sabiduría no viene de la edad, sino de la experiencia.", autor: "Anónimo", categoria: "sabiduría" },
+            { texto: "El fracaso es la oportunidad de empezar de nuevo con más inteligencia.", autor: "Henry Ford", categoria: "éxito" },
+            { texto: "Cree que puedes y ya habrás recorrido la mitad del camino.", autor: "Theodore Roosevelt", categoria: "motivación" },
+            { texto: "Vive cada día como si fuera el último, algún día acertarás.", autor: "Marco Aurelio", categoria: "vida" },
+            { texto: "El conocimiento es poder, pero el entusiasmo es la llave.", autor: "Thomas Edison", categoria: "sabiduría" },
+            { texto: "No esperes a que las oportunidades lleguen a ti, créalas.", autor: "Gary Linn", categoria: "éxito" },
+            { texto: "Todo lo que puedas imaginar es real.", autor: "Pablo Picasso", categoria: "motivación" },
+            { texto: "La felicidad no es algo hecho, viene de las propias acciones.", autor: "Dalai Lama", categoria: "vida" },
+            { texto: "Aprende de ayer, vive para hoy, ten esperanza para mañana.", autor: "Albert Einstein", categoria: "sabiduría" },
+            { texto: "El secreto del éxito es comenzar.", autor: "Mark Twain", categoria: "éxito" },
+            { texto: "La mejor manera de predecir el futuro es creándolo.", autor: "Peter Drucker", categoria: "motivación" },
+            { texto: "No midas tu riqueza por el dinero que tienes, mídela por lo que no podrías perder.", autor: "Anónimo", categoria: "vida" },
+            { texto: "Quien pregunta es tonto por cinco minutos, quien no pregunta es tonto para siempre.", autor: "Proverbio chino", categoria: "sabiduría" }
+        ];
+
+        // Variables globales
+        let ultimaCita = null;
+        let citaActual = null;
+        const historial = [];
+        const favoritos = [];
+        let totalGeneradas = 0;
+
+        // Elementos del DOM
+        const form = document.getElementById('citaForm');
+        const nombreInput = document.getElementById('nombre');
+        const categoriaSelect = document.getElementById('categoria');
+        const citaDisplay = document.getElementById('citaDisplay');
+        const btnGenerar = document.getElementById('btnGenerar');
+        const btnFavorito = document.getElementById('btnFavorito');
+        const historialContent = document.getElementById('historialContent');
+        const favoritosContent = document.getElementById('favoritosContent');
+        const totalGeneradasEl = document.getElementById('totalGeneradas');
+        const totalFavoritosEl = document.getElementById('totalFavoritos');
+
+        // Función para validar el formulario
+        function validarFormulario() {
+            let esValido = true;
+            const nombre = nombreInput.value.trim();
+            
+            // Validar nombre
+            if (nombre.length < 2) {
+                mostrarError('nombre', 'El nombre debe tener al menos 2 caracteres');
+                esValido = false;
+            } else {
+                limpiarError('nombre');
+            }
+            
+            return esValido;
+        }
+
+        // Función para mostrar error
+        function mostrarError(campo, mensaje) {
+            const input = document.getElementById(campo);
+            const errorDiv = document.getElementById('error-' + campo);
+            input.classList.add('error');
+            errorDiv.textContent = mensaje;
+            errorDiv.style.display = 'block';
+        }
+
+        // Función para limpiar error
+        function limpiarError(campo) {
+            const input = document.getElementById(campo);
+            const errorDiv = document.getElementById('error-' + campo);
+            input.classList.remove('error');
+            errorDiv.style.display = 'none';
+        }
+
+        // Función para generar una cita aleatoria
+        function generarCitaAleatoria() {
+            let citasFiltradas = [...citas];
+            
+            // Filtrar por categoría si se seleccionó una
+            const categoria = categoriaSelect.value;
+            if (categoria) {
+                citasFiltradas = citasFiltradas.filter(c => c.categoria === categoria);
+            }
+            
+            // No repetir la última cita
+            if (ultimaCita && citasFiltradas.length > 1) {
+                citasFiltradas = citasFiltradas.filter(c => c.texto !== ultimaCita.texto);
+            }
+            
+            // Seleccionar cita aleatoria
+            const indiceAleatorio = Math.floor(Math.random() * citasFiltradas.length);
+            return citasFiltradas[indiceAleatorio];
+        }
+
+        // Función para mostrar la cita
+        function mostrarCita(cita) {
+            citaDisplay.innerHTML = `
+                <p class="cita-texto">"${cita.texto}"</p>
+                <p class="cita-autor">- ${cita.autor}</p>
+                <span class="cita-categoria">${cita.categoria}</span>
+            `;
+        }
+
+        // Función para agregar al historial
+        function agregarAlHistorial(cita) {
+            historial.unshift(cita);
+            if (historial.length > 5) {
+                historial.pop();
+            }
+            actualizarHistorial();
+        }
+
+        // Función para actualizar el historial en el DOM
+        function actualizarHistorial() {
+            if (historial.length === 0) {
+                historialContent.innerHTML = '<p class="historial-empty">No hay citas en el historial</p>';
+            } else {
+                historialContent.innerHTML = historial.map((cita, index) => `
+                    <div class="historial-item">
+                        <strong>"${cita.texto.substring(0, 50)}..."</strong>
+                        <br><small>${cita.autor} - ${cita.categoria}</small>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Función para agregar a favoritos
+        function agregarAFavoritos(cita) {
+            // Verificar si ya está en favoritos
+            const yaExiste = favoritos.some(f => f.texto === cita.texto);
+            if (yaExiste) {
+                alert('¡Esta cita ya está en favoritos!');
+                return;
+            }
+            
+            favoritos.push(cita);
+            actualizarFavoritos();
+            btnFavorito.disabled = true;
+            btnFavorito.textContent = '❤️ Ya en Favoritos';
+        }
+
+        // Función para eliminar de favoritos
+        function eliminarFavorito(index) {
+            favoritos.splice(index, 1);
+            actualizarFavoritos();
+        }
+
+        // Función para actualizar favoritos en el DOM
+        function actualizarFavoritos() {
+            totalFavoritosEl.textContent = favoritos.length;
+            
+            if (favoritos.length === 0) {
+                favoritosContent.innerHTML = '<p class="historial-empty">No hay favoritos guardados</p>';
+            } else {
+                favoritosContent.innerHTML = favoritos.map((cita, index) => `
+                    <div class="favorito-item">
+                        <div class="favorito-info">
+                            <strong>"${cita.texto.substring(0, 60)}..."</strong>
+                            <br><small>${cita.autor} - ${cita.categoria}</small>
+                        </div>
+                        <button class="btn-eliminar" onclick="eliminarFavorito(${index})">Eliminar</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Evento submit del formulario
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validarFormulario()) {
+                return;
+            }
+            
+            // Generar cita
+            const cita = generarCitaAleatoria();
+            if (!cita) {
+                alert('No hay citas disponibles');
+                return;
+            }
+            
+            citaActual = cita;
+            ultimaCita = cita;
+            totalGeneradas++;
+            totalGeneradasEl.textContent = totalGeneradas;
+            
+            // Mostrar cita
+            mostrarCita(cita);
+            
+            // Agregar al historial
+            agregarAlHistorial(cita);
+            
+            // Habilitar botón de favorito
+            btnFavorito.disabled = false;
+            btnFavorito.textContent = '❤️ Guardar a Favoritos';
+        });
+
+        // Evento click del botón de favorito
+        btnFavorito.addEventListener('click', function() {
+            if (citaActual) {
+                agregarAFavoritos(citaActual);
+            }
+        });
+    </script>
+</body>
+</html>

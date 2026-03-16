@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <ul id="lista-nombres"></ul>
+<button id="btn-mostrar">Mostrar Nombres</button>
+
+
+<script>
+
+     const lista_nombre = document.getElementById('lista-nombres')
+     const nombres_mostrar= document.getElementById('btn-mostrar')
+     const nombres=["michael","aguilar","peredo","azul","amarillo"]
+        
+    
+     nombres_mostrar.addEventListener("click",function(e){
+     let htlm=""
+        for(const nombre of  nombres ){
+            htlm += `<li>${nombre}</li>` 
+        }
+     lista_nombre.innerHTML=htlm        
+     })
+
+
+</script>
+    
+</body>
+</html>

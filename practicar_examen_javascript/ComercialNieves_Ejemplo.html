@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comercial Nieves C.A. - Cereales y Granos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --color-primary: #4a7c59;
+            --color-secondary: #8b7355;
+            --color-accent: #d4a84b;
+            --color-light: #f5f1e8;
+            --color-dark: #2c3e2d;
+            --color-error: #e74c3c;
+            --color-success: #27ae60;
+        }
+
+        body {
+            background-color: var(--color-light);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navegación */
+        nav {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-dark));
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            color: var(--color-accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%234a7c59" width="1200" height="400"/><circle fill="%23d4a84b" cx="200" cy="100" r="30" opacity="0.5"/><circle fill="%23d4a84b" cx="400" cy="200" r="20" opacity="0.4"/><circle fill="%23d4a84b" cx="600" cy="150" r="25" opacity="0.3"/><circle fill="%23d4a84b" cx="800" cy="180" r="35" opacity="0.5"/><circle fill="%23d4a84b" cx="1000" cy="120" r="28" opacity="0.4"/></svg>');
+            background-size: cover;
+            padding: 100px 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--color-accent);
+            color: var(--color-dark);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(212, 168, 75, 0.4);
+        }
+
+        /* Secciones */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--color-dark);
+            font-size: 2.2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--color-accent);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Featured Product */
+        .featured-product {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--color-accent);
+        }
+
+        .featured-product h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: var(--color-accent);
+            color: var(--color-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Tabla de Productos */
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        tbody tr:hover {
+            background: var(--color-light);
+        }
+
+        .stock-low {
+            color: var(--color-error);
+            font-weight: bold;
+        }
+
+        .stock-available {
+            color: var(--color-success);
+        }
+
+        /* Formulario */
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .form-group input.error,
+        .form-group select.error,
+        .form-group textarea.error {
+            border-color: var(--color-error);
+        }
+
+        .form-group input.success,
+        .form-group select.success {
+            border-color: var(--color-success);
+        }
+
+        .error-message {
+            color: var(--color-error);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Calculadora */
+        .calculator {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-dark));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .calculator h3 {
+            margin-bottom: 1.5rem;
+            color: var(--color-accent);
+        }
+
+        .calculator-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .calculator .form-group {
+            flex: 1;
+            min-width: 150px;
+            margin-bottom: 0;
+        }
+
+        .calculator label {
+            color: white;
+        }
+
+        .calculator input {
+            background: rgba(255,255,255,0.9);
+            border: none;
+        }
+
+        .total-display {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--color-accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">🌾</div>
+                Comercial Nieves C.A.
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <h1>Comercial Nieves C.A.</h1>
+        <p>Compra y venta de cereales y granos de la más alta calidad. Chia, Sésamo, Soya, Maní, Maíz y más...</p>
+        <a href="#contacto" class="btn">Solicitar Cotización</a>
+    </section>
+
+    <!-- Productos Destacados (Random) -->
+    <section class="section">
+        <h2 class="section-title">🌟 Producto Destacado del Día</h2>
+        <div id="featured-product" class="featured-product animate">
+            <span class="featured-badge">Oferta Especial</span>
+            <h3 id="featured-name">Cargando...</h3>
+            <p id="featured-desc">...</p>
+            <p><strong>Precio especial:</strong> $<span id="featured-price">0.00</span> / kg</p>
+        </div>
+    </section>
+
+    <!-- Tabla de Productos -->
+    <section id="productos" class="section">
+        <h2 class="section-title">📦 Catálogo de Productos</h2>
+        <div class="table-container">
+            <table id="products-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio por Kg ($)</th>
+                        <th>Stock Disponible (Kg)</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="products-body">
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Buscador y Filtros -->
+    <section class="section">
+        <h2 class="section-title">🔍 Buscar Productos</h2>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+            <input type="text" id="search-input" placeholder="Buscar producto..." style="padding: 12px; border-radius: 8px; border: 2px solid #ddd; width: 300px;">
+            <select id="filter-price" style="padding: 12px; border-radius: 8px; border: 2px solid #ddd;">
+                <option value="all">Todos los precios</option>
+                <option value="low">Menos de $5</option>
+                <option value="medium">$5 - $7</option>
+                <option value="high">Más de $7</option>
+            </select>
+            <button onclick="searchProducts()" class="btn">Buscar</button>
+        </div>
+        <div id="search-results" class="table-container" style="display: none;">
+        </div>
+    </section>
+
+    <!-- Formulario de Contacto -->
+    <section id="contacto" class="section">
+        <h2 class="section-title">📞 Solicitar Cotización</h2>
+        <div class="form-container">
+            <form id="contact-form" novalidate>
+                <div class="form-group">
+                    <label for="nombre">Nombre completo *</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre">
+                    <span class="error-message" id="error-nombre">El nombre es requerido y solo debe contener letras</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com">
+                    <span class="error-message" id="error-email">Ingrese un email válido</span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telefono">Teléfono *</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="1234567890">
+                        <span class="error-message" id="error-telefono">El teléfono debe tener 10 dígitos</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="producto">Producto de interés *</label>
+                        <select id="producto" name="producto">
+                            <option value="">Seleccione un producto</option>
+                            <option value="chia">Chia</option>
+                            <option value="sesamo_blanco">Sésamo Blanco</option>
+                            <option value="sesamo_negro">Sésamo Negro</option>
+                            <option value="soya">Soya</option>
+                            <option value="mani">Maní</option>
+                            <option value="maiz">Maíz</option>
+                            <option value="avena">Avena</option>
+                            <option value="trigo">Trigo</option>
+                        </select>
+                        <span class="error-message" id="error-producto">Seleccione un producto</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cantidad">Cantidad (Kg) *</label>
+                    <input type="number" id="cantidad" name="cantidad" placeholder="Cantidad en kilogramos" min="1">
+                    <span class="error-message" id="error-cantidad">La cantidad debe ser mayor a 0</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">Mensaje adicional</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escriba su mensaje aquí..."></textarea>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%;">Enviar Solicitud</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Calculadora de Precios -->
+    <section class="section">
+        <h2 class="section-title">🧮 Calculadora de Precios</h2>
+        <div class="calculator">
+            <h3>Calcule el total de su compra</h3>
+            <div class="calculator-row">
+                <div class="form-group">
+                    <label for="calc-producto">Producto:</label>
+                    <select id="calc-producto">
+                        <option value="8.50">Chia - $8.50/kg</option>
+                        <option value="6.00">Sésamo Blanco - $6.00/kg</option>
+                        <option value="7.50">Sésamo Negro - $7.50/kg</option>
+                        <option value="4.00">Soya - $4.00/kg</option>
+                        <option value="5.50">Maní - $5.50/kg</option>
+                        <option value="3.00">Maíz - $3.00/kg</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="calc-cantidad">Cantidad (Kg):</label>
+                    <input type="number" id="calc-cantidad" placeholder="Cantidad" min="1" value="1">
+                </div>
+                <button onclick="calculateTotal()" class="btn">Calcular</button>
+            </div>
+            <div class="total-display">
+                Total: $<span id="total-result">0.00</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section id="nosotros" class="section">
+        <h2 class="section-title">🏢 Sobre Nosotros</h2>
+        <div style="background: white; padding: 2rem; border-radius: 15px; text-align: center; max-width: 800px; margin: 0 auto;">
+            <p><strong>Comercial Nieves C.A.</strong> es una empresa dedicada a la comercialización de cereales y granos de la más alta calidad. Contamos con años de experiencia en el sector y nos especializamos en productos como:</p>
+            <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <span style="background: var(--color-light); padding: 8px 16px; border-radius: 20px;">🌱 Chia</span>
+                <span style="background: var(--color-light); padding: 8px 16px; border-radius: 20px;">🌾 Sésamo</span>
+                <span style="background: var(--color-light); padding: 8px 16px; border-radius: 20px;">🫘 Soya</span>
+                <span style="background: var(--color-light); padding: 8px 16px; border-radius: 20px;">🥜 Maní</span>
+                <span style="background: var(--color-light); padding: 8px 16px; border-radius: 20px;">🌽 Maíz</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>Comercial Nieves C.A.</h3>
+            <p>Comprometidos con la calidad de nuestros productos</p>
+            <div class="footer-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#productos">Productos</a>
+                <a href="#contacto">Contacto</a>
+                <a href="#nosotros">Nosotros</a>
+            </div>
+            <p>&copy; 2026 Comercial Nieves C.A. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============ ARRAY DE PRODUCTOS ============
+        const productos = [
+            { nombre: 'Chia', precio: 8.50, stock: 500, descripcion: 'Semillas de chia orgánicas de alta calidad' },
+            { nombre: 'Sésamo Blanco', precio: 6.00, stock: 300, descripcion: 'Sésamo blanco premium' },
+            { nombre: 'Sésamo Negro', precio: 7.50, stock: 200, descripcion: 'Sésamo negro tostado' },
+            { nombre: 'Soya', precio: 4.00, stock: 1000, descripcion: 'Granos de soja seleccionados' },
+            { nombre: 'Maní', precio: 5.50, stock: 400, descripcion: 'Maní pelado de primera' },
+            { nombre: 'Maíz', precio: 3.00, stock: 2000, descripcion: 'Maíz amarillo de buena calidad' },
+            { nombre: 'Avena', precio: 4.50, stock: 600, descripcion: 'Avena en grano' },
+            { nombre: 'Trigo', precio: 3.50, stock: 1500, descripcion: 'Trigo para consumo' }
+        ];
+
+        // ============ INICIALIZAR PÁGINA ============
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarTablaProductos();
+            mostrarProductoDestacado();
+        });
+
+        // ============ CARGAR TABLA DE PRODUCTOS ============
+        function cargarTablaProductos() {
+            const tbody = document.getElementById('products-body');
+            tbody.innerHTML = '';
+
+            productos.forEach(producto => {
+                const tr = document.createElement('tr');
+                const stockClass = producto.stock < 300 ? 'stock-low' : 'stock-available';
+                const estado = producto.stock < 300 ? 'Stock Bajo' : 'Disponible';
+
+                tr.innerHTML = `
+                    <td><strong>${producto.nombre}</strong></td>
+                    <td>$${producto.precio.toFixed(2)}</td>
+                    <td>${producto.stock} Kg</td>
+                    <td class="${stockClass}">${estado}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ============ PRODUCTO DESTACADO (RANDOM) ============
+        function mostrarProductoDestacado() {
+            const indiceRandom = Math.floor(Math.random() * productos.length);
+            const producto = productos[indiceRandom];
+
+            const precioDescuento = (producto.precio * 0.85).toFixed(2);
+
+            document.getElementById('featured-name').textContent = producto.nombre;
+            document.getElementById('featured-desc').textContent = producto.descripcion;
+            document.getElementById('featured-price').textContent = precioDescuento;
+        }
+
+        // ============ BUSCAR PRODUCTO POR NOMBRE ============
+        function buscarProductoPorNombre(nombre) {
+            const nombreLower = nombre.toLowerCase().trim();
+            return productos.filter(p => 
+                p.nombre.toLowerCase().includes(nombreLower)
+            );
+        }
+
+        // ============ FILTRAR PRODUCTOS POR PRECIO ============
+        function filtrarPorPrecio(rango) {
+            switch(rango) {
+                case 'low':
+                    return productos.filter(p => p.precio < 5);
+                case 'medium':
+                    return productos.filter(p => p.precio >= 5 && p.precio <= 7);
+                case 'high':
+                    return productos.filter(p => p.precio > 7);
+                default:
+                    return productos;
+            }
+        }
+
+        // ============ BUSCAR PRODUCTOS ============
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-input').value;
+            const priceFilter = document.getElementById('filter-price').value;
+            let resultados = productos;
+
+            if (searchTerm) {
+                resultados = buscarProductoPorNombre(searchTerm);
+            }
+
+            if (priceFilter !== 'all') {
+                const filtrados = filtrarPorPrecio(priceFilter);
+                if (searchTerm) {
+                    resultados = resultados.filter(p => 
+                        filtrados.some(f => f.nombre === p.nombre)
+                    );
+                } else {
+                    resultados = filtrados;
+                }
+            }
+
+            mostrarResultados(resultados);
+        }
+
+        // ============ MOSTRAR RESULTADOS DE BÚSQUEDA ============
+        function mostrarResultados(resultados) {
+            const container = document.getElementById('search-results');
+            
+            if (resultados.length === 0) {
+                container.style.display = 'block';
+                container.innerHTML = '<p style="padding: 2rem; text-align: center;">No se encontraron productos</p>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio por Kg ($)</th>
+                            <th>Stock (Kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            resultados.forEach(p => {
+                html += `
+                    <tr>
+                        <td><strong>${p.nombre}</strong></td>
+                        <td>$${p.precio.toFixed(2)}</td>
+                        <td>${p.stock}</td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+            container.style.display = 'block';
+        }
+
+        // ============ CALCULADORA DE PRECIOS ============
+        function calculateTotal() {
+            const precio = parseFloat(document.getElementById('calc-producto').value);
+            const cantidad = parseInt(document.getElementById('calc-cantidad').value) || 0;
+
+            if (cantidad <= 0) {
+                alert('Ingrese una cantidad válida mayor a 0');
+                return;
+            }
+
+            const total = precio * cantidad;
+            document.getElementById('total-result').textContent = total.toFixed(2);
+        }
+
+        // ============ AGREGAR PRODUCTO AL ARRAY ============
+        function agregarProducto(nuevoProducto) {
+            productos.push(nuevoProducto);
+            cargarTablaProductos();
+        }
+
+        // ============ VALIDACIÓN DE FORMULARIO ============
+        const form = document.getElementById('contact-form');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+
+            // Validar Nombre (solo letras y espacios)
+            const nombre = document.getElementById('nombre');
+            const nombrePattern = /^[a-zA-Z\s]+$/;
+            if (!nombre.value.trim() || !nombrePattern.test(nombre.value)) {
+                showError('nombre', true);
+                isValid = false;
+            } else {
+                showError('nombre', false);
+            }
+
+            // Validar Email (formato válido)
+            const email = document.getElementById('email');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim() || !emailPattern.test(email.value)) {
+                showError('email', true);
+                isValid = false;
+            } else {
+                showError('email', false);
+            }
+
+            // Validar Teléfono (solo números, 10 dígitos)
+            const telefono = document.getElementById('telefono');
+            const telefonoPattern = /^\d{10}$/;
+            if (!telefono.value.trim() || !telefonoPattern.test(telefono.value)) {
+                showError('telefono', true);
+                isValid = false;
+            } else {
+                showError('telefono', false);
+            }
+
+            // Validar Producto
+            const producto = document.getElementById('producto');
+            if (!producto.value) {
+                showError('producto', true);
+                isValid = false;
+            } else {
+                showError('producto', false);
+            }
+
+            // Validar Cantidad (número positivo mayor a 0)
+            const cantidad = document.getElementById('cantidad');
+            if (!cantidad.value || parseInt(cantidad.value) <= 0) {
+                showError('cantidad', true);
+                isValid = false;
+            } else {
+                showError('cantidad', false);
+            }
+
+            // Si todo válido, mostrar éxito
+            if (isValid) {
+                alert('¡Solicitud enviada exitosamente! Nos pondremos en contacto pronto.');
+                form.reset();
+                // Limpiar estados de validación
+                document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(el => {
+                    el.classList.remove('success', 'error');
+                });
+            }
+        });
+
+        // Función para mostrar/ocultar errores
+        function showError(fieldId, show) {
+            const input = document.getElementById(fieldId);
+            const errorSpan = document.getElementById('error-' + fieldId);
+
+            if (show) {
+                input.classList.add('error');
+                input.classList.remove('success');
+                errorSpan.classList.add('visible');
+            } else {
+                input.classList.remove('error');
+                input.classList.add('success');
+                errorSpan.classList.remove('visible');
+            }
+        }
+
+        // Validación en tiempo real (al escribir)
+        document.getElementById('nombre').addEventListener('input', function() {
+            const pattern = /^[a-zA-Z\s]+$/;
+            if (this.value.trim() && pattern.test(this.value)) {
+                showError('nombre', false);
+            }
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (this.value.trim() && pattern.test(this.value)) {
+                showError('email', false);
+            }
+        });
+
+        document.getElementById('telefono').addEventListener('input', function() {
+            const pattern = /^\d{10}$/;
+            if (this.value.trim() && pattern.test(this.value)) {
+                showError('telefono', false);
+            }
+        });
+
+        document.getElementById('cantidad').addEventListener('input', function() {
+            if (this.value && parseInt(this.value) > 0) {
+                showError('cantidad', false);
+            }
+        });
+    </script>
+</body>
+</html>

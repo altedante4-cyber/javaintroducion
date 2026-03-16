@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .caja { width: 100px; height: 100px; background: blue; }
+.caja.activa { background: red; }
+    </style>
+</head>
+<body>
+    
+    <div id="caja" class="caja"></div>
+<button id="btn-toggle">Cambiar Color</button>
+
+<script>
+     const boton = document.getElementById('btn-toggle')
+     const caja = document.getElementById('caja')
+
+     boton.addEventListener("click",function() {
+        
+            caja.classList.add('activa')
+     })
+</script>
+</body>
+</html>

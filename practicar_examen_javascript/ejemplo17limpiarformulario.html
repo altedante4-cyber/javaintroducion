@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="mi-formulario">
+    <input type="text" value="Hola">
+    <select>
+        <option selected>Opción 1</option>
+    </select>
+    <textarea>Texto</textarea>
+</form>
+<button id="btn-limpiar">Limpiar</button>
+
+<script>
+      const elementos = document.querySelectorAll('input,textarea')
+
+    document.getElementById('btn-limpiar').addEventListener("click",function() {
+           const formulario= document.getElementById('mi-formulario')
+
+        formulario.reset();            
+
+
+    })
+    
+</script>
+</body>
+</html>

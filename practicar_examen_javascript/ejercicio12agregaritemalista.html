@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="nuevo-item" placeholder="Nuevo item">
+<button id="btn-agregar">Agregar</button>
+<ul id="lista"></ul>
+
+
+<script>
+     let html=""
+     document.getElementById('btn-agregar').addEventListener('click',function() {
+
+          const capturar_valor = document.getElementById('nuevo-item')
+          const lista_agregar = document.getElementById('lista')
+           html += `<li>${capturar_valor.value}</li>`
+    lista_agregar.innerHTML= html
+
+     })
+
+</script>
+</body>
+</html>

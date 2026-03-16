@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="contenedor-tarjetas" class="grid" ></div>
+
+    <script>
+            const contenedor_producto =document.getElementById('contenedor-tarjetas')
+            const productos = [
+
+              {nombre:"leche",precio:20,imagen:"lara"},
+              {nombre:"leche",precio:20,imagen:"lara"},
+              {nombre:"leche",precio:20,imagen:"lara"},
+              {nombre:"leche",precio:20,imagen:"lara"},
+              {nombre:"leche",precio:20,imagen:"lara"},
+              {nombre:"leche",precio:20,imagen:"lara"},              
+            ]
+
+            let htlm=""
+            for(const product of productos ){
+                htlm += `<div style="border: 1px solid black;" > <h2>${product.nombre}</h2> <br> <p>${product.precio}</p> </div>`     
+            }
+            contenedor_producto.innerHTML=htlm
+
+    </script>
+    
+</body>
+</html>

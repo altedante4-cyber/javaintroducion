@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ejercicio 1</title>
+<style>
+* {
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+form {
+width: 450px;
+border: 1px solid;
+border-radius: 5px;
+}
+div {
+padding: 5px;
+margin: 10px;
+}
+label {
+display: block;
+}
+input, select {
+height: 25px;
+border-radius: 5px;
+}
+button {
+color: white;
+border-color: #0c8f1b;
+border-radius: 5px;
+background-color: #0c8f1b;
+padding: 5px;
+margin: 10px;
+}
+#error{
+display: none;
+color: rgb(237, 68, 68);
+}
+</style>
+</head>
+<body>
+<h1>Formulario de registro</h1>
+<form name="form1">
+<div>
+<label for='nombre'>Nombre *</label>
+<input type='text' name='nombre' id='nombre' />
+</div>
+<div>
+<label for='apellido'>Apellido *</label>
+<input type='text' name='apellido' id='apellido' />
+</div>
+<div>
+<label for='direccion'>Direccion *</label>
+<input type='text' name='direccion' id='direccion' />
+</div>
+<div>
+<label for='edad'>Edad *</label>
+<input type='text' name='edad' id='edad' />
+</div>
+<div>
+<label for='estudios'>Nivel de Estudios *</label>
+<select id='estudios' name='estudios' />
+<option value=''>Selecciona</option>
+<option>Ninguno</option>
+<option>Primarios</option>
+<option>Bachiller</option>
+<option>Grado</option>
+<option>Master</option>
+</select>
+</div>
+<div>
+<label>
+<input type='checkbox' value='SI' id='acepto' />
+He leido y acepto las condiciones.
+</label>
+</div>
+<div>
+<span id="error">Algunos campos no son correctos, revísalos</span>
+</div>
+<button onclick="validar()">Registrarse</button>
+</form>
+
+
+
+<script>
+    const nombre = document.getElementById('nombre')
+    const apellido = document.getElementById('apellido')
+    const direccion = document.getElementById('direccion')
+    const edad = document.getElementById('edad')
+    const estudios = document.getElementById('estudios')
+    const condiciones = document.getElementById('acepto')
+    const mensajeError = document.getElementById('error')
+
+    function validar() {
+        let hayError = false
+
+        if (nombre.value.trim().length < 2) {
+            hayError = true
+        }
+
+        if (apellido.value.trim().length < 10) {
+            hayError = true
+        }
+
+        if (direccion.value.trim() === "") {
+            hayError = true
+        }
+
+
+        // el isNaN verifica que no sea un numero 
+        //  devuelve true si es un texto 
+        // Number convirte a numero 
+        
+        if (edad.value === "" || isNaN(edad.value) || Number(edad.value) < 18) {
+            hayError = true
+        }
+
+        if (estudios.value === "") {
+            hayError = true
+        }
+
+        if (!condiciones.checked) {
+            hayError = true
+        }
+
+        if (hayError) {
+            mensajeError.style.display = 'block'
+            mensajeError.textContent = 'error'
+        } else {
+            mensajeError.style.display = 'none'
+            alert('correcto')
+        }
+    }
+</script>
+</body>
+</html>

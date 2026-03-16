@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+     body{
+         background-color: blueviolet;
+     }
+
+     #mostrar-contenido{
+         display: block;
+     }
+</style>
+</head>
+<body>
+
+    <h1 id="title">Generador de citas </h1>
+    
+    <form id="registro" novalidate>
+        
+        <label for="nombre">Tu nombre</label>
+        <input type="text" id="nombre">
+        <div id="error-nombre"></div>
+        
+        <label for="categoria">categoria </label>
+        <select name="" id="categoria">
+            <option value="uno">Todas las categorias </option>
+            <option value="dos">motivación</option>
+            <option value="tres">éxito</option>
+            <option value="cuatro">ciencia</option>
+            <option value="cinco">sabiduría</option>
+        </select>
+        <div id="mostrar-contenido"></div>
+        <button type="submit" name="accion" value="generar">Generar Cita</button>
+        <button type="submit" name="accion" value="favoritos">Guardar a Favoritos </button>
+    </form>
+
+    <div id="historial-citas">
+
+    </div>
+
+<script>
+
+   
+   const citas = [
+  // ÉXITO Y ESFUERZO
+  { texto: "La única manera de hacer un gran trabajo es amar lo que haces.", autor: "Steve Jobs", categoria: "éxito" },
+  { texto: "El éxito no es el final, el fracaso no es fatal: es el coraje para continuar lo que cuenta.", autor: "Winston Churchill", categoria: "éxito" },
+  { texto: "No cuentes los días, haz que los días cuenten.", autor: "Muhammad Ali", categoria: "éxito" },
+  { texto: "Si puedes soñarlo, puedes hacerlo.", autor: "Walt Disney", categoria: "éxito" },
+  { texto: "La disciplina es el puente entre metas y logros.", autor: "Jim Rohn", categoria: "éxito" },
+  { texto: "El éxito es caminar de fracaso en fracaso sin perder el entusiasmo.", autor: "Winston Churchill", categoria: "éxito" },
+  { texto: "No busques los errores, busca un remedio.", autor: "Henry Ford", categoria: "éxito" },
+  { texto: "Tu tiempo es limitado, así que no lo desperdicies viviendo la vida de alguien más.", autor: "Steve Jobs", categoria: "éxito" },
+  { texto: "La mejor forma de predecir el futuro es creándolo.", autor: "Peter Drucker", categoria: "éxito" },
+  { texto: "El fracaso es solo la oportunidad de comenzar de nuevo de forma más inteligente.", autor: "Henry Ford", categoria: "éxito" },
+
+  // MOTIVACIÓN Y CRECIMIENTO
+  { texto: "Cree que puedes y casi habrás llegado.", autor: "Theodore Roosevelt", categoria: "motivación" },
+  { texto: "La vida es un 10% lo que me pasa y un 90% cómo reacciono a ello.", autor: "Charles Swindoll", categoria: "motivación" },
+  { texto: "Empieza donde estás. Usa lo que tienes. Haz lo que puedas.", autor: "Arthur Ashe", categoria: "motivación" },
+  { texto: "Lo que haces hoy puede mejorar todos tus mañanas.", autor: "Ralph Marston", categoria: "motivación" },
+  { texto: "No te detengas cuando estés cansado. Detente cuando hayas terminado.", autor: "Anónimo", categoria: "motivación" },
+  { texto: "Si no escalas la montaña, jamás podrás disfrutar del paisaje.", autor: "Pablo Neruda", categoria: "motivación" },
+  { texto: "Incluso la noche más oscura terminará y el sol saldrá.", autor: "Victor Hugo", categoria: "motivación" },
+  { texto: "Apunta a la luna. Si fallas, podrías dar a una estrella.", autor: "William Clement Stone", categoria: "motivación" },
+  { texto: "La motivación te pone en marcha, el hábito te mantiene.", autor: "Jim Ryun", categoria: "motivación" },
+  { texto: "Todo lo que siempre has querido está al otro lado del miedo.", autor: "George Addair", categoria: "motivación" },
+
+  // FILOSOFÍA Y SABIDURÍA
+  { texto: "Solo sé que no sé nada.", autor: "Sócrates", categoria: "sabiduría" },
+  { texto: "La felicidad no es algo hecho. Viene de tus propias acciones.", autor: "Dalai Lama", categoria: "sabiduría" },
+  { texto: "No vemos las cosas como son, las vemos como somos.", autor: "Immanuel Kant", categoria: "sabiduría" },
+  { texto: "Pienso, luego existo.", autor: "René Descartes", categoria: "sabiduría" },
+  { texto: "La paciencia es amarga, pero su fruto es dulce.", autor: "Jean-Jacques Rousseau", categoria: "sabiduría" },
+  { texto: "El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice.", autor: "Aristóteles", categoria: "sabiduría" },
+  { texto: "No es pobre el que tiene poco, sino el que mucho desea.", autor: "Séneca", categoria: "sabiduría" },
+  { texto: "El que busca la verdad corre el riesgo de encontrarla.", autor: "Isabel Allende", categoria: "sabiduría" },
+  { texto: "La paz comienza con una sonrisa.", autor: "Teresa de Calcuta", categoria: "sabiduría" },
+  { texto: "Conócete a ti mismo.", autor: "Oráculo de Delfos", categoria: "sabiduría" },
+
+  // LITERATURA Y ARTE
+  { texto: "Lo esencial es invisible a los ojos.", autor: "Antoine de Saint-Exupéry", categoria: "literatura" },
+  { texto: "En un lugar de la Mancha, de cuyo nombre no quiero acordarme...", autor: "Miguel de Cervantes", categoria: "literatura" },
+  { texto: "La creatividad requiere coraje.", autor: "Henri Matisse", categoria: "arte" },
+  { texto: "Todo niño es un artista. El problema es cómo seguir siendo artista al crecer.", autor: "Pablo Picasso", categoria: "arte" },
+  { texto: "Donde no hay palabras, la música habla.", autor: "Hans Christian Andersen", categoria: "arte" },
+  { texto: "Aprende las reglas como un profesional, para que puedas romperlas como un artista.", autor: "Pablo Picasso", categoria: "arte" },
+  { texto: "Estar solo no tiene nada que ver con cuántas personas hay alrededor.", autor: "Richard Yates", categoria: "literatura" },
+  { texto: "No hay barrera, cerradura ni cerrojo que puedas imponer a la libertad de mi mente.", autor: "Virginia Woolf", categoria: "literatura" },
+  { texto: "La imaginación lo es todo. Es el avance de las próximas atracciones de la vida.", autor: "Albert Einstein", categoria: "creatividad" },
+  { texto: "El arte es la mentira que nos permite comprender la verdad.", autor: "Pablo Picasso", categoria: "arte" },
+
+  // CIENCIA Y PENSAMIENTO
+  { texto: "Hay dos cosas infinitas: el universo y la estupidez humana.", autor: "Albert Einstein", categoria: "ciencia" },
+  { texto: "En algún lugar, algo increíble está esperando ser descubierto.", autor: "Carl Sagan", categoria: "ciencia" },
+  { texto: "Nada en la vida debe ser temido, solo comprendido.", autor: "Marie Curie", categoria: "ciencia" },
+  { texto: "La ciencia es el alma de la prosperidad de las naciones.", autor: "Louis Pasteur", categoria: "ciencia" },
+  { texto: "A falta de pruebas, la opinión no es más que un prejuicio.", autor: "Hipócrates", categoria: "ciencia" },
+  { texto: "La inteligencia es la habilidad de adaptarse al cambio.", autor: "Stephen Hawking", categoria: "ciencia" },
+  { texto: "No tengo talentos especiales. Solo soy apasionadamente curioso.", autor: "Albert Einstein", categoria: "ciencia" },
+  { texto: "Somos polvo de estrellas.", autor: "Carl Sagan", categoria: "ciencia" },
+  { texto: "La naturaleza no hace nada incompleto ni nada en vano.", autor: "Aristóteles", categoria: "ciencia" },
+  { texto: "Para resultados diferentes, no hagas siempre lo mismo.", autor: "Albert Einstein", categoria: "ciencia" }
+];
+
+const registro = document.getElementById('registro')
+const mostrar_contendio =document.getElementById('mostrar-contenido')
+const elementos_select = document.getElementById('categoria')
+const historial_citas = document.getElementById('historial-citas')
+const guardar_ultimas_cinco_citas = []
+registro.addEventListener('submit',function(e) {
+     e.preventDefault();
+     const accion =e.submitter.value 
+     const sacar_categoria_texto = sacar_categoria_nombre(elementos_select)
+     const create_elmento = document.createElement('p')
+     const create_elemento_array = document.createElement('p')
+     
+        let contador = 5 ;
+         if(accion === 'generar'){
+            mostrar_contendio.innerHTML=''; // limpia el contenedor 
+            const cita = generar_cita_name(sacar_categoria_texto)
+            create_elmento.textContent = cita.texto + "-" +cita.autor 
+            create_elemento_array.textContent = cita.texto + "-" +cita.autor 
+            mostrar_contendio.appendChild(create_elmento)
+           
+            if(guardar_ultimas_cinco_citas.length >= 5){
+                 guardar_ultimas_cinco_citas.shift();
+            }
+
+            guardar_ultimas_cinco_citas.push(cita.texto + "-" + cita.autor );
+        }
+
+        //mostrar historial
+        historial_citas.innerHTML ='';
+        for(let i = 0 ; i < guardar_ultimas_cinco_citas.length ; i++ ){
+            const create_elemento_array = document.createElement('p');
+            create_elemento_array.textContent = guardar_ultimas_cinco_citas[i];
+            historial_citas.appendChild(create_elemento_array);
+
+        }
+
+
+        //mostramos el array 
+
+
+       
+            
+       //problema que estoy teniendo aqui el problema es que usas el mismo elemento para ambos contenedores
+       // un elemento dom solo puede estar en un lugar a la vez asi que al ahcer appendchild a histori_citas
+
+       // se mueve desde mostrar_contendio 
+       // crea elemento separado
+       // if (accioin == 'generar')
+
+})
+
+function generar_cita_name(categoria){
+    const sacamos_categoria_lista = []
+    for (let i = 0 ; i < citas.length ; i++ ){
+        
+         //accedemos directamente al objto citas[i]
+         if(citas[i].categoria === categoria ){
+             sacamos_categoria_lista.push(citas[i]);
+         }
+    }
+
+    let generamos_una_cita_alzar = Math.floor(Math.random() * sacamos_categoria_lista.length );
+
+    return sacamos_categoria_lista[generamos_una_cita_alzar]
+}
+function sacar_categoria_nombre(elemento_select){
+     let contenido = "";
+     switch(elemento_select.value){
+
+         case 'uno':
+            contenido +="motivación"
+            break 
+         case 'dos':
+            contenido += "motivación"
+         break 
+
+        case 'tres':
+            contenido +="éxito"
+         break 
+
+         case 'cuatro':
+            contenido += "ciencia"
+         break 
+
+        case 'cinco':
+            contenido +="sabiduría"        
+        break
+        default :
+            contenido +=""
+
+     }
+
+     return contenido ; 
+}
+
+
+</script>
+</body>
+</html>

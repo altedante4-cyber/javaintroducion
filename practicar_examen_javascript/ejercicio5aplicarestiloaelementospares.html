@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <ul id="lista-colores">
+    <li>Rojo</li>
+    <li>Verde</li>
+    <li>Azul</li>
+    <li>Amarillo</li>
+    <li>Morado</li>
+</ul>
+
+<script>
+
+     const elemento_padre = document.getElementById('lista-colores')
+     const hijos_elemento = elemento_padre.querySelectorAll('li')
+
+     hijos_elemento.forEach((elemento , indice ) =>{
+          
+          if(indice % 2 === 0 ){
+              elemento.style.background="yellow"
+          }
+     })
+</script>
+    
+</body>
+</html>

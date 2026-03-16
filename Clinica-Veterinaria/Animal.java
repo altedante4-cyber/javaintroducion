@@ -1,0 +1,43 @@
+public abstract class Animal {
+    
+    private String nombre , fechaNacimiento , comentarios ;
+    private  double peso ;
+
+
+    public Animal(String nombre , String fechaNacimiento , String comentarios , double peso ){
+         this.nombre = nombre ;
+         this.fechaNacimiento = fechaNacimiento;
+         this.comentarios = comentarios;
+         this.peso = peso ; 
+    }
+
+    public String getNombre(){
+        return nombre ;
+    }
+    public String getFechaNacimiento(){
+         return fechaNacimiento;
+    }
+    public String getComentarios(){
+         return comentarios ;
+    }
+    public double getPeso(){
+        return peso ; 
+    }
+
+    public void setPeso(double peso ){ 
+      this.peso = peso ; 
+    }
+    public void setComentario(String  comentario ){
+      this.comentarios=comentario;
+    }
+ 
+
+    public abstract void validar_especie(String especie );
+    public abstract String dameDatosAnimal();
+
+
+
+
+
+
+}

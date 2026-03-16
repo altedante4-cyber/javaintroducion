@@ -12,4 +12,18 @@ public class ProductoFisico  extends Producto {
          this.costoEnvio = costoEnvio ;
          
     }
+
+    @Override
+    public double calcularPrecioFinal(){
+         return precio + 1.21 + costoEnvio ; 
+    }
+
+    @Override
+    public void  obtenerDescripcion(){
+         System.out.println(" el id " + id + " el nombre " + nombre + " el precio es  " + precio + "la categoria es " + categoria + " el peso es " + peso + " el coste de envio es  " + costoEnvio);
+
+    }
+
+
+
 }

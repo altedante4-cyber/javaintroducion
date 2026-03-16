@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" class="cantidad" value="10">
+<input type="number" class="cantidad" value="20">
+<input type="number" class="cantidad" value="30">
+<button id="btn-sumar">Sumar</button>
+<p>Total: <span id="resultado">0</span></p>
+
+    <script>
+
+          const input = document.querySelectorAll('input[type="number"]')
+          const boton = document.getElementById('btn-sumar')
+          const resultado =document.getElementById('resultado')
+          boton.addEventListener("click",function() {
+            let total = 0               
+              for(let i = 0 ; i < input.length ; i++ ){
+                  
+                  total += Number(input[i].value)
+              }
+              resultado.innerHTML=total
+          })
+
+
+   </script>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 package sistemadegestiondeunatiendaonline;
 
 public abstract class Producto {
-    protected int id,
+    protected int id;
     protected String nombre ;
     protected  double precio ;
     protected String categoria ;
@@ -17,7 +17,7 @@ public abstract class Producto {
     }
 
     public abstract double calcularPrecioFinal();
-    public abstract String obtenerDescripcion();
+    public abstract void  obtenerDescripcion();
 
     public int getid(){return id; }
     public String getnombre(){return nombre ;}

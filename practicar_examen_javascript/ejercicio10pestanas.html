@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <div class="tabs">
+    <button class="tab active" data-tab="uno">Tab 1</button>
+    <button class="tab" data-tab="dos">Tab 2</button>
+    <button class="tab" data-tab="tres">Tab 3</button>
+</div>
+<div id="uno" class="contenido-tab">Contenido 1</div>
+<div id="dos" class="contenido-tab" style="display:none">Contenido 2</div>
+<div id="tres" class="contenido-tab" style="display:none">Contenido 3</div>
+
+<script>
+     const botones = document.querySelectorAll('.tab');
+const contenidos = document.querySelectorAll('.contenido-tab');
+for(let i = 0; i < botones.length; i++) {
+    botones[i].addEventListener("click", function() {
+        const pestana = this.dataset.tab;
+        
+        // Ocultar todos los contenidos
+        contenidos.forEach(div => div.style.display = 'none');
+        
+        // Mostrar el contenido correspondiente
+        document.getElementById(pestana).style.display = 'block';
+        
+        
+    });
+}
+
+</script>
+
+</body>
+</html>

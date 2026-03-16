@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="tabla-empleados">
+    <thead>
+        <tr><th>Nombre</th><th>Puesto</th><th>Salario</th></tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    const empleados = [
+  { nombre: "Ana", puesto: "Gerente", salario: 50000 },
+  { nombre: "Luis", puesto: "Desarrollador", salario: 45000 }
+];
+ 
+ const tdbodyelemento = document.querySelector('tbody')
+let html =""
+ for(const emple of empleados ){
+     html +=`<tr><td>${emple.nombre}</td> <td>${emple.puesto}</td>  <td>${emple.salario}</td> </tr>` 
+ }
+
+ tdbodyelemento.innerHTML=html
+     
+</script>
+    
+</body>
+</html>

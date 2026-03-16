@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .error { color: red; display: none; }
+.error.visible { display: block; }
+input.error { border: 2px solid red; }
+input.success { border: 2px solid green; }
+    </style>
+</head>
+<body>
+    <input type="text" id="nombre" placeholder="Nombre">
+<span class="error" id="error-nombre">El nombre es requerido</span>
+<button id="btn-validar">Validar</button>
+    
+<script>
+     const input = document.getElementById('nombre')
+     const mostrar_errro= document.getElementById('error-nombre')
+     const boton_validar = document.getElementById('btn-validar')
+
+
+     boton_validar.addEventListener("click",function() {
+            if(input.value.trim() === ""){
+                    mostrar_errro.classList.add('visible')
+            }else{
+                 input.classList.add('success')
+
+            }
+     })
+</script>
+</body>
+</html>
