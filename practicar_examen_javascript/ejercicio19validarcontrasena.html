@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="password" id="password" placeholder="Contraseña">
+<input type="password" id="confirmar" placeholder="Confirmar">
+<button id="btn-validar">Validar</button>
+<p id="resultado"></p>
+
+
+<script>
+
+    const contrasena_usuario = document.getElementById('password')
+    const contrasena_confirma=document.getElementById('confirmar')
+    const resultado = document.getElementById('resultado')
+    document.getElementById('btn-validar').addEventListener('click',function() {
+
+         const valor1 = contrasena_usuario.value.trim()
+         const valor2 = contrasena_confirma.value.trim()
+
+
+         if(valor1 === "" || valor2 === ""){
+             resultado.textContent="Los dos campos tiene que tener contendio";
+         }else if ( valor1.length !== 8 || valor2.length !== 8 ){
+             resultado.textContent="Las contrasena tiene que tener una longitud de 8 "
+         }else if (valor1 === valor2 ){
+                     resultado.textContent="CORRECTO"
+         }
+         else {
+             resultado.textContent="LA CONTRASENA NO COINCIDE"
+         }
+    })
+</script>
+    
+</body>
+</html>
