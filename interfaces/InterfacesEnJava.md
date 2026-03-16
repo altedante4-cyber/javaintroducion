@@ -1,16 +1,22 @@
 # Interfaces en Java
 
 ## 🧩 ¿Qué es una interfaz?
-Una **interfaz** en Java es un tipo de referencia que define un contrato (un conjunto de métodos) que las clases pueden implementar. Una interfaz no puede instanciarse directamente; en cambio, una clase que implementa la interfaz debe proporcionar una implementación concreta de sus métodos (salvo métodos `default` o `static`).
+Una **interfaz** en Java es un tipo de referencia que define un contrato (un conjunto de métodos y constantes) que las clases pueden implementar.
+
+### Características clave
+- **Todos los métodos son abstractos** (sin cuerpo) por defecto, excepto los `default` y `static` (Java 8+).
+- No puede contener atributos de estado (instancia); solo puede declarar **constantes públicas** (`public static final`).
+- No se puede instanciar directamente.
+- **No hay herencia múltiple de clases**, pero sí hay **herencia múltiple de tipos**: una clase puede implementar muchas interfaces. Esto se conoce como **pseudo-herencia** o **herencia de comportamiento**.
 
 > 🔑 **Idea clave:** Una interfaz define **qué** debe hacerse, no **cómo** se hace.
 
 ---
 
 ## ✅ ¿Por qué usar interfaces?
-- Permiten **desacoplar** la definición de un comportamiento de su implementación.
-- Facilitan el diseño orientado a **polimorfismo**: puedes usar el tipo de la interfaz para trabajar con múltiples implementaciones.
-- Soportan **herencia múltiple de tipo** (una clase puede implementar varias interfaces) sin los problemas de herencia múltiple de clases.
+- Permiten **desacoplar** clases: puedes usar la interfaz como tipo, aislando tu código de dependencias concretas (por ejemplo, desacoplar tu clase principal de la tecnología de almacenamiento, red o base de datos).
+- Aumentan el **polimorfismo**: múltiples implementaciones pueden ser tratadas uniformemente usando el tipo de la interfaz.
+- Soportan **herencia múltiple de tipo** (pseudo-herencia): una clase puede implementar varias interfaces y combinar comportamientos sin los problemas de herencia múltiple de clases.
 - Son fundamentales para escribir código **testable** y seguir principios SOLID (especialmente el **Principio de Segregación de Interfaces** y la **Inversión de Dependencias**).
 
 ---
