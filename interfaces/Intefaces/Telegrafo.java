@@ -1,5 +1,4 @@
-import Intefaces.Reliquia;
-
+package Intefaces;
 public class Telegrafo extends Reliquia {
     private int codigo ;
     public Telegrafo(int anio , int codigo ){
