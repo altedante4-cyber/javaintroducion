@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<input type="text" id="participante" placeholder="Nombre">
+<button id="btn-agregar">Agregar Participante</button>
+<button id="btn-sorteo">¡Sorteo!</button>
+<p>Ganador: <span id="ganador">-</span></p>
+<ul id="lista-participantes"></ul>
+
+
+<script>
+     const lista_participantes = document.getElementById('lista-participantes')
+     const input= document.getElementById('participante')
+     const array_elementos = []
+     document.getElementById('btn-agregar').addEventListener('click',function() {
+          
+        const nuevoElemento = "<li>" + input.value + "</li>";
+        array_elementos.push(input.value)
+        // Agregar al contenido existente
+        lista_participantes.innerHTML += nuevoElemento;
+
+        input.value = ''; 
+             })
+     const ganador = document.getElementById('ganador')
+    document.getElementById('btn-sorteo').addEventListener('click',function(){
+
+            let numero = Math.floor(Math.random() * array_elementos.length );
+
+            ganador.textContent=array_elementos[numero];
+
+    })
+</script>
+</body>
+</html>

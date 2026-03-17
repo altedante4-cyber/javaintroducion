@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" id="edad" placeholder="Edad">
+<button id="btn-validar">Verificar</button>
+<p id="resultado"></p>
+
+<script>
+        const input = document.getElementById('edad')
+        const resultado = document.getElementById('resultado')
+        document.getElementById('btn-validar').addEventListener('click',function(e) {
+                if(validar_edad(input)){
+                resultado.textContent="VALIDO"
+
+                }else{
+                 resultado.textContent="INVALIDO" ;
+}
+
+        })
+    
+
+    function validar_edad(edad){
+         const edad_value = edad.value.trim()
+         return edad_value >= 1 && edad_value <= 120 ; 
+    }
+</script>
+</body>
+</html>

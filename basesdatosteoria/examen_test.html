@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen: Actualización de Bases de Datos</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            border: 2px solid #e94560;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .header h1 {
+            color: #e94560;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .header p {
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+        
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #0f3460;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        
+        .info-bar span {
+            color: #e94560;
+            font-weight: bold;
+        }
+        
+        .question-card {
+            background: #1a1a2e;
+            border: 1px solid #0f3460;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            border-color: #e94560;
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.2);
+        }
+        
+        .question-number {
+            background: #e94560;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.05em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #16213e;
+            border: 2px solid #0f3460;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            border-color: #e94560;
+            background: #1a2744;
+        }
+        
+        .option.selected {
+            border-color: #e94560;
+            background: linear-gradient(135deg, #e94560 0%, #c73e54 100%);
+        }
+        
+        .option.correct {
+            border-color: #4caf50;
+            background: #1b3a1b;
+        }
+        
+        .option.incorrect {
+            border-color: #f44336;
+            background: #3a1b1b;
+        }
+        
+        .option-marker {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #a0a0a0;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .option.selected .option-marker {
+            border-color: white;
+            background: white;
+            color: #e94560;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #e94560 0%, #c73e54 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+        }
+        
+        .btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            background: #16213e;
+            border: 2px solid #e94560;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .results h2 {
+            color: #e94560;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .score {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+            color: #4caf50;
+        }
+        
+        .score.fail {
+            color: #f44336;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+        
+        .code-block {
+            background: #0d1520;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #ff6b6b;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Examen de Actualización de Bases de Datos</h1>
+            <p>Guía de Teoría - RA UPDATE</p>
+        </div>
+        
+        <div class="info-bar">
+            <div>Pregunta <span id="currentQ">1</span> de <span id="totalQ">50</span></div>
+            <div>Aciertos: <span id="correctCount">0</span></div>
+        </div>
+        
+        <div id="questionsContainer"></div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" id="submitBtn" onclick="submitExam()">Finalizar Examen</button>
+        </div>
+        
+        <div class="results" id="results">
+            <h2>Resultados del Examen</h2>
+            <div class="score" id="scoreDisplay">0/50</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="correctStat" style="color: #4caf50;">0</div>
+                    <div class="stat-label">Correctas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="incorrectStat" style="color: #f44336;">0</div>
+                    <div class="stat-label">Incorrectas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="percentageStat">0%</div>
+                    <div class="stat-label">Porcentaje</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" onclick="location.reload()">Reiniciar Examen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "¿Cuál es el propósito principal de ejecutar el script 00_fugas_setup.sql?",
+                options: [
+                    "Crear una base de datos de producción limpia",
+                    "Preparar un entorno de pruebas con datos 'sucios' y errores comunes",
+                    "Eliminar todos los datos de la base de datos",
+                    "Realizar un backup de la base de datos"
+                ],
+                correct: 1
+            },
+            {
+                question: "En MySQL Workbench, ¿qué error se produce al intentar un UPDATE sin una PK en el WHERE?",
+                options: [
+                    "Error Code: 1064",
+                    "Error Code: 1175",
+                    "Error Code: 1452",
+                    "Error Code: 1215"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cómo se soluciona el Error 1175 en MySQL Workbench?",
+                options: [
+                    "Ejecutar SET SQL_SAFE_UPDATES = 0; antes del UPDATE",
+                    "Añadir LIMIT 1 al UPDATE",
+                    "Usar DELETE en lugar de UPDATE",
+                    "Reiniciar el servidor MySQL"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Qué comportamiento tiene ON DELETE RESTRICT?",
+                options: [
+                    "Elimina automáticamente los registros dependientes",
+                    "Coloca NULL en las claves foráneas dependientes",
+                    "Bloquea la eliminación si existen registros dependientes",
+                    "Elimina solo los registros padre"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué sucede con ON DELETE CASCADE?",
+                options: [
+                    "Bloquea la eliminación del registro padre",
+                    "Elimina automáticamente todos los registros hijos",
+                    "Pone NULL en las claves foráneas de los hijos",
+                    "Genera un error de integridad"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es el propósito de SET FOREIGN_KEY_CHECKS = 0?",
+                options: [
+                    "Activar la verificación de claves foráneas",
+                    "Suspender temporalmente la comprobación de FKs",
+                    "Eliminar todas las restricciones de la base de datos",
+                    "Crear nuevas claves foráneas automáticamente"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué comando se usa para vaciar una tabla completamente y reiniciar el AUTO_INCREMENT?",
+                options: [
+                    "DELETE FROM tabla",
+                    "DROP TABLE tabla",
+                    "TRUNCATE TABLE tabla",
+                    "REMOVE FROM tabla"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Cuál es la diferencia principal entre INSERT INTO...SELECT y una inserción fila a fila?",
+                options: [
+                    "INSERT INTO...SELECT es más lento",
+                    "INSERT INTO...SELECT permite transformar datos al vuelo de forma masiva",
+                    "No hay diferencia significativa",
+                    "INSERT INTO...SELECT requiere más permisos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función se utiliza para eliminar espacios en blanco al inicio y final de un texto?",
+                options: [
+                    "UPPER()",
+                    "LOWER()",
+                    "TRIM()",
+                    "REPLACE()"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué hace REPLACE(email, ',', '.') en el contexto de saneamientos?",
+                options: [
+                    "Elimina los puntos del email",
+                    "Reemplaza comas por puntos en los emails",
+                    "Convierte el email a minúsculas",
+                    "Añade el dominio al email"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué técnica permite insertar un registro si no existe o actualizarlo si ya existe?",
+                options: [
+                    "INSERT IGNORE",
+                    "ON DUPLICATE KEY UPDATE",
+                    "REPLACE INTO",
+                    "MERGE INTO"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función se usa para devolver un valor alternativo si el campo es NULL?",
+                options: [
+                    "IFNULL()",
+                    "CASE",
+                    "DECODE()",
+                    "NVL()"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Cuál es la diferencia entre IFNULL y COALESCE?",
+                options: [
+                    "IFNULL acepta más argumentos",
+                    "COALESCE acepta múltiples argumentos y devuelve el primero no nulo",
+                    "Son equivalentes",
+                    "IFNULL solo funciona con números"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué produce la concatenación de un texto con NULL en SQL?",
+                options: [
+                    "El texto original",
+                    "El texto más la palabra 'NULL'",
+                    "NULL",
+                    "Un error de sintaxis"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Para qué se utiliza STR_TO_DATE en MySQL?",
+                options: [
+                    "Convertir una fecha a texto",
+                    "Convertir texto a tipo DATE/DATETIME",
+                    "Extraer partes de una fecha",
+                    "Calcular diferencias entre fechas"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función de MySQL convierte un texto a un tipo específico?",
+                options: [
+                    "CONVERT() o CAST()",
+                    "FORMAT()",
+                    "PARSE()",
+                    "TRANSFORM()"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Qué comando DDL se usa para añadir una columna a una tabla?",
+                options: [
+                    "ADD COLUMN nombre_columna",
+                    "INSERT COLUMN nombre_columna",
+                    "ALTER TABLE ADD COLUMN nombre_columna",
+                    "UPDATE TABLE ADD nombre_columna"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Cómo se modifica el tipo de datos de una columna existente?",
+                options: [
+                    "CHANGE COLUMN tipo",
+                    "MODIFY COLUMN tipo",
+                    "ALTER COLUMN tipo",
+                    "UPDATE COLUMN tipo"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué restricción garantiza que no haya valores duplicados en una columna?",
+                options: [
+                    "PRIMARY KEY",
+                    "UNIQUE",
+                    "NOT NULL",
+                    "CHECK"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Por qué puede fallar un ALTER TABLE ... MODIFY ... NOT NULL en una tabla con datos?",
+                options: [
+                    "La tabla está vacía",
+                    "Existen valores NULL en esa columna",
+                    "El tipo de datos es incorrecto",
+                    "La columna tiene índices"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué hace la restricción CHECK (credito >= 0)?",
+                options: [
+                    "Permite valores negativos de crédito",
+                    "Impide valores negativos en el crédito",
+                    "Establece el crédito por defecto a 0",
+                    "Elimina los registros con crédito negativo"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué es la SARGability en consultas SQL?",
+                options: [
+                    "Un tipo de índice",
+                    "La capacidad de una consulta de usar índices eficientemente",
+                    "Un método de ordenación",
+                    "Un tipo de join"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Por qué es perjudicial usar funciones en la columna del WHERE?",
+                options: [
+                    "Hace el código más legible",
+                    "Invalida el uso de índices obligando a un Full Table Scan",
+                    "Acelera la consulta",
+                    "Reduce el consumo de memoria"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es la diferencia principal entre DELETE y TRUNCATE?",
+                options: [
+                    "DELETE es más rápido",
+                    "DELETE es DML y verifica restricciones, TRUNCATE es DDL y reinicia AUTO_INCREMENT",
+                    "No hay diferencia",
+                    "TRUNCATE deja registros en el log"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué comando elimina registros anteriores a una fecha específica?",
+                options: [
+                    "REMOVE FROM tabla WHERE fecha < 'fecha'",
+                    "DELETE FROM tabla WHERE fecha < 'fecha'",
+                    "DROP FROM tabla WHERE fecha < 'fecha'",
+                    "CLEAR FROM tabla WHERE fecha < 'fecha'"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Para qué se utiliza la cláusula HAVING en una auditoría post-limpieza?",
+                options: [
+                    "Para filtrar grupos con condiciones específicas",
+                    "Para ordenar los resultados",
+                    "Para limitar el número de filas",
+                    "Para crear nuevas tablas"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Qué tipo de operación es DELETE desde el punto de vista de DML/DDL?",
+                options: [
+                    "DDL",
+                    "DML",
+                    "DCL",
+                    "TCL"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de operación es TRUNCATE desde el punto de vista de DML/DDL?",
+                options: [
+                    "DML",
+                    "DDL",
+                    "DCL",
+                    "TCL"
+                ],
+                correct: 1
+            },
+            {
+                question: "En la sintaxis UPDATE con JOIN, ¿cuál es el propósito de INNER JOIN?",
+                options: [
+                    "Crear una nueva tabla",
+                    "Actualizar registros basándose en la coincidencia con otra tabla",
+                    "Eliminar registros duplicados",
+                    "Ordenar los resultados"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué significa el término 'Upsert' en base de datos?",
+                options: [
+                    "Eliminar registros duplicados",
+                    "Insertar o actualizar según corresponda",
+                    "Ordenar una tabla",
+                    "Respaldar datos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es el comportamiento de ON UPDATE CASCADE?",
+                options: [
+                    "Elimina los hijos cuando se actualiza el padre",
+                    "Propaga los cambios del ID padre a todas las tablas dependientes",
+                    "Bloquea cualquier actualización",
+                    "Pone NULL en las claves foráneas"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función se usa para concatenar múltiples valores ignorando los NULL?",
+                options: [
+                    "CONCAT()",
+                    "CONCAT_WS()",
+                    "MERGE()",
+                    "JOIN()"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Por qué es preferible ejecutar un solo UPDATE con CASE en lugar de varios UPDATE con diferentes WHERE?",
+                options: [
+                    "Es más fácil de escribir",
+                    "Reduce el tiempo de bloqueo y escanea la tabla una sola vez",
+                    "Consume menos memoria",
+                    "No hay diferencia práctica"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué significa que el NULL sea 'como un agujero negro' en concatenaciones?",
+                options: [
+                    "NULL ocupa mucho espacio",
+                    "Cualquier concatenación con NULL devuelve NULL",
+                    "NULL es infinito",
+                    "NULL elimina los datos cercanos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué comando añade una restricción de unicidad a una columna?",
+                options: [
+                    "ALTER TABLE ADD UNIQUE (columna)",
+                    "ALTER TABLE ADD CONSTRAINT nombre UNIQUE (columna)",
+                    "ALTER TABLE SET UNIQUE (columna)",
+                    "ALTER TABLE ADD INDEX UNIQUE (columna)"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es el propósito del modificador AFTER en ADD COLUMN?",
+                options: [
+                    "Insertar la columna al final",
+                    "Posicionar la nueva columna después de otra específica",
+                    "Eliminar la columna anterior",
+                    "Renombrar la columna"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué método se utiliza para normalizar prefijos telefónicos internacionales?",
+                options: [
+                    "CASE con múltiples condiciones WHEN",
+                    "Simple UPDATE",
+                    "JOIN con tabla externa",
+                    "TRIGGER"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Para qué se utiliza la expresión REGEXP en una restricción CHECK?",
+                options: [
+                    "Realizar búsquedas simples",
+                    "Validar formatos mediante expresiones regulares",
+                    "Ordenar datos",
+                    "Crear índices"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función transforma un valor a minúsculas en MySQL?",
+                options: [
+                    "UPPER()",
+                    "LOWER()",
+                    "MIN()",
+                    "LCASE()"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función transforma un valor a mayúsculas en MySQL?",
+                options: [
+                    "UPPER()",
+                    "lower()",
+                    "MAX()",
+                    "UCASE()"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Qué representa el modo seguro (Safe Updates) en MySQL Workbench?",
+                options: [
+                    "Una restricción del servidor MySQL",
+                    "Una restricción del cliente que previene modificaciones masivas accidentales",
+                    "Un modo de solo lectura",
+                    "Un modo de depuración"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es una razón para ejecutar scripts por terminal en lugar de GUI en saneamientos masivos?",
+                options: [
+                    "Es más visual",
+                    "Evita bloqueos por falta de memoria RAM al renderizar",
+                    "Es más seguro",
+                    "Requiere menos permisos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de datos se utiliza para almacenar valores monetarios en la tabla clientes?",
+                options: [
+                    "FLOAT",
+                    "DECIMAL(10,2)",
+                    "INTEGER",
+                    "VARCHAR"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué significa el modificador DEFAULT en una definición de columna?",
+                options: [
+                    "El valor obligatorio",
+                    "El valor que se usa si no se especifica ninguno",
+                    "El valor máximo",
+                    "El valor mínimo"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de dato es BOOLEAN en MySQL?",
+                options: [
+                    "Un tipo nativo",
+                    "Se almacena como TINYINT(1)",
+                    "No existe en MySQL",
+                    "Un tipo de texto"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es la estructura correcta de una subconsulta en un UPDATE?",
+                options: [
+                    "UPDATE tabla SET campo = (SELECT ...)",
+                    "UPDATE tabla SET campo WHERE id IN (SELECT ...)",
+                    "UPDATE (SELECT ...) SET campo",
+                    "SELECT UPDATE campo FROM tabla"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué utilidad tiene DATE_SUB(NOW(), INTERVAL 5 YEAR) en un DELETE?",
+                options: [
+                    "Sumar 5 años a la fecha actual",
+                    "Calcular la fecha de hace 5 años",
+                    "Obtener la fecha actual",
+                    "Formatear una fecha"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿QuéHace SET NULL en una clave foránea?",
+                options: [
+                    "Elimina los registros hijos",
+                    "Bloquea la operación",
+                    "Conserva los hijos pero deja la FK como NULL",
+                    "Crea nuevos registros"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué tipo de consulta es más eficiente para migraciones masivas: fila a fila o conjunto (set-based)?",
+                options: [
+                    "Fila a fila",
+                    "Conjunto (set-based)",
+                    "Ambas son iguales",
+                    "Depende del tamaño"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Por qué es importante la verificación post-intervención mediante GROUP BY y HAVING?",
+                options: [
+                    "Para confirmar que no quedaron registros duplicados",
+                    "Para acelerar la consulta",
+                    "Para ordenar los resultados",
+                    "Para reducir el tamaño de la tabla"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Qué herramienta de MySQL se menciona para gestionar migraciones de bases de datos?",
+                options: [
+                    "Flyway",
+                    "Maven",
+                    "Gradle",
+                    "Ant"
+                ],
+                correct: 0
+            }
+        ];
+
+        let userAnswers = new Array(50).fill(null);
+        let correctAnswers = 0;
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                let optionsHTML = q.options.map((opt, i) => `
+                    <div class="option" onclick="selectOption(${index}, ${i})">
+                        <div class="option-marker">${String.fromCharCode(65 + i)}</div>
+                        <div>${opt}</div>
+                    </div>
+                `).join('');
+                
+                card.innerHTML = `
+                    <div class="question-text">
+                        <span class="question-number">${index + 1}</span>
+                        ${q.question}
+                    </div>
+                    <div class="options">${optionsHTML}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            userAnswers[questionIndex] = optionIndex;
+            
+            const options = document.querySelectorAll('.question-card')[questionIndex].querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                opt.classList.remove('selected');
+                if (i === optionIndex) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            updateStats();
+        }
+
+        function updateStats() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            document.getElementById('currentQ').textContent = answered + 1;
+        }
+
+        function submitExam() {
+            let correct = 0;
+            let incorrect = 0;
+            
+            questions.forEach((q, index) => {
+                const options = document.querySelectorAll('.question-card')[index].querySelectorAll('.option');
+                
+                if (userAnswers[index] === q.correct) {
+                    correct++;
+                    options[q.correct].classList.add('correct');
+                } else if (userAnswers[index] !== null) {
+                    incorrect++;
+                    options[userAnswers[index]].classList.add('incorrect');
+                    options[q.correct].classList.add('correct');
+                }
+                
+                options.forEach(opt => opt.style.pointerEvents = 'none');
+            });
+            
+            correctAnswers = correct;
+            
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('scoreDisplay').textContent = `${correct}/50`;
+            document.getElementById('correctStat').textContent = correct;
+            document.getElementById('incorrectStat').textContent = incorrect;
+            document.getElementById('percentageStat').textContent = `${(correct * 2)}%`;
+            
+            if (correct < 25) {
+                document.getElementById('scoreDisplay').classList.add('fail');
+            }
+            
+            document.getElementById('results').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').textContent = 'Examen Finalizado';
+        }
+
+        renderQuestions();
+    </script>
+</body>
+</html>

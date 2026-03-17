@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<button id="btn-barajar">Barajar</button>
+<div id="cartas"></div>
+
+
+
+<script>
+
+    const array_elementos =  ['A♠', 'K♠', 'Q♠', 'J♠', '10♠'];
+    const array_barajeado= []
+    const mostrar_baraja = document.getElementById('cartas')
+
+   document.getElementById('btn-barajar').addEventListener('click', function() {
+    array_barajeado.length = 0;
+    
+    while(array_barajeado.length < array_elementos.length){
+        let elegir = Math.floor(Math.random() * array_elementos.length);
+        let carta = array_elementos[elegir];
+        
+        if(!array_barajeado.includes(carta)){
+            array_barajeado.push(carta);
+        }
+    }
+    
+    let html = '';
+    array_barajeado.forEach((elemento) => {
+        html += `<p>${elemento}</p>`;
+    });
+    mostrar_baraja.innerHTML = html;
+});
+
+</script>
+
+
+</body>
+</html>

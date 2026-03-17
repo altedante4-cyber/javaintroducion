@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz sobre Guía de Teoría: Actualización de Bases de Datos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz sobre Actualización de Bases de Datos</h1>
+    <form id="quizForm">
+        <div class="question">
+            <p>1. ¿Cuál es el propósito del script 00_fugas_setup.sql?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q1" value="a"> a) Crear una base de datos limpia</label>
+                <label class="option"><input type="radio" name="q1" value="b"> b) Preparar un entorno con datos sucios para pruebas</label>
+                <label class="option"><input type="radio" name="q1" value="c"> c) Actualizar datos existentes</label>
+                <label class="option"><input type="radio" name="q1" value="d"> d) Eliminar la base de datos</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>2. ¿Qué hace la directiva SQL_SAFE_UPDATES = 0 en MySQL?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q2" value="a"> a) Activa el modo seguro</label>
+                <label class="option"><input type="radio" name="q2" value="b"> b) Desactiva el modo seguro para permitir UPDATE sin WHERE con PK</label>
+                <label class="option"><input type="radio" name="q2" value="c"> c) Bloquea todas las actualizaciones</label>
+                <label class="option"><input type="radio" name="q2" value="d"> d) Reinicia el servidor</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>3. ¿Cuál es el comportamiento de ON DELETE CASCADE?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q3" value="a"> a) Bloquea la eliminación</label>
+                <label class="option"><input type="radio" name="q3" value="b"> b) Elimina los registros dependientes automáticamente</label>
+                <label class="option"><input type="radio" name="q3" value="c"> c) Establece NULL en los dependientes</label>
+                <label class="option"><input type="radio" name="q3" value="d"> d) Ignora las claves foráneas</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>4. ¿Qué técnica se usa para insertar datos transformados de una tabla a otra?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q4" value="a"> a) INSERT INTO ... VALUES</label>
+                <label class="option"><input type="radio" name="q4" value="b"> b) INSERT INTO ... SELECT</label>
+                <label class="option"><input type="radio" name="q4" value="c"> c) UPDATE ... SET</label>
+                <label class="option"><input type="radio" name="q4" value="d"> d) DELETE FROM</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>5. ¿Qué es un UPSERT?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q5" value="a"> a) Una técnica para eliminar duplicados</label>
+                <label class="option"><input type="radio" name="q5" value="b"> b) Insertar o actualizar si existe la clave</label>
+                <label class="option"><input type="radio" name="q5" value="c"> c) Solo insertar datos</label>
+                <label class="option"><input type="radio" name="q5" value="d"> d) Solo actualizar datos</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>6. ¿Cuál función se usa para quitar espacios en SQL?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q6" value="a"> a) REPLACE</label>
+                <label class="option"><input type="radio" name="q6" value="b"> b) TRIM</label>
+                <label class="option"><input type="radio" name="q6" value="c"> c) CONCAT</label>
+                <label class="option"><input type="radio" name="q6" value="d"> d) LOWER</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>7. ¿Cómo se actualizan datos usando JOIN?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q7" value="a"> a) UPDATE tabla SET ... FROM otra_tabla</label>
+                <label class="option"><input type="radio" name="q7" value="b"> b) UPDATE tabla INNER JOIN otra_tabla ON ...</label>
+                <label class="option"><input type="radio" name="q7" value="c"> c) UPDATE tabla WHERE id IN (SELECT ...)</label>
+                <label class="option"><input type="radio" name="q7" value="d"> d) Ambas b y c</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>8. ¿Qué hace CASE en un UPDATE?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q8" value="a"> a) Maneja lógica condicional</label>
+                <label class="option"><input type="radio" name="q8" value="b"> b) Concatena strings</label>
+                <label class="option"><input type="radio" name="q8" value="c"> c) Calcula sumas</label>
+                <label class="option"><input type="radio" name="q8" value="d"> d) Elimina filas</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>9. ¿Cómo manejar NULLs en concatenaciones?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q9" value="a"> a) Usar IFNULL o COALESCE</label>
+                <label class="option"><input type="radio" name="q9" value="b"> b) Usar REPLACE</label>
+                <label class="option"><input type="radio" name="q9" value="c"> c) Usar TRIM</label>
+                <label class="option"><input type="radio" name="q9" value="d"> d) Usar LOWER</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>10. ¿Por qué desactivar FOREIGN_KEY_CHECKS?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q10" value="a"> a) Para borrar todas las tablas</label>
+                <label class="option"><input type="radio" name="q10" value="b"> b) Para importar datos sin orden de dependencias</label>
+                <label class="option"><input type="radio" name="q10" value="c"> c) Para activar restricciones</label>
+                <label class="option"><input type="radio" name="q10" value="d"> d) Para verificar integridad</label>
+            </div>
+        </div>
+        <button type="button" onclick="submitQuiz()">Enviar Respuestas</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function submitQuiz() {
+            const answers = {
+                q1: 'b',
+                q2: 'b',
+                q3: 'b',
+                q4: 'b',
+                q5: 'b',
+                q6: 'b',
+                q7: 'd',
+                q8: 'a',
+                q9: 'a',
+                q10: 'b'
+            };
+
+            let score = 0;
+            const total = Object.keys(answers).length;
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<h2>Resultado: ${score} de ${total} correctas</h2>`;
+            if (score === total) {
+                resultDiv.innerHTML += '<p>¡Excelente! Has acertado todas.</p>';
+            } else if (score >= total * 0.7) {
+                resultDiv.innerHTML += '<p>¡Bien hecho! Casi perfecto.</p>';
+            } else {
+                resultDiv.innerHTML += '<p>Puedes mejorar. Revisa la guía.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

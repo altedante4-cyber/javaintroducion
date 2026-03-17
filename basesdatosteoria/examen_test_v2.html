@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen: Actualización de Bases de Datos (II)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            border: 2px solid #00d9ff;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .header h1 {
+            color: #00d9ff;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .header p {
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+        
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #0f3460;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        
+        .info-bar span {
+            color: #00d9ff;
+            font-weight: bold;
+        }
+        
+        .question-card {
+            background: #1a1a2e;
+            border: 1px solid #0f3460;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.2);
+        }
+        
+        .question-number {
+            background: #00d9ff;
+            color: #1a1a2e;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.05em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #16213e;
+            border: 2px solid #0f3460;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            border-color: #00d9ff;
+            background: #1a2744;
+        }
+        
+        .option.selected {
+            border-color: #00d9ff;
+            background: linear-gradient(135deg, #00d9ff 0%, #00a8cc 100%);
+            color: #1a1a2e;
+        }
+        
+        .option.correct {
+            border-color: #4caf50;
+            background: #1b3a1b;
+        }
+        
+        .option.incorrect {
+            border-color: #f44336;
+            background: #3a1b1b;
+        }
+        
+        .option-marker {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #a0a0a0;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .option.selected .option-marker {
+            border-color: #1a1a2e;
+            background: #1a1a2e;
+            color: #00d9ff;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #00d9ff 0%, #00a8cc 100%);
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+        }
+        
+        .btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            background: #16213e;
+            border: 2px solid #00d9ff;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .results h2 {
+            color: #00d9ff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .score {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+            color: #4caf50;
+        }
+        
+        .score.fail {
+            color: #f44336;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+        
+        .code-block {
+            background: #0d1520;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #ff6b6b;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Examen de Actualización de Bases de Datos II</h1>
+            <p>Guía de Teoría - RA UPDATE (Versión 2)</p>
+        </div>
+        
+        <div class="info-bar">
+            <div>Pregunta <span id="currentQ">1</span> de <span id="totalQ">50</span></div>
+            <div>Aciertos: <span id="correctCount">0</span></div>
+        </div>
+        
+        <div id="questionsContainer"></div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" id="submitBtn" onclick="submitExam()">Finalizar Examen</button>
+        </div>
+        
+        <div class="results" id="results">
+            <h2>Resultados del Examen</h2>
+            <div class="score" id="scoreDisplay">0/50</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="correctStat" style="color: #4caf50;">0</div>
+                    <div class="stat-label">Correctas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="incorrectStat" style="color: #f44336;">0</div>
+                    <div class="stat-label">Incorrectas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="percentageStat">0%</div>
+                    <div class="stat-label">Porcentaje</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" onclick="location.reload()">Reiniciar Examen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "¿Cómo se llama la base de datos de pruebas creada por el script 00_fugas_setup.sql?",
+                options: [
+                    "FugaTech_Database",
+                    "FugaTech_Forensic",
+                    "FugaTech_Production",
+                    "FugaTech_Staging"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de datos tiene la columna 'credito' en la tabla clientes?",
+                options: [
+                    "INTEGER",
+                    "DECIMAL(10,2)",
+                    "FLOAT",
+                    "VARCHAR(50)"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué significa que una tabla sea 'Staging'?",
+                options: [
+                    "Una tabla de producción definitiva",
+                    "Una tabla temporal para importación de datos externos",
+                    "Una tabla de respaldo",
+                    "Una tabla eliminada"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es el objetivo principal del 'saneamiento masivo' de datos?",
+                options: [
+                    "Eliminar toda la base de datos",
+                    "Limpiar y normalizar datos heredados o importados",
+                    "Crear nuevos registros",
+                    "Realizar backups"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función cumple la cláusula ON DELETE RESTRICT en una foreign key?",
+                options: [
+                    "Permite eliminar sin restricciones",
+                    "Bloquea la eliminación si hay registros dependientes",
+                    "Elimina automáticamente los hijos",
+                    "Pone NULL en las foreign keys"
+                ],
+                correct: 1
+            },
+            {
+                question: "Si ejecutamos TRUNCATE en una tabla con AUTO_INCREMENT, ¿qué sucede con el contador?",
+                options: [
+                    "Se mantiene el último valor",
+                    "Se reinicia desde 1",
+                    "Se elimina completamente",
+                    "No afecta al AUTO_INCREMENT"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué comando SQL permite desactivar temporalmente la verificación de claves foráneas?",
+                options: [
+                    "SET FOREIGN_KEY_CHECKS = 0",
+                    "DISABLE FOREIGN_KEY_CHECKS",
+                    "ALTER TABLE DISABLE FK",
+                    "SKIP FOREIGN_KEY_CHECKS"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Por qué es importante reactivarlos después de desactivarlos?",
+                options: [
+                    "No es importante",
+                    "Para mantener la integridad referencial de la base de datos",
+                    "Para mejorar el rendimiento",
+                    "Es solo opcional"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función realiza TRIM() en el contexto de saneamientos?",
+                options: [
+                    "Convierte a mayúsculas",
+                    "Elimina espacios en blanco al inicio y final",
+                    "Reemplaza caracteres",
+                    "Convierte a minúsculas"
+                ],
+                correct: 1
+            },
+            {
+                question: "En la migración de datos, ¿cuál es la ventaja de usar INSERT INTO...SELECT?",
+                options: [
+                    "Solo permite migrate un registro a la vez",
+                    "Permite transformar y transferir datos en una sola operación",
+                    "Requiere permisos especiales",
+                    "Es más lento que insertar fila a fila"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué significa el término 'Upsert'?",
+                options: [
+                    "Actualizar y eliminar",
+                    "Insertar o actualizar según si el registro existe",
+                    "Eliminar duplicados",
+                    "Ordenar datos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué sucede si intentamos insertar un registro con una clave primaria que ya existe usando ON DUPLICATE KEY UPDATE?",
+                options: [
+                    "Se produce un error",
+                    "Se actualiza el registro existente",
+                    "Se ignora la operación",
+                    "Se elimina el registro anterior"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es la principal diferencia entre IFNULL() y COALESCE()?",
+                options: [
+                    "IFNULL acepta más argumentos",
+                    "COALESCE acepta múltiples valores y devuelve el primero no nulo",
+                    "Son exactamente iguales",
+                    "COALESCE solo funciona con fechas"
+                ],
+                correct: 1
+            },
+            {
+                question: "En la normalización de teléfonos, ¿qué secuencia de REPLACE eliminaría el prefijo +34?",
+                options: [
+                    "REPLACE(telefono, '+34', '')",
+                    "REPLACE(telefono, '34', '')",
+                    "REPLACE(telefono, '+', '')",
+                    "REPLACE(telefono, '0034', '+34')"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Para qué se utiliza CASE...WHEN en un UPDATE?",
+                options: [
+                    "Para ejecutar múltiples UPDATE secuenciales",
+                    "Para aplicar lógica condicional a cada fila actualizada",
+                    "Para verificar errores",
+                    "Para ordenar resultados"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de dato retorna STR_TO_DATE() en MySQL?",
+                options: [
+                    "VARCHAR",
+                    "DATE o DATETIME",
+                    "INTEGER",
+                    "TEXT"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué hace CAST('150.50' AS DECIMAL(10,2))?",
+                options: [
+                    "Convierte el texto a número",
+                    "Convierte texto a tipo DECIMAL específico",
+                    "Elimina los decimales",
+                    "Redondea el valor"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué comando se utiliza para añadir una nueva columna a una tabla existente?",
+                options: [
+                    "INSERT COLUMN nombre AFTER columna",
+                    "ALTER TABLE ADD COLUMN nombre",
+                    "ADD COLUMN nombre TO tabla",
+                    "UPDATE TABLE ADD COLUMN nombre"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué función tiene el modificador 'AFTER nombre_columna' en ADD COLUMN?",
+                options: [
+                    "Eliminar la columna anterior",
+                    "Posicionar la nueva columna después de otra específica",
+                    "Renombrar la columna",
+                    "Duplicar la columna"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es la sintaxis correcta para hacer una columna 'NOT NULL' en una tabla con datos?",
+                options: [
+                    "Directamente con ALTER TABLE MODIFY",
+                    "Primero sanear los NULL, luego aplicar la restricción",
+                    "No es posible",
+                    "Solo con CREATE TABLE"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué restricción CHECK permite solo valores positivos o cero?",
+                options: [
+                    "CHECK (credito > 0)",
+                    "CHECK (credito >= 0)",
+                    "CHECK (credito < 0)",
+                    "CHECK (credito IS NOT NULL)"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué significa que una consulta sea 'SARGable'?",
+                options: [
+                    "Que usa índices eficientemente",
+                    "Que es más larga de lo normal",
+                    "Que tiene errores de sintaxis",
+                    "Que usa subconsultas"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Por qué usar UPPER(columna) en el WHERE invalida el uso de índices?",
+                options: [
+                    "Es una práctica recomendada",
+                    "Obliga al motor a evaluar cada fila sin可以利用 índice",
+                    "Mejora el rendimiento",
+                    "No tiene ningún efecto"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál de estas operaciones es más lenta en tablas grandes: DELETE o TRUNCATE?",
+                options: [
+                    "DELETE es más lento",
+                    "TRUNCATE es más lento",
+                    "Son iguales",
+                    "Depende del motor"
+                ],
+                correct: 0
+            },
+            {
+                question: "DELETE mantiene el AUTO_INCREMENT, ¿verdadero o falso?",
+                options: [
+                    "Verdadero",
+                    "Falso",
+                    "Depende de la versión",
+                    "Solo en InnoDB"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Qué función cumple DATE_SUB(NOW(), INTERVAL 5 YEAR)?",
+                options: [
+                    "Sumar 5 años a la fecha actual",
+                    "Calcular la fecha de hace 5 años",
+                    "Obtener el año actual",
+                    "Formatear la fecha"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué utilidad tiene GROUP BY después de un saneamiento de duplicados?",
+                options: [
+                    "Ordenar los resultados",
+                    "Agrupar para identificar duplicados con HAVING",
+                    "Eliminar registros",
+                    "Crear nuevas tablas"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué significa que TRUNCATE sea una operación DDL?",
+                options: [
+                    "Que es más lenta",
+                    "Que afecta a la estructura de la tabla, no solo a los datos",
+                    "Que requiere confirmación",
+                    "Que no se puede deshacer"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cómo se denominan los datos 'sucios' mencionados en la guía?",
+                options: [
+                    "Datos corruptos",
+                    "Datos con inconsistencias deliberadas para práctica",
+                    "Datos encriptados",
+                    "Datos comprimidos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tabla se utiliza como ejemplo de 'Staging' en el script?",
+                options: [
+                    "clientes",
+                    "import_raw",
+                    "ventas",
+                    "sys_logs"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de clave foránea se usa en la tabla ventas referencing clientes?",
+                options: [
+                    "ON DELETE SET NULL",
+                    "ON DELETE CASCADE",
+                    "ON DELETE RESTRICT",
+                    "ON DELETE IGNORE"
+                ],
+                correct: 2
+            },
+            {
+                question: "En el script de inicialización, ¿qué característica tiene la tabla 'cuentas_bancarias'?",
+                options: [
+                    "Tiene índices full-text",
+                    "Tiene un campo de detección de fraude",
+                    "Es una tabla temporal",
+                    "No tiene foreign key"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué valor tiene por defecto la columna 'activo' en la tabla clientes?",
+                options: [
+                    "0",
+                    "NULL",
+                    "1",
+                    "FALSE"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué función de MySQL se usa para normalizar emails a minúsculas?",
+                options: [
+                    "UPPER()",
+                    "LOWER()",
+                    "TRIM()",
+                    "REPLACE()"
+                ],
+                correct: 1
+            },
+            {
+                question: "En una subconsulta UPDATE, ¿qué hace 'WHERE id IN (SELECT...)'?",
+                options: [
+                    "Actualiza todas las filas",
+                    "Actualiza solo las filas que coinciden con la subconsulta",
+                    "Elimina registros",
+                    "Crea una nueva tabla"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de join se utiliza en el ejemplo de UPDATE con JOIN?",
+                options: [
+                    "LEFT JOIN",
+                    "RIGHT JOIN",
+                    "INNER JOIN",
+                    "FULL OUTER JOIN"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué significa 'ETL' en el contexto de bases de datos?",
+                options: [
+                    "Extraer, Transformar, Cargar",
+                    "Eliminar, Traducir, Liberar",
+                    "Enlazar, Testear, Loguear",
+                    "Editar, Tomar, Listar"
+                ],
+                correct: 0
+            },
+            {
+                question: "La guía menciona que el 'modo seguro' es una restricción del cliente, ¿verdadero o falso?",
+                options: [
+                    "Verdadero",
+                    "Falso",
+                    "Depende del cliente",
+                    "Solo de Workbench"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Por qué ejecutar scripts por terminal evita bloqueos por falta de RAM?",
+                options: [
+                    "La terminal usa menos memoria",
+                    "No renderiza resultados graphically",
+                    "Es más rápida",
+                    "Tiene menos restricciones"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué comando reinicia el AUTO_INCREMENT de una tabla?",
+                options: [
+                    "DELETE + ALTER TABLE AUTO_INCREMENT = 1",
+                    "TRUNCATE TABLE",
+                    "DROP + CREATE",
+                    "RESET AUTO_INCREMENT"
+                ],
+                correct: 1
+            },
+            {
+                question: "En el ejemplo de actualización de precios, ¿qué tabla se usa como fuente?",
+                options: [
+                    "clientes",
+                    "importacion_tarifas",
+                    "catalogo",
+                    "ventas"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué significa 'legacy systems' en migración de datos?",
+                options: [
+                    "Sistemas modernos",
+                    "Sistemas antiguos o heredados",
+                    "Sistemas de respaldo",
+                    "Sistemas de prueba"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué herramienta menciona la guía para gestionar migraciones (Flyway)?",
+                options: [
+                    "Es un lenguaje de programación",
+                    "Es una herramienta de versionado de esquemas de base de datos",
+                    "Es un tipo de índice",
+                    "Es un servidor MySQL"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué expresión regular valida un NIF básico de 8 números y una letra?",
+                options: [
+                    "^[0-9]{8}[A-Z]$",
+                    "^[A-Z][0-9]{8}$",
+                    "^[0-9]{9}$",
+                    "^[A-Z]{8}[0-9]$"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Qué función de MySQL convierte texto a fecha con formato específico?",
+                options: [
+                    "CAST()",
+                    "DATE_FORMAT()",
+                    "STR_TO_DATE()",
+                    "CONVERT()"
+                ],
+                correct: 2
+            },
+            {
+                question: "En la guía, ¿qué evento histórico se menciona como ejemplo de desastre por ошибка tipográfica?",
+                options: [
+                    "GitLab 2017",
+                    "Facebook 2018",
+                    "Google 2019",
+                    "Amazon 2020"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Qué significa 'data profiling' mencionado en las pistas de investigación?",
+                options: [
+                    "Crear perfiles de usuario",
+                    "Analizar y entender la calidad de los datos",
+                    "Cifrar datos",
+                    "Comprimir datos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Cuál es el propósito de la tabla 'sys_logs' en el ejemplo?",
+                options: [
+                    "Almacenar usuarios del sistema",
+                    "Almacenar logs de eventos del sistema",
+                    "Gestionar sesiones",
+                    "Controlar accesos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de operación es UPDATE desde el punto de vista DML/DDL?",
+                options: [
+                    "DDL",
+                    "DML",
+                    "DCL",
+                    "TCL"
+                ],
+                correct: 1
+            },
+            {
+                question: "En la guía, ¿qué beneficio tiene usar operaciones 'set-based' vs fila a fila?",
+                options: [
+                    "Son más lentas",
+                    "Son más eficientes y atómicas",
+                    "Requieren más código",
+                    "No tienen diferencia"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué tipo de datos utiliza la columna 'iban' en la tabla cuentas_bancarias?",
+                options: [
+                    "INTEGER",
+                    "VARCHAR(34)",
+                    "DECIMAL",
+                    "TEXT"
+                ],
+                correct: 1
+            }
+        ];
+
+        let userAnswers = new Array(50).fill(null);
+        let correctAnswers = 0;
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                let optionsHTML = q.options.map((opt, i) => `
+                    <div class="option" onclick="selectOption(${index}, ${i})">
+                        <div class="option-marker">${String.fromCharCode(65 + i)}</div>
+                        <div>${opt}</div>
+                    </div>
+                `).join('');
+                
+                card.innerHTML = `
+                    <div class="question-text">
+                        <span class="question-number">${index + 1}</span>
+                        ${q.question}
+                    </div>
+                    <div class="options">${optionsHTML}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            userAnswers[questionIndex] = optionIndex;
+            
+            const options = document.querySelectorAll('.question-card')[questionIndex].querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                opt.classList.remove('selected');
+                if (i === optionIndex) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            updateStats();
+        }
+
+        function updateStats() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            document.getElementById('currentQ').textContent = answered + 1;
+        }
+
+        function submitExam() {
+            let correct = 0;
+            let incorrect = 0;
+            
+            questions.forEach((q, index) => {
+                const options = document.querySelectorAll('.question-card')[index].querySelectorAll('.option');
+                
+                if (userAnswers[index] === q.correct) {
+                    correct++;
+                    options[q.correct].classList.add('correct');
+                } else if (userAnswers[index] !== null) {
+                    incorrect++;
+                    options[userAnswers[index]].classList.add('incorrect');
+                    options[q.correct].classList.add('correct');
+                }
+                
+                options.forEach(opt => opt.style.pointerEvents = 'none');
+            });
+            
+            correctAnswers = correct;
+            
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('scoreDisplay').textContent = `${correct}/50`;
+            document.getElementById('correctStat').textContent = correct;
+            document.getElementById('incorrectStat').textContent = incorrect;
+            document.getElementById('percentageStat').textContent = `${(correct * 2)}%`;
+            
+            if (correct < 25) {
+                document.getElementById('scoreDisplay').classList.add('fail');
+            }
+            
+            document.getElementById('results').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').textContent = 'Examen Finalizado';
+        }
+
+        renderQuestions();
+    </script>
+</body>
+</html>
