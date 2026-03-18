@@ -1,5 +1,5 @@
 class Sucursales:
-
+    __banco = "ES681234"
     def __init__(self,direccion,provincia , codigo_identificativo_sucursal):
         formatead = str(codigo_identificativo_sucursal).zfill(4)
         self.direccion = direccion
@@ -23,8 +23,9 @@ class Cliente :
          self.nif =nif
          self.telefono =telefono    
          self.sucursal = sucursal 
-
-
+         self.__cuenta=[]kl
+    def listar_cuentas(self):
+         pass
 
 class CuentaCorriente:
     IBAN = []  
@@ -33,7 +34,7 @@ class CuentaCorriente:
 
             formateado_digitos_iniciales_ceros = str(codigo_identificativo).zfill(12)
             
-            CuentaCorriente.IBAN.append("ES681234"+ " " + sucursal._codigo_identificativo_sucursal+ " " + formateado_digitos_iniciales_ceros) 
+            CuentaCorriente.IBAN.append( + " " + sucursal._codigo_identificativo_sucursal+ " " + formateado_digitos_iniciales_ceros) 
             self.saldo = saldo 
             resultado_titular = [x.split(",") for x in titulares_cuenta]
             if len(resultado_titular) <= 2 :
@@ -57,35 +58,5 @@ class CuentaCorriente:
 
         for i in CuentaCorriente.IBAN:
              
-# Crear sucursales
-sucursal1 = Sucursales("Calle Mayor 10", "Madrid", 1)
-sucursal2 = Sucursales("Avenida Libertad 25", "Barcelona", 23)
 
-# Crear clientes
-cliente1 = Cliente("Juan", "Pérez", "12345678A", "600123456", sucursal1)
-cliente2 = Cliente("Ana", "García", "87654321B", "600654321", sucursal2)
-cliente3 = Cliente("Luis", "Martín", "11223344C", "600987654", sucursal1)
-
-# Crear cuentas corrientes
-cuenta1 = CuentaCorriente(1, 1000, cliente1.nombre, cliente2.nombre, sucursal=sucursal1)
-cuenta2 = CuentaCorriente(23, 500, cliente3.nombre, sucursal=sucursal2)
-
-# Imprimir sucursales
-#print(sucursal1)
-#print(sucursal2)
-
-# Imprimir clientes
-#print(f"{cliente1.nombre} {cliente1.apellidos}, Sucursal: {cliente1.sucursal.codigo_identificativo_sucursal}")
-#print(f"{cliente2.nombre} {cliente2.apellidos}, Sucursal: {cliente2.sucursal.codigo_identificativo_sucursal}")
-#print(f"{cliente3.nombre} {cliente3.apellidos}, Sucursal: {cliente3.sucursal.codigo_identificativo_sucursal}")
-
-# Buscar IBAN de clientes
-cuenta1.buscar_iban_cliente(cliente1)
-#cuenta1.buscar_iban_cliente("Ana")
-#cuenta2.buscar_iban_cliente("Luis")
-
-# Mostrar IBAN de las cuentas
-print("IBAN cuenta1:", CuentaCorriente.IBAN)
-
-#buscar cliente
 
