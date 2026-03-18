@@ -16,15 +16,22 @@ public class Persona {
          return edad ; 
       }
       
-      public boolean equals(Persona p ){
+      public boolean equals(Object obj  ){
+         boolean soniguales=false;
 
-             if(p.getNombre().equals(getNombre()) && p.getEdad() == getEdad()){
-                 return true ;
-             }
 
-             return false ; 
+         if(!(obj instanceof Persona ))    
+                return false ; 
+        
+        Persona p =(Persona) obj ;
+
+         soniguales=this.nombre.equals( p.getNombre() ) && this.edad == p.getEdad();
           
-      }
+         return soniguales;
+      
+        }
+         
+      
 
     
 }
