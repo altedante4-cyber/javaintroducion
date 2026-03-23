@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Código POO - Explicaciones</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 950px; margin: 0 auto; }
+        
+        h1 {
+            text-align: center;
+            color: #00d9ff;
+            padding: 20px;
+            background: #16213e;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .concepto {
+            background: #0f3460;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #e94560;
+        }
+        
+        .concepto-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .concepto-title {
+            color: #e94560;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .teoria {
+            background: #1e3a5f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 3px solid #00d9ff;
+        }
+        
+        .teoria strong { color: #00d9ff; }
+        
+        .code-block {
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid #30363d;
+            white-space: pre;
+        }
+        
+        .output {
+            background: #161b22;
+            color: #7ee787;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        
+        .explicacion {
+            background: #2d5016;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #7ee787;
+        }
+        
+        .explicacion strong { color: #7ee787; }
+        
+        .highlight {
+            background: #3d1f1f;
+            padding: 3px 8px;
+            border-radius: 3px;
+            color: #ff7b72;
+        }
+        
+        .nav-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .nav-links a {
+            color: #00d9ff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        
+        .nav-links a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 EJERCICIOS DE CÓDIGO POO<br><small>Explicaciones paso a paso</small></h1>
+        
+        <div class="nav-links">
+            <a href="resumen.html">📚 Resumen</a>
+            <a href="ejercicios.html">✅ Ejercicios</a>
+            <a href="soluciones.html">🔑 Soluciones</a>
+        </div>
+        
+        <!-- CONCEPTO 1: HERENCIA Y SUPER -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">1. HERENCIA - La palabra clave SUPER</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> La palabra <code>super</code> se usa para invocar el constructor o métodos de la clase PADRE. Si hay un constructor en el padre, el hijo DEBE llamarlo con <code>super()</code>.
+            </div>
+            
+            <div class="code-block">// CLASE PADRE
+public class Animal {
+    protected String nombre;
+    
+    public Animal(String nombre) {
+        this.nombre = nombre;
+        System.out.println("Constructor de Animal: " + nombre);
+    }
+    
+    public void comer() {
+        System.out.println(nombre + " está comiendo");
+    }
+}
+
+// CLASE HIJA
+public class Perro extends Animal {
+    private String raza;
+    
+    public Perro(String nombre, String raza) {
+        super(nombre);  // <-- LLAMA al constructor del padre
+        this.raza = raza;
+        System.out.println("Constructor de Perro: " + raza);
+    }
+    
+    @Override
+    public void comer() {
+        super.comer();  // <-- LLAMA al método del padre
+        System.out.println(nombre + " come croquetas");
+    }
+}
+
+// MAIN
+public class Main {
+    public static void main(String[] args) {
+        Perro p = new Perro("Rex", "Pastor Alemán");
+        p.comer();
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+Constructor de Animal: Rex
+Constructor de Perro: Pastor Alemán
+Rex está comiendo
+Rex come croquetas</div>
+            
+            <div class="explicacion">
+                <strong>EXPLICACIÓN:</strong><br>
+                1. Se crea el Perro, que llama a <code>super(nombre)</code><br>
+                2. Se ejecuta el constructor del padre (Animal)<br>
+                3. Luego continúa con el constructor del hijo<br>
+                4. <code>super.comer()</code> ejecuta el método del padre, LUEGO el del hijo
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 2: POLIMORFISMO -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">2. POLIMORFISMO - Enlazado Dinámico</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> El polimorfismo permite que un objeto de tipo PADRE apunte a un objeto de tipo HIJO. El método que se ejecuta se decide en TIEMPO DE EJECUCIÓN (no de compilación).
+            </div>
+            
+            <div class="code-block">public class Animal {
+    public void hacerRuido() {
+        System.out.println("...ruido...");
+    }
+}
+
+public class Perro extends Animal {
+    @Override
+    public void hacerRuido() {
+        System.out.println("¡Guau!");
+    }
+}
+
+public class Gato extends Animal {
+    @Override
+    public void hacerRuido() {
+        System.out.println("¡Miau!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Variable de tipo Animal, pero objeto Perro
+        Animal a1 = new Perro();
+        Animal a2 = new Gato();
+        Animal a3 = new Animal();
+        
+        a1.hacerRuido();  // ¿Qué imprime?
+        a2.hacerRuido();  // ¿Qué imprime?
+        a3.hacerRuido();  // ¿Qué imprime?
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+¡Guau!
+¡Miau!
+...ruido...</div>
+            
+            <div class="explicacion">
+                <strong>EXPLICACIÓN:</strong><br>
+                • <code>a1</code> es "Animal" pero apunta a un <span class="highlight">Perro</span><br>
+                • Java detecta en EJECUCIÓN que es Perro → ejecuta <code>hacerRuido()</code> de Perro<br>
+                • Esto se llama <strong>ENLAZADO DINÁMICO</strong><br>
+                • Es la base del polimorfismo
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 3: CLASE ABSTRACTA -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">3. CLASE ABSTRACTA</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> Una clase abstracta NO se puede instanciar con <code>new</code>. Puede tener métodos abstractos (sin cuerpo, obligatorios) y métodos normales (con cuerpo, heredados).
+            </div>
+            
+            <div class="code-block">// Clase abstracta - NO se puede hacer "new Figura()"
+public abstract class Figura {
+    protected String color;
+    
+    public Figura(String color) {
+        this.color = color;
+    }
+    
+    // Método ABSTRACTO - las subclasses DEBEN implementarlo
+    public abstract double calcularArea();
+    
+    // Método NORMAL - se hereda directamente
+    public void mostrarColor() {
+        System.out.println("Color: " + color);
+    }
+}
+
+public class Rectangulo extends Figura {
+    private double base, altura;
+    
+    public Rectangulo(String color, double base, double altura) {
+        super(color);  // Llama al constructor del padre
+        this.base = base;
+        this.altura = altura;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return base * altura;
+    }
+}
+
+public class Circulo extends Figura {
+    private double radio;
+    
+    public Circulo(String color, double radio) {
+        super(color);
+        this.radio = radio;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return Math.PI * radio * radio;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // ❌ NO se puede: Figura f = new Figura();
+        
+        Figura r = new Rectangulo("Rojo", 5, 3);
+        Figura c = new Circulo("Azul", 2);
+        
+        r.mostrarColor();           // Método del padre
+        System.out.println(r.calcularArea());  // 15.0
+        System.out.println(c.calcularArea()); // 12.56...
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+Color: Rojo
+15.0
+12.566370614359172</div>
+            
+            <div class="explicacion">
+                <strong>EXPLICACIÓN:</strong><br>
+                • Figura es abstracta → <span class="highlight">no se puede instanciar</span><br>
+                • <code>calcularArea()</code> es abstracto → cada subclase lo implementa diferente<br>
+                • <code>mostrarColor()</code> es normal → se hereda sin cambios<br>
+                • Cada figura calcula su área de forma distinta (POLIMORFISMO)
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 4: INTERFAZ -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">4. INTERFAZ - Implementación</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> Una interfaz define un CONTRATO. Las clases que la implementan DEBEN tener todos sus métodos. No tiene código (normalmente).
+            </div>
+            
+            <div class="code-block">// INTERFAZ - Define el contrato
+public interface Volador {
+    void volar();              // Sin implementación
+    boolean estaEnAire();      // Sin implementación
+    default void info() {      // Java 8+: método con código
+        System.out.println("Puedo volar");
+    }
+}
+
+// Clase que firma el contrato
+public class Pajaro implements Volador {
+    private boolean enAire = false;
+    
+    @Override
+    public void volar() {
+        enAire = true;
+        System.out.println("El pájaro vuela");
+    }
+    
+    @Override
+    public boolean estaEnAire() {
+        return enAire;
+    }
+}
+
+public class Avion implements Volador {
+    private boolean enAire = false;
+    
+    @Override
+    public void volar() {
+        enAire = true;
+        System.out.println("El avión despega");
+    }
+    
+    @Override
+    public boolean estaEnAire() {
+        return enAire;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Polymorfismo con interfaces
+        Volador v1 = new Pajaro();
+        Volador v2 = new Avion();
+        
+        v1.volar();  // El pájaro vuela
+        v2.volar();  // El avión despega
+        
+        // También puedes hacer arrays de Volador
+        Volador[] voladores = {new Pajaro(), new Avion()};
+        for (Volador v : voladores) {
+            v.volar();
+        }
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+El pájaro vuela
+El avión despega
+El pájaro vuela
+El avión despega</div>
+            
+            <div class="explicacion">
+                <strong>EXPLICACIÓN:</strong><br>
+                • <code>implements Volador</code> = "me comprometo a implementar volar() y estaEnAire()"<br>
+                • <span class="highlight">NO hay herencia</span>, es un CONTRATO<br>
+                • Puedes tratar Pajaro y Avion como "cosas que vuelan"<br>
+                • Un clase puede implementar VARIAS interfaces
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 5: ARRAYLIST -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">5. ARRAYLIST - Métodos principales</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> ArrayList es una colección dinámica que puede crecer y decrecer. A diferencia de los arrays normales, no tiene tamaño fijo.
+            </div>
+            
+            <div class="code-block">import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<String> frutas = new ArrayList<>();
+        
+        // AÑADIR elementos
+        frutas.add("Manzana");     // índice 0
+        frutas.add("Banana");      // índice 1
+        frutas.add("Cereza");      // índice 2
+        frutas.add(1, "Naranja");  // inserta en índice 1
+        
+        System.out.println("ArrayList: " + frutas);
+        System.out.println("Tamaño: " + frutas.size());
+        
+        // ACCEDER elementos
+        System.out.println("Índice 0: " + frutas.get(0));
+        System.out.println("Índice 2: " + frutas.get(2));
+        
+        // MODIFICAR
+        frutas.set(2, "Fresa");
+        System.out.println("Modificado: " + frutas);
+        
+        // ELIMINAR
+        frutas.remove(1);           // elimina por índice
+        frutas.remove("Manzana");    // elimina por objeto
+        System.out.println("Después de eliminar: " + frutas);
+        
+        // BUSCAR
+        System.out.println("¿Contiene Fresa? " + frutas.contains("Fresa"));
+        System.out.println("Índice de Fresa: " + frutas.indexOf("Fresa"));
+        
+        // RECORRER
+        System.out.println("\nCon for-each:");
+        for (String f : frutas) {
+            System.out.println("- " + f);
+        }
+        
+        // CON OBJETOS
+        ArrayList<Integer> numeros = new ArrayList<>();
+        numeros.add(10);
+        numeros.add(20);
+        numeros.add(30);
+        System.out.println("\nSuma: " + (numeros.get(0) + numeros.get(1) + numeros.get(2)));
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+ArrayList: [Manzana, Naranja, Banana, Cereza]
+Tamaño: 4
+Índice 0: Manzana
+Índice 2: Banana
+Modificado: [Manzana, Naranja, Fresa, Cereza]
+Después de eliminar: [Manzana, Fresa, Cereza]
+¿Contiene Fresa? true
+Índice de Fresa: 1
+
+Con for-each:
+- Manzana
+- Fresa
+- Cereza
+
+Suma: 60</div>
+            
+            <div class="explicacion">
+                <strong>MÉTODOS CLAVE:</strong><br>
+                • <code>add(elem)</code> → añadir al final<br>
+                • <code>add(idx, elem)</code> → insertar en posición<br>
+                • <code>get(idx)</code> → obtener elemento<br>
+                • <code>set(idx, elem)</code> → modificar<br>
+                • <code>remove(idx/elem)</code> → eliminar<br>
+                • <code>size()</code> → tamaño<br>
+                • <code>contains(elem)</code> → buscar<br>
+                • <code>clear()</code> → vaciar
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 6: HASHMAP -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">6. HASHMAP - Clave/Valor</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> HashMap almacena pares CLAVE→VALOR. La búsqueda es MUY rápida porque usa una tabla hash.
+            </div>
+            
+            <div class="code-block">import java.util.HashMap;
+
+public class Main {
+    public static void main(String[] args) {
+        // CLAVE (String) → VALOR (Integer)
+        HashMap<String, Integer> edades = new HashMap<>();
+        
+        // AÑADIR
+        edades.put("Ana", 25);
+        edades.put("Luis", 30);
+        edades.put("María", 28);
+        
+        // Si pones otra clave igual, SOBRESCRIBE el valor
+        edades.put("Ana", 26);
+        
+        System.out.println("HashMap: " + edades);
+        System.out.println("Tamaño: " + edades.size());
+        
+        // OBTENER valor por clave
+        System.out.println("Edad de Ana: " + edades.get("Ana"));
+        System.out.println("Edad de Pedro (no existe): " + edades.get("Pedro")); // null
+        
+        // VERIFICAR existencia
+        System.out.println("¿Existe Ana? " + edades.containsKey("Ana"));
+        System.out.println("¿Existe valor 30? " + edades.containsValue(30));
+        
+        // ELIMINAR
+        edades.remove("Luis");
+        System.out.println("Después de eliminar: " + edades);
+        
+        // RECORRER
+        System.out.println("\n--- Recorridos ---");
+        
+        // Solo claves
+        for (String clave : edades.keySet()) {
+            System.out.println("Clave: " + clave);
+        }
+        
+        // Solo valores
+        for (Integer valor : edades.values()) {
+            System.out.println("Valor: " + valor);
+        }
+        
+        // Clave y valor
+        for (String clave : edades.keySet()) {
+            System.out.println(clave + " tiene " + edades.get(clave) + " años");
+        }
+        
+        // CON OBJETOS
+        HashMap<String, String> capitales = new HashMap<>();
+        capitales.put("España", "Madrid");
+        capitales.put("Francia", "París");
+        System.out.println("\nCapital de España: " + capitales.get("España"));
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+HashMap: {Ana=26, Luis=30, María=28}
+Tamaño: 3
+Edad de Ana: 26
+Edad de Pedro (no existe): null
+¿Existe Ana? true
+¿Existe valor 30? true
+Después de eliminar: {Ana=26, María=28}
+
+--- Recorridos ---
+Clave: Ana
+Clave: María
+Valor: 26
+Valor: 28
+Ana tiene 26 años
+María tiene 28 años
+
+Capital de España: Madrid</div>
+            
+            <div class="explicacion">
+                <strong>MÉTODOS CLAVE:</strong><br>
+                • <code>put(clave, valor)</code> → añadir/modificar<br>
+                • <code>get(clave)</code> → obtener valor<br>
+                • <code>remove(clave)</code> → eliminar<br>
+                • <code>containsKey(clave)</code> → verificar clave<br>
+                • <code>containsValue(valor)</code> → verificar valor<br>
+                • <code>keySet()</code> → conjunto de claves<br>
+                • <code>values()</code> → conjunto de valores<br>
+                • <span class="highlight">Búsqueda O(1) - constante</span>
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 7: HASHSET -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">7. HASHSET - Elementos únicos</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> HashSet NO permite elementos duplicados. Si intentas añadir un elemento que ya existe, simplemente no lo añade.
+            </div>
+            
+            <div class="code-block">import java.util.HashSet;
+
+public class Main {
+    public static void main(String[] args) {
+        HashSet<String> colores = new HashSet<>();
+        
+        // AÑADIR
+        colores.add("Rojo");
+        colores.add("Azul");
+        colores.add("Verde");
+        colores.add("Rojo");  // Duplicado - no se añade
+        colores.add("Amarillo");
+        
+        System.out.println("HashSet: " + colores);
+        System.out.println("Tamaño: " + colores.size());  // 4, no 5!
+        
+        // VERIFICAR existencia
+        System.out.println("¿Contiene Rojo? " + colores.contains("Rojo"));
+        System.out.println("¿Contiene Naranja? " + colores.contains("Naranja"));
+        
+        // ELIMINAR
+        colores.remove("Azul");
+        System.out.println("Después de eliminar: " + colores);
+        
+        // RECORRER (sin orden)
+        System.out.println("\nRecorriendo:");
+        for (String color : colores) {
+            System.out.println("- " + color);
+        }
+        
+        // CON NÚMEROS
+        HashSet<Integer> numeros = new HashSet<>();
+        numeros.add(1);
+        numeros.add(2);
+        numeros.add(3);
+        numeros.add(2);  // Duplicado
+        numeros.add(3);  // Duplicado
+        
+        System.out.println("\nNúmeros: " + numeros);
+        System.out.println("Tamaño: " + numeros.size());  // 3
+        
+        // OPERACIONES DE CONJUNTOS
+        HashSet<String> set1 = new HashSet<>();
+        set1.add("A"); set1.add("B"); set1.add("C");
+        
+        HashSet<String> set2 = new HashSet<>();
+        set2.add("B"); set2.add("C"); set2.add("D");
+        
+        // Intersección
+        HashSet<String> copia = new HashSet<>(set1);
+        copia.retainAll(set2);  // Solo los comunes
+        System.out.println("\nIntersección: " + copia);  // [B, C]
+        
+        // Unión
+        copia = new HashSet<>(set1);
+        copia.addAll(set2);  // Todos
+        System.out.println("Unión: " + copia);  // [A, B, C, D]
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+HashSet: [Rojo, Azul, Verde, Amarillo]
+Tamaño: 4
+¿Contiene Rojo? true
+¿Contiene Naranja? false
+Después de eliminar: [Rojo, Verde, Amarillo]
+
+Recorriendo:
+- Rojo
+- Verde
+- Amarillo
+
+Números: [1, 2, 3]
+Tamaño: 3
+
+Intersección: [B, C]
+Unión: [A, B, C, D]</div>
+            
+            <div class="explicacion">
+                <strong>CARACTERÍSTICAS:</strong><br>
+                • <span class="highlight">NO permite duplicados</span><br>
+                • <span class="highlight">NO mantiene orden</span><br>
+                • <code>add()</code> → returns true si se añadió, false si ya existía<br>
+                • <code>addAll(set)</code> → unión<br>
+                • <code>retainAll(set)</code> → intersección<br>
+                • <code>removeAll(set)</code> → diferencia<br>
+                • Útil para <span class="highlight">eliminar duplicados rápidamente</span>
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 8: COMPARACIÓN COLECCIONES -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">8. COMPARACIÓN: ArrayList vs HashMap vs HashSet</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> Elige la estructura correcta según tu necesidad.
+            </div>
+            
+            <div class="code-block">import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        
+        // ARRAYLIST - Lista ORDENADA con índice
+        System.out.println("=== ARRAYLIST ===");
+        ArrayList<String> lista = new ArrayList<>();
+        lista.add("Perro");
+        lista.add("Gato");
+        lista.add("Pájaro");
+        System.out.println("get(1): " + lista.get(1));        // Por índice
+        System.out.println("contains: " + lista.contains("Gato")); // Sí
+        System.out.println("Orden: " + lista);                    // [Perro, Gato, Pájaro]
+        
+        // HASHSET - Elementos ÚNICOS sin orden
+        System.out.println("\n=== HASHSET ===");
+        HashSet<String> conjunto = new HashSet<>();
+        conjunto.add("Perro");
+        conjunto.add("Gato");
+        conjunto.add("Gato");  // Ignorado
+        conjunto.add("Pájaro");
+        System.out.println("No hay get() por índice");
+        System.out.println("contains: " + conjunto.contains("Gato")); // Sí
+        System.out.println("Orden: " + conjunto);  // Sin orden garantizado
+        
+        // HASHMAP - Clave → Valor
+        System.out.println("\n=== HASHMAP ===");
+        HashMap<String, Integer> mapa = new HashMap<>();
+        mapa.put("Perro", 5);
+        mapa.put("Gato", 3);
+        mapa.put("Pájaro", 10);
+        System.out.println("get(Clave): " + mapa.get("Gato"));  // Por clave
+        System.out.println("containsKey: " + mapa.containsKey("Gato")); // Sí
+        System.out.println("Claves: " + mapa.keySet());  // [Perro, Gato, Pájaro]
+        
+        // ¿CUÁNDO USAR CADA UNO?
+        System.out.println("\n=== ¿CUÁNDO USAR? ===");
+        System.out.println("ArrayList: Cuando NECESITAS ORDEN o ACCESO POR ÍNDICE");
+        System.out.println("HashSet:   Cuando NECESITAS ELEMENTOS ÚNICOS");
+        System.out.println("HashMap:   Cuando NECESITAS BÚSQUEDA POR CLAVE");
+        
+        // EJEMPLO PRÁCTICO
+        System.out.println("\n=== EJEMPLO PRÁCTICO ===");
+        // ArrayList de animales
+        ArrayList<String> animales = new ArrayList<>();
+        animales.add("León");
+        animales.add("Tigre");
+        
+        // HashSet de especies únicas
+        HashSet<String> especies = new HashSet<>();
+        animales.forEach(a -> especies.add(a.split(" ")[0])); // Extrae "León", "Tigre"
+        
+        // HashMap para datos de cada animal
+        HashMap<String, Integer> peso = new HashMap<>();
+        peso.put("León", 190);
+        peso.put("Tigre", 220);
+        
+        System.out.println("Especies: " + especies);
+        System.out.println("Peso del León: " + peso.get("León") + " kg");
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+=== ARRAYLIST ===
+get(1): Gato
+contains: true
+Orden: [Perro, Gato, Pájaro]
+
+=== HASHSET ===
+No hay get() por índice
+contains: true
+Orden: [Rojo, Verde, Amarillo]
+
+=== HASHMAP ===
+get(Clave): 3
+containsKey: true
+Claves: [Perro, Gato, Pájaro]
+
+=== ¿CUÁNDO USAR? ===
+ArrayList: Cuando NECESITAS ORDEN o ACCESO POR ÍNDICE
+HashSet:   Cuando NECESITAS ELEMENTOS ÚNICOS
+HashMap:   Cuando NECESITAS BÚSQUEDA POR CLAVE
+
+=== EJEMPLO PRÁCTICO ===
+Especies: [León, Tigre]
+Peso del León: 190 kg</div>
+            
+            <div class="explicacion">
+                <strong>RESUMEN:</strong><br>
+                <code>ArrayList</code> → Lista ordenada, acceso por índice<br>
+                <code>HashSet</code> → Elementos únicos, sin duplicados<br>
+                <code>HashMap</code> → Búsqueda rápida por clave<br><br>
+                <strong>COMPLEJIDAD:</strong><br>
+                ArrayList: búsqueda O(n), acceso O(1)<br>
+                HashSet/HashMap: búsqueda O(1) constante
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 9: POLIMORFISMO CON INTERFACES -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">9. POLIMORFISMO con Interfaces</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> Puedes declarar una variable del tipo de la interfaz y asignarle cualquier objeto que la implemente.
+            </div>
+            
+            <div class="code-block">interface Comparable {
+    int comparar(Object otro);
+}
+
+class Persona implements Comparable {
+    String nombre;
+    int edad;
+    
+    Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
+    @Override
+    public int comparar(Object otro) {
+        Persona p = (Persona) otro;
+        return this.edad - p.edad;  // Compara por edad
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Persona p1 = new Persona("Ana", 25);
+        Persona p2 = new Persona("Luis", 30);
+        
+        // Variable del tipo INTERFAZ
+        Comparable c1 = p1;
+        Comparable c2 = p2;
+        
+        // Pero solo puedes usar métodos de la interfaz
+        int resultado = c1.comparar(c2);
+        System.out.println("Resultado: " + resultado);  // -5
+        
+        // Arrays polimórficos
+        Comparable[] personas = {
+            new Persona("Ana", 25),
+            new Persona("Luis", 30),
+            new Persona("María", 20)
+        };
+        
+        // Ordenar usando la interfaz
+        // Arrays.sort(personas);
+        
+        for (Comparable p : personas) {
+            Persona pp = (Persona) p;  // Cast para acceder a nombre
+            System.out.println(((Persona)p).nombre);
+        }
+    }
+}</div>
+            
+            <div class="explicacion">
+                <strong>EXPLICACIÓN:</strong><br>
+                • <code>Comparable c1 = p1;</code> → la variable es del tipo interfaz<br>
+                • Solo puedes usar métodos de la interfaz<br>
+                • El objeto real puede ser cualquier clase que la implemente<br>
+                • Esto permite escribir código GENÉRICO
+            </div>
+        </div>
+        
+        <!-- CONCEPTO 10: ABSTRACT + INTERFAZ -->
+        <div class="concepto">
+            <div class="concepto-header">
+                <span class="concepto-title">10. CLASE ABSTRACTA + INTERFAZ JUNTAS</span>
+            </div>
+            
+            <div class="teoria">
+                <strong>TEORÍA:</strong> Una clase puede HEREDAR de una abstracta E IMPLEMENTAR interfaces. Ejemplo: <code>class Perro extends Animal implements Mascota, Identificable</code>
+            </div>
+            
+            <div class="code-block">// INTERFAZ 1
+interface Volador {
+    void volar();
+}
+
+// INTERFAZ 2
+interface Nadador {
+    void nadar();
+}
+
+// CLASE ABSTRACTA
+abstract class Animal {
+    protected String nombre;
+    
+    public Animal(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    abstract void comer();
+}
+
+// CLASE que usa TODO
+class Delfin extends Animal implements Nadador {
+    public Delfin(String nombre) {
+        super(nombre);
+    }
+    
+    @Override
+    public void comer() {
+        System.out.println(nombre + " come peces");
+    }
+    
+    @Override
+    public void nadar() {
+        System.out.println(nombre + " nada rápidamente");
+    }
+}
+
+class Pato extends Animal implements Volador, Nadador {
+    public Pato(String nombre) {
+        super(nombre);
+    }
+    
+    @Override
+    public void comer() {
+        System.out.println(nombre + " come grano");
+    }
+    
+    @Override
+    public void volar() {
+        System.out.println(nombre + " vuela");
+    }
+    
+    @Override
+    public void nadar() {
+        System.out.println(nombre + " nada");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Delfin d = new Delfin("Flipper");
+        Pato p = new Pato("Donald");
+        
+        d.comer();   // come peces
+        d.nadar();   // nada rápidamente
+        
+        p.comer();   // come grano
+        p.volar();   // vuela
+        p.nadar();   // nada
+        
+        // POLIMORFISMO
+        Animal[] animales = {d, p};
+        for (Animal a : animales) {
+            a.comer();  // Cada uno come a su manera
+        }
+    }
+}</div>
+            
+            <div class="output">SALIDA:
+Flipper come peces
+Flipper nada rápidamente
+Donald come grano
+Donald vuela
+Donald nada
+Flipper come peces
+Donald come grano</div>
+            
+            <div class="explicacion">
+                <strong>EXPLICACIÓN:</strong><br>
+                • <code>extends Animal implements Volador, Nadador</code><br>
+                • Una clase puede implementar VARIAS interfaces<br>
+                • Solo puede extender UNA clase (abstracta o no)<br>
+                • El Pato puede VOLAR y NADAR (2 interfaces)<br>
+                • El Delfín solo puede NADAR (1 interfaz)<br>
+                • <span class="highlight">Cada uno come() diferente</span> → polimorfismo
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

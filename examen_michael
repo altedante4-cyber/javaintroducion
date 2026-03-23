@@ -1,0 +1,435 @@
+# EXAMEN PROGRAMACIÓN ORIENTADA A OBJETOS
+
+**Nombre:** _______________________ **Fecha:** ___________
+
+---
+
+## PREGUNTA 1 - Teoría (2 puntos)
+
+Explica con tus propias palabras qué es el **polimorfismo** y pon un ejemplo de código.
+
+---
+
+## PREGUNTA 2 - Herencia (2 puntos)
+
+Dado el siguiente código:
+
+```java
+public class Vehiculo {
+    protected String marca;
+    
+    public Vehiculo(String marca) {
+        this.marca = marca;
+    }
+    
+    public void arrancar() {
+        System.out.println("Vehiculo arrancando");
+    }
+}
+
+public class Coche extends Vehiculo {
+    private int puertas;
+    
+    public Coche(String marca, int puertas) {
+        super(marca);
+        this.puertas = puertas;
+    }
+    
+    @Override
+    public void arrancar() {
+        System.out.println("Coche " + marca + " arrancando");
+    }
+}
+```
+
+**a)** ¿Qué imprimirá este código?
+
+```java
+Vehiculo v = new Coche("Ford", 4);
+v.arrancar();
+```
+
+**b)** ¿Por qué se puede asignar un `Coche` a una variable de tipo `Vehiculo`?
+
+---
+
+## PREGUNTA 3 - Clases Abstractas (2 puntos)
+
+Explica qué es una **clase abstracta** y responde:
+
+**a)** ¿Se puede hacer `new Figura()`? ¿Por qué?
+
+**b)** ¿Qué diferencia hay entre una clase abstracta y una interfaz?
+
+---
+
+## PREGUNTA 4 - Interfaces (2 puntos)
+
+Observa el siguiente código:
+
+```java
+public interface Volador {
+    void volar();
+    int getAltitude();
+}
+
+public class Avion implements Volador {
+    private int altitude = 0;
+    
+    @Override
+    public void volar() {
+        altitude = 10000;
+    }
+    
+    @Override
+    public int getAltitude() {
+        return altitude;
+    }
+}
+```
+
+**a)** ¿Qué palabra clave se usa para que una clase implemente una interfaz?
+
+**b)** Si intentamos hacer `Volador v = new Volador();`, ¿compila? ¿Por qué?
+
+---
+
+## PREGUNTA 5 - ArrayList (2 puntos)
+
+Dado:
+
+```java
+ArrayList<String> frutas = new ArrayList<>();
+frutas.add("Manzana");
+frutas.add("Banana");
+frutas.add("Cereza");
+frutas.remove(1);
+```
+
+**¿Qué contiene `frutas` después de ejecutar este código?**
+
+---
+
+## PREGUNTA 6 - HashMap (2 puntos)
+
+Dado:
+
+```java
+HashMap<String, Integer> notas = new HashMap<>();
+notas.put("Ana", 8);
+notas.put("Luis", 9);
+notas.put("Ana", 10);
+```
+
+**a)** ¿Cuántos elementos tiene el HashMap?
+
+**b)** ¿Cuál es el valor asociado a la clave "Ana"?
+
+---
+
+## PREGUNTA 7 - HashSet (2 puntos)
+
+Dado:
+
+```java
+HashSet<String> colores = new HashSet<>();
+colores.add("Rojo");
+colores.add("Azul");
+colores.add("Rojo");
+colores.add("Verde");
+```
+
+**¿Cuántos elementos tiene el HashSet? ¿Por qué?**
+
+---
+
+## PREGUNTA 8 - Traza de código (2 puntos)
+
+¿Qué se imprime al ejecutar?
+
+```java
+public class A {
+    int x = 5;
+    
+    void mostrar() {
+        System.out.println("A: " + x);
+    }
+}
+
+public class B extends A {
+    int x = 10;
+    
+    @Override
+    void mostrar() {
+        System.out.println("B: " + x);
+        System.out.println("super.x = " + super.x);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        B b = new B();
+        b.mostrar();
+    }
+}
+```
+
+---
+
+## PREGUNTA 9 - Sobrecarga vs Sobreescritura (2 puntos)
+
+**a)** Explica la diferencia entre **sobrecarga (overloading)** y **sobreescritura (overriding)**.
+
+**b)** ¿A cuál de las dos se le pone la anotación `@Override`?
+
+---
+
+## PREGUNTA 10 - Encapsulación (2 puntos)
+
+Dado:
+
+```java
+public class Persona {
+    private String nombre;
+    private int edad;
+    
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public void setEdad(int edad) {
+        if (edad > 0 && edad < 120) {
+            this.edad = edad;
+        }
+    }
+    
+    public int getEdad() {
+        return edad;
+    }
+}
+```
+
+Si ejecutamos:
+
+```java
+Persona p = new Persona("Ana", 25);
+p.setEdad(-10);
+System.out.println(p.getEdad());
+```
+
+**¿Qué se imprime? ¿Por qué?**
+
+---
+
+## PREGUNTA 11 - UML (2 puntos)
+
+Dibuja el diagrama de clases UML correspondiente a este código:
+
+```java
+public abstract class Figura {
+    protected String color;
+    
+    public Figura(String color) {
+        this.color = color;
+    }
+    
+    public abstract double calcularArea();
+}
+
+public class Rectangulo extends Figura {
+    private double base;
+    private double altura;
+    
+    public Rectangulo(String color, double base, double altura) {
+        super(color);
+        this.base = base;
+        this.altura = altura;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return base * altura;
+    }
+}
+```
+
+---
+
+## PREGUNTA 12 - Relaciones UML (2 puntos)
+
+Indica qué tipo de relación UML representa cada ejemplo:
+
+| Ejemplo | Tipo de Relación |
+|---------|------------------|
+| Un corazón ES PARTE DE una persona | |
+| Un Perro ES UN Animal | |
+| Un cliente USA una tarjeta de crédito | |
+| Un Coche TIENE UN Motor | |
+| Una clase IMPLEMENTA una interfaz | |
+
+---
+
+## PREGUNTA 13 - Constructores y Herencia (2 puntos)
+
+Dado:
+
+```java
+public class Padre {
+    public Padre() {
+        System.out.println("Constructor Padre");
+    }
+}
+
+public class Hija extends Padre {
+    public Hija() {
+        System.out.println("Constructor Hija");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Hija h = new Hija();
+    }
+}
+```
+
+**¿Qué se imprime? ¿Por qué?**
+
+---
+
+## PREGUNTA 14 - Polimorfismo en colecciones (2 puntos)
+
+Dado:
+
+```java
+ArrayList<Animal> animales = new ArrayList<>();
+animales.add(new Perro("Rex"));
+animales.add(new Gato("Michi"));
+
+for (Animal a : animales) {
+    a.hablar();
+}
+```
+
+Si `Perro` imprime "¡Guau!" y `Gato` imprime "¡Miau!", **¿qué se imprime al ejecutar este código?**
+
+---
+
+## PREGUNTA 15 - ArrayList genéricos (2 puntos)
+
+¿Qué error tiene este código?
+
+```java
+ArrayList lista = new ArrayList();
+lista.add("Hola");
+lista.add(5);
+String s = lista.get(0);
+int n = lista.get(1);
+```
+
+---
+
+## PREGUNTA 16 - Modificadores de acceso (2 puntos)
+
+Completa la tabla:
+
+| Modificador | Visible desde cualquier clase | Visible desde subclases | Visible solo en el paquete |
+|-------------|------------------------------|------------------------|----------------------------|
+| public | Sí | ? | ? |
+| private | ? | ? | ? |
+| protected | ? | ? | ? |
+| (sin modificador) | ? | ? | ? |
+
+---
+
+## PREGUNTA 17 - toString (2 puntos)
+
+Dado:
+
+```java
+public class Libro {
+    String titulo;
+    int anio;
+    
+    public Libro(String titulo, int anio) {
+        this.titulo = titulo;
+        this.anio = anio;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Libro l = new Libro("1984", 1949);
+        System.out.println(l);
+    }
+}
+```
+
+**¿Qué se imprime? ¿Por qué?**
+
+---
+
+## PREGUNTA 18 - instanceof (2 puntos)
+
+Dado:
+
+```java
+public class Vehiculo {}
+public class Coche extends Vehiculo {}
+public class Moto extends Vehiculo {}
+
+public class Main {
+    public static void main(String[] args) {
+        Vehiculo v = new Coche();
+        
+        System.out.println(v instanceof Coche);
+        System.out.println(v instanceof Vehiculo);
+        System.out.println(v instanceof Moto);
+    }
+}
+```
+
+**¿Qué se imprime?**
+
+---
+
+## PREGUNTA 19 - this y super (2 puntos)
+
+Explica para qué sirven las palabras clave `this` y `super` en Java. Pon un ejemplo de cada una.
+
+---
+
+## PREGUNTA 20 - Caso práctico (4 puntos)
+
+Implementa las clases necesarias para un sistema de gestión de una biblioteca:
+
+**Clase abstracta `Material`:**
+- Atributos: `titulo` (String), `autor` (String)
+- Método abstracto: `String getTipo()`
+- Constructor con parámetros
+
+**Clase `Libro` (hereda de Material):**
+- Atributos propios: `numPaginas` (int)
+- Implementa `getTipo()` devolviendo "Libro"
+- Constructor con todos los parámetros
+
+**Clase `DVD` (hereda de Material):**
+- Atributos propios: `duracion` (int) en minutos
+- Implementa `getTipo()` devolviendo "DVD"
+- Constructor con todos los parámetros
+
+---
+
+# ESPACIO PARA RESPUESTAS
+
+(Página extra si necesitas más espacio)
+
+---
+
+**TIEMPO: 2 horas**
+**PUNTOS TOTALES: 40 (necesitas 20 para aprobar)**

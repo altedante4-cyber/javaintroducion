@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen UML y POO para Examen</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin: 25px 0 15px;
+            font-size: 1.3em;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin: 15px 0 10px;
+            font-size: 1.1em;
+        }
+        
+        .tema {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th { background: #3498db; color: white; }
+        
+        tr:nth-child(even) { background: #f9f9f9; }
+        
+        ul {
+            margin: 10px 0 10px 25px;
+        }
+        
+        li { margin: 5px 0; }
+        
+        .concepto {
+            background: #ecf0f1;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 8px 0;
+        }
+        
+        .simbolo {
+            display: inline-block;
+            background: #2c3e50;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+            margin: 2px;
+        }
+        
+        .importante {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        
+        code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        .verde { color: #27ae60; font-weight: bold; }
+        .rojo { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RESUMEN UML y POO<br><small>Para Tipo Test</small></h1>
+        
+        <!-- TEMA 1: UML -->
+        <div class="tema">
+            <h2>1. ¿Qué es UML?</h2>
+            <ul>
+                <li><strong>UML</strong> = Unified Modeling Language (Lenguaje Unificado de Modelado)</li>
+                <li>Es un <span class="verde">LENGUAJE</span>, <span class="verde">NO</span> un proceso/metodología</li>
+                <li>Permite modelar, construir y documentar elementos de un sistema orientado a objetos</li>
+                <li>Se ha convertido en el <strong>estándar de facto</strong> de la industria</li>
+            </ul>
+            
+            <h3>Origen de UML:</h3>
+            <ul>
+                <li><strong>OMT</strong> - Object Modeling Technique (Rumbaugh)</li>
+                <li><strong>Método-Booch</strong> (G. Booch)</li>
+                <li><strong>OOSE</strong> - Object-Oriented Software Engineering (Jacobson)</li>
+            </ul>
+            
+            <h3>Historia:</h3>
+            <ul>
+                <li>1997: OMG adopta UML 1.1</li>
+                <li>2005: UML 2.0 (añade diagrama de estructura compuesta y timing)</li>
+                <li>2017: UML 2.5</li>
+            </ul>
+            
+            <div class="importante">
+                <strong>Creadores:</strong> Grady Booch, Jim Rumbaugh e Ivar Jacobson
+            </div>
+        </div>
+        
+        <!-- TEMA 2: MODELADO -->
+        <div class="tema">
+            <h2>2. Modelado</h2>
+            <p><strong>Modelar</strong> = Crear una representación de la realidad</p>
+            <p>El modelado es el análisis y diseño de aplicaciones software <strong>antes</strong> de escribir código.</p>
+            
+            <h3>Pros del modelado:</h3>
+            <ul>
+                <li>Facilita la comprensión para nuevos integrantes</li>
+                <li>Facilita la subcontratación de proyectos</li>
+                <li>Hace más fáciles los cambios</li>
+                <li>Necesario en ciertos entornos (NASA)</li>
+            </ul>
+            
+            <h3>Contras del modelado:</h3>
+            <ul>
+                <li>Modelo completo y realidad ocupan lo mismo</li>
+                <li>La documentación puede ser el código</li>
+                <li>Nadie puede prever de antemano el resultado final</li>
+            </ul>
+        </div>
+        
+        <!-- TEMA 3: DIAGRAMAS -->
+        <div class="tema">
+            <h2>3. Tipos de Diagramas UML</h2>
+            
+            <table>
+                <tr>
+                    <th>Estructurales (Vista estática)</th>
+                    <th>Comportamiento (Vista dinámica)</th>
+                    <th>Interacción</th>
+                </tr>
+                <tr>
+                    <td>Diagrama de clases</td>
+                    <td>Diagrama de actividad</td>
+                    <td>Diagrama de secuencia</td>
+                </tr>
+                <tr>
+                    <td>Diagrama de componentes</td>
+                    <td>Diagrama de casos de uso</td>
+                    <td>Diagrama de colaboración</td>
+                </tr>
+                <tr>
+                    <td>Diagrama de despliegue</td>
+                    <td>Diagrama de estados</td>
+                    <td></td>
+                </tr>
+            </table>
+            
+            <h3>Herramientas para UML:</h3>
+            <ul>
+                <li>draw.io / diagrams.net</li>
+                <li>StarUML</li>
+                <li>Modelio</li>
+            </ul>
+        </div>
+        
+        <!-- TEMA 4: DIAGRAMA DE CLASES -->
+        <div class="tema">
+            <h2>4. Diagrama de Clases</h2>
+            
+            <h3>Partes de una clase:</h3>
+            <ul>
+                <li><strong>Nombre</strong> de la clase</li>
+                <li><strong>Atributos</strong></li>
+                <li><strong>Operaciones</strong> (métodos)</li>
+            </ul>
+            
+            <h3>Tipos de Clase:</h3>
+            <table>
+                <tr><th>Tipo</th><th>Símbolo/Notación</th></tr>
+                <tr><td>Clase normal</td><td>Caja rectangular</td></tr>
+                <tr><td>Clase abstracta</td><td>Nombre en <em>cursiva</em></td></tr>
+                <tr><td>Interfaz</td><td>&lt;&lt;interfaz&gt;&gt;</td></tr>
+                <tr><td>Enumeración</td><td>&lt;&lt;enumeration&gt;&gt;</td></tr>
+                <tr><td>Utility</td><td>&lt;&lt;utility&gt;&gt;</td></tr>
+            </table>
+            
+            <h3>Visibilidad de atributos y métodos:</h3>
+            <table>
+                <tr><th>Símbolo</th><th>Significado</th></tr>
+                <tr><td><span class="simbolo">+</span></td><td>Pública (public)</td></tr>
+                <tr><td><span class="simbolo">-</span></td><td>Privada (private)</td></tr>
+                <tr><td><span class="simbolo">#</span></td><td>Protegida (protected)</td></tr>
+                <tr><td><span class="simbolo">~</span></td><td>Package (sin modificador)</td></tr>
+            </table>
+            
+            <h3>Sintaxis de Atributo:</h3>
+            <p><code>[visibilidad] nombre [: tipo] ['['multiplicidad']'] [= valor_inicial]</code></p>
+            
+            <h3>Sintaxis de Operación:</h3>
+            <p><code>[visibilidad] nombre ['('lista_parametros')'] [: tipo_retorno]</code></p>
+            
+            <h3>Notas importantes:</h3>
+            <ul>
+                <li>Atributo <strong>static</strong> → se <strong>subraya</strong></li>
+                <li>Atributo multivaluado (colección) → corchetes <code>[]</code></li>
+                <li>Restricción <code>{ordered}</code> → colección ordenada</li>
+                <li>Clase abstracta → aparece en <em>cursiva</em></li>
+            </ul>
+        </div>
+        
+        <!-- TEMA 5: RELACIONES -->
+        <div class="tema">
+            <h2>5. Relaciones entre Clases</h2>
+            
+            <table>
+                <tr><th>Relación</th><th>Descripción</th><th>Símbolo</th></tr>
+                <tr>
+                    <td><strong>Asociación</strong></td>
+                    <td>Relación estructural entre objetos</td>
+                    <td>Línea continua</td>
+                </tr>
+                <tr>
+                    <td><strong>Agregación</strong></td>
+                    <td>"Tiene un" - ciclo de vida independiente</td>
+                    <td>Rombo <strong>vacío</strong> ◇</td>
+                </tr>
+                <tr>
+                    <td><strong>Composición</strong></td>
+                    <td>"Parte de" - ciclo de vida dependiente (fuerte)</td>
+                    <td>Rombo <strong>relleno</strong> ◆</td>
+                </tr>
+                <tr>
+                    <td><strong>Herencia/Generalización</strong></td>
+                    <td>Hijo hereda propiedades del padre</td>
+                    <td>Flecha blanca △</td>
+                </tr>
+                <tr>
+                    <td><strong>Dependencia</strong></td>
+                    <td>Cambio en especificación afecta a otro, pero no al revés</td>
+                    <td>Flecha discontinua - - →</td>
+                </tr>
+                <tr>
+                    <td><strong>Realización</strong></td>
+                    <td>Implementa una interfaz</td>
+                    <td>Flecha discontinua con triángulo blanco</td>
+                </tr>
+            </table>
+            
+            <div class="concepto">
+                <strong>Diferencia Asociación vs Dependencia:</strong><br>
+                Asociación = relación <strong>estructural</strong> permanente<br>
+                Dependencia = relación <strong>temporal/puntual</strong>
+            </div>
+            
+            <h3>Relaciones N a N:</h3>
+            <p>Se resuelve con una <strong>clase de asociación</strong></p>
+        </div>
+        
+        <!-- TEMA 6: POO -->
+        <div class="tema">
+            <h2>6. Programación Orientada a Objetos (POO)</h2>
+            
+            <h3>Definición:</h3>
+            <p>Organización del software como una colección de <strong>objetos</strong> que contienen tanto estructura como comportamiento.</p>
+            
+            <h3>Objetivo principal: REUTILIZACIÓN</h3>
+            
+            <h3>Alarmas de que falta OO:</h3>
+            <ul>
+                <li>"Se nos olvidó hacerlo para X"</li>
+                <li>"Hay que acordarse de probarlo para..."</li>
+                <li>Spaguetti code (if anidados)</li>
+            </ul>
+            
+            <h3>Conceptos clave:</h3>
+            <ul>
+                <li><strong>Clase</strong>: Descripción de un conjunto de objetos</li>
+                <li><strong>Objeto</strong>: Instancia de una clase</li>
+                <li><strong>Método</strong>: Comportamiento/operación</li>
+                <li><strong>Atributo</strong>: Característica/propiedad</li>
+            </ul>
+            
+            <h3>Modificadores de acceso (Java):</h3>
+            <table>
+                <tr><th>Modificador</th><th>Acceso</th></tr>
+                <tr><td><strong>public</strong></td><td>Cualquier clase</td></tr>
+                <tr><td><strong>private</strong></td><td>Solo la propia clase</td></tr>
+                <tr><td><strong>protected</strong></td><td>Propia clase + subclases + mismo paquete</td></tr>
+                <tr><td>(sin modificador)</td><td>Solo mismo paquete</td></tr>
+            </table>
+        </div>
+        
+        <!-- TEMA 7: CLASES ABSTRACTAS E INTERFACES -->
+        <div class="tema">
+            <h2>7. Clases Abstractas e Interfaces</h2>
+            
+            <h3>Clase Abstracta:</h3>
+            <ul>
+                <li>Contiene al menos un <strong>método abstracto</strong> (sin implementación)</li>
+                <li>Se espera que las subclases lo implementen</li>
+                <li><span class="verde">NO se puede instanciar</span> con <code>new</code></li>
+                <li>Se representa con el nombre en <em>cursiva</em></li>
+            </ul>
+            
+            <h3>Interfaz:</h3>
+            <ul>
+                <li>Solo contiene <strong>definiciones de métodos y constantes</strong></li>
+                <li>Los métodos son abstractos por defecto</li>
+                <li>Representa una <strong>especificación</strong></li>
+                <li>En UML: estereotipo <code>&lt;&lt;interface&gt;&gt;</code></li>
+            </ul>
+            
+            <div class="importante">
+                <strong>Diferencia clave:</strong><br>
+                - Clase abstracta: puede tener estado (atributos con implementación)<br>
+                - Interfaz: solo contrato, sin implementación (Java 8 permite default/static)
+            </div>
+        </div>
+        
+        <!-- TEMA 8: HERENCIA -->
+        <div class="tema">
+            <h2>8. Herencia en POO</h2>
+            
+            <p>Relación "<strong>ES UN</strong>" (is-a)</p>
+            
+            <h3>Características:</h3>
+            <ul>
+                <li>La subclase <strong>hereda</strong> todos los atributos y métodos del padre</li>
+                <li>Se usa la palabra clave <code>extends</code></li>
+                <li>Java solo permite <strong>herencia simple</strong> (una clase padre)</li>
+                <li>La herencia múltiple se logra mediante <strong>interfaces</strong></li>
+            </ul>
+            
+            <h3>Clase Genérica:</h3>
+            <p>Asegura que los métodos se aplicarán con un tipo declarado en tiempo de ejecución.</p>
+        </div>
+        
+        <!-- TEMA 9: CASOS DE USO -->
+        <div class="tema">
+            <h2>9. Diagrama de Casos de Uso</h2>
+            
+            <h3>Elementos:</h3>
+            <ul>
+                <li><strong>Actor</strong>: Entidad externa que usa el sistema</li>
+                <li><strong>Caso de uso</strong>: Funcionalidad del sistema</li>
+                <li><strong>Límite del sistema</strong>: Define qué está dentro/fuera</li>
+            </ul>
+            
+            <h3>Relaciones entre casos de uso:</h3>
+            <table>
+                <tr><th>Relación</th><th>Descripción</th></tr>
+                <tr>
+                    <td><strong>Include</strong></td>
+                    <td>Un caso de uso <strong>siempre</strong> usa otro</td>
+                </tr>
+                <tr>
+                    <td><strong>Extend</strong></td>
+                    <td>Un caso de uso puede extender a otro (no necesariamente)</td>
+                </tr>
+                <tr>
+                    <td><strong>Generalization</strong></td>
+                    <td>Herencia entre casos de uso</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- TEMA 10: DIAGRAMA DE SECUENCIA -->
+        <div class="tema">
+            <h2>10. Diagrama de Secuencia</h2>
+            
+            <p>Describe el <strong>flujo de información</strong> en la interacción entre objetos.</p>
+            <p>Representa la <strong>secuencia de llamadas a métodos</strong> entre objetos.</p>
+            
+            <h3>Elementos:</h3>
+            <ul>
+                <li><strong>Actores/Objetos</strong>: En la parte superior</li>
+                <li><strong>Líneas de vida</strong>: Líneas verticales</li>
+                <li><strong>Mensajes</strong>: Flechas horizontales</li>
+                <li><strong>Activación</strong>: Barras verticales sobre las líneas de vida</li>
+            </ul>
+        </div>
+        
+        <!-- TEMA 11: MODELADO AGILE -->
+        <div class="tema">
+            <h2>11. Modelado Ágil</h2>
+            
+            <h3>Manifiesto Ágil:</h3>
+            <ul>
+                <li>No dice "no documentar", dice <strong>documentación ligera</strong></li>
+                <li>Problemas de ausencia total de documentación:
+                    <ul>
+                        <li>Dificulta la formación</li>
+                        <li>Repetición de trabajo</li>
+                        <li>Dificulta la subcontratación</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h3>Cuándo documentar (Justo A Tiempo - JIT):</h3>
+            <ul>
+                <li><strong>ANTES</strong>: Parte de requisitos, análisis y diseño</li>
+                <li><strong>DESPUÉS</strong>: Formación, petición del cliente, subcontratación</li>
+            </ul>
+            
+            <h3>Características de buena documentación:</h3>
+            <ul>
+                <li>Ordenada y accesible (wiki, ticketing)</li>
+                <li>Colaborativa</li>
+            </ul>
+        </div>
+        
+        <!-- PREGUNTAS TIPO TEST -->
+        <div class="tema" style="background: #2c3e50; color: white;">
+            <h2 style="color: #3498db; border-color: #3498db;">12. Repaso Rápido para el Test</h2>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>UML es un...</strong><br>
+                → <span class="verde">LENGUAJE</span>, NO un proceso/metodología
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Creadores de UML:</strong><br>
+                → <span class="verde">Booch, Rumbaugh, Jacobson</span>
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Clase abstracta...</strong><br>
+                → <span class="verde">NO se puede instanciar</span> con new
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Herencia es relación...</strong><br>
+                → <span class="verde">"ES UN"</span> (is-a)
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Composición vs Agregación:</strong><br>
+                → Composición = <span class="verde">rombo relleno</span><br>
+                → Agregación = <span class="verde">rombo vacío</span>
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Interfaz en UML:</strong><br>
+                → <code>&lt;&lt;interface&gt;&gt;</code>
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Atributo static:</strong><br>
+                → Se <span class="verde">subraya</span>
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Visibilidad # significa:</strong><br>
+                → <span class="verde">protected</span>
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Diagrama de secuencia:</strong><br>
+                → Muestra <span class="verde">interacción y llamadas a métodos</span>
+            </div>
+            
+            <div class="concepto" style="background: #34495e;">
+                <strong>Include vs Extend:</strong><br>
+                → Include = <span class="verde">siempre</span><br>
+                → Extend = <span class="verde">puede</span> (no siempre)
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

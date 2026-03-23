@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test POO - 50 Preguntas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #eee;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00d9ff;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            background: #333;
+            border-radius: 10px;
+            height: 25px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            height: 100%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .question {
+            background: #1e2a3a;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #00d9ff;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .question-number {
+            background: #00d9ff;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .question-type {
+            background: #ff6b6b;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+        }
+        
+        .question-type.theory {
+            background: #4ecdc4;
+        }
+        
+        .question-type.practice {
+            background: #ff9f43;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .code-block {
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid #333;
+            white-space: pre;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background: #2a3a4a;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background: #3a4a5a;
+            border-color: #00d9ff;
+        }
+        
+        .option.selected {
+            background: #1a4a5a;
+            border-color: #00d9ff;
+        }
+        
+        .option.correct {
+            background: #1a5a3a;
+            border-color: #00ff88;
+        }
+        
+        .option.incorrect {
+            background: #5a1a1a;
+            border-color: #ff4444;
+        }
+        
+        .option-letter {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #444;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .option.selected .option-letter {
+            background: #00d9ff;
+            color: #000;
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #00d9ff, #00ff88);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 30px;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .results {
+            display: none;
+            background: #1e2a3a;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .score {
+            font-size: 4em;
+            font-weight: bold;
+            color: #00d9ff;
+        }
+        
+        .score-text {
+            font-size: 1.5em;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .stat-value.correct-stat {
+            color: #00ff88;
+        }
+        
+        .stat-value.incorrect-stat {
+            color: #ff4444;
+        }
+        
+        .review-btn {
+            padding: 15px 30px;
+            background: #4ecdc4;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 10px;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .review-btn:hover {
+            background: #3dbdb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test POO - Programación Orientada a Objetos</h1>
+        <p class="subtitle">50 Preguntas - Teoría y Práctica</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress" style="width: 0%">0/50</div>
+        </div>
+        
+        <form id="testForm">
+            <!-- Las preguntas se generan con JavaScript -->
+        </form>
+        
+        <button type="button" class="submit-btn" onclick="calcularResultado()">Ver Resultados</button>
+        
+        <div class="results" id="results">
+            <h2>¡Test Completado!</h2>
+            <div class="score" id="score">0</div>
+            <div class="score-text">puntos sobre 50</div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value correct-stat" id="correctas">0</div>
+                    <div>Correctas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value incorrect-stat" id="incorrectas">0</div>
+                    <div>Incorrectas</div>
+                </div>
+            </div>
+            
+            <button type="button" class="review-btn" onclick="mostrarRespuestas()">Ver Respuestas</button>
+            <button type="button" class="review-btn" onclick="reiniciarTest()">Reiniciar Test</button>
+        </div>
+    </div>
+
+    <script>
+        const preguntas = [
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es la abstracción en POO?",
+                opciones: [
+                    "Escribir código sin errores",
+                    "Quedarse solo con lo importante e ignorar detalles irrelevantes",
+                    "Crear objetos a partir de clases",
+                    "Ocultar los datos del usuario"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es la encapsulación?",
+                opciones: [
+                    "Dividir el programa en clases pequeñas",
+                    "Ocultar cómo se guarda internamente la información y controlar el acceso",
+                    "Crear herencia entre clases",
+                    "Definir métodos abstractos"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es la modularidad?",
+                opciones: [
+                    "Crear objetos con el operador new",
+                    "Dividir el programa en partes independientes con responsabilidad clara",
+                    "Heredar métodos de una clase padre",
+                    "Usar interfaces en Java"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es la jerarquía en POO?",
+                opciones: [
+                    "El orden de ejecución de los métodos",
+                    "Organizar clases en niveles de general a específico",
+                    "La lista de atributos de una clase",
+                    "El número de constructores de una clase"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Cuál es la diferencia entre clase y objeto?",
+                opciones: [
+                    "No hay diferencia, son lo mismo",
+                    "La clase es el molde; el objeto es una copia concreta",
+                    "El objeto es el molde y la clase es la copia",
+                    "La clase ocupa memoria, el objeto no"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué tipo de relación representa la herencia?",
+                opciones: [
+                    "TIENE UN",
+                    "USA UN",
+                    "ES UN",
+                    "CONTIENE UN"
+                ],
+                correcta: 2
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué palabra clave se usa en Java para crear herencia?",
+                opciones: [
+                    "inherits",
+                    "extends",
+                    "implements",
+                    "super"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es el polimorfismo?",
+                opciones: [
+                    "La capacidad de heredar de varias clases",
+                    "La capacidad de objetos de distintas clases de responder diferente al mismo mensaje",
+                    "La encapsulación de datos",
+                    "La creación de múltiples objetos"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es la sobrecarga (overloading)?",
+                opciones: [
+                    "Crear un método con el mismo nombre pero diferentes parámetros",
+                    "Reemplazar un método de la clase padre",
+                    "Crear una clase abstracta",
+                    "Implementar una interfaz"
+                ],
+                correcta: 0
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es la sobreescritura (overriding)?",
+                opciones: [
+                    "Crear un nuevo método con otro nombre",
+                    "La subclase redefine un método de la superclase",
+                    "Cargar una clase en memoria",
+                    "Destruir un objeto"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es el enlazado estático?",
+                opciones: [
+                    "Se resuelve al ejecutar el programa",
+                    "Se resuelve en tiempo de compilación",
+                    "Solo aplica a métodos de instancia",
+                    "Es dinámico y lento"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es el enlazado dinámico?",
+                opciones: [
+                    "Se resuelve solo en la compilación",
+                    "Se resuelve al ejecutar, permitiendo polimorfismo real",
+                    "No existe en Java",
+                    "Solo aplica a métodos estáticos"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Para qué sirve la palabra clave 'super'?",
+                opciones: [
+                    "Para crear un objeto de la clase padre",
+                    "Para invocar el constructor o métodos de la clase padre",
+                    "Para definir una superclase",
+                    "Para destruir objetos"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Se puede instanciar una clase abstracta con 'new'?",
+                opciones: [
+                    "Sí, siempre",
+                    "No, genera error de compilación",
+                    "Solo si tiene constructores",
+                    "Solo en Java 8"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué diferencia hay entre una clase abstracta y una interfaz?",
+                opciones: [
+                    "No hay diferencia",
+                    "La clase abstracta puede tener estado; la interfaz solo contratos",
+                    "La interfaz puede tener implementación",
+                    "La clase abstracta no puede tener métodos"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué palabra clave se usa para implementar una interfaz?",
+                opciones: [
+                    "extends",
+                    "inherits",
+                    "implements",
+                    "super"
+                ],
+                correcta: 2
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué modificador de acceso hace que un atributo sea visible solo dentro de su clase?",
+                opciones: [
+                    "public",
+                    "protected",
+                    "private",
+                    "default"
+                ],
+                correcta: 2
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué modificador permite acceder desde cualquier clase?",
+                opciones: [
+                    "private",
+                    "protected",
+                    "public",
+                    "static"
+                ],
+                correcta: 2
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué devuelve 'instanceof' en Java?",
+                opciones: [
+                    "El tipo de dato de una variable",
+                    "Un boolean indicando si un objeto es de un tipo específico",
+                    "El nombre de la clase",
+                    "La posición en memoria del objeto"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es ArrayList en Java?",
+                opciones: [
+                    "Un array de tamaño fijo",
+                    "Una colección dinámica que puede crecer y decrecer",
+                    "Un tipo de dato primitivo",
+                    "Una interfaz"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué se imprimirá en pantalla?",
+                codigo: `public class Persona {
+    private String nombre;
+    public Persona(String nombre) {
+        this.nombre = nombre;
+    }
+    public String getNombre() { return nombre; }
+}
+public class Main {
+    public static void main(String[] args) {
+        Persona p = new Persona("Ana");
+        System.out.println(p.getNombre());
+    }
+}`,
+                opciones: ["Error de compilación", "Ana", "null", "persona"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué se imprimirá?",
+                codigo: `public class Animal {
+    protected String nombre;
+    public Animal(String nombre) {
+        this.nombre = nombre;
+    }
+    public void hablar() {
+        System.out.println("Sonido");
+    }
+}
+public class Perro extends Animal {
+    public Perro(String nombre) {
+        super(nombre);
+    }
+    @Override
+    public void hablar() {
+        System.out.println("Guau");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Animal a = new Perro("Rex");
+        a.hablar();
+    }
+}`,
+                opciones: ["Sonido", "Guau", "Error", "null"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Cuál es el resultado?",
+                codigo: `public class Calculadora {
+    public int sumar(int a, int b) { return a + b; }
+    public double sumar(double a, double b) { return a + b; }
+}
+public class Main {
+    public static void main(String[] args) {
+        Calculadora c = new Calculadora();
+        System.out.println(c.sumar(2, 3));
+        System.out.println(c.sumar(1.5, 2.5));
+    }
+}`,
+                opciones: ["5 y 4.0", "5 y 4", "Error", "2.5 y 1.5"],
+                correcta: 0
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué ocurre al ejecutar este código?",
+                codigo: `public abstract class Figura {
+    public abstract double calcularArea();
+}
+public class Main {
+    public static void main(String[] args) {
+        Figura f = new Figura();
+    }
+}`,
+                opciones: ["Se crea el objeto correctamente", "Error de compilación", "Se crea null", "Depende del sistema"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué se imprime?",
+                codigo: `public class Vehiculo {
+    public void arrancar() {
+        System.out.println("Vehiculo arrancando");
+    }
+}
+public class Coche extends Vehiculo {
+    @Override
+    public void arrancar() {
+        System.out.println("Coche arrancando");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Vehiculo v = new Vehiculo();
+        Coche c = new Coche();
+        v.arrancar();
+        c.arrancar();
+    }
+}`,
+                opciones: [
+                    "Vehiculo arrancando y Coche arrancando",
+                    "Coche arrancando y Coche arrancando",
+                    "Vehiculo arrancando y Vehiculo arrancando",
+                    "Error de compilación"
+                ],
+                correcta: 0
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué valor tiene la edad después de ejecutar setEdad(-5)?",
+                codigo: `public class Persona {
+    private int edad;
+    public void setEdad(int edad) {
+        if (edad > 0) {
+            this.edad = edad;
+        }
+    }
+    public int getEdad() { return edad; }
+}
+Persona p = new Persona();
+p.setEdad(25);
+p.setEdad(-5);
+System.out.println(p.getEdad());`,
+                opciones: ["-5", "0", "25", "Error"],
+                correcta: 2
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué se imprimirá?",
+                codigo: `public interface Mascota {
+    String getNombre();
+}
+public class Perro implements Mascota {
+    private String nombre;
+    public Perro(String nombre) { this.nombre = nombre; }
+    @Override
+    public String getNombre() { return nombre; }
+}
+public class Main {
+    public static void main(String[] args) {
+        Mascota m = new Perro("Luna");
+        System.out.println(m.getNombre());
+    }
+}`,
+                opciones: ["Luna", "null", "Error", "Mascota"],
+                correcta: 0
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Cuál es el resultado?",
+                codigo: `ArrayList<String> lista = new ArrayList<>();
+lista.add("Hola");
+lista.add("Mundo");
+lista.add("Java");
+System.out.println(lista.get(1));`,
+                opciones: ["Hola", "Mundo", "Java", "Error"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué se obtiene con este código?",
+                codigo: `HashMap<String, Integer> mapa = new HashMap<>();
+mapa.put("a", 1);
+mapa.put("b", 2);
+mapa.put("a", 10);
+System.out.println(mapa.get("a"));`,
+                opciones: ["1", "10", "2", "null"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué hace este código?",
+                codigo: `HashSet<String> set = new HashSet<>();
+set.add("Rojo");
+set.add("Azul");
+set.add("Rojo");
+System.out.println(set.size());`,
+                opciones: ["1", "2", "3", "Error"],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué estructura de datos usarías para almacenar elementos únicos sin duplicados?",
+                opciones: ["ArrayList", "HashMap", "HashSet", "LinkedList"],
+                correcta: 2
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué estructura de datos usarías para buscar por clave-valor rápidamente?",
+                opciones: ["ArrayList", "HashSet", "HashMap", "Cola"],
+                correcta: 2
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué se imprime?",
+                codigo: `public class Padre {
+    public void metodo() {
+        System.out.println("Padre");
+    }
+}
+public class Hija extends Padre {
+    @Override
+    public void metodo() {
+        System.out.println("Hija");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Padre p = new Hija();
+        p.metodo();
+    }
+}`,
+                opciones: ["Padre", "Hija", "PadreHija", "Error"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Cuál es el resultado?",
+                codigo: `public class Test {
+    public static void main(String[] args) {
+        String[] arr = {"A", "B", "C"};
+        for (String s : arr) {
+            System.out.print(s);
+        }
+    }
+}`,
+                opciones: ["ABC", "A B C", "Error", "null"],
+                correcta: 0
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué hace este código?",
+                codigo: `ArrayList<Integer> nums = new ArrayList<>();
+nums.add(10);
+nums.add(20);
+nums.add(30);
+nums.remove(1);
+System.out.println(nums.size());`,
+                opciones: ["2", "3", "1", "Error"],
+                correcta: 0
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué annotation se usa para sobreescribir un método?",
+                opciones: ["@Overload", "@Override", "@Inherit", "@Polymorphism"],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué significa que Java tenga enlazado dinámico?",
+                opciones: [
+                    "Los métodos static se ejecutan más rápido",
+                    "En tiempo de ejecución se decide qué método ejecutar (polimorfismo)",
+                    "Los constructores se ejecutan primero",
+                    "Los atributos se enlazan antes que los métodos"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué se imprime?",
+                codigo: `public class A {
+    public A() { System.out.println("A"); }
+}
+public class B extends A {
+    public B() { System.out.println("B"); }
+}
+public class Main {
+    public static void main(String[] args) {
+        B obj = new B();
+    }
+}`,
+                opciones: ["B", "A B", "A", "Error"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Cuál es la salida?",
+                codigo: `public interface I1 {
+    void metodo();
+}
+public class Clase implements I1 {
+    public void metodo() {
+        System.out.println("Implementado");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        I1 i = new Clase();
+        i.metodo();
+    }
+}`,
+                opciones: ["Implementado", "Error", "null", "I1"],
+                correcta: 0
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Cuál es el orden correcto de los modificadores de acceso de más restrictivo a menos?",
+                opciones: [
+                    "public, protected, default, private",
+                    "private, default, protected, public",
+                    "default, private, protected, public",
+                    "protected, private, public, default"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Una interfaz en Java 8+ puede tener?",
+                opciones: [
+                    "Solo métodos abstractos",
+                    "Métodos default y static",
+                    "Solo atributos static",
+                    "Constructores"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué retorna este código?",
+                codigo: `public class Fabrica {
+    public static Persona crearPersona(String nombre) {
+        return new Persona(nombre);
+    }
+}
+// ¿Qué tipo de método es crearPersona?`,
+                opciones: ["Instancia", "Estático (static)", "Constructor", "Abstracto"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué se imprime?",
+                codigo: `String s1 = "Hola";
+String s2 = "Hola";
+String s3 = new String("Hola");
+System.out.println(s1 == s2);
+System.out.println(s1 == s3);`,
+                opciones: ["true y true", "true y false", "false y true", "false y false"],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué es el principio de responsabilidad única?",
+                opciones: [
+                    "Cada clase debe tener un solo constructor",
+                    "Cada clase debe tener una sola responsabilidad",
+                    "Cada método debe hacer una sola cosa",
+                    "Solo se puede heredar de una clase"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué significa 'bajo acoplamiento'?",
+                opciones: [
+                    "Que las clases tienen muchos métodos",
+                    "Que las clases dependen poco unas de otras",
+                    "Que hay poca herencia",
+                    "Que el código es pequeño"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "teoria",
+                enunciado: "¿Qué significa 'alta cohesión'?",
+                opciones: [
+                    "Que una clase tiene muchos atributos",
+                    "Que cada clase tiene una misión clara y focused",
+                    "Que hay mucha herencia",
+                    "Que el código es difícil de mantener"
+                ],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Cuál es la salida?",
+                codigo: `ArrayList<String> lista = new ArrayList<>();
+lista.add("X");
+lista.add("Y");
+lista.add("Z");
+lista.set(1, "W");
+for (String s : lista) {
+    System.out.print(s);
+}`,
+                opciones: ["XYZ", "XWZ", "WYZ", "XZ"],
+                correcta: 1
+            },
+            {
+                tipo: "practica",
+                enunciado: "¿Qué retorna contains() en un HashSet?",
+                codigo: `HashSet<Integer> set = new HashSet<>();
+set.add(1);
+set.add(2);
+set.add(3);
+System.out.println(set.contains(2));`,
+                opciones: ["true", "false", "2", "null"],
+                correcta: 0
+            }
+        ];
+
+        // Generar preguntas dinámicamente
+        const form = document.getElementById('testForm');
+        const letras = ['A', 'B', 'C', 'D'];
+
+        preguntas.forEach((preg, index) => {
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.id = `pregunta-${index}`;
+            
+            const tipoHTML = preg.tipo === 'teoria' ? 'Teoría' : 'Práctica';
+            
+            let html = `
+                <div class="question-header">
+                    <span class="question-number">Pregunta ${index + 1}</span>
+                    <span class="question-type ${preg.tipo}">${tipoHTML}</span>
+                </div>
+                <div class="question-text">${preg.enunciado}</div>
+            `;
+            
+            if (preg.codigo) {
+                html += `<div class="code-block">${preg.codigo}</div>`;
+            }
+            
+            html += '<div class="options">';
+            
+            preg.opciones.forEach((opcion, opIndex) => {
+                html += `
+                    <div class="option" onclick="seleccionarOpcion(${index}, ${opIndex})">
+                        <span class="option-letter">${letras[opIndex]}</span>
+                        ${opcion}
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            div.innerHTML = html;
+            form.appendChild(div);
+        });
+
+        let respuestas = new Array(50).fill(null);
+
+        function seleccionarOpcion(pregIndex, opIndex) {
+            const opciones = document.querySelectorAll(`#pregunta-${pregIndex} .option`);
+            opciones.forEach(op => op.classList.remove('selected'));
+            opciones[opIndex].classList.add('selected');
+            respuestas[pregIndex] = opIndex;
+            actualizarProgreso();
+        }
+
+        function actualizarProgreso() {
+            const contestadas = respuestas.filter(r => r !== null).length;
+            const porcentaje = (contestadas / 50) * 100;
+            document.getElementById('progress').style.width = porcentaje + '%';
+            document.getElementById('progress').textContent = `${contestadas}/50`;
+        }
+
+        function calcularResultado() {
+            let correctas = 0;
+            
+            preguntas.forEach((preg, index) => {
+                const opciones = document.querySelectorAll(`#pregunta-${index} .option`);
+                
+                opciones.forEach((op, opIndex) => {
+                    op.classList.remove('selected', 'correct', 'incorrect');
+                    
+                    if (opIndex === preg.correcta) {
+                        op.classList.add('correct');
+                    }
+                    
+                    if (respuestas[index] === opIndex && opIndex !== preg.correcta) {
+                        op.classList.add('incorrect');
+                    }
+                });
+                
+                if (respuestas[index] === preg.correcta) {
+                    correctas++;
+                }
+            });
+
+            document.getElementById('score').textContent = correctas;
+            document.getElementById('correctas').textContent = correctas;
+            document.getElementById('incorrectas').textContent = 50 - correctas;
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function mostrarRespuestas() {
+            preguntas.forEach((preg, index) => {
+                const opciones = document.querySelectorAll(`#pregunta-${index} .option`);
+                opciones.forEach((op, opIndex) => {
+                    if (opIndex === preg.correcta) {
+                        op.classList.add('correct');
+                    }
+                });
+            });
+        }
+
+        function reiniciarTest() {
+            respuestas = new Array(50).fill(null);
+            document.querySelectorAll('.option').forEach(op => {
+                op.classList.remove('selected', 'correct', 'incorrect');
+            });
+            actualizarProgreso();
+            document.getElementById('results').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
