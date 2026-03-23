@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios UML Resueltos - Diagramas de Clases</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; }
+        
+        h1 {
+            text-align: center;
+            color: #fff;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .nav a {
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .nav a:hover { background: #2980b9; }
+        
+        .ejercicio {
+            background: #16213e;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #0f3460;
+        }
+        
+        .ejercicio-header {
+            background: linear-gradient(135deg, #e94560, #c23a51);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px 10px 0 0;
+            margin: -25px -25px 25px -25px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .enunciado {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .enunciado h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .solucion {
+            background: #0f3460;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .solucion h3 {
+            color: #27ae60;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        
+        /* UML CLASS DIAGRAM STYLES */
+        .uml-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            position: relative;
+            min-height: 200px;
+        }
+        
+        .uml-class {
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 5px;
+            min-width: 200px;
+            max-width: 280px;
+            font-family: monospace;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .class-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .class-header.abstract {
+            font-style: italic;
+        }
+        
+        .class-header.interface {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        
+        .class-section {
+            padding: 10px;
+            border-top: 2px solid #000;
+            font-size: 0.9em;
+            color: #333;
+        }
+        
+        .class-section:first-of-type {
+            border-top: none;
+        }
+        
+        .attribute {
+            padding: 4px 0;
+        }
+        
+        .method {
+            padding: 4px 0;
+        }
+        
+        .visibility-public { color: #27ae60; font-weight: bold; }
+        .visibility-private { color: #e74c3c; font-weight: bold; }
+        .visibility-protected { color: #3498db; font-weight: bold; }
+        .visibility-package { color: #9b59b6; font-weight: bold; }
+        
+        .static { text-decoration: underline; }
+        .abstract-method { font-style: italic; }
+        
+        /* ARROWS AND CONNECTORS */
+        .arrow-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .association-line {
+            position: absolute;
+            background: #333;
+            height: 3px;
+        }
+        
+        .arrow-horizontal {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .arrow-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Inheritance Arrow */
+        .inheritance-arrow {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .arrow-line {
+            background: #333;
+            height: 4px;
+            position: relative;
+        }
+        
+        .arrow-head-hollow {
+            width: 0;
+            height: 0;
+            border-left: 12px solid #333;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+        
+        .arrow-head-filled {
+            width: 0;
+            height: 0;
+            border-left: 12px solid #333;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            position: relative;
+        }
+        
+        .arrow-head-filled::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: -8px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid white;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+        }
+        
+        /* Composition Diamond */
+        .diamond-filled {
+            width: 20px;
+            height: 20px;
+            background: #333;
+            transform: rotate(45deg);
+        }
+        
+        .diamond-empty {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 3px solid #333;
+            transform: rotate(45deg);
+        }
+        
+        /* Dashed Arrow */
+        .dashed-line {
+            background: #333;
+            height: 3px;
+            border-style: dashed;
+        }
+        
+        /* Labels */
+        .relationship-label {
+            background: #fff;
+            padding: 5px 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 0.85em;
+            color: #333;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        
+        .multiplicity {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        /* Layout helpers */
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .gap-20 { gap: 20px; }
+        .gap-40 { gap: 40px; }
+        .gap-60 { gap: 60px; }
+        .gap-80 { gap: 80px; }
+        
+        .mt-20 { margin-top: 20px; }
+        .mt-40 { margin-top: 40px; }
+        
+        /* Code blocks */
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            color: #d4d4d4;
+        }
+        
+        .keyword { color: #569cd6; }
+        .class-name { color: #4ec9b0; }
+        .string { color: #ce9178; }
+        .comment { color: #6a9955; }
+        
+        /* Explanation */
+        .explanation {
+            background: #1a1a2e;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .explanation h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        
+        /* Legend */
+        .legend {
+            background: #0f3460;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .legend h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-symbol {
+            min-width: 60px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            margin-top: 40px;
+        }
+        
+        footer a {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DIAGRAMAS UML RESUELTOS<br><small>Ejercicios con Soluciones Visuales</small></h1>
+        
+        <div class="nav">
+            <a href="ejercicios.html">Ejercicios Test</a>
+            <a href="soluciones.html">Soluciones Test</a>
+            <a href="resumen.html">Resumen</a>
+        </div>
+        
+        <!-- LEYENDA -->
+        <div class="legend">
+            <h3>Leyenda - Símbolos UML</h3>
+            <div class="flex-row gap-40">
+                <div class="legend-item">
+                    <div class="legend-symbol">
+                        <div class="diamond-filled"></div>
+                    </div>
+                    <span>Composición (rombo negro)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-symbol">
+                        <div class="diamond-empty"></div>
+                    </div>
+                    <span>Agregación (rombo vacío)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-symbol">
+                        <div style="border-left: 12px solid #333; border-top: 8px solid transparent; border-bottom: 8px solid transparent; width: 0; height: 0;"></div>
+                    </div>
+                    <span>Herencia (flecha blanca)</span>
+                </div>
+            </div>
+            <div class="flex-row gap-40 mt-20">
+                <div class="legend-item">
+                    <div class="legend-symbol">
+                        <span style="color:#27ae60; font-weight:bold;">+</span>
+                    </div>
+                    <span>Public</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-symbol">
+                        <span style="color:#e74c3c; font-weight:bold;">-</span>
+                    </div>
+                    <span>Private</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-symbol">
+                        <span style="color:#3498db; font-weight:bold;">#</span>
+                    </div>
+                    <span>Protected</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-symbol">
+                        <span style="text-decoration:underline;">subrayado</span>
+                    </div>
+                    <span>Static</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 1: Figura Abstracta con Rectángulo y Círculo -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 1 - Clase Abstracta con Herencia</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Dibuja el diagrama UML de las siguientes clases:</p>
+                <div class="code-block">
+                    <pre><span class="keyword">public abstract class</span> <span class="class-name">Figura</span> {
+    <span class="keyword">protected</span> String color;
+    
+    <span class="keyword">public</span> <span class="class-name">Figura</span>(String color) { ... }
+    <span class="keyword">public abstract double</span> calcularArea();
+}
+
+<span class="keyword">public class</span> <span class="class-name">Rectangulo</span> <span class="keyword">extends</span> <span class="class-name">Figura</span> {
+    <span class="keyword">private</span> double base;
+    <span class="keyword">private</span> double altura;
+    
+    <span class="keyword">public</span> <span class="class-name">Rectangulo</span>(String, double, double) { ... }
+    <span class="keyword">public double</span> calcularArea() { ... }
+}</pre>
+                </div>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram">
+                    <!-- Figura Abstracta -->
+                    <div class="uml-class" style="position: relative;">
+                        <div class="class-header abstract">Figura</div>
+                        <div class="class-section">
+                            <div class="attribute"><span class="visibility-protected">#</span> color: String</div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> Figura(color: String)</div>
+                            <div class="method abstract-method"><span class="visibility-public">+</span> calcularArea(): double</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flecha de Herencia -->
+                    <div class="flex-col" style="min-width: 80px;">
+                        <svg width="80" height="50" style="overflow: visible;">
+                            <defs>
+                                <marker id="arrowHead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="white" stroke="black" stroke-width="1"/>
+                                </marker>
+                            </defs>
+                            <line x1="0" y1="25" x2="70" y2="25" stroke="black" stroke-width="2"/>
+                            <polygon points="70,25 60,20 60,30" fill="white" stroke="black" stroke-width="2"/>
+                        </svg>
+                        <span style="color: #333; font-weight: bold;">extends</span>
+                    </div>
+                    
+                    <!-- Rectangulo -->
+                    <div class="uml-class">
+                        <div class="class-header">Rectangulo</div>
+                        <div class="class-section">
+                            <div class="attribute"><span class="visibility-private">-</span> base: double</div>
+                            <div class="attribute"><span class="visibility-private">-</span> altura: double</div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> Rectangulo(c: String, b: double, a: double)</div>
+                            <div class="method"><span class="visibility-public">+</span> calcularArea(): double</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li><strong>Figura</strong> es abstracta (nombre en cursiva)</li>
+                        <li><strong>calcularArea()</strong> es abstracto (cursiva) en Figura</li>
+                        <li><strong>Rectangulo</strong> hereda de Figura (extends)</li>
+                        <li>La flecha con triángulo hueco indica <strong>herencia/generalización</strong></li>
+                        <li>Rectangulo implementa calcularArea()</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 2: Vehículo con Composición -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 2 - Composición (Parte de)</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Modela un sistema donde un <strong>Coche</strong> tiene un <strong>Motor</strong>. El motor no puede existir sin el coche.</p>
+                <div class="code-block">
+                    <pre><span class="keyword">public class</span> <span class="class-name">Coche</span> {
+    <span class="keyword">private</span> String marca;
+    <span class="keyword">private</span> <span class="class-name">Motor</span> motor;
+    
+    <span class="keyword">public</span> <span class="class-name">Coche</span>(String marca, <span class="class-name">Motor</span> motor) { ... }
+    <span class="keyword">public void</span> arrancar() { ... }
+}
+
+<span class="keyword">public class</span> <span class="class-name">Motor</span> {
+    <span class="keyword">private</span> int cilindrada;
+    
+    <span class="keyword">public</span> <span class="class-name">Motor</span>(int cilindrada) { ... }
+}</pre>
+                </div>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram">
+                    <!-- Coche -->
+                    <div class="uml-class">
+                        <div class="class-header">Coche</div>
+                        <div class="class-section">
+                            <div class="attribute"><span class="visibility-private">-</span> marca: String</div>
+                            <div class="attribute"><span class="visibility-private">-</span> motor: Motor</div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> Coche(marca: String, motor: Motor)</div>
+                            <div class="method"><span class="visibility-public">+</span> arrancar(): void</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flecha de Composición -->
+                    <div class="flex-col" style="min-width: 100px;">
+                        <svg width="100" height="80" style="overflow: visible;">
+                            <!-- Línea horizontal al rombo -->
+                            <line x1="0" y1="40" x2="30" y2="40" stroke="black" stroke-width="2"/>
+                            <!-- Rombo (composición) -->
+                            <polygon points="30,25 30,55 50,40" fill="black"/>
+                            <!-- Línea del rombo a Motor -->
+                            <line x1="50" y1="40" x2="100" y2="40" stroke="black" stroke-width="2"/>
+                        </svg>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <span class="multiplicity">1</span>
+                            <span style="color: #333; font-size: 0.85em;">"tiene un"</span>
+                            <span class="multiplicity">1</span>
+                        </div>
+                        <span style="color: #333; font-weight: bold;">composición</span>
+                    </div>
+                    
+                    <!-- Motor -->
+                    <div class="uml-class">
+                        <div class="class-header">Motor</div>
+                        <div class="class-section">
+                            <div class="attribute"><span class="visibility-private">-</span> cilindrada: int</div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> Motor(cilindrada: int)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li><strong>Composición</strong>: El rombo negro indica ciclo de vida dependiente</li>
+                        <li>Si el Coche se destruye, el Motor también se destruye</li>
+                        <li>Multiplicidad <strong>1..1</strong> (obligatorio) en ambos lados</li>
+                        <li>Relación "TIENE UN" o "PARTE DE"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 3: Biblioteca con Agregación -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 3 - Agregación (Tiene un - ciclo independiente)</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Modela una <strong>Biblioteca</strong> que contiene <strong>Libros</strong>. Los libros pueden existir independientemente de la biblioteca.</p>
+                <div class="code-block">
+                    <pre><span class="keyword">public class</span> <span class="class-name">Biblioteca</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private</span> <span class="class-name">ArrayList</span>&lt;<span class="class-name">Libro</span>&gt; libros;
+    
+    <span class="keyword">public</span> <span class="class-name">Biblioteca</span>(String nombre) { ... }
+    <span class="keyword">public void</span> agregarLibro(<span class="class-name">Libro</span> libro) { ... }
+}
+
+<span class="keyword">public class</span> <span class="class-name">Libro</span> {
+    <span class="keyword">private</span> String titulo;
+    <span class="keyword">private</span> String autor;
+    
+    <span class="keyword">public</span> <span class="class-name">Libro</span>(String titulo, String autor) { ... }
+}</pre>
+                </div>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram">
+                    <!-- Biblioteca -->
+                    <div class="uml-class">
+                        <div class="class-header">Biblioteca</div>
+                        <div class="class-section">
+                            <div class="attribute"><span class="visibility-private">-</span> nombre: String</div>
+                            <div class="attribute"><span class="visibility-private">-</span> libros: Libro[0..*]</div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> Biblioteca(nombre: String)</div>
+                            <div class="method"><span class="visibility-public">+</span> agregarLibro(libro: Libro): void</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flecha de Agregación -->
+                    <div class="flex-col" style="min-width: 100px;">
+                        <svg width="100" height="80" style="overflow: visible;">
+                            <line x1="0" y1="40" x2="30" y2="40" stroke="black" stroke-width="2"/>
+                            <!-- Rombo vacío (agregación) -->
+                            <polygon points="30,25 30,55 50,40" fill="white" stroke="black" stroke-width="2"/>
+                            <line x1="50" y1="40" x2="100" y2="40" stroke="black" stroke-width="2"/>
+                        </svg>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <span class="multiplicity">1</span>
+                            <span style="color: #333; font-size: 0.85em;">"contiene"</span>
+                            <span class="multiplicity">0..*</span>
+                        </div>
+                        <span style="color: #333; font-weight: bold;">agregación</span>
+                    </div>
+                    
+                    <!-- Libro -->
+                    <div class="uml-class">
+                        <div class="class-header">Libro</div>
+                        <div class="class-section">
+                            <div class="attribute"><span class="visibility-private">-</span> titulo: String</div>
+                            <div class="attribute"><span class="visibility-private">-</span> autor: String</div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> Libro(titulo: String, autor: String)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li><strong>Agregación</strong>: El rombo VACÍO indica ciclo de vida independiente</li>
+                        <li>Los libros pueden existir sin la biblioteca (venderlos, prestarlos, etc.)</li>
+                        <li>Multiplicidad <strong>0..*</strong> (0 o más libros)</li>
+                        <li>Libro[0..*] indica colección multivaluada</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 4: Interfaz -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 4 - Interfaz e Implementación</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Crea una interfaz <strong>Volador</strong> y una clase <strong>Avion</strong> que la implemente.</p>
+                <div class="code-block">
+                    <pre><span class="keyword">public interface</span> <span class="class-name">Volador</span> {
+    <span class="keyword">void</span> volar();
+    <span class="keyword">int</span> getAltitude();
+}
+
+<span class="keyword">public class</span> <span class="class-name">Avion</span> <span class="keyword">implements</span> <span class="class-name">Volador</span> {
+    <span class="keyword">private</span> <span class="keyword">int</span> altitude;
+    
+    <span class="keyword">public void</span> volar() { ... }
+    <span class="keyword">public int</span> getAltitude() { ... }
+}</pre>
+                </div>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram">
+                    <!-- Volador Interfaz -->
+                    <div class="uml-class">
+                        <div class="class-header interface">&laquo;interface&raquo; Volador</div>
+                        <div class="class-section">
+                            <div class="method abstract-method"><span class="visibility-public">+</span> volar(): void</div>
+                            <div class="method abstract-method"><span class="visibility-public">+</span> getAltitude(): int</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flecha de Realización -->
+                    <div class="flex-col" style="min-width: 80px;">
+                        <svg width="80" height="50" style="overflow: visible;">
+                            <line x1="0" y1="25" x2="70" y2="25" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                            <polygon points="70,25 60,20 60,30" fill="white" stroke="black" stroke-width="2"/>
+                        </svg>
+                        <span style="color: #333; font-weight: bold;">implements</span>
+                    </div>
+                    
+                    <!-- Avion -->
+                    <div class="uml-class">
+                        <div class="class-header">Avion</div>
+                        <div class="class-section">
+                            <div class="attribute"><span class="visibility-private">-</span> altitude: int</div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> volar(): void</div>
+                            <div class="method"><span class="visibility-public">+</span> getAltitude(): int</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li><strong>Interfaz</strong>: Se marca con <code>&laquo;interface&raquo;</code></li>
+                        <li>Los métodos de la interfaz son abstractos (cursiva)</li>
+                        <li><strong>Realización</strong>: Flecha discontinua con triángulo hueco</li>
+                        <li>Avion implementa TODOS los métodos de Volador</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 5: Herencia Múltiple con Interfaces -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 5 - Herencia y Múltiples Interfaces</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Modela un sistema con:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Clase abstracta <strong>Animal</strong></li>
+                    <li>Subclases <strong>Perro</strong> y <strong>Gato</strong></li>
+                    <li>Interfaces <strong>Mascota</strong> y <strong>Volador</strong></li>
+                </ul>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram" style="flex-direction: column; gap: 40px;">
+                    
+                    <!-- Primera fila: Animal y Mascota -->
+                    <div class="flex-row gap-60" style="justify-content: center; align-items: flex-start;">
+                        <!-- Animal Abstracta -->
+                        <div class="uml-class">
+                            <div class="class-header abstract">Animal</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-protected">#</span> nombre: String</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method abstract-method"><span class="visibility-public">+</span> hablar(): void</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Flechas de Animal a Perro y Gato -->
+                        <div style="position: relative; min-width: 150px;">
+                            <svg width="150" height="120" style="overflow: visible;">
+                                <!-- Línea vertical desde Animal -->
+                                <line x1="75" y1="60" x2="75" y2="0" stroke="black" stroke-width="2"/>
+                                <!-- Línea horizontal -->
+                                <line x1="0" y1="0" x2="150" y2="0" stroke="black" stroke-width="2"/>
+                                <!-- Flecha a Perro -->
+                                <line x1="0" y1="0" x2="0" y2="40" stroke="black" stroke-width="2"/>
+                                <polygon points="0,40 -6,30 6,30" fill="white" stroke="black" stroke-width="2"/>
+                                <!-- Flecha a Gato -->
+                                <line x1="150" y1="0" x2="150" y2="40" stroke="black" stroke-width="2"/>
+                                <polygon points="150,40 144,30 156,30" fill="white" stroke="black" stroke-width="2"/>
+                            </svg>
+                            <span style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); color: #333; font-weight: bold; font-size: 0.85em;">extends</span>
+                        </div>
+                        
+                        <!-- Mascota Interfaz -->
+                        <div class="uml-class">
+                            <div class="class-header interface">&laquo;interface&raquo; Mascota</div>
+                            <div class="class-section">
+                                <div class="method abstract-method"><span class="visibility-public">+</span> jugar(): void</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Segunda fila: Perro y Gato -->
+                    <div class="flex-row gap-60" style="justify-content: center; align-items: flex-start;">
+                        <!-- Perro -->
+                        <div class="uml-class">
+                            <div class="class-header">Perro</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-private">-</span> raza: String</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method"><span class="visibility-public">+</span> hablar(): void</div>
+                                <div class="method"><span class="visibility-public">+</span> jugar(): void</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Gato -->
+                        <div class="uml-class">
+                            <div class="class-header">Gato</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-private">-</span> color: String</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method"><span class="visibility-public">+</span> hablar(): void</div>
+                                <div class="method"><span class="visibility-public">+</span> jugar(): void</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conexiones a Mascota -->
+                    <svg width="100%" height="60" style="position: absolute; top: 50%; left: 0; overflow: visible; pointer-events: none;">
+                        <line x1="15%" y1="0" x2="15%" y2="50%" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                        <polygon points="15%,50% 15%-6,50%-10 15%+6,50%-10" fill="white" stroke="black" stroke-width="2"/>
+                        <line x1="85%" y1="0" x2="85%" y2="50%" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                        <polygon points="85%,50% 85%-6,50%-10 85%+6,50%-10" fill="white" stroke="black" stroke-width="2"/>
+                        <line x1="15%" y1="0" x2="85%" y2="0" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                    </svg>
+                    <span style="position: absolute; top: calc(50% - 20px); left: 50%; transform: translateX(-50%); color: #333; font-weight: bold; font-size: 0.85em;">implements</span>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li><strong>Animal</strong> es abstracta (herencia común)</li>
+                        <li><strong>Perro</strong> y <strong>Gato</strong> heredan de Animal (extends)</li>
+                        <li>Ambas implementan <strong>Mascota</strong> (implements)</li>
+                        <li>Flecha discontinua = interfaz, Flecha sólida = herencia</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 6: Asociación con Multiplicidad N a N -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 6 - Asociación N a N con Clase de Asociación</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Modela un sistema donde <strong>Estudiantes</strong> pueden matricularse en múltiples <strong>Cursos</strong>, y viceversa.</p>
+                <div class="code-block">
+                    <pre><span class="keyword">public class</span> <span class="class-name">Estudiante</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private</span> <span class="class-name">ArrayList</span>&lt;<span class="class-name">Matricula</span>&gt; matriculas;
+}
+
+<span class="keyword">public class</span> <span class="class-name">Curso</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private</span> <span class="class-name">ArrayList</span>&lt;<span class="class-name">Matricula</span>&gt; matriculas;
+}
+
+<span class="keyword">public class</span> <span class="class-name">Matricula</span> {
+    <span class="keyword">private</span> String fecha;
+    <span class="keyword">private</span> <span class="keyword">double</span> nota;
+    
+    <span class="keyword">public</span> <span class="class-name">Matricula</span>(String fecha) { ... }
+}</pre>
+                </div>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram" style="flex-direction: column; gap: 30px;">
+                    
+                    <!-- Fila superior: Estudiante y Curso -->
+                    <div class="flex-row gap-80" style="justify-content: center;">
+                        
+                        <!-- Estudiante -->
+                        <div class="uml-class">
+                            <div class="class-header">Estudiante</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-private">-</span> nombre: String</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method"><span class="visibility-public">+</span> getNombre(): String</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Curso -->
+                        <div class="uml-class">
+                            <div class="class-header">Curso</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-private">-</span> nombre: String</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method"><span class="visibility-public">+</span> getNombre(): String</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conexiones a Matricula -->
+                    <svg width="100%" height="100" style="position: relative; overflow: visible;">
+                        <!-- Línea desde Estudiante -->
+                        <line x1="calc(16.67% - 30px)" y1="0" x2="calc(16.67% - 30px)" y2="60" stroke="black" stroke-width="2"/>
+                        <line x1="calc(16.67% - 30px)" y1="60" x2="calc(50%)" y2="60" stroke="black" stroke-width="2"/>
+                        <line x1="calc(50%)" y1="60" x2="calc(50%)" y2="80" stroke="black" stroke-width="2"/>
+                        <polygon points="calc(50%),100 calc(50%)-6,90 calc(50%)+6,90" fill="white" stroke="black" stroke-width="2"/>
+                        
+                        <!-- Línea desde Curso -->
+                        <line x1="calc(83.33% + 30px)" y1="0" x2="calc(83.33% + 30px)" y2="60" stroke="black" stroke-width="2"/>
+                        <line x1="calc(83.33% + 30px)" y1="60" x2="calc(50%)" y2="60" stroke="black" stroke-width="2"/>
+                        
+                        <!-- Multiplicidades -->
+                        <circle cx="calc(16.67% - 30px)" cy="5" r="5" fill="black"/>
+                        <text x="calc(16.67% - 30px)" y="-10" text-anchor="middle" fill="#e74c3c" font-weight="bold" font-size="14">0..*</text>
+                        
+                        <circle cx="calc(83.33% + 30px)" cy="5" r="5" fill="black"/>
+                        <text x="calc(83.33% + 30px)" y="-10" text-anchor="middle" fill="#e74c3c" font-weight="bold" font-size="14">0..*</text>
+                    </svg>
+                    
+                    <!-- Matricula en el medio -->
+                    <div style="display: flex; justify-content: center;">
+                        <div class="uml-class" style="position: absolute; left: 50%; transform: translateX(-50%);">
+                            <div class="class-header" style="background: linear-gradient(135deg, #27ae60, #219a52);">Matricula</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-private">-</span> fecha: String</div>
+                                <div class="attribute"><span class="visibility-private">-</span> nota: double</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method"><span class="visibility-public">+</span> Matricula(fecha: String)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Labels -->
+                    <div class="flex-row" style="justify-content: space-between; padding: 0 15%;">
+                        <span class="relationship-label">0..* "se matricula en"</span>
+                        <span class="relationship-label">0..* "tiene"</span>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li>Relación <strong>N a N</strong> (muchos a muchos)</li>
+                        <li>Se resuelve con <strong>clase de asociación</strong>: Matricula</li>
+                        <li>Matricula conecta Estudiante y Curso con multiplicidad 0..*</li>
+                        <li>La clase de asociación tiene sus propios atributos (fecha, nota)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 7: Dependencia -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 7 - Dependencia (Usa)</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Modela donde una clase <strong>Cliente</strong> usa temporalmente una clase <strong>Calculadora</strong> para calcular su IMC.</p>
+                <div class="code-block">
+                    <pre><span class="keyword">public class</span> <span class="class-name">Cliente</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private double</span> peso, altura;
+    
+    <span class="keyword">public double</span> calcularIMC() {
+        <span class="class-name">Calculadora</span> calc = <span class="keyword">new</span> <span class="class-name">Calculadora</span>();
+        <span class="keyword">return</span> calc.dividir(peso, altura * altura);
+    }
+}
+
+<span class="keyword">public class</span> <span class="class-name">Calculadora</span> {
+    <span class="keyword">public double</span> dividir(<span class="keyword">double</span> a, <span class="keyword">double</span> b) {
+        <span class="keyword">return</span> a / b;
+    }
+}</pre>
+                </div>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram">
+                    <!-- Cliente -->
+                    <div class="uml-class">
+                        <div class="class-header">Cliente</div>
+                        <div class="class-section">
+                            <div class="attribute"><span class="visibility-private">-</span> nombre: String</div>
+                            <div class="attribute"><span class="visibility-private">-</span> peso: double</div>
+                            <div class="attribute"><span class="visibility-private">-</span> altura: double</div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> calcularIMC(): double</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flecha de Dependencia -->
+                    <div class="flex-col" style="min-width: 80px;">
+                        <svg width="80" height="50" style="overflow: visible;">
+                            <line x1="0" y1="25" x2="60" y2="25" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                            <polygon points="70,25 60,20 60,30" fill="white" stroke="black" stroke-width="2"/>
+                        </svg>
+                        <span class="relationship-label" style="font-size: 0.75em;">&laquo;uses&raquo;</span>
+                    </div>
+                    
+                    <!-- Calculadora -->
+                    <div class="uml-class">
+                        <div class="class-header">Calculadora</div>
+                        <div class="class-section">
+                            <div class="method"><span class="visibility-public">+</span> dividir(a: double, b: double): double</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li><strong>Dependencia</strong>: Relación TEMPORAL/PUNTUAL (usa)</li>
+                        <li>Cliente CREA un objeto de Calculadora dentro de un método</li>
+                        <li>Se representa con <strong>flecha discontinua</strong></li>
+                        <li>Si Calculadora cambia, podría afectar a Cliente, pero no al revés</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 8: Sistema de Gestión Completo -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 8 - Sistema de Gestión de Biblioteca (Ejercicio Completo)</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Implementa el siguiente diagrama UML:</p>
+                <div class="code-block">
+                    <pre><span class="comment">// Clase abstracta Material</span>
+<span class="keyword">public abstract class</span> <span class="class-name">Material</span> {
+    <span class="keyword">protected</span> String titulo;
+    <span class="keyword">protected</span> String autor;
+    
+    <span class="keyword">public abstract</span> String getTipo();
+}
+
+<span class="comment">// Clase Libro</span>
+<span class="keyword">public class</span> <span class="class-name">Libro</span> <span class="keyword">extends</span> <span class="class-name">Material</span> {
+    <span class="keyword">private</span> <span class="keyword">int</span> numPaginas;
+    
+    <span class="keyword">public</span> String getTipo() { <span class="keyword">return</span> "Libro"; }
+}
+
+<span class="comment">// Interfaz Prestable</span>
+<span class="keyword">public interface</span> <span class="class-name">Prestable</span> {
+    <span class="keyword">void</span> prestar();
+    <span class="keyword">void</span> devolver();
+}
+
+<span class="comment">// DVD implementa Prestable</span>
+<span class="keyword">public class</span> <span class="class-name">DVD</span> <span class="keyword">extends</span> <span class="class-name">Material</span> <span class="keyword">implements</span> <span class="class-name">Prestable</span> {
+    <span class="keyword">private</span> <span class="keyword">int</span> duracion;
+    
+    <span class="keyword">public</span> String getTipo() { <span class="keyword">return</span> "DVD"; }
+    <span class="keyword">public void</span> prestar() { ... }
+    <span class="keyword">public void</span> devolver() { ... }
+}</pre>
+                </div>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram" style="flex-direction: column; gap: 30px; padding: 30px;">
+                    
+                    <!-- Primera fila: Material (abstracta) y Prestable (interfaz) -->
+                    <div class="flex-row gap-80" style="justify-content: center; align-items: flex-start;">
+                        
+                        <!-- Material Abstracta -->
+                        <div class="uml-class">
+                            <div class="class-header abstract">Material</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-protected">#</span> titulo: String</div>
+                                <div class="attribute"><span class="visibility-protected">#</span> autor: String</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method abstract-method"><span class="visibility-public">+</span> getTipo(): String</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Prestable Interfaz -->
+                        <div class="uml-class">
+                            <div class="class-header interface">&laquo;interface&raquo; Prestable</div>
+                            <div class="class-section">
+                                <div class="method abstract-method"><span class="visibility-public">+</span> prestar(): void</div>
+                                <div class="method abstract-method"><span class="visibility-public">+</span> devolver(): void</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flechas de herencia a Libro y DVD -->
+                    <svg width="100%" height="60" style="position: relative; overflow: visible;">
+                        <!-- Línea vertical desde Material -->
+                        <line x1="calc(25% + 30px)" y1="0" x2="calc(25% + 30px)" y2="20" stroke="black" stroke-width="2"/>
+                        <!-- Línea horizontal -->
+                        <line x1="calc(16.67%)" y1="20" x2="calc(83.33%)" y2="20" stroke="black" stroke-width="2"/>
+                        <!-- Flecha a Libro -->
+                        <line x1="calc(16.67%)" y1="20" x2="calc(16.67%)" y2="40" stroke="black" stroke-width="2"/>
+                        <polygon points="calc(16.67%),60 calc(16.67%)-6,50 calc(16.67%)+6,50" fill="white" stroke="black" stroke-width="2"/>
+                        <text x="calc(16.67%)" y="15" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">extends</text>
+                        
+                        <!-- Flecha a DVD -->
+                        <line x1="calc(83.33%)" y1="20" x2="calc(83.33%)" y2="40" stroke="black" stroke-width="2"/>
+                        <polygon points="calc(83.33%),60 calc(83.33%)-6,50 calc(83.33%)+6,50" fill="white" stroke="black" stroke-width="2"/>
+                    </svg>
+                    
+                    <!-- Segunda fila: Libro y DVD -->
+                    <div class="flex-row gap-80" style="justify-content: center; align-items: flex-start;">
+                        
+                        <!-- Libro -->
+                        <div class="uml-class">
+                            <div class="class-header">Libro</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-private">-</span> numPaginas: int</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method"><span class="visibility-public">+</span> getTipo(): String</div>
+                            </div>
+                        </div>
+                        
+                        <!-- DVD -->
+                        <div class="uml-class">
+                            <div class="class-header">DVD</div>
+                            <div class="class-section">
+                                <div class="attribute"><span class="visibility-private">-</span> duracion: int</div>
+                            </div>
+                            <div class="class-section">
+                                <div class="method"><span class="visibility-public">+</span> getTipo(): String</div>
+                                <div class="method"><span class="visibility-public">+</span> prestar(): void</div>
+                                <div class="method"><span class="visibility-public">+</span> devolver(): void</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Flecha implements de DVD a Prestable -->
+                    <svg width="100%" height="60" style="position: relative; overflow: visible;">
+                        <!-- Curva desde DVD hasta Prestable -->
+                        <path d="M calc(83.33%) Q calc(83.33%) calc(100%) calc(50%) calc(100%)" stroke="black" stroke-width="2" stroke-dasharray="5,3" fill="none"/>
+                        <polygon points="calc(50%)-12,calc(100%)-6 calc(50%)+12,calc(100%)-6 calc(50%),calc(100%)" fill="white" stroke="black" stroke-width="2"/>
+                        <text x="calc(66%)" y="calc(100%)-15" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">implements</text>
+                    </svg>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li><strong>Material</strong> es abstracta (nombre y método en cursiva)</li>
+                        <li><strong>Libro</strong> hereda de Material (extends)</li>
+                        <li><strong>DVD</strong> hereda de Material e implementa Prestable (extends + implements)</li>
+                        <li><strong>Prestable</strong> es interfaz (estereotipo <<interface>>)</li>
+                        <li>Símbolos: <strong>+</strong>=public, <strong>-</strong>=private, <strong>#</strong>=protected</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 9: Enumeración -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 9 - Enumeración</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Crea una enumeración <strong>DiaSemana</strong> con los días de lunes a viernes.</p>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram">
+                    <div class="uml-class" style="min-width: 180px;">
+                        <div class="class-header" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">&laquo;enumeration&raquo;<br>DiaSemana</div>
+                        <div class="class-section" style="background: #f8f9fa;">
+                            <div class="attribute" style="color: #666;">LUNES</div>
+                            <div class="attribute" style="color: #666;">MARTES</div>
+                            <div class="attribute" style="color: #666;">MIERCOLES</div>
+                            <div class="attribute" style="color: #666;">JUEVES</div>
+                            <div class="attribute" style="color: #666;">VIERNES</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li>Se marca con estereotipo <code>&laquo;enumeration&raquo;</code></li>
+                        <li>Los valores van en <strong>MAYÚSCULAS</strong></li>
+                        <li>En Java: <code>public enum DiaSemana { LUNES, MARTES, ... }</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 10: Clase de Utilidad -->
+        <div class="ejercicio">
+            <div class="ejercicio-header">EJERCICIO 10 - Clase de Utilidad (Utility)</div>
+            
+            <div class="enunciado">
+                <h3>ENUNCIADO:</h3>
+                <p>Crea una clase de utilidad <strong>MathUtils</strong> con métodos estáticos.</p>
+            </div>
+            
+            <div class="solucion">
+                <h3>SOLUCIÓN:</h3>
+                <div class="uml-diagram">
+                    <div class="uml-class" style="min-width: 200px;">
+                        <div class="class-header" style="background: linear-gradient(135deg, #e67e22, #d35400);">&laquo;utility&raquo;<br>MathUtils</div>
+                        <div class="class-section">
+                            <div class="attribute static"><span class="visibility-private">-</span> PI: double <span style="color: #888;">= 3.14159</span></div>
+                        </div>
+                        <div class="class-section">
+                            <div class="method static"><span class="visibility-public">+</span> sumar(a: int, b: int): int</div>
+                            <div class="method static"><span class="visibility-public">+</span> restar(a: int, b: int): int</div>
+                            <div class="method static"><span class="visibility-public">+</span> getPI(): double</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h4>Explicación:</h4>
+                    <ul>
+                        <li>Se marca con estereotipo <code>&laquo;utility&raquo;</code></li>
+                        <li>Todos los atributos y métodos son <strong>static</strong> (subrayados)</li>
+                        <li>No se instancian objetos de esta clase</li>
+                        <li>En Java: <code>public class MathUtils { public static int sumar(...) { ... } }</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Archivos relacionados:</strong></p>
+            <p><a href="ejercicios.html">Ejercicios Test</a> | <a href="soluciones.html">Soluciones Test</a> | <a href="resumen.html">Resumen</a></p>
+        </footer>
+    </div>
+</body>
+</html>
