@@ -1,0 +1,191 @@
+# EQUALS() - Comparar Objetos en Java
+
+## equals() vs ==
+
+```java
+Persona p1 = new Persona("Ana", 25);
+Persona p2 = new Persona("Ana", 25);
+Persona p3 = p1;
+
+p1 == p2     // false (diferentes objetos en memoria)
+p1 == p3     // true (misma referencia)
+p1.equals(p2) // ¿? (depende de cómo esté implementado)
+```
+
+| Operador/Método | Compara |
+|-----------------|---------|
+| `==` | Si son el **mismo objeto** en memoria (referencia) |
+| `equals()` | Si tienen el **mismo contenido** |
+
+---
+
+## equals() por defecto (clase Object)
+
+El equals() de Object compara por referencia:
+
+```java
+// Así funciona por defecto
+public boolean equals(Object obj) {
+    return (this == obj);
+}
+```
+
+---
+
+## Sobreescribir equals()
+
+### Ejemplo completo
+
+```java
+public class Persona {
+    private String nombre;
+    private int edad;
+    
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
+    // Sobreescribir equals()
+    @Override
+    public boolean equals(Object obj) {
+        // 1. ¿Son el mismo objeto?
+        if (this == obj) {
+            return true;
+        }
+        
+        // 2. ¿El otro es null?
+        if (obj == null) {
+            return false;
+        }
+        
+        // 3. ¿Son del mismo tipo?
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        // 4. Comparar atributos
+        Persona otra = (Persona) obj;
+        return nombre.equals(otra.nombre) && edad == otra.edad;
+    }
+    
+    // IMPORTANTE: Si sobreescribes equals, sobreescribe hashCode también
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, edad);
+    }
+}
+```
+
+---
+
+## Pasos para sobreescribir equals()
+
+1. **¿Son el mismo objeto?** → `if (this == obj) return true;`
+2. **¿El otro es null?** → `if (obj == null) return false;`
+3. **¿Son del mismo tipo?** → `if (getClass() != obj.getClass()) return false;`
+4. **Comparar atributos** → `return atributo1.equals(otra.atributo1) && ...`
+
+---
+
+## Ejemplo práctico con ArrayList
+
+```java
+ArrayList<Persona> lista = new ArrayList<>();
+lista.add(new Persona("Ana", 25));
+lista.add(new Persona("Luis", 30));
+
+Persona buscar = new Persona("Ana", 25);
+
+System.out.println(lista.contains(buscar));  // true (con equals bien implementado)
+```
+
+---
+
+## equals() vs hashCode()
+
+Si sobreescribes `equals()`, **SIEMPRE** debes sobreescribir `hashCode()`:
+
+```java
+@Override
+public int hashCode() {
+    return Objects.hash(nombre, edad);
+}
+```
+
+Esto es necesario para que funcione correctamente con:
+- `HashSet`
+- `HashMap`
+- `Hashtable`
+
+---
+
+## String y Wrapper Classes
+
+Estas clases YA tienen equals() implementado correctamente:
+
+```java
+String s1 = "Hola";
+String s2 = "Hola";
+String s3 = new String("Hola");
+
+s1.equals(s2)  // true (mismo contenido)
+s1.equals(s3)  // true (mismo contenido)
+s1 == s2       // true (pool de strings)
+s1 == s3       // false (diferentes objetos)
+```
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| `==` | Compara referencias (mismo objeto en memoria) |
+| `equals()` por defecto | Igual que `==` |
+| `equals()` sobreescrito | Compara contenido |
+| `hashCode()` | Debe sobreescribirse junto con `equals()` |
+
+
+## Ejercicios para practicar
+
+### Ejercicio 1
+```java
+// Implementa equals() para esta clase
+public class Coche {
+    private String marca;
+    private String modelo;
+    private int anio;
+    
+    // Constructor y getters...
+    
+    // Implementa equals() que compare por marca, modelo y anio
+}
+```
+
+### Ejercicio 2
+```java
+// ¿Qué se imprime?
+ArrayList<String> lista = new ArrayList<>();
+lista.add("Hola");
+lista.add("Mundo");
+System.out.println(lista.contains("Hola"));  // ?
+
+String s1 = new String("Hola");
+String s2 = new String("Hola");
+System.out.println(s1.equals(s2));  // ?
+System.out.println(s1 == s2);      // ?
+```
+
+### Ejercicio 3
+```java
+// Dado este código, ¿qué necesitas añadir?
+public class Producto {
+    private String nombre;
+    private double precio;
+    
+    // Constructor...
+    
+    // ¿Qué falta para que funcione en un HashSet?
+}
+```

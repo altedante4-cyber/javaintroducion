@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios de Programación Java - Nivel Medio-Alto</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            margin: 2cm;
+            text-align: justify;
+        }
+        h1 {
+            font-size: 24pt;
+            text-align: center;
+            color: #1a237e;
+            border-bottom: 2px solid #1a237e;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 16pt;
+            color: #283593;
+            margin-top: 30pt;
+            border-left: 4px solid #283593;
+            padding-left: 10px;
+        }
+        h3 {
+            font-size: 14pt;
+            color: #303f9f;
+        }
+        .contexto {
+            background-color: #e8eaf6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .descripcion {
+            margin: 15px 0;
+        }
+        .requisitos {
+            background-color: #f3e5f5;
+            padding: 10px;
+            border-left: 3px solid #7b1fa2;
+            margin: 10px 0;
+        }
+        .clases {
+            background-color: #e0f2f1;
+            padding: 10px;
+            border-left: 3px solid #00695c;
+            margin: 10px 0;
+        }
+        .nota {
+            background-color: #fff3e0;
+            padding: 10px;
+            border-left: 3px solid #e65100;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .ejercicio {
+            page-break-after: always;
+            margin-bottom: 30pt;
+        }
+        .ejercicio:last-child {
+            page-break-after: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Ejercicios de Programación Java<br>Nivel Medio-Alto</h1>
+
+<p style="text-align: center; font-style: italic;">
+Esta colección presenta 20 ejercicios diseñados para consolidar conocimientos de programación orientada a objetos en Java. 
+Los ejercicios cubren estructuras de datos (HashSet, HashMap, ArrayList), patrones de diseño, herencia, polimorfismo, 
+clases abstractas, interfaces y conceptos avanzados en contextos variados y creativos.
+</p>
+
+<hr>
+
+<!-- EJERCICIO 1 -->
+<div class="ejercicio">
+<h2>1. Sistema de Magia Arcana</h2>
+
+<div class="contexto">
+<b>Contexto:</b> En un reino fantástico, los magos utilizan runas para lanzar hechizos. Cada runa es un objeto místico 
+que tiene un nombre único (como "Ignis" o "Aqua"), un nivel de poder que va desde 1 hasta 100, y un elemento 
+mágico asociado. Los elementos posibles son: FUEGO, AGUA, TIERRA, AIRE, LUZ y OSCURIDAD.
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+Los magos necesitan un sistema para gestionar sus grimorios (colecciones personales de runas). Imagina que eres el 
+programador que debe crear este sistema. El mago debe poder:<br><br>
+
+1. <b>Añadir runas al grimorio:</b> Cuando el mago encuentra una nueva runa, debe poder guardarla en su grimorio. 
+   Es importante que NO se permitan duplicados - dos runas con el mismo nombre se consideran la misma runa.<br><br>
+   
+2. <b>Buscar runas por elemento:</b> El mago puede necesitar encontrar todas las runas de un elemento específico 
+   (por ejemplo, todas las runas de FUEGO para un ataque incendiario). El sistema debe devolver una lista con 
+   todas las runas que coincidan.<br><br>
+   
+3. <b>Calcular el poder total:</b> El grimorio debe poder calcular la suma de los niveles de poder de todas las 
+   runas que contiene.<br><br>
+   
+4. <b>Encontrar la runa más poderosa:</b> Dentro de un elemento específico, el mago quiere saber cuál es la runa 
+   con mayor poder. Por ejemplo, la runa de fuego más poderosa.
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos (qué debes usar):</b><br>
+- <b>HashSet:</b> Para almacenar las runas sin duplicados y con búsqueda rápida<br>
+- <b>ArrayList:</b> Para devolver listas de runas cuando se busca<br>
+- <b>Sobreescribir equals():</b> Para comparar runas por nombre y evitar duplicados<br>
+</div>
+
+<div class="clases">
+<b>Estructura de clases recomendada:</b><br><br>
+
+1. <code>enum Elemento</code> - Define los elementos mágicos<br>
+   &nbsp;&nbsp;• Constantes: FUEGO, AGUA, TIERRA, AIRE, LUZ, OSCURIDAD<br><br>
+
+2. <code>class Runa</code> - Representa una runa mágica<br>
+   &nbsp;&nbsp;• Atributos: nombre (String), poder (int 1-100), elemento (Elemento)<br>
+   &nbsp;&nbsp;• Constructor: recibe los tres parámetros<br>
+   &nbsp;&nbsp;• Getters: getNombre(), getPoder(), getElemento()<br>
+   &nbsp;&nbsp;• Sobreescribir equals() para comparar por nombre<br><br>
+
+3. <code>class Grimorio</code> - Colección de runas del mago<br>
+   &nbsp;&nbsp;• Atributo: runes (HashSet&lt;Runa&gt;)<br>
+   &nbsp;&nbsp;• Método: añadirRuna(Runa r) - añade si no existe<br>
+   &nbsp;&nbsp;• Método: buscarPorElemento(Elemento e) - devuelve ArrayList&lt;Runa&gt;<br>
+   &nbsp;&nbsp;• Método: getPoderTotal() - suma de todos los poderes<br>
+   &nbsp;&nbsp;• Método: getRunaMasPoderosa(Elemento e) - la más fuerte de ese elemento<br><br>
+
+4. <code>class Main</code> - Clase de prueba con menú interactivo
+</div>
+
+<div class="nota">
+<b>Nota:</b> No es necesario sobrescribir hashCode() en este ejercicio. El comportamiento por defecto del HashSet 
+funciona correctamente si se sobrescribe equals().
+</div>
+</div>
+
+<!-- EJERCICIO 2 -->
+<div class="ejercicio">
+<h2>2. Simulación de Ecosistema Marino</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Un biólogo marino necesita simular la vida marina para estudiar las cadenas alimentarias. 
+En este ecosistema existen tres tipos principales de entidades:<br>
+- <b>Plancton:</b> Organismos pequeños que flotan y se reproducen, son la base de la cadena alimentaria<br>
+- <b>Pez:</b> Animales que nadan, huyen de depredadores y comen plancton para sobrevivir<br>
+- <b>Tiburón:</b> Depredadores superiores que cazan peces para alimentarse
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+Crea un sistema de simulación por turnos donde:<br><br>
+
+1. <b>Entidades con propiedades:</b> Cada ser vivo tiene:<br>
+   &nbsp;&nbsp;• Posición (x, y) en el espacio 2D del océano<br>
+   &nbsp;&nbsp;• Energía (cuando llega a 0, la entidad muere)<br>
+   &nbsp;&nbsp;• Velocidad de movimiento<br><br>
+
+2. <b>Comportamiento de los tiburones:</b><br>
+   &nbsp;&nbsp;• Buscan activamente al pez más cercano dentro de su "rango de visión"<br>
+   &nbsp;&nbsp;• Se mueven hacia él para cazarlo<br><br>
+
+3. <b>Comportamiento de los peces:</b><br>
+   &nbsp;&nbsp;• Detectan tiburones cercanos dentro de su "rango de detección"<br>
+   &nbsp;&nbsp;• Huyen en dirección opuesta si detectan un depredador<br><br>
+
+4. <b>Alimentación y muerte:</b><br>
+   &nbsp;&nbsp;• Cuando un tiburón come un pez, gana energía<br>
+   &nbsp;&nbsp;• Cuando un pez come plancton, ganha energía<br>
+   &nbsp;&nbsp;• Toda entidad pierde energía con el tiempo<br>
+   &nbsp;&nbsp;• Cuando energía = 0, la entidad muere y se elimina<br><br>
+
+5. <b>Simulación por turnos:</b> En cada turno, todas las entidades actúan en orden. 
+   El sistema debe mostrar el estado actual (quién sigue vivo, posiciones, energía).
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>Herencia:</b> Clase padre Entidad, clases hijo Tiburon, Pez, Plancton<br>
+- <b>Polimorfismo:</b> Métodos comunes con comportamiento diferente<br>
+- <b>ArrayList:</b> Para almacenar listas de entidades<br>
+- <b>Arrays bidimensionales:</b> Para representar el mapa del océano
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>abstract class Entidad</code> - Clase base para todas las criaturas<br>
+   &nbsp;&nbsp;• Atributos: x, y (double), energia (int), velocidad (double), vivo (boolean)<br>
+   &nbsp;&nbsp;• Métodos: mover(double dx, double dy), comer(int energia), distancia(Entidad otra)<br><br>
+
+2. <code>class Tiburon extends Entidad</code><br>
+   &nbsp;&nbsp;• Atributo adicional: rangoVision (int)<br>
+   &nbsp;&nbsp;• Método: buscarPez(ArrayList&lt;Pez&gt;) - encuentra el más cercano<br><br>
+
+3. <code>class Pez extends Entidad</code><br>
+   &nbsp;&nbsp;• Atributo adicional: rangoDeteccion (int)<br>
+   &nbsp;&nbsp;• Método: buscarTiburon(ArrayList&lt;Tiburon&gt;) - detecta peligros<br><br>
+
+4. <code>class Plancton extends Entidad</code><br>
+   &nbsp;&nbsp;• Método: reproduce() - crea nuevo plancton<br><br>
+
+5. <code>class Ecosistema</code> - Gestor de la simulación<br>
+   &nbsp;&nbsp;• Atributos: tiburones, peces, plancton (ArrayLists), mapa[20][20]<br>
+   &nbsp;&nbsp;• Método: simularTurno() - ejecuta un paso de simulación<br><br>
+
+6. <code>class Main</code> - Programa principal con menú
+</div>
+</div>
+
+<!-- EJERCICIO 3 -->
+<div class="ejercicio">
+<h2>3. Gestor de Inventario de Videojuego RPG</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Estás desarrollando un sistema de inventario para un RPG. El jugador tiene un inventario 
+con diferentes tipos de items que debe gestionar. Cada item tiene un valor (en oro), un peso, y una rareza 
+que determina su calidad: COMUN (común), RARO, EPICO o LEGENDARIO.
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+El sistema de inventario debe:<br><br>
+
+1. <b>Gestión de peso:</b> El inventario tiene una capacidad máxima de peso (por ejemplo, 100 unidades). 
+   No se pueden añadir items que excedan este límite.<br><br>
+
+2. <b>Organización por rareza:</b> Los items se clasifican automáticamente por su rareza usando un HashMap. 
+   La clave es la rareza (String) y el valor es una lista de items de esa rareza.<br><br>
+
+3. <b>Búsqueda por rareza:</b> Encontrar el item de mayor valor dentro de una rareza específica.<br><br>
+
+4. <b>Sistema de equipamiento:</b><br>
+   &nbsp;&nbsp;• Solo se puede equipar un arma a la vez<br>
+   &nbsp;&nbsp;• Solo se puede equipar una armadura a la vez<br>
+   &nbsp;&nbsp;• Equipar mueve el item del inventario a "equipado"<br>
+   &nbsp;&nbsp;• Desequipar lo devuelve al inventario<br><br>
+
+5. <b>Cálculo de estadísticas:</b><br>
+   &nbsp;&nbsp;• Daño total = daño base del personaje + daño del arma equipada<br>
+   &nbsp;&nbsp;• Defensa total = defensa de la armadura equipada
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>HashMap:</b> Para organizar items por rareza<br>
+- <b>ArrayList:</b> Para almacenar listas de items<br>
+- <b>Herencia:</b> Item como clase padre, subclases para tipos específicos<br>
+- <b>Polimorfismo:</b> Métodos comunes en diferentes tipos de items
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>enum Rarity</code> - COMUN, RARO, EPICO, LEGENDARIO<br><br>
+
+2. <code>enum TipoItem</code> - ARMA, ARMADURA, POCION, MATERIAL<br><br>
+
+3. <code>abstract class Item</code> - Clase base<br>
+   &nbsp;&nbsp;• Atributos: nombre, valor, peso, rarity, tipo<br>
+   &nbsp;&nbsp;• Método abstracto: getDescripcion()<br><br>
+
+4. <code>class Arma extends Item</code><br>
+   &nbsp;&nbsp;• Atributo: daño (int), equipada (boolean)<br><br>
+
+5. <code>class Armadura extends Item</code><br>
+   &nbsp;&nbsp;• Atributo: defensa (int), equipada (boolean)<br><br>
+
+6. <code>class Pocion extends Item</code><br>
+   &nbsp;&nbsp;• Atributos: efecto, cantidad<br><br>
+
+7. <code>class Material extends Item</code><br>
+   &nbsp;&nbsp;• Atributo: cantidad<br><br>
+
+8. <code>class Inventario</code> - Gestor del inventario<br>
+   &nbsp;&nbsp;• Atributos: items (HashMap), capacidadMax, armaEquipada, armaduraEquipada<br>
+   &nbsp;&nbsp;• Métodos: añadirItem, eliminarItem, equiparArma, equiparArmadura, getPesoActual, getDañoTotal, getDefensaTotal<br><br>
+
+9. <code>class Personaje</code> y <code>class Main</code>
+</div>
+</div>
+
+<!-- EJERCICIO 4 -->
+<div class="ejercicio">
+<h2>4. Protocolo de Comunicación Interestelar</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Una nave espacial recibe constantemente mensajes codificados de diferentes civilizaciones 
+alienígenas. Cada mensaje tiene un ID único del remitente, el contenido del mensaje, y un nivel de prioridad 
+(1 = muy baja, 5 = muy alta/crítica).
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+El sistema de comunicaciones debe:<br><br>
+
+1. <b>Almacenar mensajes:</b> Usar un HashMap donde la clave es el ID del remitente y el valor es el mensaje.<br><br>
+
+2. <b>Recibir nuevos mensajes:</b> Si un remitente ya existe, el nuevo mensaje sobrescribe el anterior.<br><br>
+
+3. <b>Buscar mensajes importantes:</b> Recuperar todos los mensajes con prioridad >= 3, ordenados 
+   de mayor a menor prioridad.<br><br>
+
+4. <b>Limpieza automática:</b> Eliminar mensajes de remitentes que no han enviado nada en los últimos 
+   X turnos (simulado).<br><br>
+
+5. <b>Generar reportes:</b> El sistema debe poder generar un reporte con:<br>
+   &nbsp;&nbsp;• Total de mensajes almacenados<br>
+   &nbsp;&nbsp;• Promedio de prioridad de todos los mensajes<br>
+   &nbsp;&nbsp;• Remitente con más mensajes enviados
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>HashMap:</b> Almacenamiento principal de mensajes por remitente<br>
+- <b>ArrayList:</b> Para listas ordenables<br>
+- <b>Comparable/Comparator:</b> Para ordenar mensajes por prioridad<br>
+- <b>Colecciones:</b> Utilizar Collections.sort() y otros métodos útiles
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>class Mensaje</code><br>
+   &nbsp;&nbsp;• Atributos: id, contenido, prioridad (1-5), remitente, turnoRecibido<br>
+   &nbsp;&nbsp;• Implementa Comparable&lt;Mensaje&gt; para ordenar por prioridad<br><br>
+
+2. <code>class Comunicador</code><br>
+   &nbsp;&nbsp;• Atributos: mensajes (HashMap), ultimoTurnoActivo, contadorTurnos<br>
+   &nbsp;&nbsp;• Métodos: recibirMensaje, getMensajesPrioridadAlta, limpiarInactivos, generarReporte<br><br>
+
+3. <code>class Main</code>
+</div>
+</div>
+
+<!-- EJERCICIO 5 -->
+<div class="ejercicio">
+<h2>5. Motor de Física de Partículas</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Un científico necesita simular partículas cargadas en un espacio 2D. Las partículas 
+interactúan entre sí mediante fuerzas eléctricas (atracción si tienen cargas opuestas, repulsión si son 
+del mismo signo). Este es un simulador educativo de física.
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+El simulador debe:<br><br>
+
+1. <b>Almacenar partículas:</b> Todas las partículas en un ArrayList.<br><br>
+
+2. <b>Calcular fuerzas:</b> En cada paso de simulación, calcular la fuerza entre TODAS las parejas 
+   de partículas usando la ley de Coulomb (atracción/repulsión según cargas).<br><br>
+
+3. <b>Actualizar movimiento:</b> Aplicar la segunda ley de Newton (F = m*a) para calcular aceleraciones, 
+   y actualizar velocidades y posiciones.<br><br>
+
+4. <b>Congelar partículas:</b> Una partícula "congelada" no se mueve pero sigue interactuando (ejerciendo 
+   fuerzas sobre otras).<br><br>
+
+5. <b>Consultas del sistema:</b><br>
+   &nbsp;&nbsp;• Partícula más rápida<br>
+   &nbsp;&nbsp;• Partícula con mayor aceleración<br>
+   &nbsp;&nbsp;• Energía cinética total del sistema (½mv²)
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>Clases abstractas:</b> Particula como clase padre<br>
+- <b>Herencia:</b> Electron, Proton, Neutron, Fotón como subclases<br>
+- <b>ArrayList:</b> Almacenamiento de partículas<br>
+- <b>Sobrecarga de métodos:</b> Diferentes constructores o métodos con mismos nombres
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>abstract class Particula</code><br>
+   &nbsp;&nbsp;• Atributos: id, x, y, vx, vy, masa, carga, congelada, ax, ay<br>
+   &nbsp;&nbsp;• Métodos abstractos: cada subclase define su masa y carga<br>
+   &nbsp;&nbsp;• Métodos concretos: calcularAceleracion, mover, congelar, getVelocidad, getEnergiaCinetica<br><br>
+
+2. <code>class Electrón extends Particula</code> - carga: -1.6e-19, masa: 9.11e-31<br><br>
+
+3. <code>class Protón extends Particula</code> - carga: 1.6e-19, masa: 1.67e-27<br><br>
+
+4. <code>class Neutrón extends Particula</code> - carga: 0, masa: 1.67e-27<br><br>
+
+5. <code>class Fotón extends Particula</code> - masa: 0, carga: 0 (siempre a velocidad c)<br><br>
+
+6. <code>class SimuladorFísica</code> - Gestor de la simulación<br>
+   &nbsp;&nbsp;• Atributos: partículas, constantes físicas<br>
+   &nbsp;&nbsp;• Métodos: simularPaso, getParticulaMasRapida, getEnergiaTotal<br><br>
+
+7. <code>class Main</code>
+</div>
+</div>
+
+<!-- EJERCICIO 6 -->
+<div class="ejercicio">
+<h2>6. Sistema de Quests para MMORPG</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Un juego online Massively Multiplayer Online (MMORPG) tiene misiones (quests) que los 
+jugadores pueden aceptar y completar. Cada quest tiene un tipo, dificultad, nivel recomendado, y recompensas.
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+El gestor de quests debe:<br><br>
+
+1. <b>Clasificar quests:</b> Usar HashMap para organizar quests por tipo (MatarMonstruos, Recolectar, 
+   ProtegerNPC, AlcanzarUbicacion).<br><br>
+
+2. <b>Sistema de nivel del jugador:</b><br>
+   &nbsp;&nbsp;• El jugador tiene nivel y experiencia<br>
+   &nbsp;&nbsp;• Solo puede aceptar quests donde nivel_recomendado <= nivel_jugador + 2<br><br>
+
+3. <b>Completar quests:</b><br>
+   &nbsp;&nbsp;• Al completar, el jugador gana experiencia<br>
+   &nbsp;&nbsp;• Recibe objetos de recompensa<br><br>
+
+4. <b>Recomendaciones:</b> Suggest quests apropiadas para el nivel actual del jugador.<br><br>
+
+5. <b>Quests diarias:</b> Missions que solo se pueden hacer una vez por día real. Usar una interfaz 
+   para identificar estas quests especiales.
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>Herencia:</b> Quest como clase padre, subclases para cada tipo<br>
+- <b>HashMap:</b> Organizar quests por tipo<br>
+- <b>Interfaces:</b> QuestDiurna para quests diarias<br>
+- <b>ArrayList:</b> Listas de quests disponibles
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>enum TipoQuest</code> - MATAR_MONSTRUOS, RECOLECTAR, PROTEGER, UBICACION<br><br>
+
+2. <code>enum Dificultad</code> - FACIL, MEDIA, DIFICIL, EXTREMA<br><br>
+
+3. <code>class Recompensa</code> - experiencia, items, oro<br><br>
+
+4. <code>interface QuestDiurna</code> - metodos: esValidaHoy(), puedeCompletar()<br><br>
+
+5. <code>abstract class Quest</code> - clase base<br>
+   &nbsp;&nbsp;• Atributos: id, nombre, descripcion, tipo, dificultad, nivelRecomendado, recompensa, completada<br>
+   &nbsp;&nbsp;• Método abstracto: completar()<br><br>
+
+6. <code>class QuestMatar extends Quest</code> - atributos: monstruo, cantidad, matados<br><br>
+
+7. <code>class QuestRecolectar extends Quest</code> - atributos: objeto, cantidad, recolectados<br><br>
+
+8. <code>class QuestProteger extends Quest</code> - atributos: npc, duracion<br><br>
+
+9. <code>class QuestDiaria extends Quest implements QuestDiurna</code><br><br>
+
+10. <code>class GestorQuests</code> y <code>class Jugador</code><br><br>
+
+11. <code>class Main</code>
+</div>
+</div>
+
+<!-- EJERCICIO 7 -->
+<div class="ejercicio">
+<h2>7. Analizador Léxico de Código</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Estás construyendo un compilador simplificado. El primer paso es el análisis léxico: 
+convertir el código fuente (texto) en una lista de "tokens" (unidades significativas como palabras reservadas, 
+identificadores, números, operadores, etc.).
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+El analizador léxico debe:<br><br>
+
+1. <b>Recibir código fuente:</b> Una cadena con el código a analizar.<br><br>
+
+2. <b>Identificar tokens:</b> Reconocer y clasificar cada token:<br>
+   &nbsp;&nbsp;• PALABRA_RESERVADA: if, else, while, for, return, class, public, void, int...<br>
+   &nbsp;&nbsp;• IDENTIFICADOR: nombres de variables, funciones, clases<br>
+   &nbsp;&nbsp;• NÚMERO: valores numéricos<br>
+   &nbsp;&nbsp;• OPERADOR: +, -, *, /, =, ==, !=, <, >, &&, ||<br>
+   &nbsp;&nbsp;• DELIMITADOR: ( ) { } [ ] ; ,<br>
+   &nbsp;&nbsp;• CADENA: textos entre comillas<br><br>
+
+3. <b>Almacenar tokens:</b> Guardar todos los tokens en un ArrayList.<br><br>
+
+4. <b>Contar frecuencias:</b> Usar HashMap para contar cuántos tokens de cada tipo.<br><br>
+
+5. <b>Validar balanceo:</b> Verificar que paréntesis, llaves y corchetes estén equilibrados.<br><br>
+
+6. <b>Reportar errores:</b> Generar lista de errores si encuentra tokens inválidos.
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>Clases abstractas:</b> Token como clase padre<br>
+- <b>Herencia:</b> subclases para cada tipo de token<br>
+- <b>HashMap:</b> Contar frecuencia de tipos<br>
+- <b>ArrayList:</b> Almacenar lista de tokens
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>enum TipoToken</code> - PALABRA_RESERVADA, IDENTIFICADOR, NUMERO, OPERADOR, DELIMITADOR, CADENA, COMENTARIO, DESCONOCIDO<br><br>
+
+2. <code>abstract class Token</code><br>
+   &nbsp;&nbsp;• Atributos: tipo, valor, posicion<br>
+   &nbsp;&nbsp;• Método abstracto: getTipo()<br><br>
+
+3. <code>class TokenReservado extends Token</code> - palabras clave de Java<br><br>
+
+4. <code>class TokenIdentificador extends Token</code><br><br>
+
+5. <code>class TokenNumero extends Token</code> - incluye valorNumerico<br><br>
+
+6. <code>class TokenOperador extends Token</code><br><br>
+
+7. <code>class TokenDelimitador extends Token</code><br><br>
+
+8. <code>class TokenCadena extends Token</code><br><br>
+
+9. <code>class AnalizadorLexico</code> - clase principal<br>
+   &nbsp;&nbsp;• Atributos: codigo, tokens, frecuencia, errores<br>
+   &nbsp;&nbsp;• Métodos: tokenizar(), validarBalanceo(), getFrecuencias()<br><br>
+
+10. <code>class Main</code>
+</div>
+</div>
+
+<!-- EJERCICIO 8 -->
+<div class="ejercicio">
+<h2>8. Simulador de Tráfico Vehicular</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Una ciudad tiene calles que conectan diferentes puntos. Los vehículos circulan por estas 
+calles siguiendo una ruta desde su origen hasta su destino. Las calles tienen capacidad limitada.
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+El simulador debe:<br><br>
+
+1. <b>Gestionar calles:</b> Cada calle tiene:<br>
+   &nbsp;&nbsp;• Capacidad máxima de vehículos<br>
+   &nbsp;&nbsp;• Número actual de vehículos (flujo)<br>
+   &nbsp;&nbsp;• Longitud<br><br>
+
+2. <b>Vehículos con rutas:</b> Cada vehículo tiene:<br>
+   &nbsp;&nbsp;• Origen y destino<br>
+   &nbsp;&nbsp;• Ruta: lista de calles a seguir<br>
+   &nbsp;&nbsp;• Velocidad<br><br>
+
+3. <b>Lógica de tráfico:</b><br>
+   &nbsp;&nbsp;• Si una calle está llena, el vehículo debe esperar<br>
+   &nbsp;&nbsp;• Cada segundo, los vehículos avanzan una "unidad" de calle<br>
+   &nbsp;&nbsp;• Al llegar al final de una calle, pasan a la siguiente<br><br>
+
+4. <b>Estado del sistema:</b> Mostrar:<br>
+   &nbsp;&nbsp;• Vehículos en tránsito<br>
+   &nbsp;&nbsp;• Vehículos que llegaron a destino<br>
+   &nbsp;&nbsp;• Vehículos esperando
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>Herencia:</b> Vehiculo clase padre, Coche, Camion, Moto como hijos<br>
+- <b>HashMap:</b> Mapa de calles por nombre<br>
+- <b>ArrayList:</b> Listas de vehículos<br>
+- <b>Polimorfismo:</b> Diferentes velocidades y capacidades
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>class Calle</code><br>
+   &nbsp;&nbsp;• Atributos: nombre, capacidad, vehiculosActuales, longitud<br>
+   &nbsp;&nbsp;• Métodos: añadirVehiculo, removeVehiculo, estaLlena<br><br>
+
+2. <code>abstract class Vehiculo</code><br>
+   &nbsp;&nbsp;• Atributos: id, origen, destino, ruta, posicionActual, velocidad, esperando, llegada<br>
+   &nbsp;&nbsp;• Método abstracto: getTipo()<br><br>
+
+3. <code>class Coche extends Vehiculo</code> - velocidad: 3<br><br>
+
+4. <code>class Camión extends Vehiculo</code> - velocidad: 1, capacidad: 2<br><br>
+
+5. <code>class Moto extends Vehiculo</code> - velocidad: 4<br><br>
+
+6. <code>class Ciudad</code> - gestror del tráfico<br>
+   &nbsp;&nbsp;• Atributos: calles (HashMap), vehiculos, vehiculosEsperando, vehiculosLlegados<br>
+   &nbsp;&nbsp;• Método: simularSegundo(), getEstado()<br><br>
+
+7. <code>class Main</code>
+</div>
+</div>
+
+<!-- EJERCICIO 9 -->
+<div class="ejercicio">
+<h2>9. Sistema de Mensajería Cifrada</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Una aplicación de mensajería segura usa diferentes algoritmos de cifrado según el nivel 
+de seguridad requerido por el usuario. Los métodos van desde simples (César) hasta más complejos.
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+El sistema debe:<br><br>
+
+1. <b>Gestionar mensajes:</b> Cada mensaje tiene contenido, destinatario y nivel de seguridad.<br><br>
+
+2. <b>Almacenar por destinatario:</b> Usar HashMap donde la clave es el nombre del destinatario.<br><br>
+
+3. <b>Aplicar cifrado según nivel:</b><br>
+   &nbsp;&nbsp;• <b>Nivel 1 (César):</b> Desplazar cada letra X posiciones (X = nivel del usuario)<br>
+   &nbsp;&nbsp;• <b>Nivel 2 (Vigenère):</b> Usar el nombre del destinatario como clave<br>
+   &nbsp;&nbsp;• <b>Nivel 3 (Híbrido):</b> Invertir la cadena + cifrado César<br><br>
+
+4. <b>Descifrado:</b> Revertir el proceso usando el mismo nivel de seguridad.<br><br>
+
+5. <b>Buscar mensajes:</b> Recuperar todos los mensajes de un destinatario específico.
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>Interfaces:</b> Cifrador con métodos cifrar() y descifrar()<br>
+- <b>Implementaciones:</b> Clases que implementan Cifrador para cada algoritmo<br>
+- <b>HashMap:</b> Almacenar mensajes por destinatario
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>class Mensaje</code><br>
+   &nbsp;&nbsp;• Atributos: id, contenido, destinatario, nivelSeguridad, cifrado<br><br>
+
+2. <code>interface Cifrador</code><br>
+   &nbsp;&nbsp;• Métodos: cifrar(String texto, String clave): String<br>
+   &nbsp;&nbsp;• Método: descifrar(String texto, String clave): String<br><br>
+
+3. <code>class CifradorCésar implements Cifrador</code><br>
+   &nbsp;&nbsp;• Atributo: desplazamiento<br><br>
+
+4. <code>class CifradorVigenère implements Cifrador</code><br>
+   &nbsp;&nbsp;• Atributo: clave<br><br>
+
+5. <code>class CifradorHíbrido implements Cifrador</code> - invertir + César<br><br>
+
+6. <code>class GestorMensajes</code><br>
+   &nbsp;&nbsp;• Atributos: mensajes (HashMap), cifradores (HashMap)<br>
+   &nbsp;&nbsp;• Métodos: enviarMensaje, recibirMensaje, cifrar, descifrar<br><br>
+
+7. <code>class Main</code>
+</div>
+</div>
+
+<!-- EJERCICIO 10 -->
+<div class="ejercicio">
+<h2>10. Juego de Estrategia por Turnos</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Dos jugadores se enfrentan en un tablero de estrategia. Cada jugador controla un ejército 
+de unidades con diferentes características: guerreros (daño alto), arqueros (rango de ataque largo), 
+tanques (muchos puntos de vida).
+</div>
+
+<div class="descripcion">
+<b>Descripción del problema:</b><br>
+El juego debe:<br><br>
+
+1. <b>Tablero:</b> Representar como array bidimensional de celdas.<br><br>
+
+2. <b>Unidades de cada jugador:</b> ArrayList con todas sus unidades.<br><br>
+
+3. <b>Acciones por turno:</b><br>
+   &nbsp;&nbsp;• <b>Mover:</b> Hasta su rango de movimiento<br>
+   &nbsp;&nbsp;• <b>Atacar:</b> Si hay enemigo en rango de ataque<br><br>
+
+4. <b>Tipos de unidades:</b><br>
+   &nbsp;&nbsp;• <b>Guerrero:</b> HP: 80, Daño: 25, Movimiento: 3, Rango: 1<br>
+   &nbsp;&nbsp;• <b>Arquero:</b> HP: 60, Daño: 20, Movimiento: 2, Rango: 4<br>
+   &nbsp;&nbsp;• <b>Tanque:</b> HP: 120, Daño: 15, Movimiento: 2, Rango: 1<br><br>
+
+5. <b>Condición de victoria:</b> Eliminar todas las unidades del oponente.<br><br>
+
+6. <b>Historial:</b> Registrar todas las acciones del juego.
+</div>
+
+<div class="requisitos">
+<b>Requisitos técnicos:</b><br>
+- <b>Herencia:</b> Unidad clase padre, subclases para tipos<br>
+- <b>Polimorfismo:</b> Diferentes stats y comportamientos<br>
+- <b>ArrayList:</b> Almacenar unidades<br>
+- <b>Arrays bidimensionales:</b> El tablero
+</div>
+
+<div class="clases">
+<b>Estructura de clases:</b><br><br>
+
+1. <code>enum TipoUnidad</code> - GUERRERO, ARQUERO, TANQUE<br><br>
+
+2. <code>class Celda</code> - cada posición del tablero<br>
+   &nbsp;&nbsp;• Atributos: tipo, contenido (Unidad), posicionX, posicionY<br><br>
+
+3. <code>abstract class Unidad</code><br>
+   &nbsp;&nbsp;• Atributos: nombre, tipo, hp, hpMax, daño, rangoMovimiento, rangoAtaque, jugador, posicionX, posicionY, haAccionado<br>
+   &nbsp;&nbsp;• Métodos: mover, atacar, recibirDaño, estaViva<br><br>
+
+4. <code>class Guerrero extends Unidad</code> - stats específicos<br><br>
+
+5. <code>class Arquero extends Unidad</code> - stats específicos<br><br>
+
+6. <code>class Tanque extends Unidad</code> - stats específicos<br><br>
+
+7. <code>class Tablero</code> - gestión del campo de batalla<br>
+   &nbsp;&nbsp;• Atributos: celdas[][], filas, columnas<br>
+   &nbsp;&nbsp;• Métodos: colocarUnidad, moverUnidad, hayEnemigoEnRango<br><br>
+
+8. <code>class Jugador</code> - control del ejército<br>
+   &nbsp;&nbsp;• Atributos: id, nombre, unidades, historialAcciones<br><br>
+
+9. <code>class Juego</code> - lógica principal<br><br>
+
+10. <code>class Main</code>
+</div>
+</div>
+
+<!-- EJERCICIOS 11-20 RESUMIDOS -->
+<div class="ejercicio">
+<h2>11. Gestor de Reservas de Cine</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Un cine necesita gestionar sus salas, películas y reservas de asientos. Los clientes pueden 
+reservar asientos para funciones específicas.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- HashMap de salas (clave: número de sala)<br>
+- Matriz de booleanos para asientos disponibles/ocupados<br>
+- Reservas individuales y de grupo<br>
+- Calcular: ocupación por sala, película más popular, ingresos
+</div>
+
+<div class="requisitos">HashMap, Arrays bidimensionales, Herencia, Interfaces</div>
+
+<div class="clases">
+enum Género, Clasificación | class Película | class Sala (asientos[][]) | interface Reserva | 
+abstract class ReservaBase | class ReservaIndividual, ReservaGrupo | class GestorCine | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>12. Simulación de Evolución Genética</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Simulación de criaturas virtuales con genes que determinan sus características. 
+Pueden reproducirse combinando genes de dos padres.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- HashMap de genes (clave: tipo de gen, valor: valor numérico)<br>
+- Reproducción con 50% genes de cada padre + 10% mutación<br>
+- Selección natural: los mejores sobreviven<br>
+- Evolución a lo largo de generaciones
+</div>
+
+<div class="requisitos">HashMap, ArrayList, Clases abstractas, Herencia, Polimorfismo</div>
+
+<div class="clases">
+enum TipoGen | class Genética | abstract class Criatura | class Depredador, Presa | 
+class Población | class Ecosistema | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>13. Procesador de Texto con Estilos</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Editor de texto que soporta estilos: negrita, cursiva, subrayado, código. 
+Cada segmento de texto tiene un estilo asociado.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- Documento como ArrayList de Segmentos<br>
+- Aplicar estilos a rangos específicos<br>
+- Buscar palabras, contar por estilo<br>
+- Serializar a HTML, deserializar desde HTML
+</div>
+
+<div class="requisitos">Clases abstractas, Herencia, ArrayList, Interfaces (Formateable)</div>
+
+<div class="clases">
+enum Estilo | interface Formateable | abstract class Segmento | class SegmentoNegrita, Cursiva, etc. | 
+class Documento | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>14. Sistema de Subastas</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Casa de subastas donde los postores hacen ofertas por items únicos. 
+El item se vende al mayor ofertante cuando termina el tiempo.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- HashMap de items en subasta<br>
+- Ofertantes ordenados por monto (Comparable)<br>
+- Comisiones del 10%<br>
+- Reportes de subastas activas/terminadas
+</div>
+
+<div class="requisitos">HashMap, ArrayList, Comparable, Herencia</div>
+
+<div class="clases">
+enum EstadoSubasta | class Oferta (implements Comparable) | abstract class ItemSubasta | 
+class ItemArte, ItemAntiguo | class Subasta | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>15. Grafo de Conexiones de Redes Sociales</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Red social donde las conexiones entre usuarios se representan como un grafo no dirigido. 
+Cada usuario puede seguir a otros.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- HashMap de usuarios<br>
+- Seguidores y seguidos (ArrayList)<br>
+- Calcular popularidad, sugerir amigos<br>
+- Detectar ciclos, calcular distancia entre usuarios
+</div>
+
+<div class="requisitos">HashMap, ArrayList, Clases abstractas, Herencia, Interfaces</div>
+
+<div class="clases">
+interface SocialGraph | enum TipoUsuario | abstract class Usuario | class UsuarioNormal, Influencer | 
+class RedSocial | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>16. Juego de Mazmorras Procedurales</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Roguelike donde se generan mazmorras aleatoriamente. Cada habitación puede contener 
+enemigos, tesoros, trampas, NPCs o estar vacía.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- Generación procedural de habitaciones<br>
+- Grafo de conexiones entre habitaciones<br>
+- Exploración, combate automático<br>
+- El juego termina al morir o encontrar la salida
+</div>
+
+<div class="requisitos">Herencia, HashMap, ArrayList, Polimorfismo</div>
+
+<div class="clases">
+enum TipoHabitacion, TipoEnemigo | abstract class Contenido | class Enemigo, Tesoro, Trampa, NPC | 
+class Habitación | class Jugador | class Mazmorra | class Juego | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>17. Simulador de Bolsa de Valores</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Mercado de valores donde los precios de las acciones varían según oferta/demanda 
+y eventos aleatorios.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- Empresas con símbolo, precio, volatilidad<br>
+- Inversores con carteras de acciones<br>
+- Fluctuación de precios por tick<br>
+- Eventos que afectan sectores<br>
+- Portafolio y estadísticas
+</div>
+
+<div class="requisitos">HashMap, ArrayList, Herencia, Interfaces (Operable)</div>
+
+<div class="clases">
+enum Sector | class Acción | class Portafolio | interface Operable | abstract class Inversor | 
+class InversorConservador, InversorAgresivo | class Mercado | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>18. Gestor de Biblioteca de Videojuegos</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Un coleccionista gestiona su biblioteca de videojuegos organizada por plataforma, 
+género y estado de progreso.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- HashMap por plataforma<br>
+- Filtrar por género, estado, plataforma<br>
+- Calcular horas jugadas, estadísticas<br>
+- Recomendaciones basadas en último jugado
+</div>
+
+<div class="requisitos">HashMap, ArrayList, Clases abstractas, Herencia, Interfaces</div>
+
+<div class="clases">
+enum Género, Plataforma, Estado | interface Recomendable | abstract class Videojuego | 
+class VideojuegoFísico, Digital | class Biblioteca | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>19. Sistema de Control de Drones</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Flota de drones de reparto con diferentes modelos. El sistema asigna misiones 
+al dron más eficiente.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- HashMap de drones por ID<br>
+- Modelos: Lite, Standard, Heavy (herencia)<br>
+- Asignar misión según tiempo estimado<br>
+- Movimiento, batería, reportes
+</div>
+
+<div class="requisitos">Herencia, HashMap, ArrayList, Polimorfismo, Interfaces</div>
+
+<div class="clases">
+enum EstadoDron, Prioridad | class Posición | abstract class Dron | class DronLite, Standard, Heavy | 
+class Misión | class Flota | Main
+</div>
+</div>
+
+<div class="ejercicio">
+<h2>20. Puzzle: Sudoku Solver</h2>
+
+<div class="contexto">
+<b>Contexto:</b> Un resolvedor de Sudoku que valida y resuelve tableros 9x9 usando backtracking 
+y validaciones de reglas.
+</div>
+
+<div class="descripcion">
+<b>Funcionalidades:</b><br>
+- Tablero como int[9][9]<br>
+- Validar fila, columna, subcuadrante 3x3<br>
+- Backtracking para resolver<br>
+- Detectar tableros inválidos<br>
+- Mostrar proceso (opcional)
+</div>
+
+<div class="requisitos">Arrays bidimensionales, Recursión, Clases, ArrayList, Interfaces</div>
+
+<div class="clases">
+interface Validador | class Tablero | class Movimiento | class ValidadorSudoku | class Solucionador | 
+class Generador | Main
+</div>
+</div>
+
+</body>
+</html>

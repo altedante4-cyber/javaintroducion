@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:148.0) Gecko/20100101 Firefox/148.0" version="29.6.4">
+  <diagram name="Página-1" id="sPTNWgTcu5Vo3hY7_2yY">
+    <mxGraphModel dx="900" dy="548" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-1" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Empleados" vertex="1">
+          <mxGeometry height="380" width="240" x="200" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-4" parent="fc4rc4PcMkIDi8ivMD4X-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;-DNI: String&lt;/div&gt;&lt;div&gt;-Nombre:String&lt;/div&gt;&lt;div&gt;-Apellido:String&lt;/div&gt;&lt;div&gt;-Sueldo_Base:Double&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="240" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-5" parent="fc4rc4PcMkIDi8ivMD4X-1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;+Empleados(String DNI,String Nombre,String Apellidos,Double Sueldo_Base&lt;/div&gt;&lt;div&gt;+Calcular_Sueldo();&lt;/div&gt;&lt;div&gt;+Mostrar_Datos();&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="240" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-6" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Desarrolladores" vertex="1">
+          <mxGeometry height="90" width="170" x="560" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-12" parent="fc4rc4PcMkIDi8ivMD4X-6" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div&gt;-lenguaje:String&lt;/div&gt;&lt;div&gt;-bono_proyecto:double&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="170" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-10" edge="1" parent="1" source="fc4rc4PcMkIDi8ivMD4X-5" style="endArrow=classic;html=1;rounded=0;" target="fc4rc4PcMkIDi8ivMD4X-6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="360" y="430" as="sourcePoint" />
+            <mxPoint x="550" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;+Desarrolladores(Empleados m,String lenguaje,double bono_proyecto)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+Calcular_Sueldo()&lt;/div&gt;&lt;div&gt;+Mostrar_Datos()&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="170" x="560" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-15" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;rotation=0;" value="Gerentes" vertex="1">
+          <mxGeometry height="90" width="140" x="110" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-19" parent="fc4rc4PcMkIDi8ivMD4X-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;div&gt;-Departamento:String&lt;/div&gt;&lt;div&gt;-bono_responsabilidad :double&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;+Gerentes(Empleados m,String Departamento , double bono_responsabilidad)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+Calcular_Sueldo()&lt;/div&gt;&lt;div&gt;+Mostrar_Datos()&lt;/div&gt;" vertex="1">
+          <mxGeometry height="131" width="137" x="113" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-21" edge="1" parent="1" source="fc4rc4PcMkIDi8ivMD4X-5" style="endArrow=classic;html=1;rounded=0;exitX=0.779;exitY=0.991;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.589;entryY=0.026;entryDx=0;entryDy=0;entryPerimeter=0;" target="fc4rc4PcMkIDi8ivMD4X-15" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="370" y="480" as="sourcePoint" />
+            <mxPoint x="490" y="517" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-22" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Vendedores&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="110" width="170" x="330" y="496" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-23" parent="fc4rc4PcMkIDi8ivMD4X-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;-Porcentaje_comision:double&lt;/div&gt;&lt;div&gt;-ventas_realisadas:double&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="170" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;+Vendedores(Empleados m,double Porcentaje_comision , double ventas_realisadas )&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+Calcular_Sueldo()&lt;/div&gt;&lt;div&gt;+Mostrar_Datos()&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="170" x="329" y="606" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4rc4PcMkIDi8ivMD4X-30" edge="1" parent="1" source="fc4rc4PcMkIDi8ivMD4X-5" style="endArrow=classic;html=1;rounded=0;" target="fc4rc4PcMkIDi8ivMD4X-22" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="470" y="450" as="sourcePoint" />
+            <mxPoint x="590" y="487" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

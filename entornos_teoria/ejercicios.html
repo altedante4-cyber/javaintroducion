@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios UML y POO - Practicar</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .progress {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .question {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        
+        .question-header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px 10px 0 0;
+            margin: -25px -25px 20px -25px;
+            font-weight: bold;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 3px solid transparent;
+            font-size: 1em;
+        }
+        
+        .option:hover {
+            background: #d5dbdb;
+            transform: translateX(5px);
+        }
+        
+        .option.selected {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+        
+        .option.correct {
+            background: #27ae60 !important;
+            color: white !important;
+            border-color: #1e8449 !important;
+        }
+        
+        .option.incorrect {
+            background: #e74c3c !important;
+            color: white !important;
+            border-color: #c0392b !important;
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: #27ae60;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.3em;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+        
+        .submit-btn:hover { background: #219a52; }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .score { font-size: 5em; font-weight: bold; color: #27ae60; }
+        .score.fail { color: #e74c3c; }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .stat-value { font-size: 2.5em; font-weight: bold; }
+        .stat-value.correct { color: #27ae60; }
+        .stat-value.incorrect { color: #e74c3c; }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-review { background: #3498db; color: white; }
+        .btn-reset { background: #95a5a6; color: white; }
+        .btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EJERCICIOS UML y POO<br><small>Practicar para el examen</small></h1>
+        
+        <div class="instructions">
+            <strong>Instrucciones:</strong> Lee cada pregunta y selecciona la respuesta correcta.
+        </div>
+        
+        <div class="progress" id="progress">Pregunta 1 de 40</div>
+        
+        <form id="testForm">
+            <!-- Generado por JavaScript -->
+        </form>
+        
+        <button type="button" class="submit-btn" onclick="corregir()">Corregir Ejercicios</button>
+        
+        <div class="results" id="results">
+            <h2>Resultado</h2>
+            <div class="score" id="finalScore">0/40</div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value correct" id="correctas">0</div>
+                    <div>Correctas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value incorrect" id="incorrectas">0</div>
+                    <div>Incorrectas</div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button type="button" class="btn btn-review" onclick="verSoluciones()">Ver Soluciones</button>
+                <button type="button" class="btn btn-reset" onclick="reiniciar()">Reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const preguntas = [
+            // UML BÁSICO (1-10)
+            {
+                enunciado: "¿Qué significa UML?",
+                opciones: ["Universal Modeling Language", "Unified Modeling Language", "Unified Method Language", "Universal Method Language"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿UML es un lenguaje o una metodología?",
+                opciones: ["Una metodología", "Un lenguaje de programación", "Un lenguaje para modelar", "Un proceso de desarrollo"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Quiénes fueron los creadores de UML?",
+                opciones: ["Martin Fowler y Kent Beck", "Grady Booch, Jim Rumbaugh e Ivar Jacobson", "Erich Gamma y Richard Helm", "Robert C. Martin y Michael Feathers"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿En qué año OMG adoptó UML 1.1?",
+                opciones: ["1995", "1997", "2000", "2005"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué versión de UML añadió los diagramas de estructura compuesta y timing?",
+                opciones: ["UML 1.0", "UML 1.5", "UML 2.0", "UML 2.5"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Qué tipo de diagramas muestran la vista estática del sistema?",
+                opciones: ["Diagramas de comportamiento", "Diagramas de interacción", "Diagramas estructurales", "Diagramas de actividad"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Cuál NO es un diagrama de comportamiento?",
+                opciones: ["Diagrama de actividad", "Diagrama de casos de uso", "Diagrama de estados", "Diagrama de componentes"],
+                correcta: 3
+            },
+            {
+                enunciado: "¿Cuál de estas herramientas NO se usa para diseñar diagramas UML?",
+                opciones: ["draw.io", "StarUML", "Modelio", "Eclipse"],
+                correcta: 3
+            },
+            {
+                enunciado: "¿Qué significa modelar en el contexto de software?",
+                opciones: ["Escribir código fuente", "Crear una representación de la realidad", "Compilar el programa", "Hacer pruebas unitarias"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué ventaja del modelado menciona la teoría?",
+                opciones: ["Elimina la necesidad de programar", "Facilita la comprensión para nuevos integrantes", "Reduce el tiempo de ejecución", "Aumenta la velocidad del compilador"],
+                correcta: 1
+            },
+            // DIAGRAMA DE CLASES (11-20)
+            {
+                enunciado: "¿Cuáles son las partes de un diagrama de clases?",
+                opciones: ["Nombre, atributos, métodos", "Clases, interfaces, relaciones", "Actores, casos de uso, límites", "Mensajes, líneas de vida, activaciones"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Cómo se representa una clase abstracta en UML?",
+                opciones: ["Con un rombo", "Con el nombre en cursiva", "Con doble línea", "Con un estereotipo <<abstract>>"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué símbolo representa visibilidad pública en UML?",
+                opciones: ["-", "+", "#", "~"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué símbolo representa visibilidad privada en UML?",
+                opciones: ["-", "+", "#", "*"],
+                correcta: 0
+            },
+            {
+                enunciado: "¿Qué símbolo representa visibilidad protected en UML?",
+                opciones: ["-", "+", "#", "&"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Cómo se representa un atributo static en UML?",
+                opciones: ["En cursiva", "Subrayado", "En negrita", "Con mayúsculas"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué estereotipo se usa para una enumeración?",
+                opciones: ["<<interface>>", "<<enumeration>>", "<<utility>>", "<<abstract>>"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué estereotipo indica que todos los métodos y variables son estáticos?",
+                opciones: ["<<interface>>", "<<enumeration>>", "<<utility>>", "<<static>>"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Qué es una interfaz en UML?",
+                opciones: ["Una clase normal", "Una especificación de servicios", "Un tipo de relación", "Un actor externo"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Cuál es la sintaxis correcta de un atributo?",
+                opciones: ["nombre : tipo [visibilidad]", "[visibilidad] nombre [: tipo]", "tipo : nombre [visibilidad]", "visibilidad tipo nombre"],
+                correcta: 1
+            },
+            // RELACIONES (21-30)
+            {
+                enunciado: "¿Qué tipo de relación representa 'Un coche TIENE UN motor'?",
+                opciones: ["Herencia", "Asociación", "Dependencia", "Composición"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué relación indica 'Un corazón ES PARTE DE una persona'?",
+                opciones: ["Asociación", "Agregación", "Composición", "Dependencia"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Cómo se representa la agregación en UML?",
+                opciones: ["Rombo relleno", "Rombo vacío", "Flecha discontinua", "Flecha continua"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Cómo se representa la composición en UML?",
+                opciones: ["Rombo vacío", "Rombo relleno", "Línea continua", "Línea discontinua"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué relación es 'Una cuenta bancaria DEPENDE de un cliente'?",
+                opciones: ["Asociación", "Agregación", "Composición", "Dependencia"],
+                correcta: 3
+            },
+            {
+                enunciado: "¿Qué relación indica herencia entre clases?",
+                opciones: ["Asociación", "Agregación", "Generalización", "Realización"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Qué relación indica que una clase IMPLEMENTA otra?",
+                opciones: ["Herencia", "Dependencia", "Realización", "Asociación"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Cuál es la diferencia entre agregación y composición?",
+                opciones: ["No hay diferencia", "La composición tiene ciclo de vida independiente", "La composición tiene ciclo de vida dependiente", "La agregación es más fuerte"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Cómo se representa la dependencia en UML?",
+                opciones: ["Línea continua con flecha", "Línea discontinua con flecha", "Rombo lleno", "Flecha blanca"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué relación usa 'ES UN'?",
+                opciones: ["Asociación", "Agregación", "Herencia", "Dependencia"],
+                correcta: 2
+            },
+            // POO (31-40)
+            {
+                enunciado: "¿Qué es una clase en POO?",
+                opciones: ["Un objeto concreto", "La descripción de un conjunto de objetos", "Una variable", "Un método"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué es un objeto en POO?",
+                opciones: ["La plantilla de una clase", "Una instancia de una clase", "Un tipo de dato", "Un modificador de acceso"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Se puede instanciar una clase abstracta con 'new'?",
+                opciones: ["Sí, siempre", "No, genera error", "Solo si tiene constructores", "Depende del lenguaje"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué diferencia hay entre clase abstracta e interfaz?",
+                opciones: ["Ninguna", "La clase abstracta puede tener estado, la interfaz no", "La interfaz puede heredar", "La clase abstracta no puede tener métodos"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué modificador de acceso permite ver desde cualquier clase?",
+                opciones: ["private", "protected", "public", "package"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Qué modificador permite ver desde la propia clase y subclases?",
+                opciones: ["private", "protected", "public", "default"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Cuál es el objetivo principal de la POO según la teoría?",
+                opciones: ["Velocidad", "Reutilización", "Simplicidad", "Compatibilidad"],
+                correcta: 1
+            },
+            {
+                enunciado: "¿Qué indica que hay 'spaguetti code'?",
+                opciones: ["Mucha modularidad", "Mucha herencia", "Ifs anidados excesivos", "Demasiadas clases"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿Qué relación N a N se resuelve con clase de asociación?",
+                opciones: ["Herencia", "Agregación", "Asociación", "Dependencia"],
+                correcta: 2
+            },
+            {
+                enunciado: "¿En qué consiste el modelado ágil?",
+                opciones: ["No documentar nada", "Documentación ligera y justo a tiempo", "Usar solo diagramas", "Programar sin planificación"],
+                correcta: 1
+            }
+        ];
+
+        // Generar preguntas
+        const form = document.getElementById('testForm');
+        const letras = ['A', 'B', 'C', 'D'];
+
+        preguntas.forEach((preg, i) => {
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.id = `preg-${i}`;
+            
+            let html = `
+                <div class="question-header">Pregunta ${i + 1}</div>
+                <div class="question-text">${preg.enunciado}</div>
+                <div class="options">
+            `;
+            
+            preg.opciones.forEach((op, j) => {
+                html += `<div class="option" onclick="seleccionar(${i}, ${j})">
+                    <strong>${letras[j]})</strong> ${op}
+                </div>`;
+            });
+            
+            html += '</div>';
+            div.innerHTML = html;
+            form.appendChild(div);
+        });
+
+        let respuestas = new Array(40).fill(null);
+
+        function seleccionar(pregIndex, opIndex) {
+            const opciones = document.querySelectorAll(`#preg-${pregIndex} .option`);
+            opciones.forEach(op => op.classList.remove('selected'));
+            opciones[opIndex].classList.add('selected');
+            respuestas[pregIndex] = opIndex;
+            actualizarProgreso();
+        }
+
+        function actualizarProgreso() {
+            const contestadas = respuestas.filter(r => r !== null).length;
+            document.getElementById('progress').textContent = 
+                `Pregunta ${Math.min(contestadas + 1, 40)} de 40`;
+        }
+
+        function corregir() {
+            let correctas = 0;
+            
+            preguntas.forEach((preg, i) => {
+                const opciones = document.querySelectorAll(`#preg-${i} .option`);
+                opciones.forEach((op, j) => {
+                    if (j === preg.correcta) op.classList.add('correct');
+                    if (respuestas[i] === j && j !== preg.correcta) op.classList.add('incorrect');
+                    op.style.cursor = 'default';
+                });
+                if (respuestas[i] === preg.correcta) correctas++;
+            });
+
+            document.getElementById('finalScore').textContent = `${correctas}/40`;
+            if (correctas < 28) document.getElementById('finalScore').classList.add('fail');
+            document.getElementById('correctas').textContent = correctas;
+            document.getElementById('incorrectas').textContent = 40 - correctas;
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function verSoluciones() {
+            preguntas.forEach((preg, i) => {
+                const opciones = document.querySelectorAll(`#preg-${i} .option`);
+                opciones.forEach((op, j) => {
+                    if (j === preg.correcta) op.classList.add('correct');
+                });
+            });
+        }
+
+        function reiniciar() {
+            respuestas = new Array(40).fill(null);
+            document.querySelectorAll('.option').forEach(op => {
+                op.classList.remove('selected', 'correct', 'incorrect');
+                op.style.cursor = 'pointer';
+            });
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finalScore').classList.remove('fail');
+            actualizarProgreso();
+        }
+
+        actualizarProgreso();
+    </script>
+</body>
+</html>

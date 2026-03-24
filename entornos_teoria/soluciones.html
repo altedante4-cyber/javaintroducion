@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluciones - Ejercicios UML y POO</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background: linear-gradient(135deg, #27ae60, #219a52);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .info {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #155724;
+        }
+        
+        .solucion {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 5px solid #27ae60;
+        }
+        
+        .solucion-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .solucion-text {
+            margin-bottom: 10px;
+        }
+        
+        .respuesta-correcta {
+            background: #27ae60;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .explicacion {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: #555;
+        }
+        
+        .categoria {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px 10px 0 0;
+            margin: 30px 0 0 0;
+            font-weight: bold;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .nav a {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        
+        .nav a:hover { background: #2980b9; }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SOLUCIONES - Ejercicios UML y POO</h1>
+        
+        <div class="info">
+            <strong>40 Preguntas</strong> - Respuestas correctas marcadas en verde
+        </div>
+        
+        <div class="nav">
+            <a href="ejercicios.html">Ir a Ejercicios</a>
+            <a href="resumen.html">Ir a Resumen</a>
+        </div>
+        
+        <!-- UML BÁSICO -->
+        <div class="categoria">UML BÁSICO (Preguntas 1-10)</div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 1: ¿Qué significa UML?</div>
+            <div class="respuesta-correcta">✓ B) Unified Modeling Language</div>
+            <div class="explicacion">UML = Unified Modeling Language (Lenguaje Unificado de Modelado)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 2: ¿UML es un lenguaje o una metodología?</div>
+            <div class="respuesta-correcta">✓ C) Un lenguaje para modelar</div>
+            <div class="explicacion">UML es un LENGUAJE, NO una metodología/proceso</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 3: ¿Quiénes fueron los creadores de UML?</div>
+            <div class="respuesta-correcta">✓ B) Grady Booch, Jim Rumbaugh e Ivar Jacobson</div>
+            <div class="explicacion">Los 3 padres de UML</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 4: ¿En qué año OMG adoptó UML 1.1?</div>
+            <div class="respuesta-correcta">✓ B) 1997</div>
+            <div class="explicacion">Noviembre de 1997</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 5: ¿Qué versión añadió diagramas de estructura compuesta y timing?</div>
+            <div class="respuesta-correcta">✓ C) UML 2.0</div>
+            <div class="explicacion">Principios de 2005</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 6: ¿Qué tipo de diagramas muestran la vista estática?</div>
+            <div class="respuesta-correcta">✓ C) Diagramas estructurales</div>
+            <div class="explicacion">Los estructurales muestran la vista estática; los de comportamiento, la dinámica</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 7: ¿Cuál NO es un diagrama de comportamiento?</div>
+            <div class="respuesta-correcta">✓ D) Diagrama de componentes</div>
+            <div class="explicacion">Diagrama de componentes es estructural</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 8: ¿Cuál NO se usa para diseñar diagramas UML?</div>
+            <div class="respuesta-correcta">✓ D) Eclipse</div>
+            <div class="explicacion">draw.io, StarUML y Modelio sí son herramientas UML. Eclipse es un IDE.</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 9: ¿Qué significa modelar?</div>
+            <div class="respuesta-correcta">✓ B) Crear una representación de la realidad</div>
+            <div class="explicacion">Modelar = crear una representación de la realidad para analizarla antes de implementar</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 10: ¿Qué ventaja del modelado menciona la teoría?</div>
+            <div class="respuesta-correcta">✓ B) Facilita la comprensión para nuevos integrantes</div>
+            <div class="explicacion">Facilita la comprensión, la subcontratación y los cambios</div>
+        </div>
+        
+        <!-- DIAGRAMA DE CLASES -->
+        <div class="categoria">DIAGRAMA DE CLASES (Preguntas 11-20)</div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 11: ¿Cuáles son las partes de un diagrama de clases?</div>
+            <div class="respuesta-correcta">✓ A) Nombre, atributos, métodos</div>
+            <div class="explicacion">Toda clase tiene: nombre, atributos y operaciones (métodos)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 12: ¿Cómo se representa una clase abstracta en UML?</div>
+            <div class="respuesta-correcta">✓ B) Con el nombre en cursiva</div>
+            <div class="explicacion">Las clases y métodos abstractos aparecen en cursiva</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 13: ¿Qué símbolo representa visibilidad pública?</div>
+            <div class="respuesta-correcta">✓ B) +</div>
+            <div class="explicacion">+ = public, - = private, # = protected, ~ = package</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 14: ¿Qué símbolo representa visibilidad privada?</div>
+            <div class="respuesta-correcta">✓ A) -</div>
+            <div class="explicacion">- = private</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 15: ¿Qué símbolo representa visibilidad protected?</div>
+            <div class="respuesta-correcta">✓ C) #</div>
+            <div class="explicacion"># = protected</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 16: ¿Cómo se representa un atributo static?</div>
+            <div class="respuesta-correcta">✓ B) Subrayado</div>
+            <div class="explicacion">Los atributos y métodos static se subrayan</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 17: ¿Qué estereotipo para enumeración?</div>
+            <div class="respuesta-correcta">✓ B) <<enumeration>></div>
+            <div class="explicacion"><<enumeration>> representa tipos enumerados con atributos en mayúsculas</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 18: ¿Qué estereotipo indica métodos y variables estáticos?</div>
+            <div class="respuesta-correcta">✓ C) <<utility>></div>
+            <div class="explicacion"><<utility>> = clase de utilidad (fecha, concatenación, etc.)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 19: ¿Qué es una interfaz en UML?</div>
+            <div class="respuesta-correcta">✓ B) Una especificación de servicios</div>
+            <div class="explicacion">Interfaz = colección de operaciones que especifican servicios</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 20: ¿Cuál es la sintaxis correcta de un atributo?</div>
+            <div class="respuesta-correcta">✓ B) [visibilidad] nombre [: tipo]</div>
+            <div class="explicacion">visibilidad nombre : tipo = valor inicial</div>
+        </div>
+        
+        <!-- RELACIONES -->
+        <div class="categoria">RELACIONES (Preguntas 21-30)</div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 21: 'Un coche TIENE UN motor' es...</div>
+            <div class="respuesta-correcta">✓ B) Asociación</div>
+            <div class="explicacion">Asociación = relación estructural donde los objetos están conectados</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 22: 'Un corazón ES PARTE DE una persona' es...</div>
+            <div class="respuesta-correcta">✓ C) Composición</div>
+            <div class="explicacion">Composición = relación parte de con ciclo de vida dependiente (rombo relleno)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 23: ¿Cómo se representa la agregación?</div>
+            <div class="respuesta-correcta">✓ B) Rombo vacío</div>
+            <div class="explicacion">Agregación = rombo vacío (ciclo de vida independiente)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 24: ¿Cómo se representa la composición?</div>
+            <div class="respuesta-correcta">✓ B) Rombo relleno</div>
+            <div class="explicacion">Composición = rombo relleno (ciclo de vida dependiente)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 25: 'Una cuenta bancaria DEPENDE de un cliente' es...</div>
+            <div class="respuesta-correcta">✓ D) Dependencia</div>
+            <div class="explicacion">Dependencia = cambio en especificación afecta a otro pero no viceversa</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 26: ¿Qué relación indica herencia entre clases?</div>
+            <div class="respuesta-correcta">✓ C) Generalización</div>
+            <div class="explicacion">Generalización = relación superclase/subclase (herencia)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 27: ¿Qué relación indica que una clase IMPLEMENTA otra?</div>
+            <div class="respuesta-correcta">✓ C) Realización</div>
+            <div class="explicacion">Realización = implementa interfaz (flecha discontinua con triángulo)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 28: Diferencia entre agregación y composición</div>
+            <div class="respuesta-correcta">✓ C) La composición tiene ciclo de vida dependiente</div>
+            <div class="explicacion">Composición = ciclo dependiente (si muere el contenedor, mueren las partes)</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 29: ¿Cómo se representa la dependencia?</div>
+            <div class="respuesta-correcta">✓ B) Línea discontinua con flecha</div>
+            <div class="explicacion">Dependencia = flecha discontinua</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 30: ¿Qué relación usa 'ES UN'?</div>
+            <div class="respuesta-correcta">✓ C) Herencia</div>
+            <div class="explicacion">Herencia = relación "ES UN" (Perro ES UN Animal)</div>
+        </div>
+        
+        <!-- POO -->
+        <div class="categoria">POO (Preguntas 31-40)</div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 31: ¿Qué es una clase en POO?</div>
+            <div class="respuesta-correcta">✓ B) La descripción de un conjunto de objetos</div>
+            <div class="explicacion">Clase = molde/plantilla para crear objetos</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 32: ¿Qué es un objeto en POO?</div>
+            <div class="respuesta-correcta">✓ B) Una instancia de una clase</div>
+            <div class="explicacion">Objeto = instancia concreta de una clase</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 33: ¿Se puede instanciar una clase abstracta con 'new'?</div>
+            <div class="respuesta-correcta">✓ B) No, genera error</div>
+            <div class="explicacion">Las clases abstractas NO se pueden instanciar directamente</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 34: Diferencia entre clase abstracta e interfaz</div>
+            <div class="respuesta-correcta">✓ B) La clase abstracta puede tener estado, la interfaz no</div>
+            <div class="explicacion">Clase abstracta = puede tener estado e implementación. Interfaz = solo contrato.</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 35: ¿Qué modificador permite ver desde cualquier clase?</div>
+            <div class="respuesta-correcta">✓ C) public</div>
+            <div class="explicacion">public = visible desde cualquier lugar</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 36: ¿Qué modificador permite ver desde propia clase y subclases?</div>
+            <div class="respuesta-correcta">✓ B) protected</div>
+            <div class="explicacion">protected = propia clase + subclases + mismo paquete</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 37: ¿Cuál es el objetivo principal de la POO?</div>
+            <div class="respuesta-correcta">✓ B) Reutilización</div>
+            <div class="explicacion">La reutilización de código es el objetivo principal</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 38: ¿Qué indica 'spaguetti code'?</div>
+            <div class="respuesta-correcta">✓ C) Ifs anidados excesivos</div>
+            <div class="explicacion">Spaguetti code = código con muchos if/else anidados, difícil de mantener</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 39: ¿Qué relación N a N se resuelve con clase de asociación?</div>
+            <div class="respuesta-correcta">✓ C) Asociación</div>
+            <div class="explicacion">Las relaciones N a N se resuelven con clase de asociación</div>
+        </div>
+        
+        <div class="solucion">
+            <div class="solucion-header">Pregunta 40: ¿En qué consiste el modelado ágil?</div>
+            <div class="respuesta-correcta">✓ B) Documentación ligera y justo a tiempo</div>
+            <div class="explicacion">Modelado ágil = documentación ligera, ordenada, accesible, JIT (justo a tiempo)</div>
+        </div>
+        
+        <footer>
+            <p><strong>Archivos disponibles:</strong></p>
+            <p><a href="resumen.html">Resumen</a> | <a href="ejercicios.html">Ejercicios</a> | <a href="soluciones.html">Soluciones</a></p>
+        </footer>
+    </div>
+</body>
+</html>
