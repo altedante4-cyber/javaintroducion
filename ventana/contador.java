@@ -9,7 +9,7 @@ public class contador extends JFrame implements  ActionListener {
     private JButton boton;
     private JLabel etNombre;
     private JLabel saludo ; 
-
+    private int contador = 0 ; 
     public contador(){
          //construimos las dimensiones de las ventanasa
         setTitle("Primera Ventana");
@@ -36,16 +36,15 @@ public class contador extends JFrame implements  ActionListener {
         // Hacemos visible
         this.setVisible(true);
 
+    
+    }
+
           @Override 
     public void actionPerformed(ActionEvent e) {
-        // Ahora además de la consola, podemos interactuar con el campo de texto
-        int contador = 0 ; 
      String nombre = campoTexto.getText();
         saludo.setText(nombre + contador );
      contador += 1 ; 
         System.out.println("Has pulsado el botón. Hola, " + nombre);
     }
 
-
 }
-
