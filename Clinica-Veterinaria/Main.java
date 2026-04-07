@@ -45,13 +45,13 @@ public class Main {
         }
 
         System.out.println("\n=== MODIFICANDO COMENTARIOS ===");
-        boolean modificado = clinica.modificaCOmentarioAnimal("Firulais", "Paciente tranquilo, necesita paseos diarios");
+        boolean modificado = clinica.modificaComentarioAnimal("Firulais", "Paciente tranquilo, necesita paseos diarios");
         System.out.println("Comentario modificado (Firulais): " + modificado);
 
-        boolean modificado2 = clinica.modificaCOmentarioAnimal("Michi", "Gato muy nervioso");
+        boolean modificado2 = clinica.modificaComentarioAnimal("Michi", "Gato muy nervioso");
         System.out.println("Comentario modificado (Michi): " + modificado2);
 
-        boolean modificado3 = clinica.modificaCOmentarioAnimal("NoExiste", "Comentario");
+        boolean modificado3 = clinica.modificaComentarioAnimal("NoExiste", "Comentario");
         System.out.println("Comentario modificado (NoExiste): " + modificado3);
 
         System.out.println("\n=== VERIFICANDO ANIMALES DESPUES DE MODIFICACIONES ===");

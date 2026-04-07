@@ -1,0 +1,101 @@
+escenario1 = blindaje estructural
+delete con subconsultas(min,group by) eliminar duplicados exactos
+regexp / like  validar formato nif ( 8 numero  +1 letra)
+trim() / replace() eliminar espacios en blanco 
+update con case estandarizar formato col-xx-yyyy
+check constraint validar formatos en tiempo de insercion
+create table + insert + select extraer datos a nueva tabla 
+default 'valor' valores por defecto en columnas
+foreifn key con on update  integridad referencial
+alter table añadir columnas modificar constraints
+calculo aritmetico en update ( importe * 0.20)
+parsing de strings (substring , split)
+COALESCE() MANEJO DE NULL EN INFORMES
+STR_TO_DATE() / cast()  convertir fechas varhcar - datetime
+replace() + cast() => limpiar simbolos monetarios
+create index => optimizar consultas 
+documentacion tecnica => justificar cada cambio
+
+MANIPULACION DE DATOS
+
+DELETE FROM .... WHERE .... IN (SELECT ... MIN(id) ... GROUP BY ... HAVING COUNT( * ) > 1)
+update .... set ... where ...
+insert into ... selct .. where not existes (,,,,) 
+trim(), replace() 
+
+VALIDACION Y FORMATO
+regexp / like '_______'(8 caracteres)
+case when ... then .... else ... end
+check (columna regexp '...')
+unique , not null 
+
+
+ESTRUCTURA  DE TABLAS
+
+create table ... (...)
+alter table ... add column .... 
+alter table ... add constraint ... foreign key (...) references ...(...)
+alter table ... modify column ... not null 
+
+consultas avanzadas 
+
+coalesce(valor,'default')
+str_to_date() o cast()
+cast(... as decimal(10,2))
+substring_index() para parsear raw_data
+
+indices 
+create index ... on ... (columna)
+
+integridad 
+
+on update set null / on update cascade 
+
+
+
+delete from pacientes 
+where id not in(select  min(id) from pacientes group by nif , nombre );
+
+validar formato nif con regexp
+
+---varifacr rformato
+select nif from pacientees where nif not regexp '^{0-9]{8}[A-Z]$';
+-- corregir (quitar espacios) 
+update pacientes set nif = trim (replace(nif,' ' , ''));
+alplicar constraint 
+
+alter table pacientes modify column nif varichar(9) not null ;
+alter table pacientes add constraint uq_nif unique (nif);
+
+estandarizar formato(case + like)
+
+update medicos
+set num_colegiados = concat('col-',case 
+when provijncia = 'Madrid' then 'MD'
+when provincia = 'Barcelona' then 'BC'
+else 'xx'
+end,
+'-',lpad(numero,4,'0'))
+where num_colegiado not like 'col-%';
+check constriant alter table medi9cos add constraint chk_colegiado
+check (num_colegiado regexp 'ĈOL-[A-Z]{2}-[0-9]{4}$');
+
+create table seguros_pacientes ( 
+id int auto_increment primary key,
+paciente_id int not null ,
+num_poliza varchar (50),
+estado_poliza enun('ACTIVA' , 'cancelada') default 'activa',
+foreign key(paciente_id) references pacientes (id)
+);
+insert into seguors_pacientes(paciente_id, num_poliza)
+select id, seguro from pacientes where seguro is not null ;
+alter table pacientes drop column seguro ;
+columna calcula copago
+
+alter table visitas add colujm pago_estimado decimal (10,2);
+update cisitar set  copago_estimado = import _sucio * 0.20;
+
+--blindaje final 
+
+alter table visitas modifiy column pag
+

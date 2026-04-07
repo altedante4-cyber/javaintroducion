@@ -1,0 +1,116 @@
+# RESUMEN DEL SANEAMIENTO DE BASE DE DATOS
+
+## Práctica Avanzada: GHA_ANALYTICS
+
+**Grupo:** 1  
+**Estudiante:** Michael Axel Aguilar Peredo  
+**Fecha:** 07/04/2026
+
+---
+
+## RESUMEN DE FASES
+
+### FASE 1: Normalización de Identidad (PACIENTES)
+- ✅ Limpieza de espacios en NIFs (TRIM)
+- ✅ Eliminación de guiones en NIFs (REPLACE)
+- ✅ Eliminación de NIFs problemáticos (NULL, vacío, 'NULL_NIF')
+- ✅ Eliminación de duplicados por NIF
+- ✅ Validación con REGEXP: 8 números + 1 letra
+
+### FASE 2: Consistencia de Colegiados (MÉDICOS)
+- ✅ Limpieza de espacios
+- ✅ Normalización de formatos:
+  - `28/5566` → `COL-28-5566`
+  - `28-7788` → `COL-28-7788`
+  - `COL289900` → `COL-28-9900`
+  - `INV-999` → `COL-00-0999`
+
+### FASE 3: Integridad Referencial
+- ✅ Corrección de especialidad inexistente (99 → 1)
+- ✅ Eliminación de visitas huérfanas
+- ✅ Creación de 3 FOREIGN KEYs
+
+### FASE 4: División de Tablas
+- ✅ Creación de tabla `seguros_pacientes`
+- ✅ Migración de datos de num_poliza
+- ✅ Eliminación de columna redundante
+
+### FASE 5: Columnas Calculadas (VISITAS)
+- ✅ Limpieza de importes (€, $, EUR, espacios, comas)
+- ✅ Conversión a DECIMAL(10,2)
+- ✅ Creación de columna `copago_estimado` (20%)
+
+### FASE 6: Ingesta de Datos
+- ✅ Parseo de `raw_import_visitas`
+- ✅ Inserción de pacientes nuevos
+- ✅ Inserción de visitas normalizadas
+- ✅ Eliminación de tabla de staging
+
+### ESCENARIO 2: Saneamiento Profundo
+- ✅ Emails por defecto para nulos/vacíos
+- ✅ Limpieza de fechas de nacimiento
+- ✅ Limpieza de fechas de visita
+- ✅ Normalización de descuento_aplicado
+
+### FASE 8: Índices de Optimización
+- ✅ 8 índices creados para mejorar rendimiento
+
+---
+
+## ESTADÍSTICAS ESPERADAS
+
+| Tabla | Registros Finales |
+|-------|------------------|
+| pacientes | 5 (duplicados eliminados) |
+| medicos | 5 |
+| especialidades | 4 |
+| visitas | 8 (huérfanas eliminadas) |
+| seguros_pacientes | 4 |
+| raw_import_visitas | Eliminada |
+
+---
+
+## ARCHIVOS GENERADOS
+
+1. **GHA_Grupo01_MichaelAxel_AguilarPeredo_setup.sql**
+   - Creación de base de datos y tablas
+   - Carga de datos "radiactivos"
+
+2. **GHA_Grupo01_MichaelAxel_AguilarPeredo_saneamiento.sql**
+   - Script completo de saneamiento
+   - 8 fases + escenario 2
+   - Transacciones para seguridad
+
+3. **GHA_Grupo01_MichaelAxel_AguilarPeredo_Justificacion.md**
+   - Documentación detallada
+   - Problemas y soluciones
+   - Justificación de decisiones
+
+4. **GHA_Grupo01_MichaelAxel_AguilarPeredo_Resumen.txt**
+   - Este archivo (resumen ejecutivo)
+
+---
+
+## ORDEN DE EJECUCIÓN
+
+```bash
+# 1. Ejecutar setup primero
+sudo mysql < GHA_Grupo01_MichaelAxel_AguilarPeredo_setup.sql
+
+# 2. Luego ejecutar saneamiento
+sudo mysql gha_analytics < GHA_Grupo01_MichaelAxel_AguilarPeredo_saneamiento.sql
+```
+
+---
+
+## CONCLUSIÓN
+
+Script de saneamiento completo que:
+- ✅ Normaliza identidades (NIFs, colegiados)
+- ✅ Implementa integridad referencial
+- ✅ Normaliza estructura (división de tablas)
+- ✅ Limpia y convierte tipos de datos
+- ✅ Importa datos desde fuentes externas
+- ✅ Optimiza con índices
+
+**Todo usando transacciones para garantizar consistencia.**

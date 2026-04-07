@@ -7,19 +7,19 @@ public class Gato extends Animal {
     }
     @Override
     public void validar_especie(String raza ){
-         String valores_correctos [] = {"Siames","Persa","Angora","ScottishFold"};
+         String valores_correctos [] = {"Comun","Siames","Persa","Angora","ScottishFold"};
          boolean encontrado = false ; 
          for(String valores : valores_correctos){
-              if(valores.equals(raza)){
-                encontrado = true ;
-                break ; 
-              }
+               if(valores.equals(raza)){
+                 encontrado = true ;
+                 break ; 
+               }
          }
-         if(!encontrado){
+         if(encontrado){
+             this.raza = raza ;
+         } else {
              this.raza = "";
          }
-
-      this.raza = raza ; 
     }
 
     public String dameDatosAnimal(){

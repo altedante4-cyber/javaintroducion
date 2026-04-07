@@ -12,8 +12,19 @@ public class Carta {
     }
 
     public Carta(int id) {
-        this.numero = ((id - 1) % 10) + 1;
-        this.palo = (id - 1) / 10;
+        if (id >= 1 && id <= 10) {
+            this.numero = id;
+            this.palo = 0;
+        } else if (id >= 11 && id <= 20) {
+            this.numero = id - 10;
+            this.palo = 1;
+        } else if (id >= 21 && id <= 30) {
+            this.numero = id - 20;
+            this.palo = 2;
+        } else if (id >= 31 && id <= 40) {
+            this.numero = id - 30;
+            this.palo = 3;
+        }
     }
 
     public int getNumero() {

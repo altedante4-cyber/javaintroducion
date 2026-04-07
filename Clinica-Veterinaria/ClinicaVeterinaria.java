@@ -21,7 +21,7 @@ public class ClinicaVeterinaria {
             return null ; 
     }
 
-    public boolean  modificaCOmentarioAnimal(String nombre , String nuevo_comentario ){
+    public boolean modificaComentarioAnimal(String nombre , String nuevo_comentario ){
 
          for(Animal a : listaAnimales ){
                if(a.getNombre().equals(nombre)){

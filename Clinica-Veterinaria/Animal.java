@@ -32,8 +32,10 @@ public abstract class Animal {
     }
  
 
-    public abstract void validar_especie(String especie );
     public abstract String dameDatosAnimal();
+
+    public void validar_especie(String especie) {
+    }
 
 
 

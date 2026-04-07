@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sanenamiento Base de Datos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #eee;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #00d9ff;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .score-display {
+            background: #0f3460;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.2em;
+        }
+        .score-display span {
+            color: #00d9ff;
+            font-weight: bold;
+        }
+        .question-card {
+            background: #0f3460;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .question-number {
+            color: #00d9ff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .code-block {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+            border-left: 4px solid #00d9ff;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            background: #1a1a2e;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .option:hover {
+            background: #16213e;
+            border-color: #00d9ff;
+        }
+        .option.correct {
+            background: #0a4d0a;
+            border-color: #00ff00;
+        }
+        .option.incorrect {
+            background: #4d0a0a;
+            border-color: #ff0000;
+        }
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .explanation {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            border-left: 4px solid #ffd700;
+        }
+        .explanation.show {
+            display: block;
+        }
+        .explanation h4 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        .btn {
+            background: #00d9ff;
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #00b8d9;
+            transform: scale(1.02);
+        }
+        .btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-reset {
+            background: #ff6b6b;
+            margin-left: 10px;
+        }
+        .btn-reset:hover {
+            background: #ff5252;
+        }
+        .category {
+            display: inline-block;
+            background: #e94560;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+        .category-trim { background: #4ecdc4; color: #1a1a2e; }
+        .category-replace { background: #ff6b6b; }
+        .category-concat { background: #f7dc6f; color: #1a1a2e; }
+        .category-substring { background: #9b59b6; }
+        .category-regex { background: #e67e22; }
+        .category-delete { background: #c0392b; }
+        .category-alter { background: #2980b9; }
+        .category-insert { background: #27ae60; }
+        .category-update { background: #1abc9c; }
+        .category-fk { background: #8e44ad; }
+        .progress-bar {
+            background: #1a1a2e;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #00d9ff, #00ff00);
+            height: 100%;
+            transition: width 0.3s;
+        }
+        .final-result {
+            text-align: center;
+            padding: 40px;
+            background: #0f3460;
+            border-radius: 15px;
+            display: none;
+        }
+        .final-result.show {
+            display: block;
+        }
+        .final-result h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .final-result .grade {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .grade-a { color: #00ff00; }
+        .grade-b { color: #00d9ff; }
+        .grade-c { color: #ffd700; }
+        .grade-d { color: #ff6b6b; }
+        .tip-box {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #00d9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test: Saneamiento de Base de Datos</h1>
+        <p class="subtitle">Practica los patrones SQL para el examen</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        
+        <div class="score-display">
+            Puntuación: <span id="score">0</span> / <span id="total">0</span>
+        </div>
+        
+        <div id="quizContainer"></div>
+        
+        <div class="final-result" id="finalResult">
+            <h2>¡Test Completado!</h2>
+            <div class="grade" id="gradeDisplay">0%</div>
+            <p id="gradeMessage"></p>
+            <button class="btn" onclick="resetQuiz()">Reiniciar Test</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // === TRIM ===
+            {
+                category: "TRIM",
+                question: "¿Qué hace TRIM('  hola  ')?",
+                options: ["hola", "hola (con espacios)", "'hola'", "Error"],
+                correct: 0,
+                explanation: "TRIM elimina los espacios al inicio y al final. '  hola  ' → 'hola'"
+            },
+            {
+                category: "TRIM",
+                question: "Para limpiar un NIF con espacios como '  12345678A  ', ¿qué comando usas?",
+                options: [
+                    "SELECT TRIM('12345678A') FROM pacientes",
+                    "UPDATE pacientes SET nif = TRIM(nif)",
+                    "DELETE FROM pacientes WHERE nif = TRIM(nif)",
+                    "INSERT INTO pacientes VALUES (TRIM(nif))"
+                ],
+                correct: 1,
+                explanation: "UPDATE modifica los datos existentes. TRIM(nif) aplica la función a cada valor de la columna."
+            },
+            // === REPLACE ===
+            {
+                category: "REPLACE",
+                question: "¿Qué hace REPLACE('87654321-B', '-', '')?",
+                options: ["87654321-B", "87654321B", "B87654321-", "Error"],
+                correct: 1,
+                explanation: "REPLACE busca el segundo parámetro ('-') y lo sustituye por el tercero (''). Resultado: '87654321B'"
+            },
+            {
+                category: "REPLACE",
+                question: "Para limpiar un importe como '150.50€', ¿qué secuencia es correcta?",
+                options: [
+                    "REPLACE('150.50€', '€', '') → '150.50'",
+                    "REPLACE('150.50€', '€', '') → '150.50€'",
+                    "TRIM('150.50€') → '150.50'",
+                    "SUBSTRING('150.50€', 1, 5) → '150.50'"
+                ],
+                correct: 0,
+                explanation: "REPLACE elimina el símbolo € dejando solo el número. Las otras opciones no funcionan correctamente."
+            },
+            {
+                category: "REPLACE",
+                question: "¿Cuántas llamadas a REPLACE necesitas para limpiar '200.00 EUR'?",
+                options: ["1", "2", "3", "Ninguna"],
+                correct: 1,
+                explanation: "Primero eliminas 'EUR' y luego el punto. O viceversa. Son 2 operaciones."
+            },
+            // === CONCAT ===
+            {
+                category: "CONCAT",
+                question: "¿Qué resulta de CONCAT('COL-', '28', '-', '5566')?",
+                options: ["COL-28-5566", "COL285566", "COL,28,-,5566", "Error"],
+                correct: 0,
+                explanation: "CONCAT une todos los textos en uno solo: 'COL-' + '28' + '-' + '5566' = 'COL-28-5566'"
+            },
+            {
+                category: "CONCAT",
+                question: "Para convertir '28/5566' a 'COL-28-5566', ¿cuál es el resultado parcial?",
+                code: "CONCAT('COL-', SUBSTRING_INDEX('28/5566', '/', 1), '-', ...)",
+                options: [
+                    "COL-28",
+                    "COL-5566",
+                    "COL-28/5566",
+                    "28-5566"
+                ],
+                correct: 0,
+                explanation: "SUBSTRING_INDEX('28/5566', '/', 1) devuelve lo que está ANTES del '/', que es '28'. Entonces: CONCAT('COL-', '28', '-', ...) = 'COL-28-'"
+            },
+            // === SUBSTRING_INDEX ===
+            {
+                category: "SUBSTRING",
+                question: "¿Qué devuelve SUBSTRING_INDEX('28/5566', '/', 1)?",
+                options: ["28", "5566", "28/5566", "/"],
+                correct: 0,
+                explanation: "El tercer parámetro 1 significa: devuelve lo que está ANTES del primer '/'. Eso es '28'."
+            },
+            {
+                category: "SUBSTRING",
+                question: "¿Qué devuelve SUBSTRING_INDEX('28/5566', '/', -1)?",
+                options: ["28", "5566", "28/5566", "/"],
+                correct: 1,
+                explanation: "El -1 significa: devuelve lo que está DESPUÉS del primer '/'. Eso es '5566'."
+            },
+            {
+                category: "SUBSTRING",
+                question: "¿Qué devuelve SUBSTRING_INDEX('a|b|c', '|', 2)?",
+                options: ["a", "a|b", "b|c", "a|b|c"],
+                correct: 1,
+                explanation: "Devuelve las 2 primeras partes separadas por '|': 'a' + '|' + 'b' = 'a|b'"
+            },
+            {
+                category: "SUBSTRING",
+                question: "¿Qué devuelve SUBSTRING_INDEX('a|b|c', '|', -2)?",
+                options: ["a", "a|b", "b|c", "c"],
+                correct: 2,
+                explanation: "El -2 significa: las 2 últimas partes: 'b' + '|' + 'c' = 'b|c'"
+            },
+            // === SUBSTRING ===
+            {
+                category: "SUBSTRING",
+                question: "¿Qué devuelve SUBSTRING('COL289900', 4, 2)?",
+                options: ["CO", "OL", "28", "99"],
+                correct: 2,
+                explanation: "Desde la posición 4, cogemos 2 caracteres. Posición 1=C, 2=O, 3=L, 4=2, 5=8. Cogemos '2' y '8'."
+            },
+            {
+                category: "SUBSTRING",
+                question: "¿Qué devuelve SUBSTRING('COL289900', 6)?",
+                options: ["289900", "9900", "00", "99"],
+                correct: 1,
+                explanation: "Sin tercer parámetro, coge desde la posición 6 hasta el final. Posición 6=9, 7=9, 8=0, 9=0. Resultado: '9900'."
+            },
+            {
+                category: "SUBSTRING",
+                question: "¿Qué devuelve SUBSTRING('COL289900', -3)?",
+                options: ["COL", "289", "900", "9900"],
+                correct: 2,
+                explanation: "El número negativo -3 significa: los últimos 3 caracteres. '900'."
+            },
+            // === LPAD ===
+            {
+                category: "CONCAT",
+                question: "¿Qué devuelve LPAD('99', 4, '0')?",
+                options: ["0099", "9900", "99", "0000"],
+                correct: 0,
+                explanation: "LPAD rellena por la IZQUIERDA hasta tener 4 caracteres. '99' → '0099'."
+            },
+            {
+                category: "CONCAT",
+                question: "¿Qué devuelve LPAD('5566', 4, '0')?",
+                options: ["5566", "05566", "5656", "0066"],
+                correct: 0,
+                explanation: "Ya tiene 4 caracteres, así que no añade nada. Devuelve '5566'."
+            },
+            // === REGEXP ===
+            {
+                category: "REGEX",
+                question: "¿Qué significa ^[0-9]+$?",
+                options: [
+                    "Empieza con números",
+                    "Solo números (completo)",
+                    "Contiene números",
+                    "Termina en números"
+                ],
+                correct: 1,
+                explanation: "^ = empieza, [0-9]+ = uno o más números, $ = termina. Significa: TODO el texto son solo números."
+            },
+            {
+                category: "REGEX",
+                question: "¿Cuál de estos cumple ^[0-9]{8}[A-Z]$?",
+                options: ["12345678", "12345678A", "1234567A", "12345678AB"],
+                correct: 1,
+                explanation: "8 números + 1 letra mayúscula. '12345678A' → 8 números (1-8) + 1 letra (A). ✓"
+            },
+            {
+                category: "REGEX",
+                question: "¿Cuál NO cumple ^COL[0-9]{6}$?",
+                options: ["COL289900", "COL123456", "COL-28-9900", "COL000001"],
+                correct: 2,
+                explanation: "'COL-28-9900' tiene guiones, no son solo números pegados. El patrón exige exactamente 6 números sin separadores."
+            },
+            {
+                category: "REGEX",
+                question: "¿Qué significa ^[0-9]+-[0-9]+$?",
+                options: [
+                    "Números-guión-números en cualquier parte",
+                    "Solo números, guión y números (formato completo)",
+                    "Empieza con números y termina con guión",
+                    "Contiene al menos un guión"
+                ],
+                correct: 1,
+                explanation: "^ = empieza, números = [0-9]+, guión = -, números = [0-9]+, $ = termina. Formato: 'XX-YY' exacto."
+            },
+            // === DELETE ===
+            {
+                category: "DELETE",
+                question: "¿Qué hace esta consulta?",
+                code: "DELETE p1 FROM pacientes p1 INNER JOIN pacientes p2 WHERE p1.nif = p2.nif AND p1.id > p2.id",
+                options: [
+                    "Elimina todos los pacientes",
+                    "Elimina duplicados, conservando el menor id",
+                    "Elimina duplicados, conservando el mayor id",
+                    "Da error de sintaxis"
+                ],
+                correct: 2,
+                explanation: "WHERE p1.id > p2.id significa: borra los que TIENEN id mayor. Conserva el registro con id más pequeño."
+            },
+            {
+                category: "DELETE",
+                question: "¿Qué hace DELETE FROM pacientes WHERE nif IS NULL OR nif = ''?",
+                options: [
+                    "Borra pacientes con NIF nulo o vacío",
+                    "Borra todos los pacientes",
+                    "Pone a NULL los NIF vacíos",
+                    "Crea pacientes sin NIF"
+                ],
+                correct: 0,
+                explanation: "DELETE elimina filas completas. WHERE filtra: los que tengan nif NULL o texto vacío ('')."
+            },
+            // === ALTER TABLE ===
+            {
+                category: "ALTER",
+                question: "¿Qué hace ALTER TABLE pacientes DROP COLUMN num_poliza?",
+                options: [
+                    "Añade una columna",
+                    "Elimina la columna num_poliza",
+                    "Renombra num_poliza",
+                    "Crea una tabla nueva"
+                ],
+                correct: 1,
+                explanation: "DROP COLUMN elimina la columna especificada de la tabla."
+            },
+            {
+                category: "ALTER",
+                question: "¿Qué hace ALTER TABLE visitas ADD COLUMN copago DECIMAL(10,2)?",
+                options: [
+                    "Elimina la tabla visitas",
+                    "Añade columna copago de tipo decimal",
+                    "Actualiza los valores de copago",
+                    "Borra la columna copago"
+                ],
+                correct: 1,
+                explanation: "ADD COLUMN crea una nueva columna con el tipo especificado."
+            },
+            {
+                category: "ALTER",
+                question: "¿Qué hace ALTER TABLE visitas MODIFY importe_sucio DECIMAL(10,2)?",
+                options: [
+                    "Añade la columna",
+                    "Cambia el tipo de dato de importe_sucio a decimal",
+                    "Elimina la columna",
+                    "Renombra la columna"
+                ],
+                correct: 1,
+                explanation: "MODIFY cambia el tipo de dato de una columna existente."
+            },
+            // === INSERT SELECT ===
+            {
+                category: "INSERT",
+                question: "¿Qué hace INSERT INTO seguros_pacientes (paciente_id, num_poliza) SELECT id, num_poliza FROM pacientes?",
+                options: [
+                    "Crea la tabla seguros_pacientes",
+                    "Copia datos de pacientes a seguros_pacientes",
+                    "Elimina datos duplicados",
+                    "Actualiza los datos"
+                ],
+                correct: 1,
+                explanation: "INSERT ... SELECT copia datos desde una consulta SELECT hacia la tabla destino."
+            },
+            // === FK ===
+            {
+                category: "FK",
+                question: "¿Qué hace FOREIGN KEY (especialidad_id) REFERENCES especialidades(id)?",
+                options: [
+                    "Crea una nueva tabla",
+                    "Crea una relación entre tablas",
+                    "Elimina datos",
+                    "Une dos tablas"
+                ],
+                correct: 1,
+                explanation: "La FK crea una relación: cada valor de especialidad_id en medicos debe existir en especialidades(id)."
+            },
+            {
+                category: "FK",
+                question: "¿Por qué hay que eliminar visitas huérfanas ANTES de crear una FK?",
+                options: [
+                    "Para ahorrar espacio",
+                    "Porque la FK no permite referencias a filas inexistentes",
+                    "Para ir más rápido",
+                    "No es necesario"
+                ],
+                correct: 1,
+                explanation: "Si existe una visita con paciente_id = 999, pero no hay paciente con id = 999, la FK falla. Hay que eliminar primero."
+            },
+            // === UPDATE ===
+            {
+                category: "UPDATE",
+                question: "¿Qué hace UPDATE pacientes SET email = 'desconocido@email.com' WHERE email IS NULL?",
+                options: [
+                    "Elimina pacientes sin email",
+                    "Pone 'desconocido@email.com' en email de pacientes que tienen NULL",
+                    "Crea una columna email",
+                    "Cuenta pacientes sin email"
+                ],
+                correct: 1,
+                explanation: "UPDATE modifica valores. WHERE filtra: solo los que tienen email NULL les pone el nuevo valor."
+            },
+            // === LIKE ===
+            {
+                category: "REGEX",
+                question: "¿Qué significa LIKE '%/%'?",
+                options: [
+                    "Empieza con /",
+                    "Termina con /",
+                    "Contiene / en cualquier posición",
+                    "Es exactamente /"
+                ],
+                correct: 2,
+                explanation: "% es un comodín que significa 'cualquier cosa'. LIKE '%/%' busca textos que contengan '/'."
+            },
+            {
+                category: "REGEX",
+                question: "¿Qué significa NOT LIKE 'COL-%-%'?",
+                options: [
+                    "No empieza con COL",
+                    "No contiene COL",
+                    "No tiene el formato COL-XX-XX (dos guiones)",
+                    "Es exactamente COL"
+                ],
+                correct: 2,
+                explanation: "COL-%-% significa: COL + guión + algo + guión + algo. NOT LIKE excluye los que tienen ese formato."
+            },
+            // === COMBINADO ===
+            {
+                category: "COMBINADO",
+                question: "Tienes '28/5566'. Aplicas: CONCAT('COL-', SUBSTRING_INDEX('28/5566', '/', 1), '-', LPAD(SUBSTRING_INDEX('28/5566', '/', -1), 4, '0')) ¿Qué resulta?",
+                options: [
+                    "COL-28-5566",
+                    "COL-28-0005566",
+                    "COL-0028-5566",
+                    "28-5566-COL"
+                ],
+                correct: 0,
+                explanation: "1) SUBSTRING_INDEX('/'. 1) = '28', 2) SUBSTRING_INDEX('/'. -1) = '5566', 3) LPAD('5566', 4, '0') = '5566', 4) CONCAT = 'COL-28-5566'"
+            },
+            {
+                category: "COMBINADO",
+                question: "Tienes 'COL289900'. Aplicas: CONCAT('COL-', SUBSTRING('COL289900', 4, 2), '-', LPAD(SUBSTRING('COL289900', 6), 4, '0')) ¿Qué resulta?",
+                options: [
+                    "COL-COL289900-0000",
+                    "COL-28-9900",
+                    "COL-2899-00",
+                    "289900-COL"
+                ],
+                correct: 1,
+                explanation: "1) SUBSTRING(4,2) = '28', 2) SUBSTRING(6) = '9900', 3) LPAD('9900',4,'0') = '9900', 4) CONCAT = 'COL-28-9900'"
+            },
+            // === TRANSACCIONES ===
+            {
+                category: "TRIM",
+                question: "¿Qué hace START TRANSACTION + COMMIT?",
+                options: [
+                    "Empieza y termina sin guardar cambios",
+                    "Guarda los cambios permanentemente",
+                    "Cancela todo",
+                    "Crea una tabla"
+                ],
+                correct: 1,
+                explanation: "START TRANSACTION inicia un bloque. COMMIT guarda TODOS los cambios de ese bloque."
+            },
+            {
+                category: "TRIM",
+                question: "¿Qué hace START TRANSACTION + ROLLBACK?",
+                options: [
+                    "Guarda los cambios",
+                    "Deshace todos los cambios desde START TRANSACTION",
+                    "Elimina la tabla",
+                    "No hace nada"
+                ],
+                correct: 1,
+                explanation: "ROLLBACK deshace TODO lo hecho desde el último START TRANSACTION."
+            }
+        ];
+
+        let currentScore = 0;
+        let answeredQuestions = 0;
+        let questionsAnswered = new Set();
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function getCategoryClass(category) {
+            const classes = {
+                'TRIM': 'category-trim',
+                'REPLACE': 'category-replace',
+                'CONCAT': 'category-concat',
+                'SUBSTRING': 'category-substring',
+                'REGEX': 'category-regex',
+                'DELETE': 'category-delete',
+                'ALTER': 'category-alter',
+                'INSERT': 'category-insert',
+                'UPDATE': 'category-update',
+                'FK': 'category-fk',
+                'COMBINADO': 'category'
+            };
+            return classes[category] || 'category';
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            
+            const shuffledQuestions = shuffleArray(questions);
+            
+            shuffledQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `question-${index}`;
+                
+                const optionsHtml = q.options.map((opt, i) => `
+                    <div class="option" data-index="${i}" onclick="selectOption(${index}, ${i})">
+                        ${opt}
+                    </div>
+                `).join('');
+                
+                card.innerHTML = `
+                    <span class="category ${getCategoryClass(q.category)}">${q.category}</span>
+                    <div class="question-number">Pregunta ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                    ${q.code ? `<div class="code-block">${q.code}</div>` : ''}
+                    <div class="options">${optionsHtml}</div>
+                    <div class="explanation" id="explanation-${index}">
+                        <h4>Explicación:</h4>
+                        <p>${q.explanation}</p>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            document.getElementById('total').textContent = questions.length;
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            if (questionsAnswered.has(questionIndex)) return;
+            
+            const question = questions[questionIndex];
+            const options = document.querySelectorAll(`#question-${questionIndex} .option`);
+            
+            options.forEach(opt => opt.classList.add('disabled'));
+            
+            if (optionIndex === question.correct) {
+                options[optionIndex].classList.add('correct');
+                currentScore++;
+            } else {
+                options[optionIndex].classList.add('incorrect');
+                options[question.correct].classList.add('correct');
+            }
+            
+            questionsAnswered.add(questionIndex);
+            answeredQuestions++;
+            
+            document.getElementById('explanation-' + questionIndex).classList.add('show');
+            document.getElementById('score').textContent = currentScore;
+            
+            const progress = (answeredQuestions / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            if (answeredQuestions === questions.length) {
+                showFinalResult();
+            }
+        }
+
+        function showFinalResult() {
+            const percentage = Math.round((currentScore / questions.length) * 100);
+            const resultDiv = document.getElementById('finalResult');
+            const gradeDisplay = document.getElementById('gradeDisplay');
+            const gradeMessage = document.getElementById('gradeMessage');
+            
+            gradeDisplay.textContent = percentage + '%';
+            gradeDisplay.className = 'grade';
+            
+            if (percentage >= 90) {
+                gradeDisplay.classList.add('grade-a');
+                gradeMessage.textContent = '¡Excelente! Dominas los patrones perfectamente.';
+            } else if (percentage >= 70) {
+                gradeDisplay.classList.add('grade-b');
+                gradeMessage.textContent = 'Muy bien! Tienes un buen nivel. Repasa las fallidas.';
+            } else if (percentage >= 50) {
+                gradeDisplay.classList.add('grade-c');
+                gradeMessage.textContent = 'Bien! Pero necesitas practicar más.';
+            } else {
+                gradeDisplay.classList.add('grade-d');
+                gradeMessage.textContent = 'Sigue estudiando. Repasa la teoría y vuelve a intentar.';
+            }
+            
+            resultDiv.classList.add('show');
+            document.getElementById('quizContainer').style.display = 'none';
+        }
+
+        function resetQuiz() {
+            currentScore = 0;
+            answeredQuestions = 0;
+            questionsAnswered.clear();
+            
+            document.getElementById('score').textContent = 0;
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('finalResult').classList.remove('show');
+            document.getElementById('quizContainer').style.display = 'block';
+            
+            renderQuestions();
+        }
+
+        // Inicializar
+        renderQuestions();
+    </script>
+</body>
+</html>

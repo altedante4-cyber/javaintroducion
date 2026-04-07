@@ -1,0 +1,90 @@
+FASE 1: Normalización de Identidad
+DELETE p1 FROM pacientes p1 JOIN pacientes p2 
+WHERE p1.nif = p2.nif AND p1.nombre_completo = p2.nombre_completo AND p1.id > p2.id;
+→ Elimina duplicados exactos (mismo NIF y nombre), manteniendo el ID más bajo
+UPDATE pacientes SET nif = TRIM(nif);
+→ Elimina espacios al inicio y final del NIF
+UPDATE pacientes SET nif = REPLACE(nif, '-', '');
+→ Elimina guiones del NIF (ej: "87654321-B" → "87654321B")
+DELETE FROM pacientes WHERE nif IS NULL OR nif = '' OR nif = 'NULL_NIF' OR nif NOT REGEXP '^[0-9]{8}[A-Z]$';
+→ Elimina registros con NIFs inválidos (nulos, vacíos, 'NULL_NIF' o que no cumplan 8 números + 1 letra)
+ALTER TABLE pacientes MODIFY nif VARCHAR(20) NOT NULL, ADD UNIQUE INDEX idx_nif (nif);
+→ Convierte NIF en obligatorio y único
+---
+FASE 2: Consistencia de Colegiados
+UPDATE medicos SET num_colegiado = TRIM(num_colegiado);
+→ Limpia espacios
+UPDATE medicos SET num_colegiado = CONCAT('COL-', SUBSTRING_INDEX(num_colegiado, '/', 1), '-', LPAD(SUBSTRING_INDEX(num_colegiado, '/', -1), 4, '0')) WHERE num_colegiado LIKE '%/%';
+→ Convierte "28/5566" → "COL-28-5566"
+UPDATE medicos SET num_colegiado = CONCAT('COL-', REPLACE(num_colegiado, '-', '-')) WHERE num_colegiado LIKE '%-%' AND num_colegiado NOT LIKE 'COL-%';
+→ Convierte "28-7788" → "COL-28-7788" (añade COL- si no lo tiene)
+UPDATE medicos SET num_colegiado = CONCAT('COL-', SUBSTRING(num_colegiado, 4, 2), '-', LPAD(SUBSTRING(num_colegiado, 6), 4, '0')) WHERE num_colegiado LIKE 'COL[0-9]%' AND num_colegiado NOT LIKE 'COL-%-%';
+→ Convierte "COL289900" → "COL-28-9900"
+UPDATE medicos SET num_colegiado = CONCAT('COL-00-', LPAD(SUBSTRING(num_colegiado, -3), 4, '0')) WHERE num_colegiado NOT LIKE 'COL-%-%';
+→ Convierte formatos inválidos como "INV-999" → "COL-00-0999"
+ALTER TABLE medicos ADD CONSTRAINT chk_colegiado_format CHECK (num_colegiado REGEXP '^COL-[0-9]{2}-[0-9]{4}$');
+→ Añade restricción CHECK para validar formato COL-XX-YYYY
+---
+FASE 3: Integridad Referencial
+UPDATE medicos SET especialidad_id = 1 WHERE especialidad_id NOT IN (SELECT id FROM especialidades);
+→ Asigna 'Medicina General' (id=1) a médicos con especialidad inexistente
+ALTER TABLE medicos ADD CONSTRAINT fk_medicos_especialidad FOREIGN KEY (especialidad_id) REFERENCES especialidades(id);
+→ Añade FK en medicos → especialidades
+DELETE FROM visitas WHERE paciente_id NOT IN (SELECT id FROM pacientes) AND paciente_id != 999;
+DELETE FROM visitas WHERE paciente_id = 999;
+→ Elimina visitas con paciente_id inválido (999 = no existe)
+DELETE FROM visitas WHERE medico_id NOT IN (SELECT id FROM medicos) AND medico_id != 888;
+DELETE FROM visitas WHERE medico_id = 888;
+→ Elimina visitas con medico_id inválido (888 = no existe)
+ALTER TABLE visitas ADD CONSTRAINT fk_visitas_paciente FOREIGN KEY (paciente_id) REFERENCES pacientes(id);
+ALTER TABLE visitas ADD CONSTRAINT fk_visitas_medico FOREIGN KEY (medico_id) REFERENCES medicos(id);
+→ Añade FK en visitas → pacientes y medicos
+---
+FASE 4: División de Tablas
+CREATE TABLE seguros_pacientes (...);
+→ Crea nueva tabla con paciente_id, num_poliza, estado_poliza='ACTIVA' por defecto
+INSERT INTO seguros_pacientes (...) SELECT ... FROM pacientes WHERE num_poliza IS NOT NULL;
+→ Migra datos de num_poliza desde pacientes
+ALTER TABLE pacientes DROP COLUMN num_poliza;
+→ Elimina columna duplicada de pacientes
+---
+FASE 5: Columnas Calculadas
+UPDATE visitas SET importe_sucio = TRIM(importe_sucio);
+UPDATE visitas SET importe_sucio = REPLACE(REPLACE(REPLACE(importe_sucio, '€', ''), '$', ''), 'EUR', '');
+UPDATE visitas SET importe_sucio = REPLACE(importe_sucio, ',', '.');
+UPDATE visitas SET importe_sucio = NULL WHERE importe_sucio = '' OR importe_sucio = 'Gratis' OR importe_sucio = 'GRATIS';
+→ Limpia importes: elimina espacios, símbolos (€,$EUR), convierte coma a punto, maneja casos especiales
+ALTER TABLE visitas MODIFY importe_sucio DECIMAL(10,2);
+→ Convierte a tipo numérico
+ALTER TABLE visitas ADD COLUMN copago_estimado DECIMAL(10,2);
+UPDATE visitas SET copago_estimado = ROUND(importe_sucio * 0.20, 2);
+ALTER TABLE visitas MODIFY copago_estimado DECIMAL(10,2) NOT NULL;
+→ Añade columna calculada = 20% del importe y la hace obligatoria
+---
+FASE 6: Ingesta de Datos
+INSERT INTO pacientes (...) SELECT ... FROM raw_import_visitas WHERE ... NOT IN (SELECT nif FROM pacientes);
+→ Inserta nuevos pacientes desde staging (evita duplicados)
+INSERT INTO visitas (...) SELECT ... FROM raw_import_visitas r JOIN pacientes p ON ... ON DUPLICATE KEY UPDATE ...;
+→ Importa visitas, relacionando con pacientes por NIF
+DROP TABLE raw_import_visitas;
+→ Elimina tabla de staging
+---
+ESCENARIO 2: Saneamiento Profundo
+UPDATE pacientes SET email = 'desconocido@sinemail.com' WHERE email IS NULL OR email = '';
+→ Gestiona NULLs en email
+UPDATE pacientes SET f_nacimiento = TRIM(f_nacimiento);
+UPDATE pacientes SET f_nacimiento = REPLACE(f_nacimiento, '.', '/');
+UPDATE pacientes SET f_nacimiento = NULL WHERE f_nacimiento = '' OR f_nacimiento = 'NULL';
+ALTER TABLE pacientes MODIFY f_nacimiento DATETIME;
+→ Limpia y convierte fechas de nacimiento a DATETIME
+UPDATE visitas SET fecha_visita = TRIM(fecha_visita);
+UPDATE visitas SET fecha_visita = REPLACE(fecha_visita, '.', '-');
+ALTER TABLE visitas MODIFY fecha_visita DATETIME;
+→ Limpia y convierte fechas de visita a DATETIME
+ALTER TABLE visitas MODIFY descuento_aplicado DECIMAL(10,2);
+UPDATE visitas SET descuento_aplicado = 0 WHERE descuento_aplicado IS NULL;
+→ Normaliza descuento a DECIMAL y maneja NULLs
+CREATE INDEX idx_pacientes_nif ON pacientes(nif);
+CREATE INDEX idx_medicos_colegiado ON medicos(num_colegiado);
+CREATE INDEX idx_visitas_fecha ON visitas(fecha_visita);
+CREATE INDEX idx_visitas_paciente ON visitas(paciente_id);

@@ -15,11 +15,11 @@ public class Perro extends Animal  {
                 break ; 
               }
          }
-         if(!encontrado){
+         if(encontrado){
+             this.raza = raza ;
+         } else {
              this.raza = "";
          }
-
-         this.raza = raza ; 
     }
     public String getRaza(){
         return raza ; 

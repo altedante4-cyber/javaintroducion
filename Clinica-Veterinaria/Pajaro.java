@@ -13,16 +13,16 @@ public class Pajaro  extends Animal {
          String valores_correctos [] = {"Canario","Periquito","Agapornis"};
          boolean encontrado = false ; 
          for(String valores : valores_correctos){
-              if(valores.equals(especie)){
-                encontrado = true ;
-                break ; 
-              }
+               if(valores.equals(especie)){
+                 encontrado = true ;
+                 break ; 
+               }
          }
-         if(!encontrado){
+         if(encontrado){
+             this.especie = especie ;
+         } else {
              this.especie = "";
          }
-
-         this.especie = especie; 
     }
 
     public String dameDatosAnimal(){

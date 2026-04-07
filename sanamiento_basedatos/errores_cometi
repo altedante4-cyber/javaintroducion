@@ -1,0 +1,38 @@
+bueno para solucionar el problema que si un email tiene dos hice primero la consultao para ver que emial tiene  dos arrobas 
+select * from clientes where email like '%@%@%'
+para corregir (reemplazar doble @@ por uno solo ) 
+update clientes set email = replace (email ,  '@@' ,'@') where email like '%@%@%';
+
+
+==== actulizar precio rpaidamente (update con  jojin)
+
+update catalogo_productos c
+inner join nuegvas_tarifas t on c.referencia = t.referencia 
+set c.precio = t.precio_nuevo,
+c.ultima_actulizacion = now () ;
+
+update catalogo_producto c
+inner join nuevas_tarifa t on c.referencia = t.referencia
+set c.precio = t.precio_nuevo,
+c.ultima_actulizacion = now();
+
+
+update catalago_producto c 
+inner join nuevas_tarifa t on c.referencia = t.referencia
+set c.precio = t.precio_nuevo
+c.ultima_actualizacion = now () 
+
+update catalogo_producto c 
+inner join nuevas_tarifa t on c.referencia = t.referencia
+set c.precio = t.precio_nuevo
+c.utilma_actulizacion = now()
+
+update catalogo_producto c
+inner join nuevas_tarifa t on c.referencia = t.referencia
+set c.precio = t.precio_nuevo
+c.ultima_actulizacion= now ()
+
+update catalogo_producto c 
+inner join nuevas_tarifa t on c.referencia = t.referencia
+set c.precio = t.precio_nuevo
+c.ultima_actulizacion = now()	
