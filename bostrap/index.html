@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Administración - Entrega Inicial</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sidebar-width: 250px;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar para Escritorio */
+        #sidebar-wrapper {
+            min-height: 100vh;
+            width: var(--sidebar-width);
+            transition: margin .25s ease-out;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        /* Ajuste del contenido principal para dejar espacio al sidebar */
+        #page-content-wrapper {
+            width: 100%;
+            padding-left: var(--sidebar-width);
+        }
+
+        /* Responsive: Ocultar sidebar lateral en móviles */
+        @media (max-width: 991.98px) {
+            #sidebar-wrapper {
+                display: none;
+            }
+            #page-content-wrapper {
+                padding-left: 0;
+            }
+        }
+
+        .card-kpi {
+            border: none;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .card-kpi:hover {
+            transform: translateY(-5px);
+        }
+
+        .navbar {
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="d-flex" id="wrapper">
+        
+        <div class="bg-dark text-white border-end" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom p-4 fs-4 fw-bold text-center">AdminPro</div>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0 active"><i class="bi bi-speedometer2 me-2"></i> Inicio</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0"><i class="bi bi-people me-2"></i> Usuarios</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0"><i class="bi bi-graph-up me-2"></i> Reportes</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0"><i class="bi bi-gear me-2"></i> Configuración</a>
+            </div>
+        </div>
+
+        <div id="page-content-wrapper">
+            
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 sticky-top">
+                <div class="container-fluid">
+                    <button class="btn btn-outline-dark d-lg-none me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMobile">
+                        Menu
+                    </button>
+
+                    <form class="d-none d-md-flex flex-grow-1 me-4">
+                        <div class="input-group w-50">
+                            <input class="form-control shadow-none" type="text" placeholder="Buscar..." aria-label="Search">
+                            <button class="btn btn-primary" type="button">Buscar</button>
+                        </div>
+                    </form>
+
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">A</div>
+                            <span class="d-none d-sm-inline">Administrador</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
+                            <li><a class="dropdown-item" href="#">Ajustes</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid p-4">
+                <div class="row mb-4">
+                    <div class="col">
+                        <h2 class="h4">Vista General</h2>
+                        <p class="text-muted small">Bienvenido al panel de control de tu aplicación.</p>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="card card-kpi shadow-sm p-3 border-start border-primary border-4">
+                            <div class="text-muted small text-uppercase fw-bold">Nuevos Usuarios</div>
+                            <div class="d-flex align-items-center">
+                                <h3 class="mb-0">+150</h3>
+                                <span class="ms-auto badge bg-success">+12%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="card card-kpi shadow-sm p-3 border-start border-success border-4">
+                            <div class="text-muted small text-uppercase fw-bold">Ventas Totales</div>
+                            <div class="d-flex align-items-center">
+                                <h3 class="mb-0">3,400€</h3>
+                                <span class="ms-auto badge bg-info">Meta</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="card card-kpi shadow-sm p-3 border-start border-warning border-4">
+                            <div class="text-muted small text-uppercase fw-bold">Visitas Hoy</div>
+                            <div class="d-flex align-items-center">
+                                <h3 class="mb-0">12,432</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="card card-kpi shadow-sm p-3 border-start border-danger border-4">
+                            <div class="text-muted small text-uppercase fw-bold">Incidencias</div>
+                            <div class="d-flex align-items-center">
+                                <h3 class="mb-0">3</h3>
+                                <span class="ms-auto badge bg-danger text-white">Urgente</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center">
+                                <h5 class="mb-2 mb-md-0">Transacciones Recientes</h5>
+                                <form class="row g-2">
+                                    <div class="col-auto">
+                                        <select class="form-select form-select-sm shadow-none">
+                                            <option selected>Estado...</option>
+                                            <option value="1">Activo</option>
+                                            <option value="2">Pendiente</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-sm btn-dark px-3">Filtrar</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th># ID</th>
+                                            <th>Cliente</th>
+                                            <th>Producto</th>
+                                            <th>Fecha</th>
+                                            <th>Estado</th>
+                                            <th class="text-end">Monto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#TRX-001</td>
+                                            <td>Juan García</td>
+                                            <td>Suscripción Premium</td>
+                                            <td>07 Abr 2026</td>
+                                            <td><span class="badge rounded-pill bg-success text-white px-3">Activo</span></td>
+                                            <td class="text-end fw-bold">49.00€</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#TRX-002</td>
+                                            <td>Maria Valdés</td>
+                                            <td>Hardware Externo</td>
+                                            <td>06 Abr 2026</td>
+                                            <td><span class="badge rounded-pill bg-warning text-dark px-3">Pendiente</span></td>
+                                            <td class="text-end fw-bold">120.50€</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#TRX-003</td>
+                                            <td>Carlos Soler</td>
+                                            <td>Renovación Licencia</td>
+                                            <td>05 Abr 2026</td>
+                                            <td><span class="badge rounded-pill bg-danger text-white px-3">Cancelado</span></td>
+                                            <td class="text-end fw-bold">15.00€</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> </div> </div>
+
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasMobile" aria-labelledby="offcanvasMobileLabel">
+        <div class="offcanvas-header border-bottom border-secondary">
+            <h5 class="offcanvas-title fw-bold" id="offcanvasMobileLabel">Menu Admin</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <div class="list-group list-group-flush pt-3">
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0 active">Inicio</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0">Usuarios</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0">Reportes</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0 text-white-50">Actividad Reciente</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white p-3 border-0">Configuración</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
