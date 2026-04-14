@@ -1,0 +1,314 @@
+================================================================================
+                    CHEAT SHEET - EXAMEN RA5: MODIFICACIÓN DE DATOS
+                IES FRANCISCO DE GOYA – LA ELIPA - 1ºDAM 2025/2026
+================================================================================
+
+================================================================================
+NORMAS GENERALES DEL EXAMEN
+================================================================================
+
+- Cada ejercicio es INDEPENDIENTE (se evalúa sobre BBDD limpia)
+- CADA SCRIPT DEBE SER AUTOCONTENIDO (incluir creación de columnas si es necesario)
+- Uso OBLIGATORIO de START TRANSACTION y COMMIT
+- Leer atentamente cada ejercicio antes de empezar
+
+================================================================================
+EJERCICIO 1: GESTIÓN SALARIAL (2 pts)
+================================================================================
+
+OBJETIVO: 
+- Trabajar con el campo salario_base_sucio (texto con formato como "3000.00 EUR")
+- Calcular salario neto aplicando retenciones de IRPF
+
+PASOS A SEGUIR:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. Añadir columna salario_neto DECIMAL(10,2)                                 │
+│    ALTER TABLE empleados ADD COLUMN salario_neto DECIMAL(10,2);              │
+│                                                                             │
+│ 2. Extraer valor numérico y aplicar 15% retención (* 0.85)                  │
+│    UPDATE empleados SET salario_neto =                                        │
+│      CAST(REPLACE(REPLACE(salario_base_sucio, 'EUR', ''), ' ', '') * 0.85      │
+│    WHERE ...;                                                               │
+│                                                                             │
+│ 3. Utilizar ROLLBACK y SAVEPOINT para cambiar retención al 18%                  │
+│    SAVEPOINT sp_irpf_18;                                                    │
+│    ROLLBACK TO SAVEPOINT sp_irpf_18;                                         │
+│    UPDATE ... * 0.82;   (recordar: 1 - 0.18 = 0.82)                          │
+│                                                                             │
+│ 4. COMMIT para confirmar                                                   │
+│                                                                             │
+│ 5. Asignar 0 a empleados con salarios erróneos                               │
+│    WHERE salario_base_sucio LIKE '%gratis%' ...                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+FUNCIONES ÚTILES:
+- REPLACE(cadena, 'buscar', 'reemplazar') - Eliminar texto
+- CAST(valor AS DECIMAL(10,2)) - Convertir a número
+- TRIM(cadena) - Eliminar espacios
+- REGEXP - Expresiones regulares
+
+ERRORES COMUNES A EVITAR:
+❌ No usar COMMIT al final → cambios no se guardan
+❌ Olvidar que "3000.00 EUR" * 0.85 ≠ 2550 como DECIMAL (necesita casting)
+❌ Confundir retención 15% con 0.85 (debe ser 0.85) vs 18% con 0.82 (debe ser 0.82)
+
+================================================================================
+EJERCICIO 2: SANEAMIENTO DE INFRAESTRUCTURA (2 pts)
+================================================================================
+
+OBJETIVO: 
+- Eliminar almacenes duplicados por cod_almacen
+- Conservar el que tiene nombre_sucursal más LARGO (más caracteres)
+- Si hay EMPATE en longitud, conservar el de ID más BAJO
+
+PASOS A SEGUIR:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. Identificar los IDs a conservar                                          │
+│    Usar estrategia: Encontrar registros donde NO existe otro con           │
+│    nombre más largo o mismo длину pero id menor                              │
+│                                                                             │
+│ 2. DELETE de los duplicados                                                │
+│    DELETE FROM almacenes                                                    │
+│    WHERE id NOT IN (SELECT id FROM tabla_temporal);                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+CONSULTA CLAVE PARA IDENTIFICAR REGISTROS A CONSERVAR:
+SELECT a.id
+FROM almacenes a
+WHERE NOT EXISTS (
+    SELECT 1 FROM almacenes a2
+    WHERE a2.cod_almacen = a.cod_almacen
+    AND LENGTH(a2.nombre_sucursal) > LENGTH(a.nombre_sucursal)
+)
+AND NOT EXISTS (
+    SELECT 1 FROM almacenes a2
+    WHERE a2.cod_almacen = a.cod_almacen
+    AND LENGTH(a2.nombre_sucursal) = LENGTH(a.nombre_sucursal)
+    AND a2.id < a.id
+);
+
+FUNCIONES ÚTILES:
+- LENGTH(cadena) - Longitud de cadena (caracteres)
+- CHAR_LENGTH(cadena) - Para UTF8
+
+ERRORES COMUNES A EVITAR:
+❌ Confundir "más largo" con "alfabéticamente mayor" (NO es lo mismo)
+❌ No manejar el caso de empate correctamente
+❌ Eliminar todos los duplicados en lugar de quedarse con uno
+
+================================================================================
+EJERCICIO 3: INTEGRIDAD DE PLANTILLA (2 pts)
+================================================================================
+
+OBJETIVO: 
+- Reasignar empleados huérfanos (almacen_id no existe en almacenes)
+- Definir FOREIGN KEY para evitar future problemas
+
+PASOS A SEGUIR:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. Reasignar empleados huérfanos al almacén id=1 (Sede Central)            │
+│    UPDATE empleados SET almacen_id = 1                                  │
+│    WHERE almacen_id NOT IN (SELECT id FROM almacenes);                     │
+│                                                                             │
+│ 2. Definir FOREIGN KEY                                                   │
+│    ALTER TABLE empleados ADD CONSTRAINT fk_empleados_almacen              │
+│    FOREIGN KEY (almacen_id) REFERENCES almacenes(id);                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+NOTAS IMPORTANTES:
+- Antes de añadir FK, asegurar que almacen_id permite NULL si hay empleados sin asignar
+- Usar ON DELETE SET NULL o ON UPDATE CASCADE según политика
+
+ERRORES COMUNES A EVITAR:
+❌ Intentar añadir FK sin primero reasignar los huérfanos → Error por integridad referencial
+❌ Olvidar que almacen_id debe ser NULL para algunos empleados
+❌ No verificar que el almacen_id=1 existe antes de asignar
+
+================================================================================
+EJERCICIO 4: AUDITORÍA DE RETRASOS (2 pts)
+================================================================================
+
+OBJETIVO: 
+- Calcular días de retraso entre f_llegada_prevista y f_entrega_real
+- SOLO trabajar con fechas de año con 4 dígitos (interpretación unívoca)
+
+FECHAS VÁLIDAS (año de 4 dígitos - однозначная interpretación):
+✓ dd/mm/yyyy  (ej: 23/03/2025)
+✓ dd-mm-yyyy  (ej: 23-03-2025)
+✓ yyyy-mm-dd  (ej: 2025-03-23)
+✓ yyyy/mm/dd  (ej: 2025/03/23)
+
+FECHAS INVÁLIDAS (año de 2 dígitos - interpretación ambigua):
+✗ dd/mm/yy  (ej: 01/02/03 → ¿2003? ¿1903? ¿2001?)
+✗ dd-mm-yy
+✗ yy-mm-dd
+✗ yy/mm/dd
+
+PASOS A SEGUIR:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. Añadir columna dias_retraso INT                                        │
+│    ALTER TABLE envios ADD COLUMN dias_retraso INT;                          │
+│                                                                             │
+│ 2. Convertir fechas a formato válido                                    │
+│    UPDATE envios SET f_llegada_prevista =                                │
+│      DATE(STR_TO_DATE(f_llegada_prevista, '%d/%m/%Y'))                    │
+│    WHERE f_llegada_prevista REGEXP '^[0-9]{2}/[0-9]{2}/[0-9]{4}$';   │
+│                                                                             │
+│ 3. Calcular dias_retraso con DATEDIFF                                       │
+│    UPDATE envios SET dias_retraso = DATEDIFF(f_entrega_real, f_llegada_prevista)│
+│    WHERE f_entrega_real IS NOT NULL AND f_llegada_prevista IS NOT NULL;    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+FUNCIONES ÚTILES:
+- DATEDIFF(fecha_fin, fecha_inicio) - Días entre dos fechas
+- STR_TO_DATE(cadena, formato) - Convertir string a fecha
+- DATE(fecha) - Extraer parte de fecha
+- REGEXP - Filtrar formato
+
+FORMATOS PARA STR_TO_DATE:
+- %d/%m/%Y  → 23/03/2025
+- %d-%m-%Y  → 23-03-2025
+- %Y-%m-%d  → 2025-03-23
+- %Y/%m/%d  → 2025/03/23
+
+ERRORES COMUNES A EVITAR:
+❌ Intentar parsear fechas con año de 2 dígitos (interpretación ambigua)
+❌ Olvidar que las fechas en VARCHAR necesitan parseo explícito
+❌ Usar DATEDIFF con parámetros en orden incorrecto
+
+================================================================================
+EJERCICIO 5: NORMALIZACIÓN DE GESTIÓN (BONUS 1 pto)
+================================================================================
+
+OBJETIVO: 
+- Normalizar tipo_gestion creando tabla separada
+- Manejar diferencias de mayúsculas (PROPIA vs propia)
+
+PASOS A SEGUIR:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. Crear tabla tipos_gestion                                              │
+│    CREATE TABLE tipos_gestion (                                         │
+│      id INT AUTO_INCREMENT PRIMARY KEY,                                  │
+│      nombre VARCHAR(50) NOT NULL UNIQUE                                │
+│    );                                                                │
+│                                                                             │
+│ 2. Trasladar valores únicos (normalizando a mayúsculas)                 │
+│    INSERT INTO tipos_gestion (nombre)                                      │
+│    SELECT DISTINCT UPPER(TRIM(tipo_gestion))                          │
+│    FROM almacenes WHERE tipo_gestion IS NOT NULL;                      │
+│                                                                             │
+│ 3. Añadir columna tipo_gestion_id en almacenes                        │
+│    ALTER TABLE almacenes ADD COLUMN tipo_gestion_id INT;             │
+│                                                                             │
+│ 4. Vincular almacenes con tipos                                       │
+│    UPDATE almacenes a                                                 │
+│    INNER JOIN tipos_gestion tg ON UPPER(TRIM(a.tipo_gestion)) = tg.nombre│
+│    SET a.tipo_gestion_id = tg.id;                                    │
+│                                                                             │
+│ 5. Eliminar columna original                                         │
+│    ALTER TABLE almacenes DROP COLUMN tipo_gestion;                    │
+│                                                                             │
+│ 6. Añadir FOREIGN KEY                                                 │
+│    ALTER TABLE almacenes ADD CONSTRAINT ... FOREIGN KEY ...         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+PISTA DE CALIDAD (Bonus +1 punto):
+→ Usar UPPER(TRIM(...)) para normalizar antes de comparar
+→ Esto hace que "PROPIA", "propia", "  PROPIA  " se treat como igual
+
+ERRORES COMUNES A EVITAR:
+❌ No usar UNIQUE en la columna nombre →-duplicados
+❌ Olvidar TRIM → espacios causar duplicados
+❌ No normalizar a mayúsculas → "PROPIA" vs "propia"
+
+================================================================================
+RESUMEN RÁPIDO DE COMANDOS SQL
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ TRANSACCIONES                                                            │
+│   START TRANSACTION;              -- Iniciar transacción                        │
+│   COMMIT;                       -- Confirmar cambios                        │
+│   ROLLBACK;                    -- Deshacer todo                          │
+│   SAVEPOINT nombre;            -- Crear punto de guardado                │
+│   ROLLBACK TO SAVEPOINT nombre;-- Deshacer hasta savepoint              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ DDL (Data Definition Language)                                            │
+│   ALTER TABLE tabla ADD COLUMN nombre tipo;                              │
+│   ALTER TABLE tabla DROP COLUMN nombre;                                   │
+│   ALTER TABLE tabla ADD CONSTRAINT nombre FK ...;                         │
+│   CREATE TABLE nombre (columnas);                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ DML (Data Manipulation Language)                                            │
+│   UPDATE tabla SET columna = valor WHERE condición;                        │
+│   INSERT INTO tabla (cols) VALUES (valores);                             │
+│   DELETE FROM tabla WHERE condición;                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ FUNCIONES DE TEXTO                                                          │
+│   LENGTH(cadena)                -- Longitud en bytes                       │
+│   CHAR_LENGTH(cadena)           -- Longitud en caracteres                   │
+│   TRIM(cadena)                 -- Eliminar espacios                      │
+│   UPPER(cadena)                -- Convertir a mayúsculas              │
+│   LOWER(cadena)                 -- Convertir a minúsculas                │
+│   REPLACE(cadena,buscar,reemplazar) -- Reemplazar texto                  │
+│   CAST(valor AS tipo)          -- Convertir tipo                            │
+│   CONCAT(cad1, cad2, ...)      -- Concatenar                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ FUNCIONES DE FECHA                                                         │
+│   NOW()                      -- Fecha y hora actual                      │
+│   DATE(fecha)                -- Extraer fecha                            │
+│   DATEDIFF(fecha1, fecha2)   -- Días entre fechas (fecha1 - fecha2)       │
+│   STR_TO_DATE(cad, formato) -- String a fecha                           │
+│   DATE_FORMAT(fecha, formato) -- Fecha a string                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+EJEMPLOS DE CONSULTAS ÚTILES
+================================================================================
+
+-- Ver estructura de una tabla:
+DESCRIBE tabla;
+-- o
+SHOW COLUMNS FROM tabla;
+
+-- Contar registros:
+SELECT COUNT(*) FROM tabla;
+
+-- Ver valores únicos:
+SELECT DISTINCT columna FROM tabla;
+
+-- Ver duplicados:
+SELECT columna, COUNT(*) as total
+FROM tabla
+GROUP BY columna
+HAVING COUNT(*) > 1;
+
+-- Ver valores NULL:
+SELECT * FROM tabla WHERE columna IS NULL;
+
+-- Ver FK huérfanos:
+SELECT * FROM tabla1 t1
+WHERE t1.fk_id NOT IN (SELECT id FROM tabla2);
+
+================================================================================
+FRASES PARA RECORDAR EN EL EXAMEN
+================================================================================
+
+✓ "Cada script debe ser autocontenido"
+✓ "Usa START TRANSACTION y COMMIT"
+✓ "Trabaja sobre la base de datos limpia"
+✓ "El año con 4 dígitos = interpretación unívoca"
+✓ "Rollback + Savepoint = corrección sin perder todo"
+✓ "Normalizar = eliminar duplicados"
+
+================================================================================
+                                FIN DEL CHEAT SHEET
+================================================================================

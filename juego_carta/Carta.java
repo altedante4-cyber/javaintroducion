@@ -7,8 +7,8 @@ public class Carta {
     private static String[] nombrePalos = {"oros", "copas", "espadas", "bastos"};
 
     public Carta(int numero, int palo) {
-        this.numero = numero;
-        this.palo = palo;
+        setNumero(numero);
+        setPalo(palo);
     }
 
     public Carta(int id) {
@@ -25,6 +25,14 @@ public class Carta {
             this.numero = id - 30;
             this.palo = 3;
         }
+    }
+    public void setNumero(int numero ){
+         if (numero < 0 || numero > 10  ) this.numero = 0 ;
+         this.numero = numero;
+    }
+    public void setPalo(int palo){
+        if(palo < 0 || palo > 3 ) this.palo = 0 ;
+         this.palo = palo ; 
     }
 
     public int getNumero() {
@@ -56,9 +64,12 @@ public class Carta {
         int[] numeroMus = {1, 1, 10, 4, 5, 6, 7, 10, 10, 10};
         return numeroMus[numero - 1];
     }
-
+    
     public double Valor7ymedia() {
         double[] numeroMedia = {1, 2, 3, 4, 5, 6, 7, 0.5, 0.5, 0.5};
         return numeroMedia[numero - 1];
+    }
+    public String toString(){
+        return "Numero " + numero + "Palo " + palo ; 
     }
 }

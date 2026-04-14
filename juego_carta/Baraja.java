@@ -38,6 +38,8 @@ public class Baraja {
                     lista_cartas.add(new Carta(i));
                 }
                 break;
+
+    
         }
         if (!lista_cartas.isEmpty() && barajar) {
             barajar();
@@ -84,6 +86,72 @@ public class Baraja {
         lista_cartas.remove(0);
         return devolver;
     }
+
+    public void OrdenarPorNumero(){
+
+        if(!lista_cartas.isEmpty()){
+            for(int i = 0 ; i < lista_cartas.size() -1 ; i++ ){
+                for(int j = 0 ; j < lista_cartas.size() -i  -1  ; j++){
+                        if (lista_cartas.get(j).getNumero() > lista_cartas.get(j+1).getNumero()){
+                                Carta temp = lista_cartas.get(j);
+                                lista_cartas.set(j,lista_cartas.get(j+1));
+                                lista_cartas.set(j+1,temp);
+                        }
+                }
+            }
+
+        }
+
+
+    
+    }
+
+    public void OrdenarPorPalo(){
+
+        if(!lista_cartas.isEmpty()){
+            for(int i = 0 ; i < lista_cartas.size() -1 ; i++ ){
+                for(int j = 0 ; j < lista_cartas.size() -i  -1  ; j++){
+                        if (lista_cartas.get(j).getNumero() > lista_cartas.get(j+1).getNumero()){
+                                Carta temp = lista_cartas.get(j);
+                                lista_cartas.set(j,lista_cartas.get(j+1));
+                                lista_cartas.set(j+1,temp);
+                        }
+                }
+            }
+
+        }    
+    }
+     public void barajarCOnservative(){
+         if(lista_cartas.size() < 10 ){
+                System.out.println("Minimo 10 cartas necesarias");
+                return;
+         }
+         // gauradar las utlimas 5 cartas 
+
+         ArrayList <Carta> ultimas5 = new ArrayList<>();
+         for(int i = lista_cartas.size()  - 5 ; i < lista_cartas.size() ; i++ ){
+                ultimas5.add(lista_cartas.get(i));
+         }
+
+         // eliminar ultimas 5  de la lista principal
+
+         for(int i = 0 ; i < 5 ; i++ ){
+                lista_cartas.remove(lista_cartas.size() - 1 );
+         }
+
+         //Barajar las que quedan (algorimo simple)
+         Random rd = new Random();
+         for(int i = lista_cartas.size() - 1 ; i > 0 ; i-- ){
+                int idx = rd.nextInt(i +1);
+                Carta temp= lista_cartas.get(i);
+                lista_cartas.set(i,lista_cartas.get(idx));
+                lista_cartas.set(idx , temp );
+         }
+
+         // añadir las ultimas 5 al final 
+         lista_cartas.addAll(ultimas5);
+    }
+
 
     public void InsertaCartaFinal(int id_carta) {
         lista_cartas.add(new Carta(id_carta));

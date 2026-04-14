@@ -1,0 +1,157 @@
+================================================================================
+GUÍA DE ESTUDIO: Actualización de Bases de Datos (RA UPDATE)
+Departamento de Informática - Exam Ready
+================================================================================
+
+═══════════════════════════════════════════════════════════════════════════════
+COMANDOS ESCENCIALES (PARA EJERCICIOS)
+═══════════════════════════════════════════════════════════════════════════════
+
+--- 0. INICIALIZACIÓN ---
+DROP DATABASE IF EXISTS FugaTech_Forensic;
+CREATE DATABASE FugaTech_Forensic CHARACTER SET utf8mb4;
+USE FugaTech_Forensic;
+
+--- 1. SAFE UPDATES (Error 1175) ---
+SET SQL_SAFE_UPDATES = 0;           -- Desactivar modo seguro
+SET SQL_SAFE_UPDATES = 1;           -- Reactivar modo seguro
+
+--- 2. FOREIGN KEY CHECKS ---
+SET FOREIGN_KEY_CHECKS = 0;         -- Suspender validación FK
+SET FOREIGN_KEY_CHECKS = 1;        -- Reactivar validación FK
+
+--- 3. INSERT → SELECT (Migración) ---
+INSERT INTO tabla_destino (col1, col2, col3)
+SELECT col1, col2, col3 FROM tabla_origen WHERE condicion;
+
+--- 4. UPSERT (Insert or Update) ---
+INSERT INTO tabla (id, nombre, valor) VALUES (1, 'Juan', 100)
+ON DUPLICATE KEY UPDATE valor = valor + 100;
+
+--- 5. UPDATE con JOIN ---
+UPDATE tabla1 t1
+INNER JOIN tabla2 t2 ON t1.id = t2.id
+SET t1.campo = t2.campo;
+
+--- 6. UPDATE con Subconsulta ---
+UPDATE tabla SET campo = valor WHERE id IN (SELECT id FROM otra_tabla);
+
+--- 7. DELETE vs TRUNCATE ---
+DELETE FROM tabla WHERE condicion;   -- DML: fila a fila, mantiene AUTO_INCREMENT
+TRUNCATE TABLE tabla;                -- DDL: instantáneo, resetea AUTO_INCREMENT
+
+═══════════════════════════════════════════════════════════════════════════════
+FUNCIONES DE SANEAMIENTO
+═══════════════════════════════════════════════════════════════════════════════
+
+REPLACE(campo, 'antiguo', 'nuevo')          -- Reemplazar texto
+TRIM(campo)                               -- Quitar espacios extremos
+UPPER(campo) / LOWER(campo)               -- Mayúsculas/Minúsculas
+CONCAT(campo1, campo2)                    -- Concatenar campos
+IFNULL(campo, 'valor_por_defecto')         -- Valor por defecto (2 args)
+COALESCE(campo1, campo2, ...)             -- Primer valor no nulo (N args)
+STR_TO_DATE('fecha', 'formato')            -- Convertir texto a fecha
+CAST('valor' AS DECIMAL(10,2))            -- Convertir tipo
+
+--- CASE condicional ---
+UPDATE tabla SET campo = CASE
+    WHEN condicion1 THEN valor1
+    WHEN condicion2 THEN valor2
+    ELSE valor_por_defecto
+END;
+
+═══════════════════════════════════════════════════════════════════════════════
+RESTRICCIONES (FK Behaviors)
+═══════════════════════════════════════════════════════════════════════════════
+
+ON DELETE RESTRICT    -- Bloquea borrado si hay hijos
+ON DELETE CASCADE    -- Borra hijos automáticamente
+ON DELETE SET NULL   -- Deja hijos huérfanos (FK = NULL)
+ON UPDATE CASCADE    -- Actualiza hijos si cambia PK
+
+═══════════════════════════════════════════════════════════════════════════════
+DDL - Modificación Esquema
+═══════════════════════════════════════════════════════════════════════════════
+
+ALTER TABLE tabla ADD COLUMN nombre Tipo AFTER columna;
+ALTER TABLE tabla DROP COLUMN nombre;
+ALTER TABLE tabla MODIFY COLUMN nombre Tipo;
+ALTER TABLE tabla CHANGE COLUMN nombre_old nombre_new Tipo;
+ALTER TABLE tabla ADD CONSTRAINT nombre UNIQUE (columna);
+ALTER TABLE tabla ADD CONSTRAINT nombre CHECK (condicion);
+ALTER TABLE tabla MODIFY columna Tipo NOT NULL;  -- ¡Primero sanea NULLs!
+
+═══════════════════════════════════════════════════════════════════════════════
+AUDITORÍA Y VERIFICACIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+-- Ver duplicados ---
+SELECT campo, COUNT(*) FROM tabla GROUP BY campo HAVING COUNT(*) > 1;
+
+-- Ver distribución ---
+SELECT campo, COUNT(*) FROM tabla GROUP BY campo;
+
+-- Ver NULLs ---
+SELECT * FROM tabla WHERE campo IS NULL;
+
+═══════════════════════════════════════════════════════════════════════════════════════
+PREGUNTAS TIPO EXAMEN (RESPUESTAS RÁPIDAS)
+═══════════════════════════════════════════════════════════════════════════════
+
+P: ¿Qué hace SET SQL_SAFE_UPDATES = 0?
+R: Permite UPDATE sin WHERE con PK (evita Error 1175)
+
+P: ¿Diferencia DELETE vs TRUNCATE?
+R: DELETE es DML (lento, mantiene AI), TRUNCATE es DDL (instantáneo, resetea AI)
+
+P: ¿Para qué sirve SET FOREIGN_KEY_CHECKS = 0?
+R: Para importar tablas sin seguir orden (suspende validación FK)
+
+P: ¿Qué problema hay con CONCAT + NULL?
+R: Devuelve NULL (el NULL es "agujero negro")
+
+P: ¿Por qué no usar funciones en WHERE?
+R:INVALIDA índices (Full Table Scan) - No es SARGable
+
+P: ¿Qué hace ON DELETE CASCADE?
+R: Borra automáticamente los registros hijos
+
+P: ¿Qué hace ON DELETE SET NULL?
+R: Pone NULL en FK de registros hijos (quedan huérfanos)
+
+P: ¿Qué hace INSERT ... ON DUPLICATE KEY UPDATE?
+R: Actualiza si existe, inserta si no existe (UPSERT)
+
+P: ¿Por qué falla ALTER TABLE ... MODIFY ... NOT NULL?
+R: Existen valores NULL previos - hay que sanearlos primero
+
+P: Ventaja de CASE vs múltiples UPDATE?
+R: Una sola pasada (más eficiente, menos bloqueos)
+
+═══════════════════════════════════════════════════════════════════════════════
+EJEMPLOS PRÁCTICOS (Copiar y ejecutar)
+═══════════════════════════════════════════════════════════════════════════════
+
+-- Normalizar teléfonos ---
+UPDATE clientes SET telefono = REPLACE(REPLACE(REPLACE(telefono, '+34', ''), '-', ''), ' ', '');
+
+-- Limpiar emails con comas ---
+UPDATE clientes SET email = REPLACE(email, ',', '.') WHERE email LIKE '%,%';
+
+-- Bloquear clientes fraudulosos ---
+UPDATE clientes SET activo = 0 WHERE id IN (SELECT id_cliente FROM cuentas_bancarias WHERE fraude = 1);
+
+-- Migrar con transformación ---
+INSERT INTO clientes_vip (id, nombre, credito)
+SELECT id, TRIM(nombre), credito * 1.10 FROM clientes WHERE activo = 1;
+
+-- Upsert cliente ---
+INSERT INTO clientes (id, nombre, credito) VALUES (1, 'Juan', 100)
+ON DUPLICATE KEY UPDATE credito = credito + 100;
+
+-- Purga de logs antiguos ---
+DELETE FROM sys_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 5 YEAR);
+
+================================================================================
+FIN DE GUÍA - ESQUEMA RESUMEN PARA EXAMEN
+================================================================================
