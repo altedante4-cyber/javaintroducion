@@ -4,7 +4,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.ArrayList;
 public class ejercicio6 extends JFrame  {
+
     private JPanel panel ;
     private JTextField texto_español;
     private JTextField texto_ingles;
@@ -34,14 +36,26 @@ public class ejercicio6 extends JFrame  {
 
    public void leerarchivo(){
 	
-   try{
-   FileReader c1 = new FileReader("palabras.txt");
-        
-	int caracter;
-        while((caracter = c1.read()) != -1){
-                System.out.println((char)caracter );
-}
-c1.close();
+   try(FileReader c1 = new FileReader("palabras.txt")){
+	HashMap<String,String> letras = new HashMap<>();
+	String clave ="";
+	String valor ="";
+	for(int c = c1.read() ; c != -1 ; c= c1.read()){
+		
+		if ( c != ','){
+			clave += (char)c;
+		}else{
+			valor += (char) c;
+		}
+		letras.put(clave,valor);
+		clave="";
+		valor="";
+	}
+		c1.close();
+
+	for(String let : letras.keySet()){
+		System.out.println(letras.get(let));
+	}
 	}catch(Exception e){
 	System.out.println(e.getMessage());
 }
