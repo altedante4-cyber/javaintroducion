@@ -60,11 +60,18 @@ public class calculadora  extends JFrame implements ActionListener {
 	}
 
 	if(escuchar.getText().equals("=")){
+
 		String separar [] = texto.split("[+\\-*/]");
 		String valora = separar[0];
 		String valorb= separar[1];
 		int a = Integer.parseInt(valora);
 		int b = Integer.parseInt(valorb);
+		char tipo_operacion ;
+		for(int i = 0 ; i < texto.length();i++){
+			char c = texto.charAt(i);
+			
+		}
+		
 		resultado.setText(String.valueOf(a + b));
 
 }

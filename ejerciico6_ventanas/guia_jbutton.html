@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa de JButton en Java Swing</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a2e;
+            color: #eee;
+        }
+        h1 {
+            color: #00d9ff;
+            border-bottom: 3px solid #00d9ff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #ff6b6b;
+            margin-top: 40px;
+            border-left: 4px solid #ff6b6b;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #a8e6cf;
+            margin-top: 25px;
+        }
+        .concepto {
+            background-color: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: #0f3460;
+            color: #00d9ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+        }
+        pre {
+            background-color: #0f3460;
+            color: #a8e6cf;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+        }
+        .comparacion {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .comparacion-box {
+            background-color: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .comparacion-box.bueno {
+            border-left: 4px solid #2ecc71;
+        }
+        .comparacion-box.malo {
+            border-left: 4px solid #e74c3c;
+        }
+        .comparacion-box h4 {
+            margin-top: 0;
+        }
+        .bueno h4 { color: #2ecc71; }
+        .malo h4 { color: #e74c3c; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #00d9ff;
+            color: #000;
+        }
+        tr:nth-child(even) {
+            background-color: #16213e;
+        }
+        .nota {
+            background-color: #f39c12;
+            color: #000;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .nota strong {
+            color: #fff;
+        }
+        .ejemplo-completo {
+            background-color: #1a472a;
+            border: 2px solid #2ecc71;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .ejemplo-completo h4 {
+            color: #2ecc71;
+            margin-top: 0;
+        }
+        ul {
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📘 Guía Completa de JButton en Java Swing</h1>
+
+<!-- SECCIÓN 1: CREAR JBUTTON -->
+<h2>1. ¿Qué es JButton?</h2>
+
+<div class="concepto">
+<p><code>JButton</code> es un componente gráfico de Swing que representa un botón clickeable. Extiende de <code>AbstractButton</code> y hereda de <code>JComponent</code>.</p>
+
+<pre>
+javax.swing.JButton
+    └── AbstractButton
+        └── JComponent
+            └── Container
+                └── Component
+                    └── Object
+</pre>
+
+<p>Un <code>JButton</code> puede mostrar:</p>
+<ul>
+    <li>Solo texto: <code>new JButton("Guardar")</code></li>
+    <li>Solo icono: <code>new JButton(icono)</code></li>
+    <li>Texto e icono: <code>new JButton("Guardar", icono)</code></li>
+</ul>
+</div>
+
+<!-- SECCIÓN 2: CREAR ARRAY DE JBUTTON -->
+<h2>2. Crear un Array de JButton</h2>
+
+<h3>2.1 Array unidimensional</h3>
+
+<pre>
+// Declaración e inicialización
+JButton[] botones = new JButton[5];
+
+// Llenar cada botón
+botones[0] = new JButton("Uno");
+botones[1] = new JButton("Dos");
+botones[2] = new JButton("Tres");
+botones[3] = new JButton("Cuatro");
+botones[4] = new JButton("Cinco");
+
+// O con un bucle
+String[] nombres = {"Uno", "Dos", "Tres", "Cuatro", "Cinco"};
+JButton[] botones = new JButton[nombres.length];
+
+for (int i = 0; i < botones.length; i++) {
+    botones[i] = new JButton(nombres[i]);
+}
+</pre>
+
+<h3>2.2 Array bidimensional (matriz)</h3>
+
+<pre>
+// Matriz 3x3 de botones (como una calculadora)
+JButton[][] teclado = new JButton[4][4];
+
+for (int fila = 0; fila < 4; fila++) {
+    for (int col = 0; col < 4; col++) {
+        teclado[fila][col] = new JButton();
+        panel.add(teclado[fila][col]);  // Veremos esto después
+    }
+}
+</pre>
+
+<!-- SECCIÓN 3: AGREGAR A LA VENTANA -->
+<h2>3. Agregar JButton a la Ventana</h2>
+
+<h3>3.1 Estructura básica de una ventana</h3>
+
+<pre>
+import javax.swing.*;
+
+public class MiVentana extends JFrame {
+    public MiVentana() {
+        setTitle("Mi Ventana");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        JPanel panel = new JPanel();  // Contenedor para los componentes
+        // Agregar botones al panel...
+        setContentPane(panel);         // Vincular panel a la ventana
+        
+        setVisible(true);
+    }
+    
+    public static void main(String[] args) {
+        new MiVentana();
+    }
+}
+</pre>
+
+<h3>3.2 Agregar botones individuales</h3>
+
+<pre>
+JPanel panel = new JPanel();
+JButton boton1 = new JButton("Aceptar");
+JButton boton2 = new JButton("Cancelar");
+
+panel.add(boton1);  // Agregar al panel
+panel.add(boton2);
+</pre>
+
+<h3>3.3 Agregar array de botones</h3>
+
+<pre>
+JPanel panel = new JPanel();
+JButton[] botones = new JButton[3];
+
+botones[0] = new JButton("Uno");
+botones[1] = new JButton("Dos");
+botones[2] = new JButton("Tres");
+
+// Opción 1: Bucle for
+for (int i = 0; i < botones.length; i++) {
+    panel.add(botones[i]);
+}
+
+// Opción 2: For-each
+for (JButton btn : botones) {
+    panel.add(btn);
+}
+</pre>
+
+<!-- SECCIÓN 4: LAYOUTS -->
+<h2>4. Layouts (Diseños de Panel)</h2>
+
+<div class="comparacion">
+    <div class="comparacion-box bueno">
+        <h4>FlowLayout (por defecto)</h4>
+        <p>Los componentes se acomodan en filas. Si no cabe, pasa a la siguiente línea.</p>
+        <pre>
+panel.setLayout(new FlowLayout());
+// O simplemente: panel = new JPanel();</pre>
+    </div>
+    <div class="comparacion-box malo">
+        <h4>GridLayout</h4>
+        <p>Componentes en filas y columnas uniformes. Ideal para calculadoras.</p>
+        <pre>
+panel.setLayout(new GridLayout(4, 3)); // 4 filas, 3 columnas</pre>
+    </div>
+</div>
+
+<h3>4.1 FlowLayout</h3>
+
+<pre>
+panel.setLayout(new FlowLayout());
+
+// Alineación
+new FlowLayout(FlowLayout.LEFT);      // Izquierda
+new FlowLayout(FlowLayout.RIGHT);     // Derecha
+new FlowLayout(FlowLayout.CENTER);    // Centro
+
+// Con espaciado
+new FlowLayout(FlowLayout.LEFT, 10, 20); // hgap=10, vgap=20
+</pre>
+
+<h3>4.2 GridLayout</h3>
+
+<pre>
+// Calculadora 4x4
+panel.setLayout(new GridLayout(4, 4));
+
+// Con espaciado entre botones
+panel.setLayout(new GridLayout(4, 4, 5, 5)); // filas, cols, hgap, vgap
+</pre>
+
+<h3>4.3 BorderLayout</h3>
+
+<pre>
+panel.setLayout(new BorderLayout());
+
+panel.add(botonNorte, BorderLayout.NORTH);
+panel.add(botonSur, BorderLayout.SOUTH);
+panel.add(botonEste, BorderLayout.EAST);
+panel.add(botonOeste, BorderLayout.WEST);
+panel.add(botonCentro, BorderLayout.CENTER);
+</pre>
+
+<h3>4.4 BoxLayout</h3>
+
+<pre>
+panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+panel.add(Box.createVerticalGlue());  // Espacio flexible
+panel.add(boton1);
+panel.add(boton2);
+</pre>
+
+<!-- SECCIÓN 5: ACTION LISTENER -->
+<h2>5. ActionListener con Arrays de Botones</h2>
+
+<h3>5.1 La interfaz ActionListener</h3>
+
+<pre>
+public interface ActionListener {
+    void actionPerformed(ActionEvent e);
+}
+</pre>
+
+<h3>5.2 Opción 1: La clase implementa ActionListener</h3>
+
+<pre>
+public class MiVentana extends JFrame implements ActionListener {
+    private JButton[] botones;
+    
+    public MiVentana() {
+        // ... crear botones ...
+        
+        // Asignar el listener a cada botón
+        for (JButton btn : botones) {
+            btn.addActionListener(this);  // "this" es el ActionListener
+        }
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // ¿Qué botón se presionó?
+        JButton fuente = (JButton) e.getSource();
+        
+        if (fuente == botones[0]) {
+            System.out.println("Botón 1 presionado");
+        } else if (fuente == botones[1]) {
+            System.out.println("Botón 2 presionado");
+        }
+    }
+}
+</pre>
+
+<h3>5.3 Opción 2: ActionListener anónimo</h3>
+
+<pre>
+botones[0].addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Botón 1 presionado");
+    }
+});
+</pre>
+
+<h3>5.4 Opción 3: ActionListener con lambda (Java 8+)</h3>
+
+<pre>
+botones[0].addActionListener(e -> System.out.println("Botón 1"));
+botones[1].addActionListener(e -> System.out.println("Botón 2"));
+</pre>
+
+<h3>5.5 Opción 4: Identificar con actionCommand</h3>
+
+<pre>
+// Asignar un identificador a cada botón
+botones[0].setActionCommand("btn_uno");
+botones[1].setActionCommand("btn_dos");
+
+@Override
+public void actionPerformed(ActionEvent e) {
+    String comando = e.getActionCommand();
+    
+    switch (comando) {
+        case "btn_uno":
+            System.out.println("Presionaste botón 1");
+            break;
+        case "btn_dos":
+            System.out.println("Presionaste botón 2");
+            break;
+    }
+}
+</pre>
+
+<!-- SECCIÓN 6: MÉTODOS ÚTILES -->
+<h2>6. Métodos Útiles de JButton</h2>
+
+<table>
+    <tr>
+        <th>Método</th>
+        <th>Descripción</th>
+        <th>Ejemplo</th>
+    </tr>
+    <tr>
+        <td><code>setText(String)</code></td>
+        <td>Cambiar el texto del botón</td>
+        <td><code>btn.setText("Guardar")</code></td>
+    </tr>
+    <tr>
+        <td><code>getText()</code></td>
+        <td>Obtener el texto</td>
+        <td><code>String t = btn.getText()</code></td>
+    </tr>
+    <tr>
+        <td><code>setEnabled(boolean)</code></td>
+        <td>Activar/desactivar botón</td>
+        <td><code>btn.setEnabled(false)</code></td>
+    </tr>
+    <tr>
+        <td><code>isEnabled()</code></td>
+        <td>¿Está activo?</td>
+        <td><code>if (btn.isEnabled())</code></td>
+    </tr>
+    <tr>
+        <td><code>setIcon(Icon)</code></td>
+        <td>Establecer icono</td>
+        <td><code>btn.setIcon(miIcono)</code></td>
+    </tr>
+    <tr>
+        <td><code>setPreferredSize(Dimension)</code></td>
+        <td>Tamaño preferido</td>
+        <td><code>btn.setPreferredSize(new Dimension(100, 40))</code></td>
+    </tr>
+    <tr>
+        <td><code>setBackground(Color)</code></td>
+        <td>Color de fondo</td>
+        <td><code>btn.setBackground(Color.RED)</code></td>
+    </tr>
+    <tr>
+        <td><code>setForeground(Color)</code></td>
+        <td>Color del texto</td>
+        <td><code>btn.setForeground(Color.WHITE)</code></td>
+    </tr>
+    <tr>
+        <td><code>setFont(Font)</code></td>
+        <td>Tipo de letra</td>
+        <td><code>btn.setFont(new Font("Arial", Font.BOLD, 14))</code></td>
+    </tr>
+    <tr>
+        <td><code>setVisible(boolean)</code></td>
+        <td>Mostrar/ocultar</td>
+        <td><code>btn.setVisible(false)</code></td>
+    </tr>
+    <tr>
+        <td><code>setActionCommand(String)</code></td>
+        <td>Identificador único</td>
+        <td><code>btn.setActionCommand("guardar")</code></td>
+    </tr>
+</table>
+
+<!-- SECCIÓN 7: AGREGAR ÍNDICE A CADA BOTÓN -->
+<h2>7. Cómo Identificar el Índice del Botón</h2>
+
+<h3>7.1 Usando ActionCommand</h3>
+
+<pre>
+JButton[] botones = new JButton[5];
+
+for (int i = 0; i < botones.length; i++) {
+    botones[i] = new JButton("Botón " + i);
+    botones[i].setActionCommand(String.valueOf(i));  // "0", "1", "2"...
+    botones[i].addActionListener(this);
+}
+
+@Override
+public void actionPerformed(ActionEvent e) {
+    int indice = Integer.parseInt(e.getActionCommand());
+    System.out.println("Botón " + indice + " presionado");
+}
+</pre>
+
+<h3>7.2 Usando una clase interna</h3>
+
+<pre>
+for (int i = 0; i < botones.length; i++) {
+    final int indice = i;  // "final" es necesario para usar i dentro del lambda
+    botones[i] = new JButton("Botón " + i);
+    botones[i].addActionListener(e -> {
+        System.out.println("Presionaste el botón " + indice);
+    });
+}
+</pre>
+
+<!-- SECCIÓN 8: EVENTOS COMUNES -->
+<h2>8. Otros Eventos Útiles</h2>
+
+<h3>8.1 MouseListener (clic, entrada, salida)</h3>
+
+<pre>
+boton.addMouseListener(new MouseAdapter() {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("Clic");
+    }
+    
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        boton.setBackground(Color.RED);  // Cuando el mouse entra
+    }
+    
+    @Override
+    public void mouseExited(MouseEvent e) {
+        boton.setBackground(Color.BLUE);  // Cuando el mouse sale
+    }
+});
+</pre>
+
+<h3>8.2 ChangeListener (cambio de estado)</h3>
+
+<pre>
+boton.addChangeListener(e -> {
+    ButtonModel modelo = e.getSource().getModel();
+    if (modelo.isPressed()) {
+        System.out.println("Botón presionado");
+    }
+    if (modelo.isRollover()) {
+        System.out.println("Mouse sobre el botón");
+    }
+});
+</pre>
+
+<!-- SECCIÓN 9: EJEMPLO COMPLETO -->
+<h2>9. Ejemplo Completo: Calculadora Simple</h2>
+
+<div class="ejemplo-completo">
+<h4>Calculadora con GridLayout y ActionListener</h4>
+<pre>
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Calculadora extends JFrame implements ActionListener {
+    private JTextField pantalla;
+    private String operador = "";
+    private double num1 = 0, num2 = 0;
+    private JButton[] botonesNumeros;
+    private JButton[] botonesOperadores;
+    
+    public Calculadora() {
+        setTitle("Calculadora");
+        setSize(300, 400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        
+        // Pantalla
+        pantalla = new JTextField();
+        pantalla.setEditable(false);
+        pantalla.setFont(new Font("Arial", Font.BOLD, 24));
+        pantalla.setHorizontalAlignment(JTextField.RIGHT);
+        add(pantalla, BorderLayout.NORTH);
+        
+        // Panel de botones
+        JPanel panelBotones = new JPanel();
+        panelBotones.setLayout(new GridLayout(4, 4, 5, 5));
+        
+        // Crear botones numéricos
+        botonesNumeros = new JButton[10];
+        for (int i = 0; i <= 9; i++) {
+            botonesNumeros[i] = new JButton(String.valueOf(i));
+            botonesNumeros[i].setFont(new Font("Arial", Font.BOLD, 20));
+            botonesNumeros[i].addActionListener(this);
+            botonesNumeros[i].setActionCommand("num" + i);
+            panelBotones.add(botonesNumeros[i]);
+        }
+        
+        // Crear botones de operadores
+        botonesOperadores = new JButton[4];
+        String[] ops = {"+", "-", "*", "/"};
+        for (int i = 0; i < 4; i++) {
+            botonesOperadores[i] = new JButton(ops[i]);
+            botonesOperadores[i].setFont(new Font("Arial", Font.BOLD, 20));
+            botonesOperadores[i].setBackground(Color.LIGHT_GRAY);
+            botonesOperadores[i].addActionListener(this);
+            botonesOperadores[i].setActionCommand("op" + ops[i]);
+            panelBotones.add(botonesOperadores[i]);
+        }
+        
+        // Botón igual y limpiar
+        JButton btnIgual = new JButton("=");
+        btnIgual.setFont(new Font("Arial", Font.BOLD, 20));
+        btnIgual.setBackground(Color.ORANGE);
+        btnIgual.addActionListener(this);
+        btnIgual.setActionCommand("igual");
+        panelBotones.add(btnIgual);
+        
+        JButton btnLimpiar = new JButton("C");
+        btnLimpiar.setFont(new Font("Arial", Font.BOLD, 20));
+        btnLimpiar.setBackground(Color.RED);
+        btnLimpiar.setForeground(Color.WHITE);
+        btnLimpiar.addActionListener(this);
+        btnLimpiar.setActionCommand("limpiar");
+        panelBotones.add(btnLimpiar);
+        
+        add(panelBotones, BorderLayout.CENTER);
+        setVisible(true);
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String comando = e.getActionCommand();
+        
+        if (comando.startsWith("num")) {
+            String num = comando.substring(3);
+            pantalla.setText(pantalla.getText() + num);
+        } else if (comando.startsWith("op")) {
+            operador = comando.substring(2);
+            num1 = Double.parseDouble(pantalla.getText());
+            pantalla.setText("");
+        } else if (comando.equals("igual")) {
+            num2 = Double.parseDouble(pantalla.getText());
+            double resultado = 0;
+            
+            switch (operador) {
+                case "+": resultado = num1 + num2; break;
+                case "-": resultado = num1 - num2; break;
+                case "*": resultado = num1 * num2; break;
+                case "/": resultado = num1 / num2; break;
+            }
+            
+            pantalla.setText(String.valueOf(resultado));
+        } else if (comando.equals("limpiar")) {
+            pantalla.setText("");
+            num1 = 0;
+            num2 = 0;
+            operador = "";
+        }
+    }
+    
+    public static void main(String[] args) {
+        new Calculadora();
+    }
+}
+</pre>
+</div>
+
+<!-- SECCIÓN 10: TIPS -->
+<h2>10. Tips y Buenas Prácticas</h2>
+
+<div class="concepto">
+    <h3>✅ Haz</h3>
+    <ul>
+        <li>Usa <code>setActionCommand()</code> para identificar botones</li>
+        <li>Usa <code>final</code> cuando uses variables dentro de lambdas</li>
+        <li>Usa <code>GridLayout</code> para botones uniformes</li>
+        <li>Usa <code>FlowLayout</code> para flexibilidad</li>
+        <li>Invoca <code>pack()</code> después de agregar todo</li>
+    </ul>
+    
+    <h3>❌ No Haz</h3>
+    <ul>
+        <li>No mezcles diferentes layouts sin entender cómo funcionan</li>
+        <li>No crees listeners anónimos para cada botón (usa un solo listener)</li>
+        <li>No uses <code>setSize()</code> en componentes individuales, usa <code>setPreferredSize()</code></li>
+        <li>No olvides invocar <code>setVisible(true)</code> al final</li>
+    </ul>
+</div>
+
+<div class="nota">
+    <strong>⚠️ Nota importante:</strong> Swing no es thread-safe. Si modificas la UI desde otro thread, usa <code>SwingUtilities.invokeLater()</code>.
+</div>
+
+<!-- SECCIÓN 11: RESUMEN RÁPIDO -->
+<h2>11. Resumen Rápido</h2>
+
+<pre>
+// 1. Crear array
+JButton[] botones = new JButton[5];
+
+// 2. Inicializar
+for (int i = 0; i < 5; i++) {
+    botones[i] = new JButton("Botón " + i);
+}
+
+// 3. Agregar listener
+for (JButton btn : botones) {
+    btn.addActionListener(this);
+}
+
+// 4. Agregar al panel
+JPanel panel = new JPanel(new GridLayout(1, 5));
+for (JButton btn : botones) {
+    panel.add(btn);
+}
+
+// 5. Identificar en actionPerformed
+@Override
+public void actionPerformed(ActionEvent e) {
+    JButton btn = (JButton) e.getSource();
+    String texto = btn.getText();
+    String comando = e.getActionCommand();
+}
+</pre>
+
+</body>
+</html>
