@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apuntes de Java - Ejercicios Prácticos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .concepto {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .concepto h3 {
+            margin-top: 0;
+        }
+        code {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+        }
+        .ejercicio {
+            background-color: #fff;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .ejercicio h3 {
+            color: #c0392b;
+            margin-top: 0;
+        }
+        .solucion {
+            display: none;
+            background-color: #d5f5e3;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 0 8px 8px 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error-comun {
+            background-color: #fdebd0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .error-comun strong {
+            color: #e67e22;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📚 Apuntes de Java - Guía Práctica</h1>
+
+<!-- CONCEPTO 1 -->
+<h2>1. Variables dentro vs fuera del Loop</h2>
+
+<div class="concepto">
+<h3>El Problema</h3>
+
+<pre>
+// ❌ INCORRECTO: Variable dentro del for
+for(int i = 0; i < 5; i++) {
+    int contador = 0;    // Se reinicia en CADA iteración
+    contador++;
+}
+System.out.println(contador); // Error: contador no existe aquí
+
+
+// ✅ CORRECTO: Variable fuera del for
+int contador = 0;        // Se mantiene entre iteraciones
+for(int i = 0; i < 5; i++) {
+    contador++;
+}
+System.out.println(contador); // Imprime: 5
+</pre>
+
+<h3>Pregunta de Reflexión</h3>
+<p>¿Cuántas veces se imprimirá "Hola" en el código incorrecto?</p>
+</div>
+
+<!-- CONCEPTO 2 -->
+<h2>2. Variables de Estado (boolean)</h2>
+
+<div class="concepto">
+<h3>¿Qué es una variable de estado?</h3>
+<p>Es una variable que indica EN QUÉ SITUACIÓN estamos. Como un interruptor que cambia el comportamiento del programa.</p>
+
+<pre>
+// Ejemplo: Modo de juego
+boolean esTurnoJugador1 = true;
+
+for(Caracter c : movimientos) {
+    if (c == 'X') {
+        esTurnoJugador1 = !esTurnoJugador1;  // Cambiar turno
+    } else {
+        if (esTurnoJugador1) {
+            // Agregar a puntuación del jugador 1
+        } else {
+            // Agregar a puntuación del jugador 2
+        }
+    }
+}
+</pre>
+
+<h3>Pregunta de Reflexión</h3>
+<p>Si lees "ABCXDEF", ¿en qué variable se guarda "DEF"?</p>
+</div>
+
+<!-- CONCEPTO 3 -->
+<h2>3. If-Else-If: El Orden Importa</h2>
+
+<div class="concepto">
+<h3>El Orden de las Condiciones</h3>
+
+<pre>
+// ❌ PROBLEMA: El else-if nunca se ejecuta
+if (c != ',') {
+    clave += c;
+} else if (c != '\n') {  // ❌ NUNCA llega aquí
+    valor += c;
+}
+
+// ✅ CORRECTO: Verificar primero los casos especiales
+if (c == ',') {
+    // Solo cambiar modo
+} else if (c == '\n') {
+    // Guardar y limpiar
+} else {
+    // Agregar a clave o valor
+}
+</pre>
+
+<h3>Regla Importante</h3>
+<p>Siempre verificar PRIMERO los casos especiales (coma, salto de línea) y después el caso general.</p>
+</div>
+
+<!-- CONCEPTO 4 -->
+<h2>4. HashMap en Java</h2>
+
+<div class="concepto">
+<h3>Concepto Básico</h3>
+<p>Un HashMap funciona como un diccionario: buscas por CLAVE y obtienes un VALOR.</p>
+
+<table>
+<tr>
+    <th>Concepto</th>
+    <th>Analogía</th>
+    <th>Código</th>
+</tr>
+<tr>
+    <td>Crear</td>
+    <td>Crear un diccionario vacío</td>
+    <td><code>HashMap&lt;String,String&gt; dict = new HashMap&lt;&gt;()</code></td>
+</tr>
+<tr>
+    <td>Agregar</td>
+    <td>Escribir una palabra</td>
+    <td><code>dict.put("hola", "hello")</code></td>
+</tr>
+<tr>
+    <td>Obtener</td>
+    <td>Buscar una palabra</td>
+    <td><code>dict.get("hola")</code></td>
+</tr>
+<tr>
+    <td>Todas las claves</td>
+    <td>Índice del diccionario</td>
+    <td><code>dict.keySet()</code></td>
+</tr>
+<tr>
+    <td>Todos los valores</td>
+    <td>Todas las definiciones</td>
+    <td><code>dict.values()</code></td>
+</tr>
+</table>
+
+<h3>Ejemplo Completo</h3>
+<pre>
+HashMap&lt;String, String&gt; traductor = new HashMap&lt;&gt;();
+traductor.put("hola", "hello");
+traductor.put("gato", "cat");
+traductor.put("perro", "dog");
+
+String palabra = traductor.get("gato");  // Devuelve "cat"
+System.out.println(palabra);             // Imprime: cat
+</pre>
+</div>
+
+<!-- CONCEPTO 5 -->
+<h2>5. Errores Comunes en Java</h2>
+
+<div class="concepto">
+<div class="error-comun">
+<strong>❌ Mayúsculas/minúsculas:</strong> <code>keySet()</code> vs <code>KeySet()</code>
+</div>
+
+<div class="error-comun">
+<strong>❌ Olvidar inicializar:</strong> La variable <code>boolean esValor</code> debe estar FUERA del for
+</div>
+
+<div class="error-comun">
+<strong>❌ No limpiar después de guardar:</strong> Después de <code>put()</code> hay que limpiar las variables
+</div>
+
+<div class="error-comun">
+<strong>❌ Agregar el delimitador:</strong> La coma <code>,</code> no debe ir ni en clave ni en valor
+</div>
+</div>
+
+<!-- EJERCICIOS -->
+<h1>🧑‍💻 Ejercicios Prácticos</h1>
+
+<div class="ejercicio">
+<h3>Ejercicio 1: Contar Vocales</h3>
+<p>Dado el String "Hola Mundo", cuenta cuántas vocales tiene (a, e, i, o, u).</p>
+
+<pre>
+String texto = "Hola Mundo";
+int vocales = 0;
+
+// Escribe tu código aquí
+
+System.out.println("Vocales: " + vocales); // Debe imprimir: Vocales: 4
+</pre>
+
+<button onclick="mostrarSolucion('solucion1')">Ver Solución</button>
+<div id="solucion1" class="solucion">
+<pre>
+String texto = "Hola Mundo";
+int vocales = 0;
+
+for(int i = 0; i < texto.length(); i++) {
+    char c = texto.charAt(i);
+    c = Character.toLowerCase(c);
+    
+    if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+        vocales++;
+    }
+}
+
+System.out.println("Vocales: " + vocales); // Vocales: 4
+</pre>
+</div>
+</div>
+
+<div class="ejercicio">
+<h3>Ejercicio 2: Separar por Comas</h3>
+<p>Dado "manzana,pera,uva", guarda cada palabra en un ArrayList.</p>
+
+<pre>
+String texto = "manzana,pera,uva";
+ArrayList&lt;String&gt; frutas = new ArrayList&lt;&gt;();
+String palabra = "";
+
+// Escribe tu código aquí
+
+System.out.println(frutas); // [manzana, pera, uva]
+</pre>
+
+<button onclick="mostrarSolucion('solucion2')">Ver Solución</button>
+<div id="solucion2" class="solucion">
+<pre>
+String texto = "manzana,pera,uva";
+ArrayList&lt;String&gt; frutas = new ArrayList&lt;&gt;();
+String palabra = "";
+
+for(int i = 0; i < texto.length(); i++) {
+    char c = texto.charAt(i);
+    
+    if (c == ',') {
+        frutas.add(palabra);
+        palabra = "";
+    } else {
+        palabra += c;
+    }
+}
+// No olvidar la última palabra
+frutas.add(palabra);
+
+System.out.println(frutas); // [manzana, pera, uva]
+</pre>
+</div>
+</div>
+
+<div class="ejercicio">
+<h3>Ejercicio 3: Usar un boolean como modo</h3>
+<p>Dado "ABC|DEF|GHI", guarda "ABC" y "DEF" y "GHI" en un ArrayList.</p>
+
+<pre>
+String texto = "ABC|DEF|GHI";
+ArrayList&lt;String&gt; partes = new ArrayList&lt;&gt;();
+String actual = "";
+boolean esNuevaParte = true;
+
+// Escribe tu código aquí
+
+System.out.println(partes); // [ABC, DEF, GHI]
+</pre>
+
+<button onclick="mostrarSolucion('solucion3')">Ver Solución</button>
+<div id="solucion3" class="solucion">
+<pre>
+String texto = "ABC|DEF|GHI";
+ArrayList&lt;String&gt; partes = new ArrayList&lt;&gt;();
+String actual = "";
+
+for(int i = 0; i < texto.length(); i++) {
+    char c = texto.charAt(i);
+    
+    if (c == '|') {
+        partes.add(actual);
+        actual = "";
+    } else {
+        actual += c;
+    }
+}
+partes.add(actual); // Última parte
+
+System.out.println(partes); // [ABC, DEF, GHI]
+</pre>
+</div>
+</div>
+
+<div class="ejercicio">
+<h3>Ejercicio 4: Traductor Simple con HashMap</h3>
+<p>Dado "hola,hello,mundo,world", crea un HashMap y busca "hola".</p>
+
+<pre>
+String texto = "hola,hello,mundo,world";
+HashMap&lt;String, String&gt; traductor = new HashMap&lt;&gt;();
+
+// Escribe tu código aquí
+
+String busqueda = traductor.get("hola");
+System.out.println(busqueda); // hello
+</pre>
+
+<button onclick="mostrarSolucion('solucion4')">Ver Solución</button>
+<div id="solucion4" class="solucion">
+<pre>
+String texto = "hola,hello,mundo,world";
+HashMap&lt;String, String&gt; traductor = new HashMap&lt;&gt;();
+
+String clave = "";
+String valor = "";
+boolean esValor = false;
+
+for(int i = 0; i < texto.length(); i++) {
+    char c = texto.charAt(i);
+    
+    if (c == ',') {
+        esValor = true;
+    } else if (c == ',') {  // Alternativa: verificar segundo ','
+        traductor.put(clave, valor);
+        clave = "";
+        valor = "";
+        esValor = false;
+    } else {
+        if (!esValor) {
+            clave += c;
+        } else {
+            valor += c;
+        }
+    }
+}
+// Guardar la última palabra
+traductor.put(clave, valor);
+
+String busqueda = traductor.get("hola");
+System.out.println(busqueda); // hello
+</pre>
+</div>
+</div>
+
+<div class="ejercicio">
+<h3>Ejercicio 5: Contar Palabras (Nivel Avanzado)</h3>
+<p>Lee "uno,dos|tres,cuatro|cinco,seis" y cuenta cuántas palabras hay de cada tipo.</p>
+<p>Separa por <code>|</code> y luego por <code>,</code></p>
+
+<pre>
+String texto = "uno,dos|tres,cuatro|cinco,seis";
+HashMap&lt;String, Integer&gt; conteo = new HashMap&lt;&gt;();
+
+// Escribe tu código aquí
+
+System.out.println(conteo); // {uno=1, dos=1, tres=1, cuatro=1, cinco=1, seis=1}
+</pre>
+</div>
+
+<script>
+function mostrarSolucion(id) {
+    var x = document.getElementById(id);
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>

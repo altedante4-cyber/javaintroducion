@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Lógica con Bucles</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a2e;
+            color: #eee;
+        }
+        h1 {
+            color: #00d9ff;
+            border-bottom: 2px solid #00d9ff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #ff6b6b;
+        }
+        .ejercicio {
+            background-color: #16213e;
+            border-left: 4px solid #00d9ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .ejercicio h3 {
+            color: #00d9ff;
+            margin-top: 0;
+        }
+        .nivel {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .basico { background-color: #2ecc71; color: #000; }
+        .intermedio { background-color: #f39c12; color: #000; }
+        .avanzado { background-color: #e74c3c; color: #fff; }
+        .problema {
+            background-color: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        code {
+            background-color: #0f3460;
+            color: #00d9ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+        }
+        pre {
+            background-color: #0f3460;
+            color: #a8e6cf;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+        }
+        .solucion {
+            display: none;
+            background-color: #1a472a;
+            border-left: 4px solid #2ecc71;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        button {
+            background-color: #00d9ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #00b8d9;
+        }
+        .tabla-ejercicios {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .tabla-ejercicios th, .tabla-ejercicios td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: left;
+        }
+        .tabla-ejercicios th {
+            background-color: #00d9ff;
+            color: #000;
+        }
+        .tabla-ejercicios tr:nth-child(even) {
+            background-color: #16213e;
+        }
+        .tabla-ejercicios tr:nth-child(odd) {
+            background-color: #1a1a2e;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🧠 Ejercicios de Lógica con Bucles</h1>
+
+<p>Ejercicios diseñados para practicar lógica, bucles anidados, y manipulación de datos.</p>
+
+<table class="tabla-ejercicios">
+    <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Nivel</th>
+        <th>Ir</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Números Primos</td>
+        <td><span class="nivel basico">Básico</span></td>
+        <td><a href="#ej1"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Triángulo de Asteriscos</td>
+        <td><span class="nivel basico">Básico</span></td>
+        <td><a href="#ej2"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Encontrar el Mayor y Menor</td>
+        <td><span class="nivel basico">Básico</span></td>
+        <td><a href="#ej3"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Invertir un Array</td>
+        <td><span class="nivel basico">Básico</span></td>
+        <td><a href="#ej4"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Buscar Duplicados</td>
+        <td><span class="nivel intermedio">Intermedio</span></td>
+        <td><a href="#ej5"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Matriz Transpuesta</td>
+        <td><span class="nivel intermedio">Intermedio</span></td>
+        <td><a href="#ej6"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>FizzBuzz Extendido</td>
+        <td><span class="nivel intermedio">Intermedio</span></td>
+        <td><a href="#ej7"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Subsecuencia Más Larga</td>
+        <td><span class="nivel avanzado">Avanzado</span></td>
+        <td><a href="#ej8"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>Combinar Dos Arrays Ordenados</td>
+        <td><span class="nivel avanzado">Avanzado</span></td>
+        <td><a href="#ej9"><button>Ir</button></a></td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Sudoku 4x4 (Validación)</td>
+        <td><span class="nivel avanzado">Avanzado</span></td>
+        <td><a href="#ej10"><button>Ir</button></a></td>
+    </tr>
+</table>
+
+<!-- EJERCICIO 1 -->
+<div class="ejercicio" id="ej1">
+    <h3>1. Números Primos <span class="nivel basico">Básico</span></h3>
+    <div class="problema">
+        <p>Dado un número <code>n</code>, muestra todos los números primos desde 1 hasta <code>n</code>.</p>
+        <p><strong>Ejemplo:</strong> n=20 → 2, 3, 5, 7, 11, 13, 17, 19</p>
+    </div>
+    <p><strong>Pista:</strong> Un número primo solo es divisible por 1 y por sí mismo. ¿Cuántas veces necesitas verificar la división?</p>
+    <button onclick="mostrar('sol1')">Ver Solución</button>
+    <div id="sol1" class="solucion">
+        <pre>
+int n = 20;
+for (int i = 2; i <= n; i++) {
+    boolean esPrimo = true;
+    for (int j = 2; j < i; j++) {
+        if (i % j == 0) {
+            esPrimo = false;
+            break;
+        }
+    }
+    if (esPrimo) System.out.print(i + " ");
+}
+// Salida: 2 3 5 7 11 13 17 19
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 2 -->
+<div class="ejercicio" id="ej2">
+    <h3>2. Triángulo de Asteriscos <span class="nivel basico">Básico</span></h3>
+    <div class="problema">
+        <p>Dado un número <code>n</code>, dibuja un triángulo de asteriscos:</p>
+        <pre>
+n = 5
+*
+**
+***
+****
+*****</pre>
+    </div>
+    <p><strong>Pista:</strong> Necesitas dos bucles: uno para las filas y otro para las columnas. ¿Cuántos asteriscos va en cada fila?</p>
+    <button onclick="mostrar('sol2')">Ver Solución</button>
+    <div id="sol2" class="solucion">
+        <pre>
+int n = 5;
+for (int i = 1; i <= n; i++) {       // Filas
+    for (int j = 1; j <= i; j++) {   // Columnas
+        System.out.print("*");
+    }
+    System.out.println();
+}
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 3 -->
+<div class="ejercicio" id="ej3">
+    <h3>3. Encontrar el Mayor y Menor <span class="nivel basico">Básico</span></h3>
+    <div class="problema">
+        <p>Dado un array de números, encuentra el valor máximo y mínimo sin usar <code>Collections.max()</code>.</p>
+        <pre>
+int[] numeros = {5, 2, 9, 1, 7, 3};
+// Mayor: 9, Menor: 1</pre>
+    </div>
+    <p><strong>Pista:</strong> Compara cada elemento con una variable "mayor" y "menor". ¿Qué valor inicial les das?</p>
+    <button onclick="mostrar('sol3')">Ver Solución</button>
+    <div id="sol3" class="solucion">
+        <pre>
+int[] numeros = {5, 2, 9, 1, 7, 3};
+int mayor = numeros[0];
+int menor = numeros[0];
+
+for (int i = 1; i < numeros.length; i++) {
+    if (numeros[i] > mayor) mayor = numeros[i];
+    if (numeros[i] < menor) menor = numeros[i];
+}
+System.out.println("Mayor: " + mayor + ", Menor: " + menor);
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 4 -->
+<div class="ejercicio" id="ej4">
+    <h3>4. Invertir un Array <span class="nivel basico">Básico</span></h3>
+    <div class="problema">
+        <p>Invierte un array sin usar una colección auxiliar.</p>
+        <pre>
+int[] original = {1, 2, 3, 4, 5};
+// Resultado: 5, 4, 3, 2, 1</pre>
+    </div>
+    <p><strong>Pista:</strong> Usa dos índices: uno al inicio y otro al final. Intercambia sus valores y muévelos hacia el centro.</p>
+    <button onclick="mostrar('sol4')">Ver Solución</button>
+    <div id="sol4" class="solucion">
+        <pre>
+int[] original = {1, 2, 3, 4, 5};
+int inicio = 0;
+int fin = original.length - 1;
+
+while (inicio < fin) {
+    int temp = original[inicio];
+    original[inicio] = original[fin];
+    original[fin] = temp;
+    inicio++;
+    fin--;
+}
+
+for (int n : original) System.out.print(n + " ");
+// Salida: 5 4 3 2 1
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 5 -->
+<div class="ejercicio" id="ej5">
+    <h3>5. Buscar Duplicados <span class="nivel intermedio">Intermedio</span></h3>
+    <div class="problema">
+        <p>Encuentra todos los elementos duplicados en un array.</p>
+        <pre>
+int[] numeros = {1, 3, 5, 3, 7, 5, 9, 1};
+// Duplicados: 1, 3, 5</pre>
+    </div>
+    <p><strong>Pista:</strong> Compara cada elemento con todos los demás. ¿Cómo evitas contar el mismo par dos veces?</p>
+    <button onclick="mostrar('sol5')">Ver Solución</button>
+    <div id="sol5" class="solucion">
+        <pre>
+int[] numeros = {1, 3, 5, 3, 7, 5, 9, 1};
+System.out.print("Duplicados: ");
+
+for (int i = 0; i < numeros.length; i++) {
+    for (int j = i + 1; j < numeros.length; j++) {  // j = i + 1
+        if (numeros[i] == numeros[j]) {
+            System.out.print(numeros[i] + " ");
+            break;  // No mostrar el mismo duplicado varias veces
+        }
+    }
+}
+// Salida: Duplicados: 3 5 1
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 6 -->
+<div class="ejercicio" id="ej6">
+    <h3>6. Matriz Transpuesta <span class="nivel intermedio">Intermedio</span></h3>
+    <div class="problema">
+        <p>Dada una matriz 3x3, calcula su transpuesta (filas become columnas).</p>
+        <pre>
+Original:          Transpuesta:
+1 2 3              1 4 7
+4 5 6      →       2 5 8
+7 8 9              3 6 9</pre>
+    </div>
+    <p><strong>Pista:</strong> La transpuesta intercambia <code>matriz[i][j]</code> con <code>matriz[j][i]</code>. ¿Necesitas iterar toda la matriz?</p>
+    <button onclick="mostrar('sol6')">Ver Solución</button>
+    <div id="sol6" class="solucion">
+        <pre>
+int[][] matriz = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+for (int i = 0; i < matriz.length; i++) {
+    for (int j = i + 1; j < matriz[i].length; j++) {  // Solo j > i
+        int temp = matriz[i][j];
+        matriz[i][j] = matriz[j][i];
+        matriz[j][i] = temp;
+    }
+}
+
+for (int[] fila : matriz) {
+    for (int n : fila) System.out.print(n + " ");
+    System.out.println();
+}
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 7 -->
+<div class="ejercicio" id="ej7">
+    <h3>7. FizzBuzz Extendido <span class="nivel intermedio">Intermedio</span></h3>
+    <div class="problema">
+        <p>Del 1 al 100: muestra "Fizz" si es divisible por 3, "Buzz" si es divisible por 5, "FizzBuzz" si es divisible por ambos, o el número.</p>
+        <pre>
+1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz...</pre>
+    </div>
+    <p><strong>Pista:</strong> El orden de las condiciones importa. ¿Qué verificas primero?</p>
+    <button onclick="mostrar('sol7')">Ver Solución</button>
+    <div id="sol7" class="solucion">
+        <pre>
+for (int i = 1; i <= 100; i++) {
+    if (i % 3 == 0 && i % 5 == 0) {
+        System.out.print("FizzBuzz ");
+    } else if (i % 3 == 0) {
+        System.out.print("Fizz ");
+    } else if (i % 5 == 0) {
+        System.out.print("Buzz ");
+    } else {
+        System.out.print(i + " ");
+    }
+}
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 8 -->
+<div class="ejercicio" id="ej8">
+    <h3>8. Subsecuencia Más Larga <span class="nivel avanzado">Avanzado</span></h3>
+    <div class="problema">
+        <p>Encuentra la subsecuencia común más larga entre dos strings.</p>
+        <pre>
+String a = "ABCDGH";
+String b = "AEDFHR";
+// Subsecuencia común: "ADH" (longitud 3)</pre>
+    </div>
+    <p><strong>Pista:</strong> Usa una matriz 2D donde <code>dp[i][j]</code> representa la longitud de la subsecuencia común hasta esos índices.</p>
+    <button onclick="mostrar('sol8')">Ver Solución</button>
+    <div id="sol8" class="solucion">
+        <pre>
+String a = "ABCDGH";
+String b = "AEDFHR";
+int[][] dp = new int[a.length() + 1][b.length() + 1];
+
+for (int i = 1; i <= a.length(); i++) {
+    for (int j = 1; j <= b.length(); j++) {
+        if (a.charAt(i - 1) == b.charAt(j - 1)) {
+            dp[i][j] = dp[i - 1][j - 1] + 1;
+        } else {
+            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
+    }
+}
+System.out.println("Longitud: " + dp[a.length()][b.length()]);
+// Salida: 3
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 9 -->
+<div class="ejercicio" id="ej9">
+    <h3>9. Combinar Dos Arrays Ordenados <span class="nivel avanzado">Avanzado</span></h3>
+    <div class="problema">
+        <p>Mezcla dos arrays ordenados en uno solo ordenado, sin usar Collections.</p>
+        <pre>
+int[] a = {1, 3, 5, 7};
+int[] b = {2, 4, 6, 8};
+// Resultado: {1, 2, 3, 4, 5, 6, 7, 8}</pre>
+    </div>
+    <p><strong>Punta:</strong> Usa dos índices, uno por array. Compara y avanza el menor.</p>
+    <button onclick="mostrar('sol9')">Ver Solución</button>
+    <div id="sol9" class="solucion">
+        <pre>
+int[] a = {1, 3, 5, 7};
+int[] b = {2, 4, 6, 8};
+int[] resultado = new int[a.length + b.length];
+
+int i = 0, j = 0, k = 0;
+
+while (i < a.length && j < b.length) {
+    if (a[i] <= b[j]) {
+        resultado[k++] = a[i++];
+    } else {
+        resultado[k++] = b[j++];
+    }
+}
+
+while (i < a.length) resultado[k++] = a[i++];
+while (j < b.length) resultado[k++] = b[j++];
+
+for (int n : resultado) System.out.print(n + " ");
+        </pre>
+    </div>
+</div>
+
+<!-- EJERCICIO 10 -->
+<div class="ejercicio" id="ej10">
+    <h3>10. Sudoku 4x4 (Validación) <span class="nivel avanzado">Avanzado</span></h3>
+    <div class="problema">
+        <p>Valida si un tablero de Sudoku 4x4 es válido: cada fila y cada columna debe contener los números 1-4 sin repetir.</p>
+        <pre>
+boolean[][] tablero = {
+    {true, true, true, true},  // 1,2,3,4
+    {true, true, true, true},  // 4,3,2,1
+    {true, true, true, true},  // 2,1,4,3
+    {true, true, true, true}   // 3,4,1,2
+};
+// Válido: true</pre>
+    </div>
+    <p><strong>Pista:</strong> Necesitas verificar filas y columnas. Para cada una, ¿cómo contarías los números del 1 al 4?</p>
+    <button onclick="mostrar('sol10')">Ver Solución</button>
+    <div id="sol10" class="solucion">
+        <pre>
+boolean[][] tablero = {
+    {true, true, true, true},
+    {true, true, true, true},
+    {true, true, true, true},
+    {true, true, true, true}
+};
+
+boolean valido = true;
+
+// Verificar filas
+for (int i = 0; i < 4 && valido; i++) {
+    boolean[] seen = {false, false, false, false};
+    for (int j = 0; j < 4; j++) {
+        int num = (int)tablero[i][j];
+        if (seen[num - 1]) {
+            valido = false;
+            break;
+        }
+        seen[num - 1] = true;
+    }
+}
+
+// Verificar columnas
+for (int j = 0; j < 4 && valido; j++) {
+    boolean[] seen = {false, false, false, false};
+    for (int i = 0; i < 4; i++) {
+        int num = (int)tablero[i][j];
+        if (seen[num - 1]) {
+            valido = false;
+            break;
+        }
+        seen[num - 1] = true;
+    }
+}
+
+System.out.println("Válido: " + valido);
+        </pre>
+    </div>
+</div>
+
+<script>
+function mostrar(id) {
+    var x = document.getElementById(id);
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
