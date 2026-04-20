@@ -1,0 +1,11 @@
+numero de subredes => 1000 => 2^10
+n de host utiles => 60 => 2 ^6 
+direcion de red =>  165.100.0.0
+
+
+nueva mascara de subred => 255.255.255.192
+hos disponible 2 ^ 6 = 64 - 2 = 62
+
+165.100.64.0
+165.100.128.0
+165.100
