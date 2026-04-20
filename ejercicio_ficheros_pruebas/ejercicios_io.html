@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Java - Reader y Writer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+        h1 { color: #569cd6; border-bottom: 2px solid #4ec9b0; padding-bottom: 10px; }
+        h2 { color: #4ec9b0; margin-top: 40px; }
+        .ejercicio {
+            background-color: #2d2d2d;
+            border-left: 4px solid #569cd6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .ejercicio h3 { color: #dcdcaa; margin-top: 0; }
+        .numero { color: #569cd6; font-weight: bold; font-size: 1.2em; }
+        ul { line-height: 1.8; }
+        li { margin: 8px 0; }
+        .note {
+            background-color: #3c3c3c;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #dcdcaa;
+        }
+        code {
+            background-color: #3c3c3c;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+            color: #ce9178;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicios de Java - java.io.Reader y java.io.Writer</h1>
+    
+    <div class="note">
+        <strong>Restricciones:</strong> Solo se pueden utilizar las clases base <code>FileReader</code> y <code>FileWriter</code> 
+        (que heredan de <code>Reader</code> y <code>Writer</code> respectivamente).<br>
+        <strong>NO se permite:</strong> <code>BufferedReader</code>, <code>BufferedWriter</code>, <code>InputStreamReader</code>, 
+        <code>OutputStreamWriter</code> ni ninguna otra clase que no herede directamente de <code>Reader</code> o <code>Writer</code>.<br><br>
+        <strong>Manejo de excepciones:</strong> Todos los ejercicios deben manejar apropiadamente las excepciones 
+        (<code>IOException</code>, <code>FileNotFoundException</code>, etc.) ya sea con try-catch othrows.
+    </div>
+
+    <h2>Ejercicio 1: Contador de Líneas</h2>
+    <div class="ejercicio">
+        <p>Crear un programa en Java que lea un archivo de texto cuyo nombre se pasará como argumento desde la línea de comandos. El programa debe:</p>
+        <ul>
+            <li>Utilizar <code>FileReader</code> para leer el archivo carácter por carácter.</li>
+            <li>Contar el número total de líneas (cada salto de línea <code>\n</code> cuenta como una línea).</li>
+            <li>Mostrar el resultado con el formato: "El archivo [nombre] tiene [X] líneas".</li>
+            <li>Manejar <code>FileNotFoundException</code> si el archivo no existe.</li>
+            <li>Manejar cualquier otra <code>IOException</code>.</li>
+        </ul>
+        <p><strong>Entrada:</strong> args[0] = nombre del archivo</p>
+        <p><strong>Salida:</strong> Mensaje con el conteo de líneas</p>
+    </div>
+
+    <h2>Ejercicio 2: Generador de Registro</h2>
+    <div class="ejercicio">
+        <p>Crear un programa que genere un archivo de registro (log) con marca de tiempo. El programa debe:</p>
+        <ul>
+            <li>Crear un archivo llamado <code>registro.log</code> utilizando <code>FileWriter</code>.</li>
+            <li>Escribir 10 entradas de registro, cada una con formato: "[YYYY-MM-DD HH:MM:SS] - Mensaje de ejemplo #X"</li>
+            <li>Obtener la fecha y hora usando <code>java.time.LocalDateTime</code>.</li>
+            <li>Agregar un salto de línea después de cada entrada (usar <code>\n</code> o el método <code>newLine()</code> de Writer).</li>
+            <li>Cerrar el escritor correctamente usando try-with-resources.</li>
+            <li>En caso de error, mostrar un mensaje claro.</li>
+        </ul>
+        <p><strong>Archivo de salida:</strong> registro.log</p>
+    </div>
+
+    <h2>Ejercicio 3: Lector de Números a Array</h2>
+    <div class="ejercicio">
+        <p>Crear un programa que lea un archivo con números enteros y los almacene en un array. El programa debe:</p>
+        <ul>
+            <li>Leer un archivo llamado <code>numeros.txt</code> (un número por línea).</li>
+            <li>Primera pasada: contar cuántos números hay (contar los saltos de línea).</li>
+            <li>Crear un array de enteros del tamaño exacto: <code>int[] numeros = new int[cuenta]</code>.</li>
+            <li>Segunda pasada: leer cada línea y convertir a entero con <code>Integer.parseInt()</code>.</li>
+            <li>Almacenar cada número en la posición correspondiente del array.</li>
+            <li>Mostrar todos los números separados por comas.</li>
+            <li>Manejar errores de archivo no encontrado y de parsing.</li>
+        </ul>
+        <p><strong>Archivo de entrada:</strong> numeros.txt (crear con 15 números)</p>
+    </div>
+
+    <h2>Ejercicio 4: Copia de Archivo</h2>
+    <div class="ejercicio">
+        <p>Crear un programa que copie un archivo a otro usando FileReader y FileWriter. El programa debe:</p>
+        <ul>
+            <li>Recibir dos argumentos: archivo origen y archivo destino.</li>
+            <li>Usar <code>FileReader</code> para leer carácter por carácter del origen.</li>
+            <li>Usar <code>FileWriter</code> para escribir cada carácter en el destino.</li>
+            <li>Leer con <code>read()</code> y escribir con <code>write(int c)</code>.</li>
+            <li>Preservar todos los caracteres exactamente igual (incluyendo saltos de línea).</li>
+            <li>Contar cuántos caracteres se copiaron.</li>
+            <li>Cerrar ambos recursos correctamente.</li>
+        </ul>
+        <p><strong>Entrada:</strong> args[0] = origen, args[1] = destino</p>
+    </div>
+
+    <h2>Ejercicio 5: Excepción Personalizada</h2>
+    <div class="ejercicio">
+        <p>Crear un programa con excepción personalizada para manejo de errores. El programa debe:</p>
+        <ul>
+            <li>Crear una clase <code>ArchivoException</code> que extienda de <code>Exception</code>.</li>
+            <li>Crear una clase <code>LectorDatos</code> con método <code>leer(String archivo)</code>.</li>
+            <li>El método debe lanzar <code>ArchivoException</code> con mensajes específicos:</li>
+            <ul>
+                <li>"El archivo no existe: [nombre]"</li>
+                <li>"El archivo está vacío: [nombre]"</li>
+                <li>"Error de lectura: [detalle]"</li>
+            </ul>
+            <li>Verificar si el archivo existe antes de leer.</li>
+            <li>Verificar si el archivo está vacío (0 bytes).</li>
+            <li>En el main, capturar <code>ArchivoException</code> y mostrar mensaje.</li>
+            <li>Probar con archivo inexistente, vacío y válido.</li>
+        </ul>
+    </div>
+
+    <h2>Ejercicio 6: Lector de Nombres a Array</h2>
+    <div class="ejercicio">
+        <p>Crear un programa que lea nombres y los almacene en un array de strings. El programa debe:</p>
+        <ul>
+            <li>Leer un archivo llamado <code>nombres.txt</code> (un nombre por línea).</li>
+            <li>Primera lectura: contar líneas no vacías (ignorar líneas en blanco).</li>
+            <li>Crear array: <code>String[] nombres = new String[cuenta]</code>.</li>
+            <li>Segunda lectura: almacenar cada nombre usando <code>trim()</code>.</li>
+            <li>Mostrar el array en orden inverso (índice mayor a menor).</li>
+            <li>Mostrar cuántos nombres se leyeron.</li>
+            <li>Ignorar líneas que solo contengan espacios o estén vacías.</li>
+        </ul>
+        <p><strong>Archivo de entrada:</strong> nombres.txt (crear con 10 nombres)</p>
+    </div>
+
+    <h2>Ejercicio 7: Generador de Reporte</h2>
+    <div class="ejercicio">
+        <p>Crear un programa que genere un archivo de reporte formateado. El programa debe:</p>
+        <ul>
+            <li>Crear archivo <code>reporte.txt</code> usando <code>FileWriter</code>.</li>
+            <li>Usar arrays para almacenar los datos antes de escribir:</li>
+            <ul>
+                <li><code>String[] productos = {"ProductoA", "ProductoB", ...}</code></li>
+                <li><code>int[] cantidades = {10, 25, ...}</code></li>
+                <li><code>double[] precios = {15.50, 20.00, ...}</code></li>
+            </ul>
+            <li>Escribir encabezado: "═══════════════════════════" y "REPORTE DE VENTAS"</li>
+            <li>Escribir línea separadora.</li>
+            <li>Usar <code>String.format()</code> para formatear cada línea:</li>
+            <ul>
+                <li>Formato: "Producto: X | Cantidad: Y | Precio: $ZZ.ZZ"</li>
+            </ul>
+            <li>Escribir un pie con el total.</li>
+            <li>Agregar líneas en blanco para legibilidad.</li>
+        </ul>
+        <p><strong>Archivo de salida:</strong> reporte.txt</p>
+    </div>
+
+    <h2>Ejercicio 8: Analizador de Caracteres</h2>
+    <div class="ejercicio">
+        <p>Crear un programa que analice un archivo a nivel de caracteres. El programa debe:</p>
+        <ul>
+            <li>Leer un archivo cuyo nombre se pasa como argumento.</li>
+            <li>Usar <code>FileReader</code> con <code>read()</code> para leer carácter por carácter.</li>
+            <li>Contar en un array de 5 enteros:</li>
+            <ul>
+                <li>Índice 0: total de letras (a-z, A-Z)</li>
+                <li>Índice 1: total de dígitos (0-9)</li>
+                <li>Índice 2: espacios en blanco</li>
+                <li>Índice 3: saltos de línea (\n)</li>
+                <li>Índice 4: otros caracteres</li>
+            </ul>
+            <li>Usar <code>Character.isLetter()</code>, <code>isDigit()</code>, <code>isWhitespace()</code> para clasificar.</li>
+            <li>Detectar fin de archivo cuando <code>read()</code> retorna -1.</li>
+            <li>Mostrar resultados en formato tabular.</li>
+        </ul>
+        <p><strong>Entrada:</strong> args[0] = nombre del archivo</p>
+    </div>
+
+    <h2>Ejercicio 9: Combinador de Archivos</h2>
+    <div class="ejercicio">
+        <p>Crear un programa que combine múltiples archivos en uno solo. El programa debe:</p>
+        <ul>
+            <li>Recibir argumentos: archivo de salida seguido de N archivos de entrada.</li>
+            <li>Usar <code>FileWriter</code> para el archivo de salida.</li>
+            <li>Para cada archivo de entrada:</li>
+            <ul>
+                <li>Crear <code>FileReader</code> y leer carácter por carácter.</li>
+                <li>Escribir línea separadora: "=== Inicio de: [nombre] ==="</li>
+                <li>Copiar todos los caracteres del archivo.</li>
+                <li>Escribir línea separadora: "=== Fin de: [nombre] ==="</li>
+                <li>Agregar línea en blanco entre archivos.</li>
+            </ul>
+            <li>Almacenar nombres de archivos en un array de strings.</li>
+            <li>Si un archivo no existe, continuar con los demás y mostrar warning.</li>
+            <li>Mostrar cuántos archivos se combinaron.</li>
+        </ul>
+        <p><strong>Entrada:</strong> args[0] = salida, args[1...n] = archivos</p>
+    </div>
+
+    <h2>Ejercicio 10: Lector de Matriz desde CSV</h2>
+    <div class="ejercicio">
+        <p>Crear un programa que lea un archivo CSV y lo almacene en un array bidimensional. El programa debe:</p>
+        <ul>
+            <li>Leer archivo <code>matriz.csv</code> donde cada línea es una fila y los valores están separados por comas.</li>
+            <li>Primera lectura: contar filas (líneas no vacías) y columnas (comas por línea + 1).</li>
+            <li>Crear matriz: <code>String[][] matriz = new String[filas][columnas]</code>.</li>
+            <li>Segunda lectura: usar <code>split(",")</code> para dividir cada línea en valores.</li>
+            <li>Almacenar cada valor en la posición对应ada de la matriz.</li>
+            <li>Mostrar la matriz en formato tabular:</li>
+            <ul>
+                <li>Formato: | valor1 | valor2 | valor3 | ...</li>
+            </ul>
+            <li>Calcular y mostrar total de celdas (filas × columnas).</li>
+            <li>Manejar filas con diferente número de columnas.</li>
+        </ul>
+        <p><strong>Archivo de entrada:</strong> matriz.csv (crear con formato 3x4)</p>
+    </div>
+
+    <h2>Notas Adicionales</h2>
+    <div class="note">
+        <ul>
+            <li> Solo usar <code>FileReader</code> y <code>FileWriter</code> como clases de entrada/salida.</li>
+            <li> Para leer líneas sin BufferedReader, se debe implementar la lógica manualmente:</li>
+            <ul>
+                <li>Leer carácter por carácter con <code>read()</code>.</li>
+                <li>Acumular en un <code>StringBuilder</code> hasta encontrar '\n'.</li>
+                <li>Procesar la línea cuando se detecta el salto de línea.</li>
+            </ul>
+            <li>Usar try-with-resources para cerrar recursos automáticamente.</li>
+            <li>Crear archivos de prueba antes de ejecutar.</li>
+        </ul>
+    </div>
+
+</body>
+</html>
