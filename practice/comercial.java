@@ -202,10 +202,13 @@ public comercial(){
 					
 					 
 						escribir.write(valor_guardar[i] + "\n");
-				}
-				escribir.write("\n");			}catch(Exception p ){
+	
+			}
+				escribir.write("\n");			
+			}catch(Exception p ){
 				System.out.println("No se pudo copiar correctmaente en el archivos");
-			}finally{
+		
+		}finally{
 				if(escribir != null){
 					try{
 						escribir.close();

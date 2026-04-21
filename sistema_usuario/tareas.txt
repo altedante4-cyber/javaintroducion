@@ -1,0 +1,4 @@
+Estudiar Java;Alta
+Hacer ejercicio;Media
+Comprar pan;Baja
+Repasar excepciones;Alta
