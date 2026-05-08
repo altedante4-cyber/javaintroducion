@@ -1,6 +1,6 @@
 
 try:
-    fichero = open("fichero.txt","at" )as f:
+    fichero = open("fichero.txt","at" ):
         #w => siempre empiesa desde el principio
         # a => empesamos a agregar desde el final del ultimo contenido 
 except Exception:
@@ -8,3 +8,4 @@ except Exception:
 finally:
     fichero.close()
     
+
