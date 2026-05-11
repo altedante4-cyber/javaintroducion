@@ -12,7 +12,11 @@ try:
     fichero.write("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n")
         
     #siempre hay que cerrar el fichero 
+<<<<<<< HEAD
 >>>>>>> 5206c623ef7e1f2e31e5854442919b4541342ccc
+=======
+>>>>>>> d067594 (subiendo cambios)
+>>>>>>> 4309b75 (subiendo cambios)
 except Exception:
     print("Error")
 finally:
@@ -35,4 +39,8 @@ try:
 except:
     print("Error")
     
+<<<<<<< HEAD
 >>>>>>> 5206c623ef7e1f2e31e5854442919b4541342ccc
+=======
+>>>>>>> d067594 (subiendo cambios)
+>>>>>>> 4309b75 (subiendo cambios)
