@@ -4,6 +4,7 @@ def cifrado(nombre_archivo,clave):
         entrada = f.readlines()
 
 
+<<<<<<< HEAD
     a = entrada[0].splitlines()
 
     
@@ -11,6 +12,8 @@ def cifrado(nombre_archivo,clave):
     for j in a:
         for numero , k in enumerate(j):
             print(numero)
+=======
+>>>>>>> 5608d6a (subiendo cambios)
                 
 
 cifrado("lecturas.txt",2)

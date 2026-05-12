@@ -1,46 +1,45 @@
+#escribir fichero 
 
+# FORMA 1: open() + close() manual
+# open("ruta", "modo") devuelve un objeto fichero.
+#   "w" (write):  abre el fichero para escritura.
+#                 SI existe, lo SOBREESCRIBE desde cero.
+#                 SI no existe, lo CREA.
+#   "a" (append): abre el fichero para escritura.
+#                 NO borra el contenido existente.
+#                 Empieza a escribir al FINAL del archivo.
+#   "t" (text):   modo texto (se puede omitir, es el default).
+# ------------------------------------------------------------
+
+fichero = None
 try:
-<<<<<<< HEAD
-    fichero = open("fichero.txt","at" ):
-        #w => siempre empiesa desde el principio
-        # a => empesamos a agregar desde el final del ultimo contenido 
-=======
-    fichero = open("fichero.txt","at" )
-        #w => siempre empiesa desde el principio siel ficheor no  existe lo borra por completo 
-        # a => empesamos a agregar desde el final del ultimo contenido  si el fichero no existe crea uno nuevo  
-
-    fichero.write("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n")
-        
-    #siempre hay que cerrar el fichero 
-<<<<<<< HEAD
->>>>>>> 5206c623ef7e1f2e31e5854442919b4541342ccc
-=======
->>>>>>> d067594 (subiendo cambios)
->>>>>>> 4309b75 (subiendo cambios)
-except Exception:
-    print("Error")
+    # "at" = append + text mode. Agrega contenido al final.
+    fichero = open("fichero.txt", "at")
+    fichero.write("Texto agregado al final\n")
+except Exception as e:
+    print("Error al abrir/escribir el fichero:", e)
 finally:
-    fichero.close()
-<<<<<<< HEAD
-    
-
-=======
-
-#otra manera de hacerlo
+    # finally se ejecuta SIEMPRE, haya error o no.
+    # Aquí cerramos el fichero manualmente para liberar recursos.
+    if fichero is not None:
+        fichero.close()
 
 
-try:
-    with open("fichero.txt","a") as f :
-        sueldo =4304
-        texto = "Tu sueldo es " + str(sueldo) + " euros \n "
-        fichero.write(texto)
-    #con esto evito   poner el close es decir olvidarme cerrar el fichero 
-    
-except:
-    print("Error")
-    
-<<<<<<< HEAD
->>>>>>> 5206c623ef7e1f2e31e5854442919b4541342ccc
-=======
->>>>>>> d067594 (subiendo cambios)
->>>>>>> 4309b75 (subiendo cambios)
+# ------------------------------------------------------------
+# FORMA 2 (RECOMENDADA): with open()
+# ------------------------------------------------------------
+# El bloque "with" se encarga AUTOMÁTICAMENTE de cerrar
+# el fichero al salir del bloque, incluso si ocurre una
+# excepción. No hace falta llamar a .close().
+# ------------------------------------------------------------
+
+# "w"  => write. Borra todo y escribe desde el principio.
+with open("fichero.txt", "w") as f:
+    f.write("Esto borra el contenido anterior\n")
+    f.write("y escribe estas líneas desde cero.\n")
+
+# "a"  => append. Agrega al final sin borrar.
+with open("fichero.txt", "a") as f:
+    f.write("Esto se agrega al final\n")
+    f.write("sin borrar lo que ya había.\n")
+
