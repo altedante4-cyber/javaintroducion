@@ -1,0 +1,8 @@
+-El router es capaz de ver si una ruta no funciona y buscar una alternativa.
+
+-El router es capaz incluso de buscar la ruta mas répida (por ejemplo la que tenga
+menos tréfico) en caso de poder escoger entre varias posibilidades.
+
+El router uniré las redes del emisor y el destinatario de una informacién
+determinada (email, pagina Web, ...) y ademas sdlo transmitiré entre las
+mismas la informacién necesaria.

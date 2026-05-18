@@ -1,0 +1,20 @@
+PING / TRACE
+
+Analisis mediante el comando ping Analisis mediante el comando trace
+
+—Peticlndeeco de eco paints” Es
+Respuesta deeco de eco
+
+Router>ping 172.16.1.5
+
+‘Type escape sequence to abort. York#trace ROME
+Sending 5, 100 byte ICMP Echos to 172.16.1.5, Pie OTs
+tneoct de 2) seconde ‘Tracing the route to Rome (172,16.33.5)
+
+1 towow (172,16,12,3) 1000 maee @ asec 4 msec
+2 PARIS (172.16.16.2) 8 ma Once
+Success rate is 100 percent, 3 ROME (172.16.35.8) Oasec Onzec dso
+
+round-trip min/avg/nax = 1/3/4 ms : .
+Router> tee
+

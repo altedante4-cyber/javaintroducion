@@ -1,0 +1,64 @@
+Lista de comandos: Modo
+Privilegiado
+
+Resultado del comando
+
+Router> ena
+Paseword:
+Router# ?
+access-enable
+access-template
+appa
+
+stmsig
+
+bte
+
+calendar
+
+od
+
+clear
+
+clock
+
+emt
+
+configure
+connect
+
+copy
+
+debug
+
+delete
+
+dir
+
+Creates 4 temporary access list entry
+Creates a temporary access list entry
+Sends a command to the APPN subsystem
+Executes ATM signsling commands
+
+Sets manual emergency modes
+
+Manages the hardware calendar
+
+Changes the current device
+
+Resets functions
+
+Manages the system clock
+
+Starts or stops FDDI connection management functions
+Enters configuration mode
+
+Opens a terminal connection
+
+Copies configuration or image data
+
+Uses debugging functions (see also undebug)
+Deletes a file
+
+Lists files on a given device
+

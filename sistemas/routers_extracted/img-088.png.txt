@@ -1,0 +1,17 @@
+Solucion
+
+a)
+
+Para que Al y A2 puedan intercambiar trafico es necesario comprobar en las tablas de encaminamiento si hay una ruta
+Al->A2 y A2->A1, es decir, en ambos sentidos. No tenemos en cuenta las tablas de encaminamiento de las maquinas,
+sdlo los routers, porque en el enunciado dice que estan correctamente configuradas.
+
+Al->A2
+
+Al-> R1-> (212.1.2.2) R3 -> (212.1.2.130) R4 ->A2
+
+A2->Al
+A2-> R4 > (212.1.2.129) R3 -> (212.1.2.67) RS > (212.1.2.65) R2 > (212.1.1.129) R1->Al
+
+Dado que existe un camino para ir y otro para volver, Al y A2 pueden intercambiar trafico sin necesidad de hacer
+ningun cambio en las tablas de encaminamiento.

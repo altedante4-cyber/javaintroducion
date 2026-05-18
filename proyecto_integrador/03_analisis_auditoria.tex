@@ -1,0 +1,452 @@
+% ============================================================
+% APARTADO C: Analisis de Auditoria (CE.a, CE.c)
+% Bitacora completa de correcciones sobre codigo generado por IA
+% Sistema auditado: MongoDB (Catalogo de Vehiculos y Mantenimiento)
+% ============================================================
+
+\subsection{Analisis de Auditoria (CE.a, CE.c)}
+
+\subsection{Introduccion a la Auditoria de Codigo Generado por IA}
+
+\subsubsection{Concepto de Auditoria de Generacion IA}
+
+La auditoria de generacion mediante inteligencia artificial es el proceso mediante el cual un arquitecto de datos revisa, valida y corrige el codigo sintetizado por un modelo generativo (ChatGPT, Gemini, Claude, etc.) antes de incorporarlo a un sistema productivo. En el contexto de EcoDrive, este proceso es especialmente critico porque los asistentes de IA han sido entrenados predominantemente con documentacion, foros y repositorios que durante decadas han estado dominados por el paradigma SQL y el modelo relacional. Como consecuencia directa, la IA tiende a trasladar de forma inconsciente los patrones de diseno de bases de datos relacionales a entornos NoSQL, produciendo codigo que, aunque sintacticamente valido, resulta arquitectonicamente incorrecto.
+
+Este fenomeno no es trivial: la IA no piensa en terminos de agregados, particiones fisicas o estructuras de datos en memoria. La IA genera secuencias de tokens estadisticamente probables basadas en su corpus de entrenamiento, y dado que el corpus contiene ingentes cantidades de SQL y pocos ejemplos de modelado NoSQL experto, el sesgo relacional emerge de forma natural. Detectarlo y corregirlo es responsabilidad ineludible del arquitecto de datos.
+
+\subsubsection{El Sesgo Relacional en la Generacion Automatica}
+
+El sesgo relacional se manifiesta de las siguientes formas concretas, todas ellas observadas durante la auditoria de los scripts generados para EcoDrive:
+
+\begin{itemize}
+    \item \textbf{Normalizacion automatica:} La IA separa en colecciones distintas entidades que en NoSQL deberian formar un unico agregado. En MongoDB, esto se traduce en colecciones separadas con referencias por ID, exactamente igual que tablas SQL con claves foraneas.
+    \item \textbf{Esquemas rigidos:} La IA tiende a uniformar todos los documentos de una coleccion con los mismos campos, ignorando que MongoDB es una base de datos sin esquema (schemaless) y que precisamente esa flexibilidad es una de sus ventajas fundamentales.
+    \item \textbf{Ignorancia del acceso por agregados:} La IA no disena pensando en como se van a leer los datos, sino en como se estructuran las entidades del dominio, que es exactamente el enfoque opuesto al que necesita NoSQL.
+\end{itemize}
+
+\subsubsection{Pensar en Agregados: El Cambio de Mentalidad Fundamental}
+
+Para auditar correctamente el codigo generado, es imprescindible comprender que significa pensar en agregados. En el modelo relacional, normalizamos datos para eliminar redundancias y definimos relaciones mediante claves foraneas. En el modelo documental de MongoDB, el paradigma es el opuesto: agrupamos en una misma unidad de almacenamiento todos los datos que se consultan y modifican juntos.
+
+El agregado es la unidad atomica de coherencia en MongoDB. Cuando la IA genera codigo que separa en colecciones distintas \texttt{vehiculos} y \texttt{reparaciones}, esta rompiendo el agregado: cada vez que la aplicacion necesite mostrar un vehiculo con su historial de reparaciones, tendra que realizar dos lecturas y un join en memoria del lado del cliente. Esto contradice directamente el principio fundamental de MongoDB: si lees los datos juntos, almacenalos juntos.
+
+\subsubsection{Query-First Design}
+
+El Query-First Design es una metodologia de modelado que invierte el orden tradicional de diseno. En SQL, primero disenamos el esquema entidad-relacion y luego escribimos las consultas. En NoSQL, primero identificamos exactamente que consultas va a realizar la aplicacion y luego disenamos el esquema para que esas consultas sean optimas.
+
+En nuestro caso, la consulta principal del Servicio A es: "mostrar la ficha completa de un vehiculo con todo su historial de reparaciones". Cualquier diseno que no permita responder a esta consulta con una sola lectura esta mal disenado.
+
+\subsubsection{Persistencia Poliglota}
+
+La persistencia poliglota es el patron arquitectonico que consiste en utilizar diferentes tecnologias de bases de datos, cada una optimizada para un tipo de carga de trabajo especifico. Para el Servicio A (Catalogo de Vehiculos y Mantenimiento), MongoDB es la eleccion correcta por:
+
+\begin{itemize}
+    \item \textbf{Esquema flexible:} Un patinete, una bicicleta y un coche tienen atributos radicalmente distintos. MongoDB permite almacenarlos en la misma coleccion sin necesidad de tablas separadas ni campos nulos.
+    \item \textbf{Datos semi-estructurados:} Las reparaciones tienen piezas variables. Unas veces sera una rueda, otras una bateria, otras un motor. Cada reparacion puede tener campos diferentes.
+    \item \textbf{Agregados naturales:} Un vehiculo y sus reparaciones forman un agregado logico que se lee y escribe conjuntamente.
+\end{itemize}
+
+\subsubsection{Relacion con los Criterios CE.a y CE.c}
+
+Este apartado de analisis de auditoria se vincula directamente con los criterios de evaluacion del RA7:
+
+\begin{itemize}
+    \item \textbf{CE.a (Caracteristicas de los sistemas NoSQL):} La correccion demuestra la aplicacion practica de las caracteristicas fundamentales de MongoDB: ausencia de esquema, modelo documental, atomicidad a nivel de documento y diseno por agregados.
+    \item \textbf{CE.c (Elementos utilizados en estas bases de datos):} La auditoria identifica y justifica la eleccion de elementos concretos: agregados incrustados (embedding), arrays de subdocumentos, esquemas flexibles por tipo de vehiculo y operadores de actualizacion atomica (\texttt{\$push}, \texttt{\$set}).
+\end{itemize}
+
+\newpage
+
+\subsection{Auditoria de MongoDB: Correccion de Normalizacion Encubierta}
+
+\subsubsection{El Error: Codigo Generado por la IA (INCORRECTO)}
+
+Cuando se solicito a la IA que generara un script de insercion de datos para el servicio de catalogo de vehiculos de EcoDrive, el modelo genero el siguiente codigo:
+
+\begin{lstlisting}[caption=Codigo IA incorrecto: colecciones separadas con relacion por ID]
+// ============================================================
+// VERSION INCORRECTA generada por IA
+// Normalizacion Encubierta: separa vehiculos y reparaciones
+// en colecciones distintas con relacion por ID (como SQL)
+// ============================================================
+
+// Coleccion 1: vehiculos
+db.vehiculos.insertMany([
+  {
+    _id: ObjectId("661a00000000000000000001"),
+    matricula: "PAT-001",
+    tipo: "patinete",
+    modelo: "Xiaomi Pro 3",
+    anyo: 2024,
+    peso_maximo_kg: 120,
+    autonomia_km: 45,
+    estado: "disponible"
+  },
+  {
+    _id: ObjectId("661a00000000000000000002"),
+    matricula: "BIC-001",
+    tipo: "bicicleta",
+    modelo: "Orbea Vibe H30",
+    anyo: 2023,
+    marchas: 9,
+    peso_kg: 16.5,
+    estado: "mantenimiento"
+  },
+  {
+    _id: ObjectId("661a00000000000000000003"),
+    matricula: "COC-001",
+    tipo: "coche",
+    modelo: "Renault Zoe ZE50",
+    anyo: 2024,
+    tipo_combustible: "electrico",
+    capacidad_bateria_kwh: 52,
+    plazas: 5,
+    estado: "disponible"
+  }
+]);
+
+// Coleccion 2: reparaciones (SEPARADA de vehiculos)
+db.reparaciones.insertMany([
+  {
+    _id: ObjectId("661b00000000000000000001"),
+    vehiculo_id: ObjectId("661a00000000000000000001"),
+    fecha: new Date("2025-01-15"),
+    taller: "EcoFix Centro",
+    pieza_reemplazada: "rueda delantera",
+    coste: 45.00,
+    observaciones: "Pinchazo por cristal en carril bici"
+  },
+  {
+    _id: ObjectId("661b00000000000000000002"),
+    vehiculo_id: ObjectId("661a00000000000000000001"),
+    fecha: new Date("2025-03-20"),
+    taller: "EcoFix Centro",
+    pieza_reemplazada: "bateria",
+    coste: 120.00,
+    observaciones: "Bateria no retenia carga completa"
+  },
+  {
+    _id: ObjectId("661b00000000000000000003"),
+    vehiculo_id: ObjectId("661a00000000000000000002"),
+    fecha: new Date("2025-02-10"),
+    taller: "EcoBici Taller",
+    pieza_reemplazada: "cadena y pinion",
+    coste: 35.50,
+    observaciones: "Desgaste por uso intensivo"
+  }
+]);
+\end{lstlisting}
+
+La IA tambien genero esta consulta para obtener un vehiculo con sus reparaciones:
+
+\begin{lstlisting}[caption=Join manual generado por IA (incorrecto)]
+// INCORRECTO: Join manual en el codigo de aplicacion
+var vehiculo = db.vehiculos.findOne({ matricula: "PAT-001" });
+var reparaciones = db.reparaciones.find({ vehiculo_id: vehiculo._id }).toArray();
+
+// El programador debe combinar manualmente los datos
+var resultado = {
+  vehiculo: vehiculo,
+  historial_reparaciones: reparaciones
+};
+printjson(resultado);
+\end{lstlisting}
+
+\subsubsection{Antipatron Detectado: Normalizacion Encubierta}
+
+El antipatron de \textbf{Normalizacion Encubierta} consiste en aplicar principios del diseno relacional (separar entidades en tablas distintas con claves foraneas) dentro de una base de datos documental como MongoDB. La IA ha reproducido el esquema mental de un modelo entidad-relacion donde \texttt{vehiculos} y \texttt{reparaciones} son dos tablas relacionadas por el campo \texttt{vehiculo\_id}.
+
+\textbf{\textquestiondown Por que es incorrecto en MongoDB?}
+
+\begin{enumerate}
+    \item \textbf{Joins manuales en la capa de aplicacion:} Cada vez que la aplicacion necesite mostrar la ficha completa de un vehiculo con su historial de reparaciones ---que es el caso de uso principal--- debera ejecutar dos consultas y combinar los resultados manualmente. Esto duplica la latencia de red y anade complejidad algoritmica innecesaria en el codigo de la aplicacion.
+
+    \item \textbf{Perdida de localidad de datos:} Los documentos de \texttt{reparaciones} se almacenan fisicamente en una ubicacion distinta que los documentos de \texttt{vehiculos}. MongoDB no garantiza ninguna cercania fisica entre colecciones diferentes. Los datos que siempre se leen juntos estan almacenados por separado, desperdiciando los beneficios de la localidad de datos en disco y en cache.
+
+    \item \textbf{Atomicidad limitada:} Al estar separados en dos colecciones, no es posible realizar operaciones atomicas que afecten simultaneamente al vehiculo y a sus reparaciones. Si la aplicacion necesita anadir una reparacion y actualizar el estado del vehiculo a "disponible", estas dos operaciones no pueden encapsularse en una unica transaccion sin recurrir a transacciones multi-documento, que tienen un rendimiento significativamente menor.
+
+    \item \textbf{Multiplicacion de accesos a red:} En MongoDB, cada consulta implica un viaje de ida y vuelta por la red entre la aplicacion y el servidor. Si una pantalla muestra un listado de 50 vehiculos con sus ultimas reparaciones, el enfoque de la IA requeriria 51 consultas (1 para los vehiculos + 1 por cada vehiculo para sus reparaciones). Con documentos incrustados, sigue siendo una sola consulta.
+
+    \item \textbf{Esquema rigido implicito:} La IA ha creado una coleccion \texttt{reparaciones} con un esquema uniforme (fecha, taller, pieza\_reemplazada, coste, observaciones), cuando en realidad las reparaciones pueden requerir documentos diferentes: una reparacion programada incluye \texttt{tipo\_revision}, una de emergencia incluye \texttt{nivel\_urgencia}, un siniestro incluye \texttt{parte\_seguros}. Al separar en coleccion propia, la IA ha creado un esquema rigido que contradice la naturaleza schemaless de MongoDB.
+
+\end{enumerate}
+
+\subsubsection{Correccion 1: Agregados Incrustados (Embedding)}
+
+Aplicando el principio de diseno por agregados y la guia del Anexo A2 (Incrustar vs. Referenciar), la primera correccion unifica vehiculo y sus reparaciones en un unico documento:
+
+\begin{lstlisting}[caption=Correccion 1: agregado con reparaciones incrustadas]
+// ============================================================
+// VERSION CORREGIDA
+// Agregado: vehiculo con historial de reparaciones incrustado
+// Los datos que se leen juntos se almacenan juntos.
+// ============================================================
+
+db.vehiculos.insertMany([
+  {
+    _id: ObjectId("661a00000000000000000001"),
+    matricula: "PAT-001",
+    tipo: "patinete",
+    modelo: "Xiaomi Pro 3",
+    anyo: 2024,
+    peso_maximo_kg: 120,
+    autonomia_km: 45,
+    estado: "disponible",
+    // Historial de reparaciones INCRUSTADO como array
+    reparaciones: [
+      {
+        fecha: new Date("2025-01-15"),
+        taller: "EcoFix Centro",
+        pieza_reemplazada: "rueda delantera",
+        coste: 45.00,
+        observaciones: "Pinchazo por cristal en carril bici",
+        tipo_reparacion: "correctiva"
+      },
+      {
+        fecha: new Date("2025-03-20"),
+        taller: "EcoFix Centro",
+        pieza_reemplazada: "bateria",
+        coste: 120.00,
+        observaciones: "Bateria no retenia carga completa",
+        tipo_reparacion: "correctiva"
+      }
+    ],
+    ultima_revision: new Date("2025-03-20"),
+    proxima_revision_programada: new Date("2025-06-20")
+  },
+  {
+    _id: ObjectId("661a00000000000000000002"),
+    matricula: "BIC-001",
+    tipo: "bicicleta",
+    modelo: "Orbea Vibe H30",
+    anyo: 2023,
+    marchas: 9,
+    peso_kg: 16.5,
+    estado: "mantenimiento",
+    reparaciones: [
+      {
+        fecha: new Date("2025-02-10"),
+        taller: "EcoBici Taller",
+        pieza_reemplazada: "cadena y pinion",
+        coste: 35.50,
+        observaciones: "Desgaste por uso intensivo",
+        tipo_reparacion: "preventiva"
+      }
+    ],
+    ultima_revision: new Date("2025-02-10"),
+    proxima_revision_programada: new Date("2025-05-10")
+  },
+  {
+    _id: ObjectId("661a00000000000000000003"),
+    matricula: "COC-001",
+    tipo: "coche",
+    modelo: "Renault Zoe ZE50",
+    anyo: 2024,
+    tipo_combustible: "electrico",
+    capacidad_bateria_kwh: 52,
+    plazas: 5,
+    estado: "disponible",
+    reparaciones: [], // Array vacio, sin reparaciones
+    ultima_revision: new Date("2024-12-01"),
+    proxima_revision_programada: new Date("2025-06-01")
+  }
+]);
+\end{lstlisting}
+
+Ahora la consulta es mucho mas simple y eficiente:
+
+\begin{lstlisting}[caption=Consulta corregida: un solo viaje de red]
+// CORRECTO: Una sola consulta, un solo documento
+var vehiculo = db.vehiculos.findOne(
+  { matricula: "PAT-001" },
+  { matricula: 1, modelo: 1, estado: 1, reparaciones: 1 }
+);
+
+printjson({
+  vehiculo: vehiculo.matricula,
+  modelo: vehiculo.modelo,
+  num_reparaciones: vehiculo.reparaciones.length,
+  gasto_total_reparaciones: vehiculo.reparaciones.reduce(
+    function(acc, r) { return acc + r.coste; }, 0
+  )
+});
+\end{lstlisting}
+
+\subsubsection{Justificacion Tecnica de la Correccion 1}
+
+\textbf{Reduccion de operaciones de lectura:} En la version incorrecta, obtener la ficha completa del patinete PAT-001 con su historial requeria 2 consultas independientes. En la version corregida, requiere 1 consulta. Esto supone una reduccion del 50\% en operaciones de lectura, lo que se traduce directamente en menor latencia para el usuario final y menor carga en el servidor.
+
+\textbf{Eliminacion de joins manuales:} El join manual en JavaScript obligaba a: (1) esperar la primera consulta, (2) extraer el \texttt{\_id} del resultado, (3) construir una segunda consulta con ese \texttt{\_id}, (4) esperar la segunda consulta, (5) combinar manualmente ambas estructuras de datos en la logica de la aplicacion. En la version corregida, este proceso desaparece por completo.
+
+\textbf{Mejora de localidad de datos:} MongoDB almacena los documentos BSON en disco en bloques contiguos. Al incrustar las reparaciones dentro del documento del vehiculo, todos los datos relativos a un mismo vehiculo se almacenan en una unica region del disco. Esto maximiza la eficiencia de la cache de almacenamiento y reduce los accesos a disco para lecturas secuenciales, mejorando los tiempos de respuesta.
+
+\textbf{Atomicidad:} Al estar las reparaciones dentro del mismo documento, MongoDB puede garantizar atomicidad a nivel de documento. Si la aplicacion necesita anadir una reparacion y actualizar la \texttt{ultima\_revision} y la \texttt{proxima\_revision\_programada}, todo puede hacerse en una sola operacion atomica:
+
+\begin{lstlisting}[caption=Operacion atomica sobre el agregado completo]
+// Una sola operacion atomica: inserta reparacion Y actualiza fechas
+db.vehiculos.updateOne(
+  { matricula: "PAT-001" },
+  {
+    \$push: {
+      reparaciones: {
+        fecha: new Date(),
+        taller: "EcoFix Centro",
+        pieza_reemplazada: "manillar",
+        coste: 25.00,
+        tipo_reparacion: "correctiva"
+      }
+    },
+    \$set: {
+      ultima_revision: new Date(),
+      proxima_revision_programada:
+        new Date(Date.now() + 90 * 24 * 3600 * 1000)
+    }
+  }
+);
+\end{lstlisting}
+
+\subsubsection{Correccion 2: Esquema Flexible para Vehiculos Heterogeneos}
+
+El segundo error de la IA fue tratar de uniformar todos los vehiculos con los mismos campos. En la version original, los tres vehiculos tenian practicamente la misma estructura. La IA no aprovecho la naturaleza schemaless de MongoDB.
+
+Un patinete electrico no tiene marchas, una bicicleta no tiene tipo de combustible y un coche no tiene peso maximo de carga. Forzar un esquema comun obligaria a tener campos nulos en cada documento o, peor aun, a crear colecciones separadas por tipo de vehiculo (lo que la IA evito, pero por las razones equivocadas).
+
+La correccion consiste en permitir que cada documento tenga EXACTAMENTE los campos que necesita su tipo de vehiculo, sin campos nulos ni estructuras forzadas:
+
+\begin{lstlisting}[caption=Correccion 2: esquema flexible por tipo de vehiculo]
+// Cada vehiculo solo tiene los campos que necesita
+
+// Patinete: no necesita "marchas" ni "tipo_combustible"
+db.vehiculos.insertOne({
+    matricula: "PAT-002",
+    tipo: "patinete",
+    modelo: "Segway Ninebot MAX",
+    anyo: 2025,
+    peso_maximo_kg: 150,   // Solo patinetes
+    autonomia_km: 65,      // Solo patinetes
+    estado: "disponible"
+});
+
+// Bicicleta: no necesita "peso_maximo" ni "plazas"
+db.vehiculos.insertOne({
+    matricula: "BIC-002",
+    tipo: "bicicleta",
+    modelo: "Trek FX 3",
+    anyo: 2024,
+    marchas: 21,           // Solo bicicletas
+    peso_kg: 10.5,         // Solo bicicletas
+    talla: "L",            // Solo bicicletas
+    estado: "disponible"
+});
+
+// Coche: no necesita "marchas" ni "peso_maximo_kg"
+db.vehiculos.insertOne({
+    matricula: "COC-002",
+    tipo: "coche",
+    modelo: "Tesla Model 3",
+    anyo: 2025,
+    tipo_combustible: "electrico",   // Solo coches
+    capacidad_bateria_kwh: 75,       // Solo coches
+    plazas: 5,                       // Solo coches
+    puertas: 4,                      // Solo coches
+    autonomia_km: 513,               // Solo coches
+    estado: "disponible"
+});
+\end{lstlisting}
+
+Ademas, esto permite consultar por atributos que solo existen en un tipo:
+
+\begin{lstlisting}[caption=Consulta filtrando por campo exclusivo de coches]
+// Buscar solo vehiculos que tengan "tipo_combustible" (coches)
+db.vehiculos.find(
+  { tipo_combustible: { \$exists: true } },
+  { matricula: 1, modelo: 1, tipo_combustible: 1, plazas: 1 }
+);
+\end{lstlisting}
+
+\subsubsection{Justificacion Tecnica de la Correccion 2}
+
+\textbf{Eliminacion de campos nulos:} En SQL, para modelar herencia de tipos se usan patrones como "single table inheritance" que dejan campos nulos para tipos que no los necesitan, o "class table inheritance" que requiere multiples joins. MongoDB permite que cada documento tenga exactamente los campos que necesita, sin nulos ni joins. Esto se conoce como \textbf{esquema polimorfico}.
+
+\textbf{Evolucion del esquema sin migraciones:} Si en el futuro EcoDrive anade un nuevo tipo de vehiculo (ej. monopatines, motos electricas), basta con insertar documentos con los nuevos campos. No hay que ejecutar migraciones ni alter table. El esquema evoluciona con los datos.
+
+\textbf{Consultas especificas por tipo:} Se puede consultar usando \texttt{\$exists} sobre campos que solo existen en un tipo de vehiculo, o filtar por el campo \texttt{tipo} combinado con proyecciones.
+
+\subsubsection{Ventajas e Inconvenientes del Modelo Propuesto}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Reduccion drastica del numero de consultas (de N+1 a 1).
+    \item Atomicidad en operaciones de vehiculo + reparaciones.
+    \item Localidad de datos: todo el agregado fisico esta junto.
+    \item Flexibilidad de esquema para cada tipo de vehiculo.
+    \item Sin campos nulos: cada documento tiene solo lo que necesita.
+    \item Evolucion del esquema sin migraciones.
+\end{itemize}
+
+\textbf{Inconvenientes (a considerar):}
+\begin{itemize}
+    \item Limite de tamanio de documento BSON (16 MB). En vehiculos con miles de reparaciones podria alcanzarse. Para EcoDrive, con una media estimada de 10--20 reparaciones por vehiculo al ano, es perfectamente viable.
+    \item Si el historial de reparaciones creciese sin limite (ej. decadas de datos), habria que plantearse una coleccion separada o un archivado. No es el caso actual.
+    \item Actualizar una reparacion existente requiere localizarla dentro del array con el operador posicional \texttt{\$}.
+\end{itemize}
+
+\subsubsection{Principios NoSQL Aplicados}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Principio} & \textbf{Aplicacion} \\
+\hline
+Diseno por agregados & Vehiculo + reparaciones forman un agregado natural que se lee y escribe junto \\
+\hline
+Esquema flexible (schemaless) & Cada tipo de vehiculo tiene sus propios campos sin necesidad de estructura comun \\
+\hline
+Embedding como opcion por defecto & Los datos que se leen juntos se almacenan juntos en un unico documento \\
+\hline
+Atomicidad a nivel de documento & Las operaciones con \texttt{\$push} y \texttt{\$set} se ejecutan atomicamente sobre el agregado \\
+\hline
+Desnormalizacion consciente & Aceptamos duplicacion de informacion (nombre del taller en cada reparacion) a cambio de eficiencia en lectura \\
+\hline
+\end{tabular}
+\caption{Principios NoSQL aplicados en las correcciones de MongoDB}
+\end{table}
+
+\newpage
+
+\subsection{Resumen de Correcciones Realizadas}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Error generado por IA} & \textbf{Antipatron detectado} & \textbf{Correccion aplicada} & \textbf{Beneficio arquitectonico} \\
+\hline
+Colecciones separadas \texttt{vehiculos} y \texttt{reparaciones} con relacion por \texttt{vehiculo\_id} y joins manuales en JavaScript & Normalizacion Encubierta (diseno relacional aplicado a MongoDB) & Incrustacion del array \texttt{reparaciones} como subdocumento dentro del documento \texttt{vehiculos} & Reduccion del 50\% en consultas, atomicidad en escritura, localidad de datos en disco \\
+\hline
+Documentos uniformes para los tres tipos de vehiculo con los mismos campos (estructura rigida) & Esquema rigido implicito (ignorar naturaleza schemaless de MongoDB) & Documentos polimorficos donde cada vehiculo tiene solo los campos que necesita segun su tipo & Sin campos nulos, evolucion del esquema sin migraciones, consultas por tipo con \texttt{\$exists} \\
+\hline
+\end{tabular}
+\caption{Resumen de errores, antipatrones, correcciones y beneficios en MongoDB}
+\end{table}
+
+\newpage
+
+\subsection{Conclusion del Analisis de Auditoria}
+
+La bitacora de auditoria presentada en este apartado demuestra que la generacion de codigo mediante inteligencia artificial, si bien es una herramienta productiva para obtener esqueletos de codigo funcional, no puede ser incorporada a un sistema productivo sin un proceso riguroso de revision arquitectonica.
+
+El caso analizado en EcoDrive revela un patron consistente: la IA reproduce modelos mentales relacionales incluso cuando se le solicita explicitamente codigo para MongoDB. La Normalizacion Encubierta es el ejemplo mas claro: la IA separa \texttt{vehiculos} y \texttt{reparaciones} en dos colecciones con un campo \texttt{vehiculo\_id}, replicando el esquema mental de las claves foraneas de SQL. El codigo funciona, pero arquitectonicamente es incorrecto para un sistema documental.
+
+\textbf{La importancia de auditar codigo generado por IA} radica en que los errores detectados no son errores sintacticos (el codigo funciona y devuelve resultados) sino errores semanticos de diseno que comprometen el rendimiento y la mantenibilidad del sistema. La diferencia entre hacer dos consultas con join manual o una sola consulta con un agregado incrustado no es un detalle menor: en un sistema con cientos de peticiones por segundo, esa diferencia determina si el servidor soporta la carga o no.
+
+\textbf{MongoDB exige un cambio de mentalidad} que la IA todavia no ha internalizado. Este cambio tiene tres pilares fundamentales:
+
+\begin{enumerate}
+    \item \textbf{Pensar en agregados:} En lugar de normalizar como hariamos en SQL, debemos agrupar en una misma unidad de almacenamiento todo lo que se consulta y modifica conjuntamente. Vehiculo + reparaciones forman un agregado natural.
+    \item \textbf{Esquema flexible:} MongoDB no exige un esquema uniforme para todos los documentos de una coleccion. Aprovechar esta caracteristica permite modelar datos heterogeneos (patinetes, bicicletas, coches) sin campos nulos ni estructuras forzadas.
+    \item \textbf{Diseno orientado a consultas:} Primero identificamos las consultas que la aplicacion va a realizar, y luego disenamos los documentos para que esas consultas sean optimas. No al reves.
+\end{enumerate}
+
+Este analisis ha cubierto los criterios CE.a (caracteristicas de los sistemas NoSQL: esquema flexible, modelo documental, atomicidad) y CE.c (elementos utilizados: agregados incrustados, subdocumentos en array, esquemas polimorficos, operadores \texttt{\$push} y \texttt{\$set}) mediante la identificacion, correccion y justificacion tecnica de dos antipatrones reales generados por inteligencia artificial en el contexto del proyecto EcoDrive.

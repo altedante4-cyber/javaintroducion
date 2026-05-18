@@ -1,0 +1,3 @@
+b) Seguin las tablas de encaminamiento que se muestran en la figura, explicar razonadamente
+si Al y A3 pueden intercambiar trafico IP. Si no es asi, realiza las modificaciones minimas
+necesarias en las tablas de encaminamiento para que sea posible.

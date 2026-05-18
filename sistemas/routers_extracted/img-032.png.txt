@@ -1,0 +1,44 @@
+Lista de comandos: Modo
+
+usuario
+
+Router> ?
+
+Exec Commands :
+
+laccess-enable Creates a temporary access list entry
+
+jatmsig Executes ATM signaling commands
+
+led Changes current device
+
+clear Resets functions
+
+connect Opens a terminal connection
+
+dir Lists files on a given device
+
+disable Turns off privileged commands
+
+disconnect Disconnects an existing network connectior
+
+enable Turns on privileged commands
+
+exit Exits EXEC
+
+help Gets a description of the interactive helr
+system
+
+lat Opens @ LAT connection
+
+lock Locks the terminal
+
+login Logs in as a particular user
+
+logout Exits from EXEC mode
+
+Imrinfo Requests neighbor and version information
+from a multicast router
+
+~-More-~
+

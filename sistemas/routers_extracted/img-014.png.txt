@@ -1,0 +1,7 @@
+El enrutador (del inglés router), direccionador, ruteador o encaminador es
+un dispositivo de hardware para interconexién de red de ordenadores que
+opera en la capa tres (nivel de red).
+
+Un enrutador es un dispositivo para la interconexién de redes informaticas
+que permite asegurar el enrutamiento de paquetes entre redes o determinar la
+ruta que debe tomar el paquete de datos.

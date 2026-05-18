@@ -1,0 +1,52 @@
+Routers
+Switch Un switch o conmutadores un dispositivo de interconexión utilizado
+para conectar equipos en red formando lo que se conoce como una red de
+área local (LAN)
+Routers
+Routers
+Routers
+¿Cuántas redes hay aquí?
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+Routers
+El enrutamiento no es otra cosa que instrucciones para ir de una red a otra. Estas instrucciones, también
+conocidas como rutas, pueden ser dadas a un router por otro de forma dinámica, o pueden ser asignadas al
+router por el administrador de forma estática.
+Routers
+Routers
+Routers
+En una conexión de internet enviamos la información troceada en paquetes y que
+en esos paquetes debemos indicar la IP origen y destino para poder localizar
+ambos equipos en la red.
+
+Además de las IPs de origen y destino en el paquete también deberemos incluir la
+información de puerto origen y destino.
+
+
+ De esta manera además de localizar los equipos involucrados en la conexión
+seremos capaces de identificar las aplicaciones en concreto que participan en
+ella.
+
+
+ https://naseros.com/2020/05/29/que-es-un-puerto-y-un-socket/
+
+ https://naseros.com/2020/06/05/tipos-de-puerto-puerto-bien-comocido-
+ asignado-y-efimero/
+PUERTOS
+SOCKETS
+

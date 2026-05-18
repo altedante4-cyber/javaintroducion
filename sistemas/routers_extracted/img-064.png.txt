@@ -1,0 +1,16 @@
+Estructura de una tabla de encaminamiento
+
+La tabla de encaminamiento debe incluir, como minimo, la siguiente
+informacion
+
+Para cada subred de destino, debe contener, entre otros datos, la mascara de
+subred, la direccién IP del siguiente nodo al que reenviarle el datagrama y el
+
+coste.
+
+Ejemplo.
+
+stino
+
+Pueden tener una ruta por defecto en la que tanto el destino como la mascara
+son 0.0.0.0.

@@ -1,0 +1,183 @@
+Requisitos Funcionales
+1. Sistema de Ayuda y Descubrimiento
+El script debe incluir un módulo de consulta que permita al usuario:
+- Listar todos los comandos disponibles del sistema, con capacidad de filtrar por verbo, sustantivo o tipo de comando.
+- Mostrar ayuda detallada de cualquier comando, incluyendo ejemplos de uso.
+- Examinar las propiedades y métodos de cualquier objeto del sistema.
+- Acceder a información sobre la consola actual y el historial de comandos ejecutados.
+2. Gestión del Sistema de Archivos
+El script debe proporcionar funcionalidades para:
+- Navegar entre directorios y mostrar la ubicación actual.
+- Listar el contenido de carpetas con diferentes formatos de visualización.
+- Crear, copiar, mover, renombrar y eliminar archivos y carpetas.
+- Leer el contenido de archivos de texto.
+- Gestionar recursively carpetas que contengan subdirectorios.
+3. Administración del Sistema Operativo
+El script debe permitir:
+- Visualizar y finalizar procesos del sistema.
+- Gestionar servicios de Windows (iniciar, detener y listar).
+- Obtener información de adaptadores de red y discos.
+- Apagar o reiniciar el equipo.
+- Consultar y modificar la fecha y hora del sistema.
+4. Procesamiento con Tuberías (Pipelines)
+El script debe implementar:
+- Filtrado de objetos según condiciones específicas usando Where-Object.
+- Selección de propiedades específicas de los objetos.
+- Ordenamiento de resultados por una o varias propiedades.
+- Formateo de salida en tablas, listas o formatos amplios.
+  - Exportación de resultados a archivos.
+
+# SOLUCIÓN DEL SCRIPT EN POWERSHELL
+
+# Módulo de Ayuda y Descubrimiento
+function Get-AvailableCommands {
+    param([string]$Verb, [string]$Noun, [string]$Type)
+    $commands = Get-Command
+    if ($Verb) { $commands = $commands | Where-Object { $_.Name -like "$Verb-*" } }
+    if ($Noun) { $commands = $commands | Where-Object { $_.Name -like "*-$Noun" } }
+    if ($Type) { $commands = $commands | Where-Object { $_.CommandType -eq $Type } }
+    $commands | Select-Object Name, CommandType, ModuleName
+}
+
+function Show-CommandHelp {
+    param([string]$CommandName)
+    Get-Help $CommandName -Detailed
+    Get-Help $CommandName -Examples
+}
+
+function Get-ObjectInfo {
+    param([string]$ObjectName)
+    Get-Member -InputObject (New-Object $ObjectName) -MemberType Properties, Methods
+}
+
+function Get-ConsoleInfo {
+    Write-Host "Consola: $($Host.Name)"
+    Write-Host "Versión: $($Host.Version)"
+    Get-History | Select-Object CommandLine, ExecutionStatus
+}
+
+# Gestión del Sistema de Archivos
+function Set-CurrentLocation {
+    param([string]$Path)
+    Set-Location $Path
+    Get-Location
+}
+
+function Get-FolderContent {
+    param([string]$Path, [string]$Format = "Table")
+    switch ($Format) {
+        "Table" { Get-ChildItem $Path | Format-Table }
+        "List" { Get-ChildItem $Path | Format-List }
+        "Wide" { Get-ChildItem $Path | Format-Wide }
+    }
+}
+
+function New-FileSystemItem {
+    param([string]$Path, [string]$Type = "File")
+    if ($Type -eq "File") { New-Item -Path $Path -ItemType File }
+    else { New-Item -Path $Path -ItemType Directory }
+}
+
+function Copy-FileSystemItem {
+    param([string]$Source, [string]$Destination)
+    Copy-Item $Source $Destination -Recurse
+}
+
+function Move-FileSystemItem {
+    param([string]$Source, [string]$Destination)
+    Move-Item $Source $Destination
+}
+
+function Remove-FileSystemItem {
+    param([string]$Path)
+    Remove-Item $Path -Recurse -Force
+}
+
+function Get-TextFileContent {
+    param([string]$Path)
+    Get-Content $Path
+}
+
+# Administración del Sistema Operativo
+function Get-SystemProcesses {
+    Get-Process | Select-Object Name, Id, CPU, Memory
+}
+
+function Stop-SystemProcess {
+    param([int]$ProcessId)
+    Stop-Process -Id $ProcessId -Force
+}
+
+function Get-WindowsServices {
+    Get-Service | Select-Object Name, Status, DisplayName
+}
+
+function Start-WindowsService {
+    param([string]$ServiceName)
+    Start-Service $ServiceName
+}
+
+function Stop-WindowsService {
+    param([string]$ServiceName)
+    Stop-Service $ServiceName
+}
+
+function Get-NetworkAdapters {
+    Get-NetAdapter | Select-Object Name, InterfaceDescription, Status
+}
+
+function Get-DiskInfo {
+    Get-Disk | Select-Object Number, FriendlyName, Size, PartitionStyle
+}
+
+function Set-SystemShutdown {
+    param([string]$Action = "Shutdown")
+    if ($Action -eq "Shutdown") { Stop-Computer }
+    elseif ($Action -eq "Restart") { Restart-Computer }
+}
+
+function Get-SystemDateTime {
+    Get-Date
+}
+
+function Set-SystemDateTime {
+    param([DateTime]$NewDateTime)
+    Set-Date $NewDateTime
+}
+
+# Procesamiento con Tuberías
+function Filter-Objects {
+    param([scriptblock]$Condition)
+    $input | Where-Object $Condition
+}
+
+function Select-ObjectProperties {
+    param([string[]]$Properties)
+    $input | Select-Object $Properties
+}
+
+function Sort-ObjectResults {
+    param([string[]]$Properties)
+    $input | Sort-Object $Properties
+}
+
+function Format-Output {
+    param([string]$Format = "Table")
+    switch ($Format) {
+        "Table" { $input | Format-Table }
+        "List" { $input | Format-List }
+        "Wide" { $input | Format-Wide }
+    }
+}
+
+function Export-Results {
+    param([string]$Path, [string]$Format = "CSV")
+    switch ($Format) {
+        "CSV" { $input | Export-Csv $Path -NoTypeInformation }
+        "JSON" { $input | ConvertTo-Json | Out-File $Path }
+        "TXT" { $input | Out-File $Path }
+    }
+}
+
+# Ejemplo de uso
+# Get-Process | Filter-Objects { $_.CPU -gt 100 } | Select-ObjectProperties Name, CPU | Export-Results "procesos.csv"

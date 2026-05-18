@@ -1,0 +1,11 @@
+1) Conexién Ethernet a switch
+externo,
+
+2) Conexién Ethernet a PC.
+
+3) Conexién ADSL sobre POTS.
+4) Puerto de la consola.
+
+5) Adaptador de alimentacién.
+
+Conexién de un Router a la Red, a internet, a un pc y a su alimentacién.

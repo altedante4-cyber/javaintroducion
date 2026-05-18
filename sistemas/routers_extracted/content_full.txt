@@ -1,0 +1,1372 @@
+Routers
+
+Switch Un switch o conmutadores un dispositivo de inferconexion utilizado
+para conectar equipos en red formando lo que se conoce como una red de
+area local (LAN)
+
+PPS
+
+Topologia en estrella de las redes locales en la actualidad
+
+Routers
+
+©
+<n
+f
+
+}
+
+-
+
+Cisco
+
+891F
+
+an
+
+:
+
+.
+
+SS
+1
+
+CT)
+
+Om
+Jj
+
+seco
+
+®
+
+Routers
+Juniper M160
+
+Cisco GSR 12416
+49” ~0.5m
+
+~0.5m
+
+A
+
+y
+
+19”
+
+AT
+
+| : Capacity: 160Gb/s
+Power: 4.2kW
+Full rack
+
+6ft
+
+3ft
+
+~1.8m
+
+~0.9m
+
+2
+
+> st
+
+Capacity: 80Gb/s
+
+Power: 2.6kW
+| Half-a-rack
+
+4Cuantas redes hay aqul?
+Qué es un router?
+
+Se
+
+192.168.2.0/24
+
+LAN
+
+aS
+
+™“™.
+
+.
+
+192.168.1.0/24
+
+R1
+
+2”
+
+_
+
+-
+
+LAN
+
+“>
+192.168.3.0/24
+
+Routers
+Un router es un tipo especial de computador.
+Cuenta con los mismos componentes basicos que un PC estandar
+de escritorio.
+Tiene una CPU, memoria, bus de sistema y distintas interfaces
+
+de entrada/salida. Sin embargo, los routers estan disefiados para
+cumplir algunas funciones muy especificas que, en general, no
+realizan los computadores de escritorio.
+
+Routers
+El enrutador (del inglés router), direccionador, ruteador o encaminador es
+
+un dispositivo de hardware para interconexion de red de ordenadores que
+opera en la capa tres (nivel de red).
+Un enrutador es un dispositivo para la interconexién de redes informaticas
+que permite asegurar el enrutamiento de paquetes entre redes o determinar la
+ruta que debe tomar el paquete de datos.
+
+Routers
+
+La Capa de Red
+
+“
+
+donde se
+
+cher
+
+- --"
+
+Routers
+
+Routers
+Host origen
+
+Host destino
+
+Aplicacion
+
+Aplicacion
+
+Presentacion
+
+Presentacion
+
+Transporte
+
+Transporte
+
+Router
+
+Enlace de datos
+
+Enlace de dato:
+
+Enlace de datos
+
+Fisica
+
+Fisica
+
+Fisica
+
+Routers
+Capa de Aplicacién
+
+7. Programas de aplicacién que usa la red.
+
+Capa de Presentacién
+
+6. Estandariza la forma en que se presentan los datos de las aplicaciones.
+
+Capa de Sesion
+
+Capa de Transporte
+
+5. Gestiona las conexiones entre aplicaciones cooperativas.
+
+4, Proporciona servicios de deteccién y correccién de errores.
+
+3. Gestiona conexiones a través de la red para las capas superiores.
+
+Capa de Enlace de Datos
+
+. Proporciona servicios de envio de datos a través del enlace fisico.
+
+Capa Fisica
+
+No
+
+Capa de Red
+
+1. Define las caracteristicas fisicas de la red material.
+
+Routers
+Capa 3
+
+El objetivo de la capa de red es hacer que los datos lleguen desde el origen al
+destino, atin cuando ambos no estén conectados directamente.
+
+Los routers trabajan en esta capa.
+En este nivel se realiza el direccionamiento légico y la determinacién de la ruta
+
+de los datos hasta su receptor final.
+
+Routers
+-E] router es capaz de ver si una ruta no funciona y buscar una alternativa.
+-E] router es capaz incluso de buscar la ruta mas rapida (por ejemplo la que tenga
+menos trafico) en caso de poder escoger entre varias posibilidades.
+
+El router unira las redes del emisor y el destinatario de una informacion
+determinada (email, pagina Web, ...) y ademas sélo transmitira entre las
+mismas la informacion necesaria.
+
+Routers
+
+router
+
+Routers
+
+E] router tiene con funcién principal saber si el destinatario de un paquete
+de informacién que enviamos esta en nuestra propia red o en una
+remota. Para ello, el router dispone de un mecanismo llamado “mdscara de
+
+subred" similar a la IP, y que determina a que grupo de ordenadores o
+redes pertecenece el receptor.
+
+Routers
+
+1) Conexién Ethernet a switch
+externo.
+2) Conexién Ethernet a PC.
+3) Conexién ADSL sobre POTS.
+4) Puerto de la consola.
+5) Adaptador de alimentacién.
+
+Conexién de un Router a la Red, a internet, a un pc y a su alimentacioén.
+
+Routers
+Lista de comandos:
+
+Modo
+
+usuario
+Indicador
+
+de comandos
+
+Router>
+?
+Exec Commands:
+
+access-enable
+atmsig
+ed
+clear
+connect
+dir
+
+disable
+disconnect
+enable
+exit
+
+help
+
+lat
+lock
+login
+logout
+mrinfo
+
+--More--
+
+Creates a temporary access list entry
+Executes ATM signaling commands
+Changes current device
+Resets functions
+Opens a terminal connection
+Lists files on a given device
+Turns off privileged commands
+Disconnects an existing network connectior
+Turns on privileged commands
+Exits EXEC
+Gets a description of the interactive helf
+system
+
+Opens a LAT connection
+Locks the terminal
+Logs in as a particular user
+Exits from EXEC mode
+Requests neighbor and version
+from a multicast router
+
+information
+
+Routers
+Lista de comandos:
+
+Modo
+
+Privilegiado
+
+Router>
+
+ena
+
+Router#
+
+?
+
+Paseword:
+
+access~enable
+
+Creates
+
+atmsig
+
+Executes
+
+access-template
+appn
+
+4
+
+temporary
+
+access
+
+list
+
+Creates a temporary access list entry
+Sends 4 command to the APPN subsystem
+ATM
+
+signaling
+
+commands
+
+bte
+calendar
+cd
+clear
+clock
+cmt
+
+Sets manual emergency modes
+Manages the hardware calendar
+Changes the current device
+Resets functions
+Manages the system clock
+Starts or stops FDODI connection
+
+copy
+debug
+delete
+
+Copies configuration or image
+Uses debugging functions
+(see
+Deletes a file
+
+configure
+connect
+
+dir
+
+entry
+
+Enters configuration mode
+Opens 4 terminal connection
+
+Lists
+
+files
+
+on
+
+a given
+
+device
+
+management
+
+data
+also
+
+undebug)
+
+functions
+
+Routers
+
+Comandos
+
+Comando
+
+Control-A
+
+de edicion de |OS
+
+Descripcion
+Permite desplazarse hasta el principio de la linea de comando
+
+Esc-B
+
+Permite desplazarse una palabra hacia atras
+
+Control-B
+
+Permite desplazarse un caracter hacia atras
+
+Control-E
+
+Permite desplazarse hasta el final de |a linea de comando
+
+Control-F
+
+Permite desplazarse un caracter hacia adelante
+
+Esc-F
+
+Permite desplazarse una palabra hacia adelante
+
+Routers
+- El comando ping envia un paquete al host
+destino y luego espera un paquete de
+respuesta de ese host.
+¢ Dos tipos: Ping y ping extendido
+- Respuestas del comando:
+! Recibo satisfactorio de respuesta eco
+. Esperando interrupcion de respuesta de datagrama
+U Error por destino inalcanzable
+C Paquetes que experimentan congestion
+| ping interrumpido ( ej: Ctrl + May+6 X)
+? Tipo de paquete desconocido
+& Paquete TTL excedido
+
+Routers
+- El comando trace es similar al comando
+ping, salvo que en lugar de probar la
+conectividad de extremo a extremo, trace
+prueba cada paso del proceso.
+¢- Respuestas del comando:
+—
+
+!H El router recibio la respuesta pero no la envid> Lista de acceso
+
+—
+
+P El protocolo era inalcanzable
+
+—
+
+NLared era inalcanzable
+
+—
+
+UEl puerto era inalcanzable
+
+—
+
+*,nInterrupcion
+
+Routers
+
+PING / TRACE
+Analisis mediante el comando ping Analisis mediante el comando trace
+
+Peticién de eco
+
+i
+
+a Respuesta
+de eco
+
+>
+
+\
+~~
+
+Router>ping
+
+LES
+172.16.1.5
+
+Type escape sequence
+
+to abort.
+
+York#trace ROME
+
+Sending 5, 100 byte ICMP Echos to 172.16.1.5,
+
+soe
+
+-
+
+timeout
+258
+
+is
+
+2
+
+seconds:
+
+8.
+
+Success
+
+:
+
+rate
+
+is
+
+100
+
+percent,
+
+round-trip min/avg/max
+Router>
+
+Tracing
+
+= 1/3/4 ms
+
+ee
+
+the route to Rome
+
+(172,16.33.5)
+
+1 LONDON
+
+(172.16,12.3)
+
+1000
+
+msec
+
+2 PARIS
+
+(172.16.16.2)
+
+8 msec
+
+Smsec
+
+3 ROME
+
+(172.16.35.5)
+
+msec
+
+York#
+
+8 msec
+msec
+
+Smsec dmsec
+
+4 msec
+
+—
+
+Destino
+
+Siguiente
+
+D
+
+R3
+
+E
+
+R3
+
+F
+
+R5
+
+—
+
+Routers
+La funcion principal de un router es enviar un paquete hacia su red de destino, que es la direccion IP de destino del paquete.
+Para hacerlo, el router necesita buscar la informacion de enrutamiento almacenada en su tabla de enrutamiento.
+
+/
+
+Una tabla de enrutamiento es un archivo de datos en la RAM que se usa para almacenar la informacion de la ruta sobre
+redes remotas y conectadas directamente. La tabla de enrutamiento contiene asociaciones entre la red y el siguiente salto.
+Estas asociaciones le indican al router que un destino en particular se puede alcanzar mejor enviando el paquete hacia un
+router en particular, que representa el "siguiente salto" en el camino hacia el destino final. La asociacion del siguiente salto
+
+también puede ser la interfaz de salida hacia el destino final]
+
+Routers
+Enrutamiento estdatico
+
+Se considera una ruta estdtica aquella creada manualmente por el administrador de red. Al no tener vinculos con
+los protocolos, las rutas estdticas no reciben actualizaciones,
+
+lo cual indica que el administrador debe reconfigurar estas
+rutas nuevamente e incluir los cambios en la topologia.
+
+El enrutamiento no es otra cosa que instrucciones para ir de una red a otra. Estas instrucciones, también
+
+conocidas como rutas, pueden ser dadas a un router por otro de forma dinamica, o pueden ser asignadas al
+router por el administrador de forma estatica.
+
+Las siguientes analogias pueden ayudar a aclarar el concepto de rutas conectadas, estaticas y dinamicas:
+
+Rutas conectadas directamente: para visitar a un vecino, lo Unico que tiene que hacer es caminar por la calle donde vive.
+
+Esta ruta es similar a una ruta conectada directamente porque el "destino" esta disponible directamente a través de su
+
+"interfaz conectada", la calle.
+
+Rutas estaticas: un tren siempre usa las mismas vias en una ruta especifica. Esta ruta es similar a una estatica porque la ruta
+hacia el destino es siempre la misma.
+
+Rutas dinamicas: al conducir un automovil, usted puede elegir "dinamicamente" una ruta diferente seguin el trafico, el
+
+clima y otras condiciones. Esta ruta es similar a una ruta dinamica porque puede elegir una nueva ruta en muchos puntos
+diferentes en su trayecto hacia el destino.
+
+e Ruta estdtica por defecto: es muy interesante debido a que encamina todos los
+paquetes hacia destinos que no cuentan con una referencia en la tabla de enrutamiento. Ejemplo: cuando los proveedores de servicio de internet se conectan con
+un encaminador adyacente de una multinacional.
+
+e Enrutamiento dindmico: este enrutamiento lo vemos en organizaciones medianas y grandes donde se necesita una actualizacién constante de las rutas. Se
+da mediante el encaminamiento de protocolos, los cuales actualizan automati-
+
+camente las rutas. Estos protocolos se basan en la tabla de enrutamiento para
+escoger la mejor ruta, brindan la posibilidad de es-
+
+tablecer normas para que la red siempre esté actualizada. Ejemplo: una empresa en la que se permite
+
+escoger nuevas rutas en casos especificos donde la
+ruta presente inconvenientes y se procede a encon-
+
+trar redes adyacentes.
+
+Adyacentes
+
+Se entiende como adyacente aquello
+
+que estd préximo o cercano.
+
+Aceptar paquetes por las lineas de entrada
+Lookup: busqueda de la direccion de destino del
+paquete en la tabla de reenvio (para identificar puerto
+de salida).
+Header Processing: Manipulacion de la cabecera IP:
+decrementar TTL, recalcular checksum.
+
+Switching: Enviar el paquete al puerto de destino
+correspondiente.
+Buffering: Almacenar paquete en la cola.
+Transmitir paquete en la linea de salida.
+
+Routers
+204.17.5.32/27
+
+204.17.5.64/27
+
+204.17.5.128/2?
+
+© 3J 2
+
+1
+
+204.17,5.96/27
+
+204.17.5.192/2?
+
+wd
+
+ali
+
+204.17.5.0/27
+
+129
+
+204.17.5.160/2?
+193
+
+Routers
+» Basada en la direccion de destino
+
+del paquete IP
+
+R3
+
+7
+
+Paquete: Direccion IP
+de destino: 10.1.1.1
+
+os
+R1
+
+——
+
+Todo el 10/8
+
+excepto 10.1/16
+
+>
+
+R2
+10/8 > R3
+10.1/16 > R4
+20/8 > R5
+30/8
+R6
+Tabla de enrutamiento
+de R2
+
+R4
+10.1/16
+
+Estructura de una tabla de encaminamiento
+
+la tabla de
+informacion:
+Para cada
+
+encaminamiento
+
+debe
+
+incluir,
+
+subred de destino, debe contener,
+
+como
+
+minimo,
+
+entre otros datos,
+
+la siguiente
+la mascara
+
+de
+
+subred, la direccion IP del siguiente nodo al que reenviarle el datagrama y el
+
+coste.
+
+Ejemplo:
+Destino
+
+Viascara
+
+Siguiente
+
+Nodo
+
+Pueden tener una ruta por defecto en la que tanto el destino como la mascara
+son 0.0.0.0.
+
+Funcionamiento
+
+Cuando un router recibe un datagrama, mira la da. IP de destino y busca en las filas de
+la tabla la subred a la que pertenece dicha direccién, utilizando para ello la mascara de
+subred.
+Exyemplo 1: direccién destino 172.30.3.5
+
+$7330.10
+
+32352552550
+
+17230201
+
+i
+
+17230206
+
+2352552550
+
+17230.10.2
+
+i
+
+1723030
+
+2352352350
+
+172.30.102
+
+I
+
+00090
+
+0000
+
+172.30.103
+
+I
+
+Fyemplo 2: direccién destino 172.30.4.11
+Paso 1: Obtener el prefyo de red, mediante una operacion AND (bit a bat) con la
+mascara de subved de cada fila y comparar con la dweccion de la eubred de destmo de
+dicha tila. Si comcide, se enviara al srgmsente nodo mdicado en la fila
+
+1723010
+
+335233552550
+
+172.30.101
+
+i
+
+1723020
+
+2352552550
+
+172.30.10.2
+
+|
+
+1723030
+
+2352352350
+
+172.30.102
+
+I
+
+§8=s itgmmacues)
+
+lt
+
+—> 0000
+
+ooo
+
+Routers
+Una empresa tiene la red de la figura. El reparto de las direcciones se realiza utilizando subredes
+con una mascara de red de 255.255.255.0.
+
+redes
+
+y la configuracion
+
+de los routers
+
+En un momento
+
+que
+
+se ven
+
+dado la empresa tiene instaladas las
+
+en la figura y quiere
+
+instalar la subred
+
+100.1.200.0. Suponga que es el administrador de la subred marcada en la figura y se le ha asignado
+
+el Router R3 y la direccion IP en la red central 100.1.100.3. (Las direcciones IP de los interfaces se
+
+muestran sobre los enlaces).
+
+RS7
+
+0
+
+ee
+
+ee
+
+H1
+
+ee
+
+R1
+
+i
+C
+i.
+
+=
+100.1.150.12
+Sheer
+
+—/"
+
+100.1.100.3
+
+22?
+
+ee
+ee
+ee
+
+H3
+
+100.1.100.1
+
+Subred
+
+Subred
+100.1.100.0
+
+100.1.200.0
+
+100.1.100.2
+
+100.1.150.0
+
+R2
+
+ne
+
+ee
+
+En la siguiente figura A y B son switches Ethernet, R es un router
+
+y Al, A2, A3, Bl y B2 son
+
+maquinas que tienen configuradas las direcciones IP que se muestran en la figura.
+
+Ad
+
+AD
+
+Ag
+
+B1
+
+B2
+
+212.1.0.2
+
+133.3.0.2
+
+212.1.0.3
+
+133.3.0.3
+al
+
+212.1.0.4
+o
+
+La mascara de todas las subredes que aparecen en la figura es 255.255.255.0.
+a) Indique qué maquinas pueden intercambiar trafico IP sin modificar ningun elemento de la
+figura.
+b) Indique qué cambios realizaria en las conexiones o en la configuracién IP para que
+puedan intercambiar trafico todas las maquinas entre si. No se permite modificar las
+direcciones IP que aparecen en la figura.
+
+a)
+
+Las maquinas que pueden intercambiar trafico son aquéllas que pertenecen a la misma subred IP.
+Por tanto pueden intercambiar trafico:
+- Al, A3 y B2, en la red 212.1.0.0/24.
+- A2 y BI, en la red 133.3.0.0/24.
+
+- configurar en R1 las rutas a estas redes directamente conectadas, es decir
+
+Destino
+
+Mascara
+
+Interfaz
+
+212.1.0.0
+
+| 255.255.255.0
+
+IfO
+
+133.3.0.0
+
+| 255.255.255.0
+
+IfO
+
+ee
+
+- configurar una ruta por defecto a R1 desde todas las maquinas:
+
+o desde Al, A3 y B2 el gateway sera 212.1.0.1
+o desde B1 y A2 el gateway sera 133.3.0.1
+
+En RI:
+
+EnR2: |
+
+En R3:
+
+En R4:
+
+Destino
+
+Mascara
+
+Gateway
+
+212.1.1.0
+
+9 255.255.255.128
+
+0.0.0.0
+
+212.1.2.0
+
+J 255.255.255.192
+
+0.0.0.0
+
+212.1.1.128 | 255.255.255.128
+
+0.0.0.0
+
+212.1.4.0
+
+255.255.255.0
+
+212.1.2.2
+
+0.0.0.0
+
+0.0.0.0
+
+212.1.1.130
+
+Destino
+
+Mascara
+
+Gateway
+
+212.1.1.0
+
+| 255.255.255.128 | 212.1.1.129
+
+ie
+
+212.1.1.10
+
+2
+
+| 255.255.255.192
+
+0.0.0.0
+
+Destino
+
+Mascara
+
+Gateway
+
+212.1.4.0
+
+255,255.255.0
+
+| 212.1.2.130
+
+212.1.2.0
+
+| 255.255.255.192
+
+0.0.0.0
+
+212.1.2.64
+
+} 255.255.255.192
+
+0.0.0.0
+
+Subred 6
+
+212.1.2.128 | 255.255.255.128
+
+0.0.0.0
+
+212.1.3.0/24
+
+Destino
+
+Mascara
+
+Gateway
+
+212.1.2.128 | 255.255.255.128
+
+0.0.0.0
+
+212.1.4.0
+
+255.255.255.0
+
+0.0.0.0
+
+0.0.0.0
+
+0.0.0.0
+
+212.1.2.129
+
+Subred 4
+
+‘b2
+
+Subred 3
+
+:b3 |
+
+212.1.1.128/25
+
+212.1.2.64
+
+212.1.2.67
+
+12.1.2.1
+
+eves
+Subred
+
+2121.22
+
+212.1.1.130
+1
+
+R2
+212.1.2.65
+
+212.1.264/26
+
+R3
+212.1.2.66
+:d3
+
+C2
+
+Subred 1
+212.1.1.0/25
+
+Ri
+
+249.1.1.109
+
+0.0.0.0
+
+0.0.0.0
+
+‘al
+
+212.1.1.1
+‘b1 |
+
+212.1.1.128 | 255.255.255.128
+
+0.0.0.0
+
+Al
+
+212.1.2.67
+
+R5
+
+e230
+
+“a
+1
+
+212.1.2.129
+:d2
+
+Subred §
+
+212.1.2.130
+
+212.1.2.128/25
+
+e1
+
+f
+
+A3®
+
+212.1.2.0/26
+
+R4
+
+212.1.3.1
+
+‘a3
+
+‘f2
+
+:
+
+212.1.3.2
+
+R6
+
+Internet
+
+Subred 7
+
+212.1.4.10
+
+212.1.4.0/24
+|
+
+Mascara
+
+255.255.255.192
+212.1.1.0
+
+J 255.255.255.128
+
+a) Segun las tablas de encaminamiento que se muestran en la figura, explicar razonadamente
+si Al y A2 pueden intercambiar trafico IP. Si no es asi, realiza las modificaciones minimas
+necesarias en las tablas de encaminamiento para que sea posible.
+
+Solucion
+a)
+
+Para que Al y A2 puedan intercambiar trafico es necesario comprobar en las tablas de encaminamiento si hay una ruta
+Al->A2 y A2->A1,
+
+es decir, en ambos sentidos. No tenemos en cuenta las tablas de encaminamiento de las maquinas,
+
+sdlo los routers, porque en el enunciado dice que estan correctamente configuradas.
+Al1->A2
+Al-> R1-> (212.1.2.2) R3 -> (212.1.2.130) R4 ->A2
+A2->Al1
+
+A2-> R4 -> (212.1.2.129) R3 -> (212.1.2.67) RS -> (212.1.2.65) R2 -> (212.1.1.129) R1->All
+
+Dado que existe un camino para ir y otro para volver, Al y A2 pueden intercambiar trafico sin necesidad de hacer
+ningun cambio en las tablas de encaminamiento.
+
+b) Segun las tablas de encaminamiento que se muestran en la figura, explicar razonadamente
+si Al y A3 pueden intercambiar trafico IP. Si no es asi, realiza las modificaciones minimas
+necesarias en las tablas de encaminamiento para que sea posible.
+
+b)
+
+Para que Al y A3 puedan intercambiar trafico es necesario comprobar en las tablas de encaminamiento si hay una ruta
+Al->A3 y A3->A1,
+
+es decir, en ambos sentidos. No tenemos en cuenta las tablas de encaminamiento de las maquinas,
+
+solo los routers, porque en el enunciado dice que estan correctamente configuradas.
+A1->A3
+Al-> R1-> (212.1.1.130) R2 -> ??? (no hay ruta)
+Es necesario afiadir en R2 una ruta, ademas de las que ya tiene, por ejemplo:
+
+Destino
+
+Mascara
+
+212.1.3.0
+
+255.255.255.0
+
+Gateway
+
+| 212.1.2.67
+
+Por tanto, desde R2 -> (212.1.2.67) R5 -> ?? (no hay ruta)
+Es necesario afadir en R5 una ruta, ademas de las que ya tiene, por ejemplo:
+Destino
+
+Mascara
+
+212.1.3.0
+
+255.255.255.0.
+
+Por tanto, desde R5->A3
+
+Gateway
+| 0.0.0.0
+
+A3->Al
+A3-> RS -> (212.1.2.65) R2 -> (212.1.1.129) RI
+
+> AI
+
+Para este ultimo trayecto no es necesario anadir ninguna ruta adicional.
+
+Las aplicaciones
+¢
+
+Son software
+
+¢
+
+Diferentes maquinas y
+sistemas Operativos
+
+«
+
+Quienes se comunican
+son procesos
+¢
+
+Intercambian mensajes
+
+¢
+
+Emplean Protocolos de
+nivel de aplicacion
+
+En una conexion de internet enviamos la informacion troceada en paquetes y que
+en esos paquetes debemos indicar la IP origen y destino para poder localizar
+ambos equipos en la red.
+Ademas de las IPs de origen y destino en el paquete tambien deberemos incluir la
+informacion de puerto origen y destino.
+De esta manera ademas de localizar los equipos involucrados en la conexion
+seremos capaces de identificar las aplicaciones en concreto que participan en
+ella.
+
+hitps://naseros.com/2020/05/29/que-es-Un-puerto-y-Uun-socket/
+hitps://naseros.com/2020/06/05/tipos-de-puerto-puerto-bien-cOMmocidoasignado-y-efimero/
+
+PUERTOS
+
+SOCKETS
+
+Los puertos se clasifican en 3 tipos:
+
+e Puertos bien conocidos. Van desde el 0 hasta el 1023 y como su propio nombre indica
+son aquellos que estan reservados para los protocolos , programas y servicios establecidos
+universalmente y conocidos por todos. Este rango de puertos esta reservado para el
+sistema operativo y solo puede asignarlo en usuario con privilegios elevados como un
+superusuario (root). Esto es porque son servicios bastante criticos y si un usuario
+
+cualquiera pudiera abrirlos podria generar problemas de seguridad.
+Dentro de los puertos bien conocidos estarian el servidor web (80), servidor web seguro
+
+(443), SSH (22), DNS (53), FTP (21)....
+e Puertos registrados. Estos puertos estan asignados por la IANA y van desde el 1024 hasta
+el 49151. Los puertos registrados son los que utilizan las aplicaciones cuando queremos
+conectarnos a ellas. Dentro de este grupo estarian todos los servicios y aplicaciones que
+podemos instalar en un equipo. Aqui estarian comprendidos los juegos, aplicaciones de
+mensajeria, voz sobre IP (VoIP)...
+Por ejemplo en los puertos registrados tenemos:
+
+Plex (32400), SIP (5060), VNC (5900),
+
+Zerotier (9993), Battlefield (14567)....
+¢ Puertos efimeros o dinamicos. Van desde el 49152 hasta el 65535 y son unos puertos
+temporales de usar y tirar que el sistema operativo asigna a las aplicaciones cuando los
+necesitan. Una vez que la conexién ha terminado ese puerto queda libre y puede ser
+reutilizado nuevamente por cualquier otra aplicacién.
+Cuando una aplicacién actua como cliente y necesita conectarse a un servidor se le asigna un
+puerto efimero.
+
+

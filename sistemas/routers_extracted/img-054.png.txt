@@ -1,0 +1,4 @@
+e Ruta estatica por defecto: es muy interesante debido a que encamina todos los
+paquetes hacia destinos que no cuentan con una referencia en la tabla de enruta-
+miento. Ejemplo: cuando los proveedores de servicio de internet se conectan con
+un encaminador adyacente de una multinacional.

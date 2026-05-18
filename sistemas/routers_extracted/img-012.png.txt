@@ -1,0 +1,9 @@
+Un router es un tipo especial de computador.
+
+Cuenta con los mismos componentes basicos que un PC estandar
+de escritorio.
+
+Tiene una CPU, memoria, bus de sistema y distintas interfaces
+de entrada/salida. Sin embargo, los routers estan disefiados para
+cumplir algunas funciones muy especificas que, en general, no
+realizan los computadores de escritorio.

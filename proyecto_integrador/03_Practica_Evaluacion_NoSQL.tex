@@ -1,0 +1,469 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+% Desactivar el carácter activo de la comilla doble de babel-spanish
+
+\newtcolorbox{objetivo}{
+  colback=primary!5,
+  colframe=primary,
+  fonttitle=\bfseries,
+  title=Objetivo del Proyecto,
+  arc=2mm
+}
+
+\newtcolorbox{criterio}{
+  colback=accent!10,
+  colframe=accent!80!black,
+  fonttitle=\bfseries,
+  title=Criterios de Evaluación (RA7),
+  arc=2mm
+}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{\textbf{Proyecto de Evaluación: Arquitectura Políglota en \enquote{EcoDrive}}}
+\author{Víctor de Juan}
+\date{Curso 2025-2026}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\usepackage{graphicx}
+
+% --- Configuración de listings para código ---
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codeblue}{RGB}{0,102,204}
+\definecolor{codegreen}{RGB}{0,128,0}
+\definecolor{codegray}{RGB}{128,128,128}
+\definecolor{codepurple}{RGB}{128,0,128}
+\definecolor{codeback}{RGB}{245,245,245}
+\lstset{
+    backgroundcolor=\color{codeback},
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    commentstyle=\color{codegray},
+    frame=single,
+    keepspaces=true,
+    keywordstyle=\color{codeblue},
+    numbers=left,
+    numberstyle=\tiny\color{codegray},
+    showspaces=false,
+    showstringspaces=false,
+    style=default,
+    tabsize=2,
+    stringstyle=\color{codepurple},
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {ü}{{\"u}}1
+}
+\begin{document}
+
+\maketitle
+
+\section{Contexto del Proyecto: EcoDrive}
+La startup \textbf{\enquote{EcoDrive}} es una plataforma de movilidad urbana sostenible que ofrece alquiler de patinetes eléctricos, bicicletas y coches compartidos. Debido a su rápida expansión por toda Europa, el equipo de ingeniería se ha dado cuenta de que una única base de datos relacional tradicional ya no es capaz de soportar la diversidad y el volumen de sus datos.
+
+Han decidido migrar a una arquitectura de \textbf{Persistencia Políglota}, apoyándose en tecnologías NoSQL. Tu misión como Arquitecto de Datos es diseñar, justificar e implementar los cuatro subsistemas críticos de la empresa.
+
+\begin{criterio}
+\begin{itemize}
+    \item \textbf{CE.a:} Se han identificado las características de los sistemas NoSQL.
+    \item \textbf{CE.b:} Se han evaluado los tipos de bases de datos NoSQL y su adecuación al caso de uso.
+    \item \textbf{CE.c:} Se han identificado los elementos (agregados, claves, nodos, tipos de datos) utilizados en estas bases de datos.
+    \item \textbf{CE.d:} Se ha gestionado la información utilizando comandos específicos.
+    \item \textbf{CE.e:} Se han utilizado herramientas gráficas para la gestión de las bases de datos.
+\end{itemize}
+\end{criterio}
+
+\section{Fase 1: Análisis y Toma de Decisiones}
+A continuación, se describen los cuatro servicios que necesita EcoDrive. \textbf{Tu primera tarea es decidir qué tipo de base de datos NoSQL (Clave-Valor, Documental, Columnar o de Grafos) es la ideal para cada servicio y justificar tu elección.} Tienes a tu disposición Redis, MongoDB, Apache Cassandra y Neo4j en tu entorno Docker.
+
+\subsection*{Servicio A: Catálogo de Vehículos y Mantenimiento}
+El catálogo contiene vehículos con características técnicas radicalmente distintas (un patinete tiene un límite de peso, una bicicleta tiene marchas y un coche tiene tipo de combustible). Además, se deben guardar historiales de reparación sin un esquema rígido, ya que las piezas a reparar varían constantemente.
+
+\subsection*{Servicio B: Telemetría y Sensores IoT (Internet of Things)}
+Cada vehículo emite un \enquote{ping} cada 5 segundos indicando su ubicación exacta, velocidad y consumo de batería. Se generan millones de registros diarios. El equipo de Análisis de Datos necesita consultar rápidamente todo el historial de un vehículo concreto para detectar anomalías en la batería, por lo que las escrituras masivas sin bloqueos son críticas.
+
+\textit{\textbf{Pista de Diseño:} En este motor, el orden de los campos en la clave primaria determina cómo se reparten los datos en el clúster y cómo se ordenan en el disco. Consulta el \textbf{Anexo A1} para decidir qué campo garantiza que los datos de un mismo vehículo estén físicamente juntos.}
+
+\subsection*{Servicio C: Sesiones Activas y Caché de Batería}
+La aplicación móvil necesita saber de forma casi instantánea qué vehículos están libres en un radio cercano y cuánta batería les queda. También se gestionan los tokens de sesión temporal de los usuarios que están actualmente realizando un viaje. Todo debe responder en microsegundos y los datos de sesión deben borrarse solos al terminar el viaje.
+
+\subsection*{Servicio D: Red Social de \enquote{Carpooling}}
+EcoDrive quiere implementar un sistema para compartir coche. Necesitan recomendar compañeros de viaje basándose en si son \enquote{amigos}, \enquote{amigos de amigos}, o si suelen hacer rutas con puntos de origen y destino conectados.
+
+\section{Fase 2: Generación y Auditoría de Datos con IA}
+Una vez asignado un SGBD a cada servicio, deberás poblar las bases de datos. Sin embargo, en este módulo la IA suele cometer errores de \enquote{sesgo relacional}. Tu misión no es solo generar código, sino auditarlo.
+
+\begin{itemize}
+    \item Utiliza una IA (ChatGPT, Gemini, Claude...) para generar un \textbf{script de carga de datos inicial} para cada motor.
+    \item \textbf{Auditoría Crítica:} Revisa minuciosamente las propuestas de la IA buscando los siguientes \enquote{Antipatrones NoSQL}:
+    \begin{itemize}
+        \item \textbf{Normalización Encubierta (Mongo/Cassandra):} La IA tiende a separar datos en colecciones distintas y sugerir \enquote{joins manuales} por ID. Debes corregirlo usando \textbf{Agregados} (incrustar documentos) si los datos se leen siempre juntos.
+        \item \textbf{Diseño de Claves Erróneo (Cassandra):} Comprueba que la \textit{Partition Key} no sea un ID secuencial genérico, sino un campo que permita distribuir los datos (ej. \texttt{vehicle\_id}).
+        \item \textbf{Uso Pobre de Estructuras (Redis):} Evita que la IA use solo el tipo \texttt{SET/GET} (Strings) para todo. Audita si un \texttt{HASH} o un \texttt{SORTED SET} sería más eficiente para el caso de uso.
+        \item \textbf{Nodos-Tabla (Neo4j):} Asegúrate de que las relaciones tengan sentido semántico y dirección, y que no esté tratando los nodos como si fueran simples filas de una tabla SQL.
+    \end{itemize}
+    \item En tu memoria, es \textbf{obligatorio} documentar al menos \textbf{dos correcciones técnicas} que hayas realizado sobre el código original de la IA, justificando por qué el cambio mejora la arquitectura del sistema.
+\end{itemize}
+
+\newpage
+
+\section{Fase 3: Implementación y Consultas en MongoDB}
+
+A continuación se presentan los scripts de insercion y consulta ejecutados sobre MongoDB para el Servicio A (Catalogo de Vehiculos y Mantenimiento). Todos los comandos se han ejecutado sobre una instancia de MongoDB 7.0 utilizando \texttt{mongosh}.
+
+\subsection{Insercion de vehiculos con esquema flexible}
+
+Se insertan 3 vehiculos de distinto tipo, cada uno con sus campos especificos aprovechando la flexibilidad del esquema de MongoDB:
+
+\begin{lstlisting}[caption=Insercion de vehiculos heterogeneos en MongoDB]
+// Conectar a la base de datos EcoDrive
+use eco_drive;
+
+// Insertar un patinete (tiene peso_maximo_kg y autonomia_km)
+db.vehiculos.insertOne({
+    matricula: "PAT-002",
+    tipo: "patinete",
+    modelo: "Segway Ninebot MAX",
+    anyo: 2025,
+    peso_maximo_kg: 150,
+    autonomia_km: 65,
+    estado: "disponible"
+});
+
+// Insertar una bicicleta (tiene marchas y talla)
+db.vehiculos.insertOne({
+    matricula: "BIC-002",
+    tipo: "bicicleta",
+    modelo: "Trek FX 3",
+    anyo: 2024,
+    marchas: 21,
+    peso_kg: 10.5,
+    talla: "L",
+    estado: "disponible"
+});
+
+// Insertar un coche (tiene tipo_combustible y plazas)
+db.vehiculos.insertOne({
+    matricula: "COC-002",
+    tipo: "coche",
+    modelo: "Tesla Model 3",
+    anyo: 2025,
+    tipo_combustible: "electrico",
+    capacidad_bateria_kwh: 75,
+    plazas: 5,
+    puertas: 4,
+    autonomia_km: 513,
+    estado: "disponible"
+});
+\end{lstlisting}
+
+\subsection{Consulta por atributo exclusivo de un tipo}
+
+La siguiente consulta filtra los vehiculos que poseen el campo \texttt{tipo\_combustible}, el cual solo existe en los documentos de tipo coche:
+
+\begin{lstlisting}[caption=Consulta filtrando por campo exclusivo de coches]
+// Buscar vehiculos que tengan "tipo_combustible" (solo coches)
+db.vehiculos.find(
+  { tipo_combustible: { \$exists: true } },
+  { matricula: 1, modelo: 1, tipo_combustible: 1, plazas: 1, _id: 0 }
+);
+\end{lstlisting}
+
+Resultado esperado:
+
+\begin{lstlisting}[caption=Resultado de la consulta]
+[
+  {
+    matricula: "COC-002",
+    modelo: "Tesla Model 3",
+    tipo_combustible: "electrico",
+    plazas: 5
+  }
+]
+\end{lstlisting}
+
+\newpage
+
+\section{Entregables}
+
+\subsection{Entregable 1: Justificacion Arquitectonica (CE.a, CE.b, CE.c)}
+
+La siguiente tabla muestra la asignacion de cada servicio de EcoDrive al sistema NoSQL correspondiente, con la justificacion y los elementos de diseno utilizados:
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Servicio} & \textbf{SGBD} & \textbf{Tipo NoSQL} & \textbf{Justificacion} & \textbf{Elementos de diseno} \\
+\hline
+A: Catalogo de Vehiculos y Mantenimiento & MongoDB & Documental & Datos heterogeneos (patinete/bici/coche) con esquemas distintos; historial de reparaciones como agregado; flexibilidad de esquema & Agregados incrustados (array \texttt{reparaciones}), subdocumentos, esquema polimorfico, operadores \texttt{\$push} y \texttt{\$set} \\
+\hline
+B: Telemetria IoT & Cassandra & Columnar & Millones de escrituras diarias sin bloqueos; escalabilidad horizontal; consultas por vehicle\_id & Partition Key (\texttt{vehicle\_id}), Clustering Column (\texttt{timestamp}), orden fisico \texttt{DESC} \\
+\hline
+C: Sesiones y Cache & Redis & Clave-Valor & Latencia de microsegundos; datos efimeros con TTL; operaciones atomicas de decremento & HASH, EXPIRE, HINCRBY, nomenclatura jerarquica con \texttt{:} \\
+\hline
+D: Red Social Carpooling & Neo4j & Grafos & Relaciones sociales (amigos de amigos); navegacion por rutas y destinos conectados; recomendaciones & Nodos (\texttt{:User}, \texttt{:Destino}), relaciones semanticas (\texttt{:AMIGO\_DE}, \texttt{:VIAJA\_A}) con propiedades \\
+\hline
+\end{tabular}%
+}
+\caption{Asignacion de SGBD a servicios y elementos de diseno}
+\end{table}
+
+\newpage
+
+\subsection{Entregable 2: Prompts de Generacion de Datos}
+
+Los siguientes prompts se utilizaron con una inteligencia artificial (ChatGPT) para generar los scripts iniciales de carga de datos para cada sistema:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Sistema} & \textbf{Prompt utilizado} \\
+\hline
+MongoDB & \texttt{Genera un script de insercion de datos para MongoDB de un catalogo de vehiculos de una plataforma de movilidad llamada EcoDrive. Debe incluir 3 vehiculos (patinete, bicicleta, coche) con caracteristicas tecnicas distintas cada uno y un historial de reparaciones para algunos de ellos en una coleccion separada llamada reparaciones. Usa ObjectId para las referencias.} \\
+\hline
+Cassandra & \texttt{Genera un script CQL para crear una tabla de telemetria IoT en Cassandra para la plataforma EcoDrive. Cada vehiculo emite un ping cada 5 segundos con localizacion, velocidad y bateria. La consulta principal es obtener el historial de un vehiculo.} \\
+\hline
+Redis & \texttt{Genera comandos de Redis para gestionar sesiones de viaje activas y bateria de vehiculos en la plataforma EcoDrive. Debe incluir creacion de sesiones, almacenamiento de nivel de bateria y decremento de bateria. Usa SET y GET con JSON.} \\
+\hline
+Neo4j & \texttt{Genera un script Cypher para modelar una red social de carpooling en Neo4j para EcoDrive. Debe incluir 3 usuarios, 2 rutas con origen y destino, y relaciones entre ellos. Usa relaciones genericas.} \\
+\hline
+\end{tabular}
+\caption{Prompts utilizados para la generacion de datos con IA}
+\end{table}
+
+\input{03_analisis_auditoria}
+
+\newpage
+
+\subsection{Entregable 4: Scripts de Carga y Consultas (CE.d)}
+
+A continuacion se presentan los scripts finales utilizados en MongoDB tras la auditoria y correccion de los antipatrones detectados. Estos scripts corresponden a las operaciones solicitadas en la Fase 3 para el Servicio A.
+
+\begin{lstlisting}[caption=Script completo de insercion de vehiculos con agregados]
+// ============================================================
+// SCRIPT FINAL - CARGA DE DATOS EN MONGODB
+// Servicio A: Catalogo de Vehiculos y Mantenimiento
+// ============================================================
+
+use eco_drive;
+
+// Vehiculo 1: Patinete electrico (con historial de reparaciones)
+db.vehiculos.insertOne({
+    matricula: "PAT-001",
+    tipo: "patinete",
+    modelo: "Xiaomi Pro 3",
+    anyo: 2024,
+    peso_maximo_kg: 120,
+    autonomia_km: 45,
+    estado: "disponible",
+    reparaciones: [
+        {
+            fecha: new Date("2025-01-15"),
+            taller: "EcoFix Centro",
+            pieza_reemplazada: "rueda delantera",
+            coste: 45.00,
+            observaciones: "Pinchazo por cristal",
+            tipo_reparacion: "correctiva"
+        },
+        {
+            fecha: new Date("2025-03-20"),
+            taller: "EcoFix Centro",
+            pieza_reemplazada: "bateria",
+            coste: 120.00,
+            observaciones: "Bateria no retenia carga",
+            tipo_reparacion: "correctiva"
+        }
+    ],
+    ultima_revision: new Date("2025-03-20"),
+    proxima_revision_programada: new Date("2025-06-20")
+});
+
+// Vehiculo 2: Bicicleta (con una reparacion)
+db.vehiculos.insertOne({
+    matricula: "BIC-001",
+    tipo: "bicicleta",
+    modelo: "Orbea Vibe H30",
+    anyo: 2023,
+    marchas: 9,
+    peso_kg: 16.5,
+    estado: "mantenimiento",
+    reparaciones: [
+        {
+            fecha: new Date("2025-02-10"),
+            taller: "EcoBici Taller",
+            pieza_reemplazada: "cadena y pinion",
+            coste: 35.50,
+            observaciones: "Desgaste por uso intensivo",
+            tipo_reparacion: "preventiva"
+        }
+    ],
+    ultima_revision: new Date("2025-02-10"),
+    proxima_revision_programada: new Date("2025-05-10")
+});
+
+// Vehiculo 3: Coche electrico (sin reparaciones)
+db.vehiculos.insertOne({
+    matricula: "COC-001",
+    tipo: "coche",
+    modelo: "Renault Zoe ZE50",
+    anyo: 2024,
+    tipo_combustible: "electrico",
+    capacidad_bateria_kwh: 52,
+    plazas: 5,
+    estado: "disponible",
+    reparaciones: [],
+    ultima_revision: new Date("2024-12-01"),
+    proxima_revision_programada: new Date("2025-06-01")
+});
+
+print("Datos insertados correctamente");
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Script de consultas sobre MongoDB]
+// ============================================================
+// CONSULTAS - FASE 3
+// ============================================================
+
+// Consulta 1: Mostrar todos los vehiculos
+print("=== CATALOGO COMPLETO ===");
+db.vehiculos.find().pretty();
+
+// Consulta 2: Filtrar por campo exclusivo de coches
+print("=== VEHICULOS CON TIPO COMBUSTIBLE (COCHES) ===");
+db.vehiculos.find(
+    { tipo_combustible: { \$exists: true } },
+    { matricula: 1, modelo: 1, tipo_combustible: 1, plazas: 1, _id: 0 }
+);
+
+// Consulta 3: Vehiculos en mantenimiento
+print("=== VEHICULOS EN MANTENIMIENTO ===");
+db.vehiculos.find({ estado: "mantenimiento" });
+
+// Consulta 4: Vehiculos con mas de 1 reparacion
+print("=== VEHICULOS CON MAS DE 1 REPARACION ===");
+db.vehiculos.find({
+    "reparaciones.1": { \$exists: true }
+}, {
+    matricula: 1,
+    modelo: 1,
+    num_reparaciones: { \$size: "\$reparaciones" }
+});
+
+// Consulta 5: Anadir una reparacion nueva (operacion atomica)
+print("=== ANIADIENDO REPARACION NUEVA ===");
+db.vehiculos.updateOne(
+    { matricula: "COC-001" },
+    {
+        \$push: {
+            reparaciones: {
+                fecha: new Date(),
+                taller: "EcoGaraje Norte",
+                pieza_reemplazada: "neumatico trasero",
+                coste: 85.00,
+                tipo_reparacion: "correctiva"
+            }
+        },
+        \$set: {
+            ultima_revision: new Date(),
+            proxima_revision_programada: new Date(Date.now() + 90*24*60*60*1000)
+        }
+    }
+);
+print("Reparacion anadida correctamente");
+\end{lstlisting}
+
+\newpage
+
+\subsection{Entregable 5: Ejecucion y Visualizacion (CE.e)}
+
+Las siguientes capturas de pantalla muestran la ejecucion de los comandos en MongoDB a traves de \texttt{mongosh} (consola oficial de MongoDB) y Mongo Express (interfaz grafica web).
+
+\subsubsection{Ejecucion en mongosh}
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering\vspace{3cm}
+\includegraphics[width=\textwidth]{capturas/mongosh_insercion.png}%
+\newline\vspace{0.3cm}
+\textit{Captura 1: Insercion de vehiculos en mongosh}}}
+\caption{Ejecucion de script de insercion en mongosh}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering\vspace{3cm}
+\includegraphics[width=\textwidth]{capturas/mongosh_consulta.png}%
+\newline\vspace{0.3cm}
+\textit{Captura 2: Consulta de vehiculos con tipo\_combustible en mongosh}}}
+\caption{Ejecucion de consulta en mongosh}
+\end{figure}
+
+\subsubsection{Visualizacion en Mongo Express}
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering\vspace{3cm}
+\includegraphics[width=\textwidth]{capturas/mongo_express_coleccion.png}%
+\newline\vspace{0.3cm}
+\textit{Captura 3: Coleccion vehiculos en Mongo Express}}}
+\caption{Interfaz grafica de Mongo Express mostrando los documentos}
+\end{figure}
+
+\newpage
+
+\subsubsection{Instrucciones para la ejecucion}
+
+Para reproducir los resultados mostrados en las capturas, se deben seguir los siguientes pasos:
+
+\begin{enumerate}
+    \item Iniciar el contenedor de MongoDB: \texttt{docker run -d --name eco-mongo -p 27017:27017 mongo:7.0}
+    \item Iniciar Mongo Express: \texttt{docker run -d --name eco-mongo-express -p 8081:8081 --link eco-mongo:mongo mongo-express}
+    \item Conectarse a mongosh: \texttt{docker exec -it eco-mongo mongosh}
+    \item Ejecutar los scripts del Entregable 4 en orden.
+    \item Acceder a Mongo Express en \texttt{http://localhost:8081} para la visualizacion grafica.
+\end{enumerate}
+
+\textbf{Nota:} Las capturas de pantalla deben insertarse en la carpeta \texttt{capturas/} con los nombres indicados (\texttt{mongosh\_insercion.png}, \texttt{mongosh\_consulta.png}, \texttt{mongo\_express\_coleccion.png}) antes de compilar el documento por ultima vez.
+
+\appendix
+\section*{Anexo: Guía Maestra de Auditoría y Modelado NoSQL}
+
+\subsection*{A1. El cambio de mentalidad en Cassandra: La Partition Key}
+En SQL, una \texttt{PRIMARY KEY} sirve para identificar una fila. En Cassandra, el diseño es \textbf{físico} y busca repartir el trabajo entre muchos servidores.
+
+\begin{itemize}
+    \item \textbf{Partition Key (El \enquote{Dónde}):} Es el campo que Cassandra usa para decidir en qué servidor guarda el dato.
+    \begin{itemize}
+        \item \textbf{Alta Cardinalidad (Deseable):} Necesitamos un campo que tenga muchos valores distintos posibles (ej. \texttt{vehicle\_id} o \texttt{user\_id}). Al haber miles de IDs diferentes, Cassandra puede repartir los datos de forma equilibrada por todo el clúster.
+        \item \textbf{Baja Cardinalidad (Antipatrón):} Si usas un campo con pocos valores posibles (ej. \texttt{tipo\_vehiculo} o \texttt{estado\_bateria}), Cassandra mandará todos los \enquote{Coches} al mismo servidor y todas las \enquote{Bicis} a otro. Si tienes 1 millón de coches, ese servidor explotará mientras los demás están vacíos. Esto se llama \textbf{Hotspot}.
+    \end{itemize}
+    \item \textbf{Clustering Column (El \enquote{Orden}):} Decide el orden físico dentro del servidor. Si quieres consultar el historial de un vehículo de más reciente a más antiguo, el \texttt{timestamp} debe ser tu \textit{Clustering Column}.
+    \item \textbf{Query-First:} No diseñes tablas para \enquote{guardar cosas}, diséñalas para \enquote{responder preguntas}. Si necesitas dos formas de buscar, crea dos tablas con los mismos datos.
+\end{itemize}
+
+\subsection*{A2. MongoDB: ¿Incrustar o Referenciar? (RA7-CE.c)}
+\begin{itemize}
+    \item \textbf{Incrustar (Embedding):} Metes los datos relacionados dentro del mismo JSON. Es la opción por defecto. Úsalo si los datos se leen siempre juntos (ej. las piezas de un motor dentro del documento del coche).
+    \item \textbf{Referenciar (Linking):} Guardas solo el ID. Úsalo solo si el dato \enquote{hijo} crece sin parar (millones de logs) o si se comparte entre muchos padres y cambia constantemente.
+\end{itemize}
+
+\subsection*{A3. Redis: Más allá del Texto (Key-Value avanzado)}
+\begin{itemize}
+    \item \textbf{HASHES:} No guardes un objeto como un JSON gigante. Usa \texttt{HSET}. Permite editar solo un campo (ej. bajar la batería un 1\%) sin tener que reescribir todo el coche en memoria.
+    \item \textbf{TTL (Time To Live):} Fundamental para sesiones. Si la IA no usa \texttt{EXPIRE}, la memoria se llenará de sesiones de usuarios que ya se fueron hace días.
+\end{itemize}
+
+\subsection*{A4. Neo4j: Las Relaciones son Ciudadanos de Primera}
+\begin{itemize}
+    \item \textbf{Semántica:} Las relaciones deben tener dirección y nombre. No es lo mismo \texttt{(User)-[:VIAJA\_EN]->(Coche)} que \texttt{(Coche)-[:PERTENECE\_A]->(User)}.
+    \item \textbf{Propiedades en Bordes:} Puedes guardar datos en la propia flecha (ej. la \texttt{distancia} de una ruta o la \texttt{fecha} de una amistad).
+\end{itemize}
+
+\end{document}
+

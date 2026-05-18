@@ -1,0 +1,5 @@
+Ejemplo 2: direccién destino 172.30.4.11
+
+Paso lL: Obtener el prefyo de red, mediante una operacion AND (bit a bit) con la
+mascara de subred de cada fila y comparar con la direccion de la subred de destino de
+dichafila. Si comcide, se enviara al siguiente nodo imndicado en la fila

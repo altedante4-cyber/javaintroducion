@@ -1,0 +1,15 @@
+* El comando trace es similar al comando
+ping, salvo que en lugar de probar la
+conectividad de extremo a extremo, trace
+prueba cada paso del proceso.
+
+* Respuestas del comando:
+
+— !H El router recibié la respuesta pero no la envid> Lista de acceso
+— P El protocolo era inalcanzable
+
+— NLared era inalcanzable
+
+— UEl puerto era inalcanzable
+
+— *,n Interrupcion

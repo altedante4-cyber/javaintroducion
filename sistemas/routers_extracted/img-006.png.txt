@@ -1,0 +1,16 @@
+Cisco GSR 12416 Juniper M160
+
+peal 950.5 49” ~0.5m
+
+a Capacity: 80Gb/s
+| |) Power: 2.6kW
+| Half-a-rack
+
+Capacity: 160Gb/s
+Power: 4.2kW
+Full rack
+
+6ft
+3ft
+~1.8m ~0.9m
+Hi 2ft ast

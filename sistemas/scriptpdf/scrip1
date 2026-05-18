@@ -1,0 +1,31 @@
+
+$result ="";
+do{
+	$result = Read-Host "1.Listar Usuario 2.Crear usuario (pide usuario y contraseña 3.Elimina usuairo (pide usuario) 4.Modifica suaurio (pide suario y nuevo nombre) 5.Salir"
+
+	switch($result){
+
+		"1" {Get-LocalUser | Format-List }
+		"2" {
+			$user = Read-Host "Ingrese el nombre usuario"
+			$contra= Read-Host "INgrese la contraseña "
+
+			New-LocalUser $user -Password $contra 
+			
+			
+		 }
+
+		"3" { 
+			$user2 = Read-Host "Ingrese el nombre del usuario " 
+			Remove-LocalUser -Name $user2
+		  }
+		 "4"{
+			$user3 = Read-Host "Ingrese le nombre usueraio a modificar"
+			$nuevo_name = Read-Host "Ingrese el nuevo Nombre "
+
+			Rename-localUser -Name $user3 -NewName $nuevo_name 
+		  }
+	}
+	
+
+}while($result -ne "5")

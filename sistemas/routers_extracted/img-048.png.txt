@@ -1,0 +1,5 @@
+Una tabla de enrutamiento es un archivo de datos en la RAM que se usa para almacenar la informacion de la ruta sobre
+redes remotas y conectadas directamente. La tabla de enrutamiento contiene asociaciones entre la red y el siguiente salto.
+Estas asociaciones le indican al router que un destino en particular se puede alcanzar mejor enviando el paquete hacia un
+router en particular, que representa el "siguiente salto" en el camino hacia el destino final. La asociacion del siguiente salto
+también puede ser la interfaz de salida hacia el destino final

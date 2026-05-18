@@ -1,0 +1,2980 @@
+Resumen
+
+Redes
+
+Red de Ordenadores
+
+E
+
+F
+
+Concentrado
+P
+
+Red de Ordenadores
+» Red de datos (o de comunicacion)
+
+© Conjunto de dispositivos interconectados
+de un medio de transmision.
+0 Ofrecen
+
+servicios a los usuarios.
+
+a través
+
+Red de Ordenadores
+» Los dispositivos
+de una red tienen
+que
+ponerse de acuerdo para poder comunicarse.
+Hola iqué tal?
+Muy bien iqué quieres?
+Dame la foto
+
+<
+
+foto.jpeg
+
+z=
+
+Conjunto de reglas -> PROTOCOLO
+
+Protocolos
+Reglas que rigen las comunicaciones
+
+Toda comunicacion, ya sea cara a Cara O por una red, esta regida por
+reglas predeterminadas denominadas protocolos.
+Estos
+
+protocolos
+
+son
+
+especificos
+
+de
+
+las
+
+caracteristicas
+
+de
+
+la
+
+conversacion. En nuestras comunicaciones personales cotidianas, las reglas
+que utilizamos para comunicarnos a través de un medio, como el telefono,
+no necesariamente son las mismas que los protocolos que se usan en otro
+medio, como escribir una carta.
+
+Protocolos
+¢ Los protocolos son el conjunto de reglas
+usadas por los dispositivos para poder
+comunicarse entre si.
+¢ Para poder comunicarse no es suficiente con
+estar conectados a la misma red, sino que
+ademas deben “entenderse”.
+
+¢ Los protocolos son fundamentales ya que
+permiten establecer el “idioma comun’”.
+
+Protocolos
+» Muchos problemas a resolver
+
+Oo
+
+oO
+
+oO
+
+Oo
+
+© Informacion ordenada.
+Informacion sin errores.
+Informacion sin perdidas ni duplicados.
+Siguiendo el camino adecuado.
+Diferentes medios de transmision.
+© Trasmision segura.
+1°)
+
+Protocolos
+» Resolver todos
+los problemas
+de_ golpe:
+inflexible, ineficiente, complejo.
+» Solucion
+(“Divide
+y
+venceras”)
+->
+Arquitecturas de red.
+
+ORIGEN
+
+DESTINO
+
+PROCESO POR PARTES [CAPAS)
+
+MEDIO DE TRANSMISION
+
+Arquitecturas de red
+» Conjunto
+
+protocolos.
+EQUIPO
+Capa
+
+organizado
+
+capas
+
+1
+<
+
+Capa 4
+
+<
+
+Capa
+
+3
+
+<
+
+Capa
+
+2
+
+<
+
+1
+
+(niveles)
+
+EQUIPO
+
+5
+
+Capa
+
+de
+
+Procolos de capa
+?
+
+5
+
+Procolos de capa 4
+Procolos de capa
+
+3
+
+Procolos de capa
+
+2
+
+Procolos de capa
+
+1
+
+<
+
+LS
+
+AS
+
+2
+
+>
+
+Capa
+
+5
+
+>
+
+Capa 4
+
+>
+
+Capa
+
+3
+
+>
+
+Capa
+
+2
+
+>
+
+Capa
+
+1
+
+y
+
+Arquifectura en Capas
+
+© Es una forma de resolver un problema complejo
+dividiendolo en problemas menores.
+© Cada capa crea herramientas que facilitan la creacion
+de la siguiente capa.
+
+Arquifectura en Capas
+» Se estructura el proceso de comunicacion
+niveles Oo Capas.
+
+en
+
+> Cada capa se encarga de una parte del proceso de
+comunicacion.
+o> Libera y abstrae a las demas
+de la_ solucion
+adoptada.
+
+» En cada nivel o capa se definen
+protocolos.
+
+uno o varios
+
+Arquitecturas de red
+» Ejemplos de arquitecturas de red
+° Modelo OSI.
+© Arquitectura TCP/IP
+
+> Arquitecturas de Redes de Area Local (RAL) (Loca/
+Area Network, LAN).
+° Arquitectura ATM.
+
+© Arquitectura Frame Relay.
+
+Modelos
+
+de Referencia TCP/IP
+COMO
+
+FLUYE
+Empresa A
+
+Nivel de
+Ejecutivo
+Nivel de
+Secretario
+Nivel de
+Correos
+Nivel de
+Cartero
+
+Medio de
+
+transporte
+
+LA INFORMACION
+Empresa B
+
+Modelos de Referencia OS|
+>» El modelo de referencia OSI (Open Systems
+Interconnect)
+sirve
+de_referencia
+para
+describir y estudiar arquitecturas de redes.
+Capa
+
+7: Aplicacion
+
+Capa 6: Presentacién
+Capa
+Capa
+
+5: Sesién
+
+4: Transporte
+
+Capa
+
+3: Red
+
+Capa
+
+2: Enlace
+
+Capa
+
+1: Fisica
+
+Modelos de Referencia OS|
+© El modelo de Interconexién de Sistemas Abiertos (‘©S!)
+fue desarrollado por ISO en 1980.
+o En esta epoca, las redes era propietarias (IBM, DEC....).
+Cada una usaba unos protocolos diferentes.
+© El principal objetivo fue, tener un sistema abierto donde
+equipos de diferentes fabricantes pudieran comunicarse.
+© Se definio una arquitectura basada en / capas y
+protocolos para cada una de las capas.
+© Sin embargo, no tubo exito. Hoy en dia se usa la
+arquitectura de Internet o TCP/IP.
+© Es importante por su uso en la ensehanza como modelo
+de “referencia’ para describir otras arquitecturas.
+
+Modelos de Referencia OS|
+7 Layers of the OSI Model
+TRANSMIT
+
+RECEIVED
+
+Arquitectura de redes de area |ocal
+» Los estandares LAN
+fisico y de enlace.
+OSI
+
+definen
+
+solo los niveles
+
+IEEE 802
+
+Capa 7: Aplicacién
+Capa 6: Presentacion
+Capa 5: Sesion
+Capa
+
+4: Transporte
+
+Capa
+Capa
+
+3: Red
+2: Enlace
+
+Enlace
+
+Capa 1: Fisica
+
+Fisica
+
+Arquitectura de redes de area local
+Osl
+
+IEEE 802
+
+Capa 7: Aplicacién
+
+RED DE AREA LOCAL
+
+Capa 6: Presentacién
+
+Switch
+
+Enlace
+
+Fisica
+
+Capa 5: Sesion
+
+I
+
+Capa 4: Transporte
+Capa
+Capa
+
+=a
+
+3: Red
+
+Punto de acceso
+©
+
+2: Enlace
+
+Enlace
+
+Capa 1: Fisica
+
+Fisica
+
+EB
+Enlace
+
+Fisica
+
+|
+
+yr"
+Enlace
+
+Fisica
+
+Modelos de Referencia OS|
+CAPAS OSI
+
+R
+
+UNI
+POL
+DE \
+
+© Formado por 7 capas o nivéles
+
+Presentacion
+Sesion
+
+ysOy ap seded
+
+Aplicacion
+
+Enlace
+FISICO
+
+pes ap sedes
+
+Transporte
+
+© Las cuatro superiores solo se
+usan en el host origen y destino.
+© Las tres inferiores son las que
+
+permiten el trafico a traves de la
+red
+
+Modelos de Referencia OS|
+Objetivo:
+oDar servicios especificos a los
+
+Aplicacion
+Presentacion
+
+Usuarios (correo, mensajes.... ).
+
+Sesion
+
+Funciones:
+oDependiendo de la aplicacion
+
+Transporte
+
+Protocolos:
+—
+
+Enlace
+
+OHTTP (Word Wide Web)
+oSMTP (Correo electronico)
+oDNS (Sistema de nombre de dominio)
+
+O...
+
+.
+
+) <
+7.CAPA DE APLICACION
+
+800
+© OO
+© O@
+
+Modelos de Referencia OS|
+
+Modelos de Referencia OS|
+Aplicacion
+Presentacion
+
+Objetivo:
+oDefine los formatos de representacion de los datos (caracteres,
+numeros, imagenes.... )
+
+Sesion
+
+Funciones:
+
+Transporte
+
+eConversion de formatos
+oCifrado
+oCompresion
+
+Enlace
+FISICO
+
+Protocolos:,.
+
+o SAP en desuso
+
+Modelos de Referencia OS|
+Aplicacion
+Presentacion
+
+Sesion
+Transporte
+
+Enlace
+FISICO
+
+Objetivo:
+oPermite indicar puntos en la comunicacion para recuperar o continuar
+en uno de estos puntos
+
+Funciones:
+oControl del dialogo
+olntroduccion de puntos de
+sincronizacion
+oRecuperacion hasta un punto
+
+Ranterior
+
+Protocolos:
+oASP en desuso
+oSCP en desuso
+
+Modelos de Referencia OS|
+Aplicacion
+Presentacion
+
+Sesion
+
+Transporte
+
+Enlace
+=
+
+FISICO
+
+Objetivo:
+oTransmitir datos de forma optima y
+libre de errores entre dos aplicaciones
+Funciones:
+oEstablecer conexiones
+
+oSegmentacion y re-ensamblado de
+paquetes
+oDeteccion y recuperacion de errores
+eControl de flujo
+
+Protocolos:
+
+R
+
+oTCP o UDP (Internet)
+
+oTP4 (OSI) en desuso
+
+oATP (Appletalk) en desuso
+
+Modelos de Referencia OS|
+5.SESION
+
+(3
+
+4.TRANSPORTE
+
+SEGMENTOS
+
+0594
+
+{ ™
+
+PAQUETES
+
+Modelos de Referencia OS|
+Aplicacion
+Presentacion
+
+;
+
+Sesion
+Transporte
+
+Objetivo:
+oPermitir la comunicacion a traves de
+una red entre equipos no conectados
+
+Funciones:
+
+oEncaminamiento
+oldentificaciodn de usuarios
+oTransmision de dato& entre subrede:
+
+heterogeneas
+eControl de congestion y contabilidad
+Enlace
+
+Protocolos:
+olP (Internet)
+olPX (Novel) en desuso
+oAARP (Appletalk) en desuso
+
+|
+
+Modelos de Referencia OS|
+
+3.RED
+
+2.ENLACE DATOS
+1.FISICA
+
+Vy
+PAQUETES
+
+i
+
+TRAMAS
+BITS
+
+Modelos de Referencia OS|
+Aplicacion
+
+ED
+
+Presentacion
+
+Red
+
+Objetivo:
+oTransmision de datos fiable y libre
+de errores entre equipos directamente
+
+conectados
+Funciones:
+oDeteccion y recuperacion de errores
+Control de flujo
+
+oControl de acceso al medio
+
+Protocolos:
+=
+
+oWIFI
+
+Modelos de Referencia OS|
+CAPA FISICA
+Aplicacion
+Presentacion
+
+Sesion
+
+Transporte
+
+Objetivo:
+oTransmitir bits a lo largo de un
+medio de transmision
+Funciones:
+
+oDefinir medios de transmision
+
+oDefinir potencia, niveles eléctricos
+
+codificacion
+
+oConectores
+oModulacion, filtrado y deteccion
+
+Enlace
+FISICO
+
+Interfaces:
+oUSB
+N
+
+oRS232
+oRJ45 con par trenzado
+
+Modelos
+
+de Referencia
+Modelo TCP/IP
+
+Modelo OS!
+Aplicacién
+
+Aplicacion
+
+Presentacién
+
+Sesién
+
+Transporte
+Red
+Enlace de datos
+Fisica
+
+Un modelo de red es sdlo una
+representacion del funcionamiento de
+
+una red. El modelo no es Ia red real.
+
+Transporte
+Internet
+Acceso a la red
+
+COMPARACION MODELO OSI
+YMODELO TCP / IP
+7.APLICACION
+
+6.PRESENT ACION
+
+4.APLICACION
+
+4.TRANSPORTE
+
+3. TRANSPORTE
+
+REINTERNED)
+ee
+2.ENLACE DATOS
+FISICA
+
+1.ACCESO ARED
+
+Modelos
+
+de Referencia TCP/IP
+
+© La arguitectura TCP/IP fue creada en los ahos /O para
+su utilizacion en la red ARPANET. Primera WAN creada
+por el departamento de defensa de EEUU.
+o ARPANET
+
+fue creciendo hasta convertirse en Internet.
+
+o En la actualidad TCP/IP es utilizada por cualquier
+dispositivo que quiera conectarse a Internet.
+
+de Referencia TCP/IP
+
+Aplicacion
+otcocen
+
+Transporte
+a:
+7
+a,
+
+Internet
+
+Acceso
+Ease
+
+a
+
+£ey)
+
+D
+
+© Formado por 4 capas o niveles
+o Las dos superiores sola-se usan
+en el host origen y destino.
+
+>
+Oo
+x
+
+© Las dos inferiores son las que
+permiten el trafico en la red
+
+pei ap sedes
+
+Modelos
+
+Modelos
+
+de Referencia TCP/IP
+
+Aplicacion
+
+Transporte
+internet
+
+Acceso a
+la red
+
+Objetivo:
+oNo es definido en el modelox
+Simplemente se indica que hemos de
+disponer de un enlace entre equipos.
+
+Equivalencia OSI:
+
+oCapa de Enlace de datos
+oCapa Fisica
+
+Protocolos:
+
+oNo se define ningun protocolo.
+se Pusu usar cualquiera (Ethernet,
+WiFi, PPP...)
+
+Modelos
+
+de Referencia TCP/IP
+
+Aplicacion
+
+'ransporte
+
+oPermitir la comunicacion de paquetes
+a traves de la red
+be
+Equivalencia OSI:
+oCapa de Red
+Protocolos:
+olP (IPv4 6 IPv6)
+
+Internet
+
+Acceso
+la red
+
+Objetivo:
+
+a
+
+Modelos
+
+de Referencia TCP/IP
+
+Aplicacion
+
+Transporte
+
+oTCP (fiable)
+
+cL
+
+la red
+
+Equivalencia OSI:
+oCapa de Transporte
+Protocolos:
+
+ieee
+
+Acceso
+
+Objetivo:
+oTransmitir datos de forma optima y
+libre de errores entre dos aplicaciqnes
+
+oUDP (rapido)
+a
+
+Modelos
+
+de Referencia TCP/IP
+
+Aplicacion
+
+'ransporte
+
+Equivalencia OSI:
+oCapa de Transporte
+Protocolos:
+oTCP (fiable)
+
+internet
+
+Acceso
+la read
+
+Objetivo:
+oTransmitir datos de forma optima y
+libre de errores entre dos aplicaciqnes
+
+oUDP (rapido)
+
+a
+
+Modelos
+
+de Referencia TCP/IP
+
+Aplicacion
+
+Transporte
+
+internet
+
+Acceso
+la red
+
+Objetivo:
+oDar servicios especificos a los
+Usuarios (correo, mensajes. ... )
+Equivalencia OSI:
+oCapa Aplicacion
+oCapa de Presentacion
+oCapa de Sesion
+Protocolos:
+
+a
+
+OHTTP (Word Wide Web)
+oSMITP (Correo electronico)
+oDNS (Sistema de nombre de dominio)
+O...
+
+be
+
+Modelos
+OSI
+
+de Referencia TCP/IP
+TCP/IP
+
+Usado actualmente
+
+Ls
+
+INTERNET
+¢ Internet es un conjunto descentralizado de
+redes de comunicacion interconectadas entre
+si y de alcance mundial.
+¢ Para que pueda funcionar es necesario utilizar
+un conjunto de protocolos comunes
+
+denominados TCP/IP
+
+Protocolos
+¢ Los protocolos de la familia TCP/IP son la base
+de Internet:
+— Transmission Control Protocol (TCP)
+— Internet Protocol (IP)
+— Hypertext Transfer Protocol
+
+(HTTP)
+
+— Otros Protocolos: File Transfer Protocol (FTP),
+Simple Mail Transfer Protocol (SMTP), Post Office
+Protocol (POP)...
+
+Protocolo TCP
+¢ TCP es el protocolo que permite que la
+comunicacion entre los ordenadores se realice
+libre de errores, sin perdidas y con seguridad.
+¢ Se encarga basicamente de los siguientes
+procesos:
+— Establecimiento de la conexion
+— Transferencia de d&tos
+— Fin de la conexion
+
+Protocolo IP
+¢ IP se encarga de enviar los datos en bloques
+conocidos como paquetes.
+¢ Ademas define las direcciones de las
+
+maquinas de origen y destino (direcciones IP).
+¢ Sin embargo IP no proforciona mecanismos
+para saber si los datos transmitidos llegan a su
+
+destino correctamente (se ocupa TCP).
+
+Direccion IP
+¢ Una direccion IP permite identificar logica y
+jerarquicamente los dispositivos (ordenadores,
+moviles,...) en una red que utilice el protocolo IP.
+¢ Actualmente se utiliza la version IPv4 que usa
+direcciones de 32 bits. -> 2°7 direcciones. Sin
+embargo el crecimiento de internet ha provocado
+que estas direcciones se hayan agotado.
+¢ La proxima version del protocolo, la IPv6, utiliza
+direcciones de 64 bits. -> 2% direcciones.
+@
+
+Direccion IP
+
+No existe dispositivo en el mundo que pueda comunicarse con otro sin tener una IP. Las direcciones IP son los
+nombres numeéricos que se asignan a un dispositivo
+
+a modo de «matricula» para que pueda ser llamado por
+
+otros dispositivos. Existen dos tipos de IP: las direcciones IP publicas y las direcciones IP privadas.
+
+Direccion IP
+~Que es una direccion IP publica?
+Una IP publica es la identificaci6n que te asigna tu proveedor de internet para ser reconocido en Internet.
+
+Direccion IP
+Los rangos de direcciones IP privadas
+A diferencias de las direcciones |P publicas, las privadas tienen asignado un rango en funcidn del tipo de red
+que veremos a continuacion. Las direcciones IP publicas son libres, te puede tocar cualquiera:
+
+e Rango clase A: 10.0.0.0 a 10.255.255 255.
+e Rango clase B: 172.16.0.0a 172.311.255.255.
+e Rango clase C: 192.168.0.0 a 192.168.255.255.
+
+¢ Ejemplo de direccion IP: 123.456.789.876
+¢ Jerarquia direcciones |P:
+CG 123
+r
+
+& 456
+|
+@
+
+a
+
+@*
+s7
+
+@ ..
+@..
+
+——
+
+«
+
+7
+
+.
+
+@
+.—.
+
+@..
+
+.
+@ ..
+
+FORMAS
+
+DE CREAR
+
+REDES Y SUBREDES:
+
+Direccionamiento Classtul
+Subnetting
+VLSM
+Superne?ting
+CIDR
+
+IP
+Es un protocolo de nivel de red
+Nos va a permitir enviar paquetes entre redes diferentes
+Las redes pueden ser de tecnologias diferentes, la forma de
+direccionar a los interfaces a nivel de enlace puede ser
+diferente
+IP ofrece un espacio de direcciones tinico para todos los
+interfaces conectados a la red
+Las direcciones IP son nimeros de 32 bits
+
+Ademas se organizan en grupos o redes de forma que sea
+mas sencillo para los encaminadores saber dénde (en qué
+red) esta conectada la maquina de cierta IP
+
+Dentro del rango de direcciones de cada red |Pv4, existen tres tipos de direcciones:
+Direccién de red: la direcciOn en la que se hace referencia a la red.
+Direccion de broadcast: una direccién especial utilizada para enviar datos a todos los hosts de la red.
+Direcciones host: las direcciones asignadas a los dispositivos finales de la red.
+
+IDENTIFICADOR DE RED - HOST
+
+1000001101101100/0111101011001100
+ee
+
+RED
+
+eee
+
+ee
+
+HOST OO
+
+—————
+OD EI>™ETEYEY OPO
+
+~4200.100. 10. ra 124
+
+Direccion de Red
+
+Direccion
+
+de Broadcast
+
+Tipos de direcciones
+Red
+
+Direccion de red
+
+Direccion
+
+de broadcast
+
+Direccion
+
+host
+
+Coloque el! cursor del mouse aqui para
+
+Host
+
+00001010
+
+00000000
+
+00000000
+
+00001010
+
+00000000
+
+00000000
+
+00001010
+
+00000000
+
+00000000
+
+obtener mas informacion.
+
+—
+
+10.0.0.0 se utiliza para referirse a la red en su totalidad.
+
+Todos los dispositivos en esta red poseen los mismos bits de
+direccién de red.
+
+W
+
+Estos sencillos pasos
+
+nos valdran para sacar la direcci6n de red, 2 direccién de broadcast, ©! 1° host
+
+y el Gitimo host de cualquier direccion IP.
+
+192.160.26.109/20
+
+1° PASO
+
+La mascara de red es / 20, con lo que tendremos que saber cuantos bits utiliza para hosts.
+sabiendo que la direcci6én IP tiene un total de 32 bits, haremos una resta:
+
+32-20=12,
+
+12 seran los bits que utiliza para hosts.
+
+Entonces
+
+2° PASO
+
+Tenemos que pasar a binario la IP que nos han dado para poder saber hasta
+
+donde tenemos los bits que corresponden
+que corresponden a los hosts.
+
+a red y hasta donde los bits
+
+Cogeremos 12 bits de derecha a izquierda, que seran todos del 4° octeto + 4 bits del 3° octeto.
+
+- Para saber la direcci6n de red,
+; ne =a
+a de red.
+
+pondremos los 12 bits de hosts a cero.
+
+la direcci6n del 1° host disponible sera la siguiente direcciOn ip a partir de
+
+- Para saber la direccién de broadcast pondremos los 12 bits de host a uno.
+- La direccién
+
+del ultimo host disponible sera |a anterior ala de broadcast.
+
+11000000
+
+10100000
+
+00011010
+
+01101101
+
+IP DADA
+
+11000000
+
+10100000
+
+00010000
+
+Q000000 RED
+
+11000000
+
+10100000
+
+00010000
+
+Q0000001
+
+1° HOST
+
+11000000
+
+10100000
+
+00011111
+
+11111110
+
+ULTIMO HOST
+
+11000000
+
+10100000
+
+00011111
+
+11111111
+
+BROADCAST
+
+3° PASO
+
+Pasar a decimal las direcciones que acabamos de transformar:
+
+192
+
+160
+
+16
+
+11000000
+
+10100000
+
+00010000
+
+192
+
+160
+
+16
+
+11000000
+
+10100000
+
+00010000
+
+192
+
+160
+
+31
+
+11000000
+
+10100000
+
+00011111
+
+192
+
+160
+
+31
+
+11000000
+
+10100000
+
+00011111
+
+00000000
+
+00000001
+254
+11111110
+255
+11111111
+
+CLASSFUL
+
+Direccionamiento Classful
+¢
+
+Originalmente Internet era la interconexién de una serie de
+LANs
+
+e
+
+Cada LAN tiene un router de acceso que la conecta con el
+
+backbone de Internet (en sus comienzos, ARPANET) y asi
+
+con las otras redes
+
+¢
+
+A cada LAN se le asigna un rango de direcciones IP
+
+LAN
+
+Direccionamiento Classful
+¢
+
+Se penso que podria haber redes de diferente tamafho (numero
+
+¢
+
+de hosts)
+Secrearon 3 “tipos” de redes: clase A, clase B y clase C
+
+¢
+
+Las direcciones IP tendran 2 partes:
+—
+
+Identificador de la red (network ID) (...)
+
+—
+
+Identificador del host (host ID) (...)
+bit O
+
+bit 31
+
+<
+
+>
+
+2D
+
+LAN A
+
+Po,
+Direccionamiento clasico
+
+In IPV4 classful addressing, the address space is divided into five
+
+classes: A, B, C, D, and E.
+First
+
+Second
+
+byte
+
+byte
+
+Class A [fom]
+
+Third
+byte
+
+First
+byte
+
+Fourth
+
+byte
+
+Class A [ 0-127
+
+Class D
+
+1110
+
+Class
+
+Class E
+
+1117
+
+Class E [240-255
+
+D
+
+|224-239
+
+Second
+byte
+|
+
+Third
+byte
+
+Fourth
+byte
+
+2]
+
+11111111 00000000 00000000 00000000
+
+es
+
+11111111 11111111 00000000 00000000
+11111111
+
+11111111
+
+11111111
+
+00000000
+
+| 255.255.255.0
+
+/24
+
+Clase A
+¢
+
+Network ID:
+— 8 bits, primero a 0 (...)
+
+— Primer byte: 0 - 127 (...)
+
+¢
+
+Host ID:
+— 24 bits (...)
+
+— Mas de 16M direcciones!!
+
+— 50% de las direcciones
+
+Redes “MUY” grandes
+bit 31
+
+Host ID
+
+Direccionamiento clasico
+
+Clase B
+Network ID:
+
+— 16 bits, primeros a 10 (...)
+— Primer byte: 128 - 191 (...)
+_
+
+46K redes
+
+—
+
+25% de las direcciones
+
+¢ Host ID:
+
+— 16 bits (...)
+
+— 64K direcciones
+
+| Redes grandes
+
+bit O
+
+Host ID
+
+Direccionamiento clasico
+
+bit 31
+
+Clase C
+- Network ID:
+
+— 24 bits, primeros a 110 (...)
+
+—
+
+Primer byte: 192 - 223 (...)
+
+—
+
+12.5% de las direcciones
+
+_ 92M redes
+
+¢ Host ID:
+
+— 8 bits (...)
+
+— 256 direcciones
+| Redes pequenas |
+
+bit O
+
+bit 31
+
+Direccionamiento clasico
+
+éY el resto de direcciones?
+¢
+
+Clase D:
+—
+
+¢
+
+Primeros bits a 1110
+
+— Primer byte: 224 - 239
+—
+
+Grupos multicast
+
+Clase E:
+—
+
+¢
+
+Reservadas para futuro uso
+
+Reparto en clases:
+
+ee
+bit O
+
+| 1110 |
+
+oo
+
+LAN A
+
+ee
+
+A
+
+ee
+
+ee
+bit 31
+
+Grupo Multicast
+
+2 oi eens
+Ae, J
+
+LAN B
+
+LANC
+Direccionamiento clasico
+
+$
+
+Direccionamiento Classful
+Por qué asf?
+
+Los routes emplean el Network ID para decidir por dénde deben
+reenviar un paquete
+Cuando reciben un paquete deben averiguar repidamente cual es el
+Network ID de la red a la que pertenece el destino
+Si el primer bit es un 0 entonces pertenece a una red de clase A y el
+NetID son los primeros 8 bits
+Si el primer bit es un 1 pero el segundo un 0 entonces pertenece a una
+red de clase B y el NetID son los primeros 16 bits
+Si los dos primeros bits son 1 pero el tercero es un 0 entonces
+pertenece
+a una red de clas C y el NetID son los primeros
+24 bits
+En la propia direccién IP esta codificado el nimero de bits del NetID
+Son comprobaciones rapidas de realizar
+Cuanto menos tiempo emplee el router con cada paquete mas paquetes
+podra procesar por segundo
+
+Direccionamiento Classful
+Envio y reenvio de paquetes
+
+¢ ;Cémo actiian los hosts?:
+- Tienen configurado:
+¢ Su direccién IP
+
+* La direccién IP que tiene el router de salida de su LAN en el interfaz
+
+conectado a la misma
+
+* Pueden averiguar el NetID de su LAN a partir de su IP
+
+- Dada la IP del destino al que desean enviar un paquete :
+* Calculan el NetID de la red a la que pertenece
+* Es el mismo que el de mi red?
+
+- Si esta en mi red, sc lo envio directamente (a su MAC)
+- No: esta en otra red, se lo envio al router(a la MAC del router)
+
+Direccionamiento Classful
+Envio y reenvio de paquetes
+
+e ;Cémo actian los routers?:
+
+- Sin estado. Toman decisiones paquete a paquete.
+- Tienen configurado:
+
+* La direccién IP de cada uno de sus interfaces (cada interfaz esta cn una LAN y por lo
+
+tanto tiene una IP de dentro de esa LAN)
+
+® Una tabla de rutas que indica por dénde enviar el paqucte segun c! destino del mismo
+
+Reddestino
+
+|
+
+Nexthop
+
+|
+
+— Interfa
+
+- Si recibe un paquete que no es para ninguna de sus direcciones IP:
+
+* Busca en la tabla si hay alguna fila que en cl campo Red destino tenga esa direccidn IP
+- Sf: Es una ruta a ese host en concreto, lo envia segin indica la fila
+- No: Calculael NetID de la reda la que pertenece
+esa IP y busca una ruta
+a esa red en la
+tabla. ; Encuentra una entrada?
+- St: Es una ruta a esa red, lo envia segin indica ba fila
+- No: Busca en la tabla una ruta por defecto. ; Encacntra uma?
+S¢ Lo envia segin indica la fila
+
+- No: No sabe cdieen becer Iegar cl paqueiec al destion. Lo descarta (Io tira)
+
+Direccion de IP publica ;Qué es?
+Una direccién IP publica es aquella que se le asigna a cualquier dispositivo que se conecte de forma directa a Internet, por ejemplo, el router de casa o
+los servidores donde se alojan las paginas web. La IP publica es visible desde Internet.
+La IP publica es una direccién dnica y nunca se puede repetir. La asignan los proveedores de Internet (ISP) y se la conoce también como direccion IP
+dinamica, puesto que cambia cada vez que reiniciamos el router o cada cierto periodo de tiempo. Esto quiere decir que también existe una direccion IP
+publica fija o estatica, pero si se necesita por algtin motivo, es necesario contactar con el ISP para solicitar que nos la configuren manualmente.
+
+Direccion de IP privada ¢ Qué es?
+La direccion IP privada es una direccién fija que se asigna a cada dispositivo conectado a una red privada o doméstica, es decir, la direccién IP que el
+router asigna a cada ordenador, smartphones, smart TV, tablet, videoconsola o cualquier otro dispositivo conectado a él. Asi, cada dispositivo conectado
+
+a un router tiene su propia direccién IP privada, mientras comparten la misma IP publica.
+Las IP’s privadas no son accesibles desde Internet y no cambian, a no ser que las asignemos nosotros manualmente.
+
+Rangos de IP privadas
+Dentro de las IP privadas podemos encontrar diferentes rangos, que se asignan en funcidén del tipo de red:
+
+Rango clase A
+El rango de clase A es el que emplean las grandes empresas, puesto que permite crear hasta 126 redes distintas y conectar hasta un maximo de
+16.777.214 equipos a la red.
+Este rango se encuentra entre estos numeros: 10.0.0.0 a 10.255.255.255. El primer bloque de la direccién identifica la red y los otros tres bloques
+identifican a los dispositivos que se conectan a la red.
+
+Rango clase B
+El rango clase B se emplea en redes de tamario medio, como organizaciones 0 universidades. Permite crear un mayor numero de redes que el rango A,
+16.384 redes, pero con muchos menos equipos conectados a ellas, 65.534 dispositivos.
+El rango esta en 172.16.0.0 a 172.31.255.255; los dos primeros bloques identifican la red y los restantes a los equipos conectados a ella.
+
+Rango clase C
+Finalmente el rango clase C es el mas comtn y usado, puesto que es el que se emplea en las redes domésticas. Permite tener muchas mas redes,
+2.097.152, pero pudiendo conectar muchos menos equipos a cada una de ellas, 254.
+El rango C va desde 192.168.0.0 a 192.168.255.255; aqui son los tres primeros bloques los que identifican la red, mientras que el Ultimo identifica a los
+equipos.
+
+SUBNETTING
+
+é Qué es el subnetting?
+Definido
+
+de
+
+la
+
+forma
+
+mas
+
+simple,
+
+el
+
+término
+
+subnetting
+
+hace
+
+referencia
+
+ejemplo,
+
+dividir
+
+a
+
+la
+
+subdivision de una red en varias subredes.
+
+El subneteo
+
+permite
+
+a
+
+los administradores
+
+de
+
+red,
+
+por
+
+una
+
+red
+
+empresarial en varias subredes sin hacerlo publico en Internet.
+Esto se traduce en que el router que establece
+se especifica como
+
+direccion unica, aunque
+
+Asi,
+
+hosts
+
+el
+
+numero
+
+de
+
+considerablemente.
+
+que
+
+estan
+
+a
+
+la conexion
+
+puede
+
+disposicion
+
+entre la red e Internet
+
+que haya varios hosts ocultos.
+del
+
+administrador
+
+aumenta
+
+SUBREDES
+Direccion de RED
+10.0.0.0
+vo?
+
+00001010.00000000.00000000.00000000
+11111111.00000000.00000000.00000000
+
+Ze
+
+Mascara
+
+255.0.0.0
+
+Bits de Host = 224= 16.777.216
+
+ce
+
+.
+
+Se utilizan para
+
+representar
+
+Subredes 2* = 16 Iw
+
+~7
+
+Direccion de RED
+10.0.0.0
+
+00001010.00000000.00000000.00000000
+11111111.11110000.,00000000.00000000
+Cuatro (4) Bits
+prestados
+
+J
+
+Mascara
+
+255.240.0.0
+
+Al pedir prestados bits de la
+
+porcion de host el valor de la mascara de
+
+red cambia y pasa a ser una mascara de subred.
+
+Se utilizan para representar
+subredes 2° = 8
+
+SUBREDES CREADAS
+Direcci6n de RED
+192.168.168.0
+
+=
+11000000.10101000.10101000.00000000
+
+11000000.10101000.10101000.00000000
+11000000.10101000.10101000.00100000
+
+11111111.11111111.11111111.11100000
+
+11000000.10101000.10101000.01000000
+11000000.10101000.10101000.01100000
+11000000.10101000.10101000.10000000
+a3
+"10101000.10101000.101
+4
+
+Mascara
+
+11000000.10101000.10101000.11000000
+
+255.255.255.224
+
+192.168.168.192
+
+Tres (3) Bits prestados
+
+Mascara
+255.255.255.224
+
+SUBREDES CREADAS
+11000000.10101000.10101000.00000000
+
+11000000.10101000.10101000.00100000
+11000000.10101000.10101000.01000000
+
+\\,
+
+11000000.10101000.10101000.01100000
+11000000.10101000.10101000.10000000
+11000000.10101000.10101000.10100000
+11000000.10101000.10101000.11000000 (2
+1000000.10101000.10101000.11100000
+
+192.168.168.224
+
+Mascara
+255.255.255.224
+
+CADA UNA DE ESTAS SUBREDES
+
+TIENE CAPACIDAD PARA
+DIRECCIONAR
+5 BITS DEHOST:
+
+éC6mo funciona el subnetting?
+En el subnetting o subneteo se toman bits del ID del host “prestados” para crear una subred. Con solo un bit
+se tiene la posibilidad de generar dos subredes, puesto que solo se tiene en cuenta el 0 o el 1. Para un
+numero mayor de subredes se tienen que liberar mas bits, de modo que hay menos espacio para direcciones
+de hosts. Cabe remarcar en este caso que tanto las direcciones IP de una subred como aquellas que no
+forman parte de ninguna tienen la misma apariencia y los ordenadores tampoco detectan ninguna
+diferencia, de ahi que se creen las llamadas mascaras de subred. Si se envian paquetes de datos de Internet
+a la propia red, el router es capaz de decidir mediante esta mascara en qué subred distribuye los datos.
+
+Como ocurre con las direcciones de |Pv4, las mascaras de red contienen 32 bits (o 4 bytes) y se depositan en
+la direcci6n como una mascara o una plantilla. Una tipica mascara de subred tendria la siguiente
+apariencia: 255.255.255.128
+
+éComo funciona el subnetting?
+En el subnetting
+
+o subneteo
+
+se toman
+
+bits del ID del host
+
+“prestados”
+
+para
+
+crear
+
+Una subred. Con solo un bit se tiene la posibilidad de generar dos subredes, puesto
+que solo se tiene en cuenta elO oel 1.
+Para
+
+un numero
+
+mayor
+
+de subredes
+
+se tienen
+
+que
+
+liberar mas
+
+bits, de
+
+modo
+
+que
+
+hay menos espacio para direcciones de hosts.
+Cabe
+
+remarcar
+
+aquellas
+
+que
+
+ordenadores
+llamadas
+oropia
+
+en
+no
+
+este
+
+caso
+
+forman
+
+tampoco
+
+mascaras
+
+de
+
+parte
+
+subred.
+
+tanto
+de
+
+detectan
+
+red, el router es capaz
+
+distribuye los datos.
+
+que
+
+las direcciones
+
+ninguna
+
+tienen
+
+la
+
+IP de
+
+una
+
+subred
+
+misma
+
+apariencia
+
+ninguna
+
+diferencia,
+
+de
+
+ahi
+
+que
+
+Si se envian
+
+paquetes
+
+de
+
+datos
+
+de
+
+de decidir mediante
+
+esta
+
+mascara
+
+se
+
+como
+y
+
+los
+
+creen
+
+las
+
+Internet
+
+a la
+
+en qué
+
+subred
+
+Subnetting
+¢
+
+El esquema Classful ocasionaba ciertos problemas practicos:
+Las redes pueden llegar a ser muy grandes
+Una red de clase A contiene direcciones para millones de hosts pero es dificil
+
+que una tecnologia de LAN soporte esa cifra de maquinas conectadas
+
+Podemos necesitar conectar dentro de la red con otro tipo de tecnologia que
+
+nos permita llegar mayores distancias
+
+Puede que el trafico de broadcast a nivel de enlace sea demasiado abundante
+
+y queramos reducirel tamafio de la red
+
+LAN
+
+yn
+LAN
+
+Subnetting
+¢
+
+Empez6 como una solucién interna practicada por algunas
+redes muy grandes hasta que se estandariz6
+
+¢
+
+También llamado FLSM (Fixed Length Subnet Masks)
+
+e
+
+Desde el exterior es como sila LAN no hubiera cambiado
+
+¢
+
+En el interior se divide la LAN en LANs
+interconectadas por routers
+
+“
+
+8 8 888
+
+mas pequejias
+
+28 ae
+
+Subnetting
+¢ Generalmente se aplicé en redes de clase B porque:
+- Redes de clase A hay muy pocas
+- Las de clase C son muy pequefias (solo 254 hosts)
+
+* Lo que se hace es dividir la parte del HostID en dos:
+ba 0
+
+bal
+
+.
+
+-
+
+Extended Network ID
+
+-
+
+-
+
+- A la primera parte se Ie lama cl Subnetwork ID ¢ identifica a la Subred dentro de la Red
+- La segunda parte es el Host ID c identifica al host dentro de la Subred
+- A la concatenacién del Network ID y cl Subnetwork ID se Ie llamé el Extended Network ID
+
+Subnetting
+ba 0
+
+ba3l
+
+a
+™
+
+Extended Network [D
+
+rs
+Ll
+
+* E] Subnetwork ID puede tener cualquier nimero de bits entre 2 y la longitud
+del Host ID original menos 2 (al menos 2 bits para el Host ID)
+
+* ~Cémo sabemos dénde acaba el Extended Network ID?
+
+- Se afiade a la configuracién de los interfaces de red otro nimero de 32 bits
+- Este ntimero se llama la mdscara
+
+- La mascara tiene 1s en el Extended Network ID y Os en el Host ID
+T1111...
+
+cee
+
+ee
+
+eeeeceeeeelll[000.....00
+
+Subnetting
+Ejemplo
+
+¢ Supongamos que nuestra LAN tiene asignada la red 135.65.0.0
+* Queremos separar nuestra red cn varias subredes como se ve en la figura
+
+i
+
+SD
+
+Lt
+
+—_— a
+
+LG
+
+L
+
+int '
+
+o
+
+ant
+
+:a
+
+L
+
+a
+
+a ‘a
+
+135.65.0.0
+
+Subnetting
+Ejemplo
+
+¢ Supongamos que nuestra LAN tiene asignada la red 135.65.0.0
+* Queremos separar nuestra red en varias subredes como se ve en la figura
+¢ ,Cual es cl ntimero minimo de bits que debe tener el Subnetwork ID si deseo crear 3 subredes?...
+
+* Con 2 bits tengo 4 posibles valores del subnetwork ID (00, 01, 10 y 11) pero 2 de ellos estan
+
+reservados asi que solo me quedan 2 (como se ve menos de 2 bits no dejaria ninguno libre)
+* Con 3 bits tengo 8 posibles valores del subnetwork ID, menos los 2 reservados me deja 6
+identificadores de subred diferentes. Este seria el minimo.
+
+¢ El resto de bits los puedo repartir entre el subnetwork ID y el host ID como quiera:
+- Cuarmos mas haya en cl subnetwork ID mas subredes podré crear en el futuro
+- Cuarmtos mas haya en cl host ID mas hosts podré direccionar en cada subred
+135.65.0.0
+
+3 -BLE OO
+—4
+
+Oe
+
+-_—--—-—
+
+2
+
+ee
+
+eo
+
+ee
+
+ee
+
+Ede
+i
+
+a) {Oy
+
+dee
+
+EJERCICIOS DE SUBREDES
+
+clase
+
+Red
+
+de
+
+° Se
+
+soliccta
+
+=
+
+toner
+
+: |4ar.190..0.0
+1D
+
+subro da.
+
+hitos://www.youtube.com/watch¢v=lEKR7WTKzDA
+
+|
+
+iA qué Clase Pertenece 192.190.0.0?
+
+- CIGSSMA
+
+(255.0.0.0)
+
+O--—_-_-,
+
+amie
+nee
+
+C
+
+‘aoa
+
+HO
+
+ort
+
+(2SS_2SS.255.9)
+
+re DSRSSSSePens!
+mi nas seeee
+
+face
+
+y
+
+6 0.0.90
+
+hasta : 1.255.255.2755
+dasde
+
+i
+
+:12%.6.0.0
+
+Haste
+
+144 265 9ss- 95s.
+
+daste
+
+.192.0.0.0
+
+host. : 223. 255.265
+265
+
+i Cual es la mascara para una red tipo C?
+
+iL
+
+. GIBBZHE (25S. 285.255.)
+AAD
+
+i
+
+.
+
+_]. Ld
+
+dasde
+
+——
+192.0.0.0)
+
+a
+
+» 223.2858
+.2SS .2Ss
+
+Mascara
+
+en Binario
+
+25S _2USS.255.
+
+ASAANAAD
+
+oO
+
+\
+
+LAAAAAAAA. AAAAAAAA. COOOOOOC
+——_
+
+Queremos tres subredes.
+
+Necesitamos 2 bits para tener 3 subredes
+
+2SS 2USS.255.
+
+A SAAAAADA
+4
+
+bt
+
+2 bit
+
+\
+
+0
+
+AAAAAAAA. AAAAAAAA. COCTOOOOC
+———
+
+=>
+
+2
+
+svdvedos
+
+>
+
+2'=2
+
+s+ Y subredoas
+
+>
+
+2
+
+=)
+
+Necesitamos
+
+2 bits por lo que lo ponemos
+
+ASBAAAAD
+
+Hides
+
+at
+
+a _1’s y pasamos
+
+la mascara
+
+-AAAAAAAA AAAAAAAA
+
+ele
+
+Hat
+
+pe sis
+
+a decimal
+
+AN CCQ¥ODODDSC
+
+192 |
+
+iCuadles son las posibles tres subredes que hemos creado?
+
+Con dos bits tenemos las combinaciones 00,01,10,11
+192.190.0.00000000
+
+=
+
+192.190.0.0
+
+192.190.0.01000000
+
+192.190.0.64
+
+192.190.0. 10000000
+
+192.190.0.128
+
+.190.0.11000000
+
+192.190.0.192
+
+EJEMPLO 2
+LAN 1
+60 Hosts
+
+ESPACIO DE
+DIRECCIONAMIENTO
+
+172.30.4.0 / 22
+
+LAN 3
+250 Hosts
+
+172 . 30 . 00000100 . 00000000
+
+10 Hosts
+LAN 2
+
+100 Hosts
+
+LAN 4
+
+EJEMPLO 2
+60 Hosts
+
+ESPACIO DE
+DIRECCIONAMIENTO
+172.30.4.0/ 22
+172 . 30 . 00000100 . 00000000
+—
+
+ee
+
+10 Hosts
+LAN 2
+
+)
+
+=.
+
+~
+
+LAN 3
+250 Hosts
+
+, “a
+
+100 Hosts
+LAN 4
+
+iCuantos bits necesito para 250 hosts?
+Necesito 8 bits para hosts
+Los que me sobran se los paso a la secci6on de subred, por eso cambia la
+
+mascara.
+
+_—
+60 Hosts
+
+EJEMPLO 2
+a
+DIRECCIONAMIENTO
+172.30.4.0/ 22
+
+10 Hosts
+LAN 2
+
+Subred
+
+0: 172.30.4.0 / 24
+
+Subred
+
+1: 172.30.5.0 / 24
+
+Subred
+
+2: 172.30.6.0 / 24
+172 . 30 . 00000111 . 00000000
+3: 172.30.7.0 / 24
+
+Subred
+
+172 . 30 . 00000100 . 00000000
+
+100 Hosts
+LAN4
+
+172 . 30 . 00000100 . 00000000
+
+172 . 30 . 00000101 . 00000000
+
+172 . 30 . 00000110 . 00000000
+
+172 . 30 . 00000100
+
+Subred 0: 172.30.4.0 / 24
+
+. 00000000
+
+172 . 30 . 00000101 . 00000000
+Subred 1: 172.30.5.0 / 24
+172 . 30 . 00000110 . 00000000
+Subred 2: 172.30.6.0 / 24
+172 . 30 . 00000111 . 00000000
+Subred 3: 172.30.7.0 / 24
+
+<{—_] SEASIGNAALAN3
+
+172 . 30 . 00000101 . 00000000]
+Subred 1: 172.30.5.0 / 24
+172 . 30 . 00000110 . 00000000
+
+EJEMPLO 2
+LAN 1
+
+oie
+
+Subred 2: 172.30.6.0 / 24
+
+172 . 30 . 00000111 . 00000000
+
+NCI DE
+
+omeccichiurenTo
+
+Subred 3: 172.30.7.0 / 24
+
+172 . 30 . 00000100 . 00000000
+
+ms
+
+|
+
+<(—_] SEASIGNAALAN3
+Subred
+
+172 . 30 . 00000101
+
+1: 172.30.5.0 / 24
+
+. 00000000]
+
+172 . 30 . 00000110 . 00000000
+Subred 2: 172.30.6.0 / 24
+Subred
+
+ly
+
+N
+
+SARA
+
+“A
+
+172 . 30 . 00000111 . 00000000
+3: 172.30.7.0 / 24
+
+172 . 30 . 00000101
+
+SEASIGNAALANS [> Ic ubred 0: 172.30.5.0 / 25
+Subred
+
+. 00000000
+
+172 . 30 . 00000101 . 10000000
+
+1: 172.30.5.128 / 25
+
+EJEMPLO 2
+LAN
+
+1
+
+une
+
+,oCP™
+
+LAN 3
+
+ESPACIO DE
+
+172.30.4.0 / 22
+
+172 . 30 . 00000100 . 00000000
+
+=
+
+74
+
+*
+
+—
+-
+
+10 Hosts
+LAN
+
+2
+
+-
+
+a
+-
+
+100 Hosts
+
+—
+
+SE ASIGNAALAN4 >|
+
+ae
+
+|
+
+Subred
+
+52050
+
+472.30
+
+/9
+
+. 00000101 . 10000000
+
+1: 172.30.5.128 / 25
+“Amis
+
+A)
+
+“Chey,
+
+172 . 30 . 00000101 . 10000000
+Subred 0: 172.30.5.128 / 26
+172 . 30 . 00000101 . 11000000
+Subred 1: 172.30.5.192 / 26
+
+|
+
+“A Mis
+
+SEASIGNAALAN1
+
+| —_
+
+172 . 30 . 00000101
+
+C Amp, i
+
+. 10000000
+
+Subred 0: 172.30.5.128 / 26°
+172 . 30 . 00000101 . 11000000
+Subred 1: 172.30.5.192 / 26
+
+,
+
+EJEMPLO 2
+LAN 1
+60 Hosts
+-
+
+-
+
+LAN 3
+250 Hosts
+
+172 . 30 . 00000100 . 00000000
+
+-
+
+-
+
+a
+-
+
+-
+
+10 Hosts
+
+LAN 2
+
+a
+=
+
+”As
+
+fe-
+
+N/
+
+oe
+
+une
+
+ESPACIO DE
+DIRECCIONAMIENTO
+172.30.4.0 / 22
+
+” pe
+
+A"
+
+100 Hosts
+
+a
+
+|
+
+as
+
+SE ASIGNA ALAN3
+
+any, Cana
+
+172 . 30 . 00000110 . 00000000
+Subred 2: 172.30.6.0 / 24
+
+Ae,
+
+172 . 30 . 000001114 . 00000000
+
+172.
+
+172.30.4.0/22
+38.
+
+GeoseneO
+
+Subred 3: 172.30.7.0 / 24
+
+GooCooeO
+
+SE ASIGNA ALAN 4 >|
+
+|
+
+|
+‘Ang,
+
+SEASIGNAALANT [>
+
+Qh
+
+|
+
+|
+|
+
+Subred
+
+172 . 30 . 00000101 . 11000000
+
+1: 172.30.5.192 / 26
+
+|
+
+SEASIGNAALAN1
+
+172 . 30 . 00000101 . 11000000
+Subred 0: 172.30.5.192 / 28
+172 . 30 . 00000101 . 11010000
+Subred 1: 172.30.5.208 / 28
+172 . 30 . 00000101 . 11100000
+Subred 0: 172.30.5.224 / 28
+
+172 . 30 . 00000101 . 11110000
+Subred 1: 172.30.5.240 / 28
+
+ss!
+
+[_— >
+
+|
+yo
+
+EJEMPLO 2
+
+172 . 30 . 00000110 . 00000000
+
+Rs
+
+Subred 2: 172.30.6.0 / 24
+
+172 . 30 . 00000111 . 00000000
+
+ESPACIO CE
+CORE CCIONAMIENTO
+172.
+
+SEASIGNAALAN2
+
+Subred 3: 172.30.7.0 / 24
+
+172.30.4.0/22
+30.
+
+G0000800
+
+ka
+
+GOOCOOCO
+
+[>
+172
+
+. 30 . 00000101
+
+.
+
+11010000
+
+Subred 1: 172.30.5.208 / 28
+
+172 . 30 . 00000101
+.
+wath 0: 172.30.5.224
+
+11100000
+/ 28
+
+. 30 . 00000101 . 11110000
+Subred 4: 172.30.5.240 / 28
+
+AS
+
+SE ASIGNA ALAN3
+
+EJEMPLO 2
+LAN 1
+60 Hosts
+
+ESPACIO DE
+DIRECCIONAMIENTO
+
+-
+
+172.30.4.0 / 22
+
+Ges
+
+al
+
+.
+
+=>
+10 Hosts
+LAN 2
+
+LAN 3
+250 Hosts
+ae
+
+172 . 30 . 00000100 . 00000000
+
+” Da
+
+N/
+
+LRM
+
+ar
+
+.coP™
+
+,
+
+—
+
+172 .30. 00000101 . 11010000
+Subred 0: 172.30.5.208/30
+172.30. 00000101 . 11010000
+Subred 1: 172.30.5.212/30
+172 .30. 00000101 . 11010000
+Subred 2: 172.30.5.216/30
+
+. 00000101 . 11010000
+Subred 3: 172.30.5.220/30
+172 . 30
+
+SE ASIGNA ALAN2
+
+172 . 30 . 00000101 . 11010000
+Subred1: 172.30.5.208 / 28
+
+172 . 30 . 00000101 . 11100000
+
+Subred 0: 172.30.5.224 / 28
+
+172 . 30 . 00000101 .
+
+Subred 1: 172.30.5.240
+
+11110000
+
+/ 28 '
+
+Subred
+Subred
+
+- 172.30 00000140 . 00000000
+2: 172.30.6.0 / 24
+172 . 30 . 00000111 . 00000000
+3: 172.30.7.0 / 24
+
+DISPONIBLE!
+
+DISPONIBLE!
+
+172 . 30 . 00000101 . 11010000
+Subred 1: 172.30.5.212/30
+172 . 30 . 00000101 . 11010000
+Subred 2: 1/72.30.5.216/30
+
+172 . 30 . 00000101 . 11010000
+Subred 3: 172.30.5.220/30
+
+DISPONIBLE!
+
+,
+
+|
+
+FA
+
+<<)
+
+SAS
+
+172 . 30 . 00000139 . On0D000
+172.36.0 / 24 ied
+172 . 30 . co0001
+Subred 3: 172.30.7.0 / 24
+
+hes
+
+DISPONIBLE!
+masenaaans (">
+waAw@aawan
+
+(">
+*
+
+|
+
+|
+
+172
+. 30 . 00000101 . 1101
+
+Subred
+
+1: 172.30.5.21
+
+172. 30 00000101 . 1101
+Subred 2: 172.30.5.21
+172 . 30 . 00000101 . 1101
+Subred 3: 172.30.5.2
+
+DISPONIBLE!
+
+1
+
+172.30. 00000101
+
+sage
+
+0:
+
+11
+
+172.30.5.22
+
+30 . 00000101 _ 11
+Subred 1 172.30.5.24 138
+/
+
+DISPONIBLE!
+
+asescAsn aAP™
+
+ALAN
+
+

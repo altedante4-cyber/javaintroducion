@@ -1,0 +1,7 @@
+En la siguiente figura A y B son switches Ethernet, R es un router y Al, A2, A3, Bl y B2 son
+maquinas que tienen configuradas las direcciones IP que se muestran en la figura.
+
+Al A2 A3 ak =
+
+212.1.0.2 133.3.0.2 212.1.0.3 133.3.0.3 212.1.0.4
+

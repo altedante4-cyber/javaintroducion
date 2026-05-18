@@ -1,0 +1,5 @@
+El router tiene con funcién principal saber si el destinatario de un paquete
+de informacién que enviamos esta en nuestra propia red o en una
+remota. Para ello, el router dispone de un mecanismo llamado "mascara de
+subred” similar a la IP, y que determina a que grupo de ordenadores 0
+redes pertecenece el receptor.

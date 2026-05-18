@@ -1,0 +1,7 @@
+54.239.33.90 T
+amazon - Rawter
+
+socket firefox PC
+
+IP: 54.239.33.90 IP: 23.43.115.12
+Puerto: 80 Puerto: 6520

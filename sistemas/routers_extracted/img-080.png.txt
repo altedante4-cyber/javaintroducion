@@ -1,0 +1,8 @@
+- configurar en R1 las rutas a estas redes directamente conectadas, es decir
+
+| 212.1.0.0 | 265.255.265.0 | 0.0.0.0 | 10 |
+| 133.3.0.0 | 255.255.255.0 | 0.0.0.0 | fo |
+
+- configurar una ruta por defecto a R1 desde todas las maquinas:
+o desde Al, A3 y B2 el gateway sera 212.1.0.1
+o desde B1 y A2 el gateway sera 133.3.0.1

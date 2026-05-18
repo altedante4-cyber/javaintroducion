@@ -1,0 +1,12 @@
+Las siguientes analogias pueden ayudar a aclarar el concepto de rutas conectadas, estaticas y dinamicas:
+
+Rutas conectadas directamente: para visitar a un vecino, lo unico que tiene que hacer es caminar por la calle donde vive.
+Esta ruta es similar a una ruta conectada directamente porque el "destino" esta disponible directamente a través de su
+"interfaz conectada", la calle.
+
+Rutas estaticas: un tren siempre usa las mismas vias en una ruta especifica. Esta ruta es similar a una estatica porque la ruta
+hacia el destino es stempre la misma.
+
+Rutas dinamicas: al conducir un automévil, usted puede elegir "dinamicamente" una ruta diferente segrin el trafico, el
+clima y otras condiciones. Esta ruta es similar a una ruta dinamica porque puede elegir una nueva ruta en muchos puntos
+diferentes en su trayecto hacia el destino.

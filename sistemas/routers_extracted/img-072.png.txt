@@ -1,0 +1,13 @@
+Una empresa tiene la red de la figura. El reparto de las direcciones se realiza utilizando subredes
+con una mascara de red de 255.255.255.0. En un momento dado la empresa tiene instaladas las
+redes y la configuracion de los routers que se ven en la figura y quiere instalar la subred
+100.1.200.0. Suponga que es el administrador de la subred marcada en la figura y se le ha asignado
+el Router R3 y la direccion IP en la red central 100.1.100.3. (Las direcciones IP de los interfaces se
+muestran sobre los enlaces).
+
+Subred
+100.1.150.0
+
+100.1.100.2
+
+R2

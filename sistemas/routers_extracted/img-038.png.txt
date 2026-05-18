@@ -1,0 +1,19 @@
+* El comando ping envia un paquete al host
+destino y luego espera un paquete de
+respuesta de ese host.
+
+* Dos tipos: Ping y ping extendido
+* Respuestas del comando:
+
+! Recibo satisfactorio de respuesta eco
+
+. Esperando interrupcién de respuesta de datagrama
+U Error por destino inalcanzable
+
+C Paquetes que experimentan congestion
+
+| ping interrumpido ( ej: Ctrl + May+6 X)
+
+2? Tipo de paquete desconocido
+
+& Paquete TTL excedido

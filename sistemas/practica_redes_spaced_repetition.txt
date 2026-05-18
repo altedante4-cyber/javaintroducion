@@ -1,0 +1,233 @@
+=== CORRECCIÓN DE ERROR EN PDF ===
+El PDF indica que IPv6 usa 64 bits. ERROR: IPv6 usa 128 bits, permitiendo 2^128 direcciones únicas.
+=== FIN CORRECCIÓN ===
+
+=== PRÁCTICA 1: CÁLCULO DE RED, BROADCAST Y HOSTS (CIDR) ===
+Ejemplo resuelto 1: IP 192.160.26.109, máscara /20
+Paso 1: Bits de host = 32 - 20 = 12
+Paso 2: IP a binario: 192→11000000, 160→10100000, 26→00011010, 109→01101101
+IP binaria: 11000000.10100000.00011010.01101101
+Paso 3: Separar NetID (20 bits iniciales) y HostID (12 bits finales):
+NetID: 11000000.10100000.0001 | HostID: 1010.01101101
+Paso 4: Red (HostID a 0): 11000000.10100000.00010000.00000000 → 192.160.16.0
+Paso 5: 1er host: 192.160.16.1
+Paso 6: Broadcast (HostID a 1): 11000000.10100000.00011111.11111111 → 192.160.31.255
+Paso 7: Último host (Broadcast -1): 192.160.31.254
+
+
+
+
+==> PRACTICA 1 CALCULO DE RED  , BORADAAST Y HOST 
+ejempo resuelto 1 => ip 192.168.26.109  mascara / 20 
+-paso 1 BitsHost => 32- 20 => 12 
+-paso 2 pasa a binario => 11000000..10100000.00011010.01101101
+-paso3 separa en NetBits(20) y HostBit (12) => los host de bits se ponen a  0 
+ -Host de Red   11000000.10100000.0001 | 0000.0000 
+-Primer host de red => 192.168.16.1 
+-Broadcat(HostId 1 ) => 192.168.31.255 => esto en binario 11000000.10100000.00011111.11111111
+-Ultimo host (Broadcast -1 ) : 192.160.31.254 
+
+
+
+==> repaso  192.160.26.109 mscara /20
+passo 1 : bits de host = 32 - 20 = 12
+paso 2 : ip a binario  192->11000000, 160 => 10100000 , 26=> 0001110110 , 109 => 011011
+IP binaria : 1100000
+-- memot3ecnicca 
+calculo de red 
+ejemplo resuleot 1: ip 192.160.26.109 masccar /20
+paso 1 : bits de host = 32 -20 = 12
+paso2 : ip a binario : 192=> 11000000 , 160=> 10100000, 26=>00011010, 109=> 01101101
+ip binEIO  => 11000000.
+PASO 3 : SPEAR NETEiD(20 bits iniciales ) y hostID(12 bits fiinales) :
+netID = 11000000.10100000.0001 | hostID: 1010.10.01101101
+paso 4 : red(HOSTId A 0) : 11000000.10100000.0000000.0000000 
+
+
+Ejemplo resuelto 2: IP 10.10.5.0/24
+Paso 1: Bits host = 32-24=8
+Paso 2: IP binaria: 00001010.00001010.00000101.00000000
+Paso 3: NetID (24 bits): 10.10.5 | HostID (8 bits): 00000000
+Paso 4: Red: 10.10.5.0 | 1er host: 10.10.5.1
+Paso 5: Broadcast: 10.10.5.255 | Último host: 10.10.5.254
+
+Ejemplo resuelto 3: IP 172.16.30.100/18
+Paso 1: Bits host = 32-18=14
+Paso 2: IP binaria: 10101100.00010000.00011110.01100100
+Paso 3: NetID (18 bits): 172.16.0 | HostID (14 bits): 01111001100100
+Paso 4: Red: 172.16.0.0 | 1er host: 172.16.0.1
+Paso 5: Broadcast: 172.16.63.255 | Último host: 172.16.63.254
+
+=== PRÁCTICA 2: DIRECCIONAMIENTO CLASSFUL ===
+Ejemplo resuelto 1: IP 192.168.1.1
+Paso 1: 1er octeto 192 → Clase C (192-223)
+Paso 2: Máscara por defecto: 255.255.255.0 (/24)
+Paso 3: Hosts por red: 2^8 -2 = 254 => e(sto es por que la mascara por defecto es / 24
+ asi que los bits de host son 32-24= 8 2 ^8  es el total de conbinacions posibles de 8 bits para el hostID 
+ se restan 2 ( direcion de red y boradcast) para obtener lso 254 host utilizanles
+
+==practica mischael 
+192.168.1.1
+paso1 : 1er octeto 192 => Clase c ( 192-223)
+paso2 : Mascara por defecto : 255.255.255.0 (/24)
+paso3 : Host por red 2 ^8 - 2 = 254 
+
+192.168.1.1
+paso1: 1er OCTETO 192 => Clase c (192-223)
+paso2 : Mascara por defecto = 255.255.255.0 (/24)
+paso3 : Host de red = 2 ^8  -2 = 254
+
+
+
+Ejemplo resuelto 2: IP 10.0.0.5
+Paso 1: 1er octeto 10 → Clase A (0-127)
+Paso 2: Máscara por defecto: 255.0.0.0 (/8)
+Paso 3: Hosts por red: 2^24 -2 = 16,777,214
+
+== practica michael 
+10.0.0.5
+paso1 = 1er octeto 10 => Clase A (0-127)
+paso2 :Mascara por defecto : 255.0.0.0(/8)
+paso 3 : Host por red : 2 ^24 -2 = 16,77,214
+
+
+10.0.0.5
+paso1 = 1 er octeto 10 => Clase A (0-127)
+paso2 = Mascara por defecto : 255.0..0.0 (/8)
+paso3 = Host por red : 2 + 24 -2 = 
+
+
+
+Ejemplo resuelto 3: IP 172.20.5.10
+Paso 1: 1er octeto 172 → Clase B (128-191)
+Paso 2: Máscara por defecto: 255.255.0.0 (/16)
+Paso 3: Hosts por red: 2^16 -2 = 65,534
+
+== michael practica
+172.20.5.10
+paso1 : 1er octeto 172 => clase b (128-191)
+paso2 : Mascara por defecto 255.255.0.0(/16)
+paso 3 : Hosts por red 2 16 -2 = 
+
+
+=== PRÁCTICA 3: SUBNETTING (PRÉSTAMO DE BITS) ===
+Ejemplo resuelto 1: Dividir 192.168.1.0/24 en 4 subredes
+Paso 1: Bits para 4 subredes: 2^x=4 → x=2 bits prestados
+Paso 2: Nueva máscara: /24+2 = /26 → 255.255.255.192
+Paso 3: Hosts por subred: 2^(8-2) -2 = 62
+Paso 4: Subredes:
+1. 192.168.1.0/26 (hosts 1-62, broadcast 63)
+2. 192.168.1.64/26 (hosts 65-126, broadcast 127)
+3. 192.168.1.128/26 (hosts 129-190, broadcast 191)
+4. 192.168.1.192/26 (hosts 193-254, broadcast 255)
+
+
+== practica michael subtentting
+
+ejemplo resuelto 1 : dividir 192.168.1.0 / 24 en 4 subredes
+paso 1 : bits para 4 subredes = 2 ^4  x = 2 bits prestado se
+paso 2 : nueva mascara : / 24 + 2 = / 26 255.255.255.192
+paso 3 : host por subred : 2 ^(8 - 2 )-2 = 62 
+paso 4 subredes
+
+192.168.1.0/26
+192.168.1.64/26
+192.168.1.128 /26
+
+contexto bajo nivel 
+
+1.Original /24 (192.168.1.0) tiene 8 bits de host(4 octeto completo 0-255) 
+2.para 4 subredes prestamos 2 bits de host (2ç= 4) quedadno 6 bits de host por subred
+3.el 4 octeto se divide en 2 bits de subred (izquierda)  + 6 bits de host ( derech )
+
+- subred 1 : bits subred 00 -> 00 - 4 octeto 00000000 = 0 192.168.1.0/26
+- subred 2 : bits subred 01 -> 01 - 01000000 = 64 => 192.168.1.64/26
+- subred 3 : bits subred 10 -> 10000000= 128 => 192.168.1.128
+- subred 4 : bits subred 11 => 11000000 = 192 
+Ejemplo resuelto 2: Dividir 10.0.0.0/8 en 8 subredes
+Paso 1: Bits para 8 subredes: 2^x=8 → x=3 bits prestados
+Paso 2: Nueva máscara: /8+3 = /11 → 255.224.0.0
+Paso 3: Hosts por subred: 2^(24-3) -2 = 2,097,150
+Paso 4: Subredes (incremento de 32 en 2º octeto):
+10.0.0.0/11, 10.32.0.0/11, 10.64.0.0/11, 10.96.0.0/11, 10.128.0.0/11, 10.160.0.0/11, 10.192.0.0/11, 10.224.0.0/11
+
+=== EJERCICIOS PARA PRACTICAR (SIN RESOLVER) ===
+1. Calcula red, broadcast, 1er host, último host de 172.20.15.50/16
+    1.paso bits host = 32 - 16 = 16
+    2.paso binario  red = 10101100.00010100.00001111.00111100
+    3. paso netID(16) , HostId(0)
+    10101100.00010100 | 00000000.00000000
+    4.direccion de red => 172.20.0.0 / 16 
+    5 primer host => 172.20.0.1
+    6.ultimo host => 172.20.255.254 // ojo aqui el 255 puso 254 tiene que ser 255 no 254
+2. ¿Clase de 192.168.50.100? Máscara por defecto? Hosts por red?
+
+    1.Cogemos el primer octeto (192) = Clase C (191-223)
+    2.Mascara por defecto es = 255.255.255.0 
+    3.Host de red  2 ^24 = 
+
+3. Divide 192.168.10.0/24 en 8 subredes: nueva máscara, hosts por subred, lista de subredes.
+4. Calcula red, broadcast, 1er host, último host de 10.50.100.200/8
+5. Calcula red, broadcast, 1er host, último host de 192.168.5.150/26
+6. Divide 172.16.0.0/16 en 16 subredes: nueva máscara, hosts por subred, lista primeras 4 subredes.
+7. Calcula red, broadcast, 1er host, último host de 10.200.50.100/12
+  1.Numero de hos = 32 - 12 = 20
+  2.Pasaa  binario la ip => 00001010.11001000.00110010.0111001
+  3.separ en Next(12) | host(20)
+
+    00001010.1100 | 0000.00000000.00000000
+  4.Direccion de red  10.192.0.0
+  5.Primer host  10.192.0.1
+  6.ultimo host 10.192.255.254
+  7.direcion de boradcast 10.192.255.255
+    
+8. ¿Clase de 172.31.100.50? Máscara por defecto? Hosts por red?
+9. Divide 192.168.100.0/24 en 4 subredes: nueva máscara, hosts por subred, lista completa.
+10. Calcula red, broadcast, 1er host, último host de 192.168.1.200/25
+11. Divide 10.0.0.0/8 en 32 subredes: nueva máscara, hosts por subred.
+12. Calcula dirección de red de 200.100.50.25 (clase C, máscara por defecto).
+
+=== RESPUESTAS A EJERCICIOS ===
+1. Red: 172.20.0.0 | 1er host: 172.20.0.1 | Último host: 172.20.255.254 | Broadcast: 172.20.255.255
+2. Clase C | Máscara 255.255.255.0 (/24) | Hosts por red: 254
+3. Máscara /27 (255.255.255.224) | Hosts por subred: 30 | Subredes: 192.168.10.0/27, 192.168.10.32/27, 192.168.10.64/27, 192.168.10.96/27, 192.168.10.128/27, 192.168.10.160/27, 192.168.10.192/27, 192.168.10.224/27
+4. Red: 10.0.0.0 | 1er host: 10.0.0.1 | Último host: 10.255.255.254 | Broadcast: 10.255.255.255
+5. Red: 192.168.5.128 | 1er host: 192.168.5.129 | Último host: 192.168.5.190 | Broadcast: 192.168.5.191
+6. Máscara /20 (255.255.240.0) | Hosts por subred: 4094 | Subredes: 172.16.0.0/20, 172.16.16.0/20, 172.16.32.0/20, 172.16.48.0/20...
+7. Red: 10.192.0.0 | 1er host: 10.192.0.1 | Último host: 10.207.255.254 | Broadcast: 10.207.255.255
+8. Clase B | Máscara 255.255.0.0 (/16) | Hosts por red: 65,534
+9. Máscara /26 (255.255.255.192) | Hosts por subred: 62 | Subredes: 192.168.100.0/26, 192.168.100.64/26, 192.168.100.128/26, 192.168.100.192/26
+10. Red: 192.168.1.128 | 1er host: 192.168.1.129 | Último host: 192.168.1.254 | Broadcast: 192.168.1.255
+11. Máscara /13 (255.248.0.0) | Hosts por subred: 524,286
+12. Red: 200.100.50.0
+
+=== PRÁCTICA 4: CÁLCULOS RÁPIDOS (COMO CHINO: VELOCIDAD) ===
+Responde en menos de 30 segundos cada uno:
+
+Ejemplo resuelto 1: IP 192.168.1.1/24 → Red: 192.168.1.0
+Ejemplo resuelto 2: IP 10.0.0.0/8 → Broadcast: 10.255.255.255
+Ejemplo resuelto 3: Clase de 172.16.0.1 → Clase B
+
+Ejercicios rápidos (sin resolver):
+1. IP 192.168.5.0/26 → ¿Cuántos hosts por subred?
+2. IP 10.10.10.10/8 → ¿Dirección de red?
+3. IP 172.16.32.0/20 → ¿Último host?
+4. Clase de 200.100.50.25 → ¿Qué clase?
+5. IP 192.168.1.128/25 → ¿Broadcast?
+6. Divide 192.168.0.0/24 en 2 subredes → ¿Máscara nueva?
+7. IP 10.0.0.0/8 → ¿Cuántas subredes con /16?
+8. IP 172.16.0.0/16 → ¿Hosts por red original?
+9. IP 192.168.10.0/27 → ¿1er host de 3ª subred (si divides /24 en /27)?
+10. IP 10.128.0.0/9 → ¿Broadcast?
+
+Respuestas rápidas:
+1. 62 hosts
+2. 10.0.0.0
+3. 172.16.47.254
+4. Clase C
+5. 192.168.1.255
+6. /25 (255.255.255.128)
+7. 256 subredes
+8. 65,534 hosts
+9. 192.168.10.65
+10. 10.255.255.255

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerShell Command Quest</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        .game-container {
+            background: #0f3460;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            background: #1a1a2e;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .score { color: #00ff88; }
+        .lives { color: #ff6b6b; }
+        .question-box {
+            background: #1a1a2e;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .question {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .category {
+            background: #00ff88;
+            color: #1a1a2e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .option {
+            background: #1a1a2e;
+            border: 2px solid #16213e;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.1em;
+            transition: all 0.2s;
+        }
+        .option:hover {
+            background: #16213e;
+            border-color: #00ff88;
+            transform: scale(1.02);
+        }
+        .option.correct {
+            background: #00ff88;
+            color: #1a1a2e;
+        }
+        .option.wrong {
+            background: #ff6b6b;
+            color: #fff;
+        }
+        .feedback {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: none;
+        }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #00ff88; color: #1a1a2e; }
+        .feedback.wrong { background: #ff6b6b; color: #fff; }
+        .next-btn {
+            display: block;
+            width: 100%;
+            background: #00ff88;
+            color: #1a1a2e;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .next-btn:hover { background: #00cc6a; }
+        .progress-bar {
+            height: 6px;
+            background: #1a1a2e;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: #00ff88;
+            transition: width 0.3s;
+        }
+        .start-screen, .end-screen {
+            text-align: center;
+        }
+        .end-screen { display: none; }
+        .start-btn {
+            background: #00ff88;
+            color: #1a1a2e;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+        .final-score {
+            font-size: 3em;
+            color: #00ff88;
+            margin: 20px 0;
+        }
+        .legend {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+            font-size: 0.85em;
+        }
+        .legend h3 { color: #00ff88; margin-top: 0; }
+        .legend-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #16213e;
+        }
+        .alias { color: #00ff88; }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>PowerShell Quest</h1>
+        <p class="subtitle">Domina los comandos para tu examen!</p>
+        
+        <div class="start-screen" id="startScreen">
+            <p>Responde 10 preguntas sobre comandos PowerShell.</p>
+            <p>Tienes 3 vidas. Cada error te acerca al GAME OVER!</p>
+            <button class="start-btn" onclick="startGame()">INICIAR</button>
+            
+            <div class="legend">
+                <h3>Alias Essentiales</h3>
+                <div class="legend-row"><span>Get-ChildItem</span><span class="alias">dir, ls</span></div>
+                <div class="legend-row"><span>Set-Location</span><span class="alias">cd</span></div>
+                <div class="legend-row"><span>Get-Location</span><span class="alias">pwd</span></div>
+                <div class="legend-row"><span>Copy-Item</span><span class="alias">cp</span></div>
+                <div class="legend-row"><span>Move-Item</span><span class="alias">mv</span></div>
+                <div class="legend-row"><span>Remove-Item</span><span class="alias">rm, del</span></div>
+                <div class="legend-row"><span>Get-Content</span><span class="alias">gc, cat</span></div>
+            </div>
+        </div>
+
+        <div id="gameScreen" style="display:none;">
+            <div class="progress-bar"><div class="progress" id="progress"></div></div>
+            <div class="score-board">
+                <span class="score">Puntos: <span id="score">0</span></span>
+                <span class="lives">Vidas: <span id="lives">3</span></span>
+            </div>
+            <div class="question-box">
+                <span class="category" id="category">AYUDA</span>
+                <div class="question" id="question">Pregunta</div>
+            </div>
+            <div class="options" id="options"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()" style="display:none;">SIGUIENTE</button>
+        </div>
+
+        <div class="end-screen" id="endScreen">
+            <div class="final-score" id="finalScore">0</div>
+            <p id="finalMessage">Intentalo de nuevo!</p>
+            <button class="start-btn" onclick="startGame()">REINICIAR</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Que comando muestra todos los comandos disponibles?", a: "Get-Command", ops: ["Get-Command", "Get-Help", "Get-Member", "Get-Host"], cat: "AYUDA" },
+            { q: "Sistema de ayuda. Que comando usarias?", a: "Get-Help", ops: ["Get-Help", "Get-Command", "Show-Command", "Get-History"], cat: "AYUDA" },
+            { q: "Que comando muestra propiedades de un objeto?", a: "Get-Member", ops: ["Get-Member", "Get-Command", "Select-Object", "Where-Object"], cat: "AYUDA" },
+            { q: "Alias para Get-ChildItem:", a: "dir", ops: ["dir", "ls", "pwd", "cd"], cat: "ALIAS" },
+            { q: "Alias para Set-Location:", a: "cd", ops: ["cd", "dir", "mv", "cp"], cat: "ALIAS" },
+            { q: "Alias para Get-Location:", a: "pwd", ops: ["pwd", "cd", "ls", "dir"], cat: "ALIAS" },
+            { q: "Alias para Copy-Item:", a: "cp", ops: ["cp", "mv", "rm", "dir"], cat: "ALIAS" },
+            { q: "Alias para Move-Item:", a: "mv", ops: ["mv", "cp", "rm", "ren"], cat: "ALIAS" },
+            { q: "Alias para Remove-Item:", a: "rm", ops: ["rm", "del", "rmdir", "erase"], cat: "ALIAS" },
+            { q: "Comando para listar contenido de carpeta:", a: "Get-ChildItem", ops: ["Get-ChildItem", "Get-Content", "Get-Item", "Get-Location"], cat: "ARCHIVOS" },
+            { q: "Comando para crear archivo/carpeta:", a: "New-Item", ops: ["New-Item", "New-File", "New-Dir", "Create-Item"], cat: "ARCHIVOS" },
+            { q: "Comando para copiar archivos:", a: "Copy-Item", ops: ["Copy-Item", "Move-Item", "Clone-Item", "Duplicate-Item"], cat: "ARCHIVOS" },
+            { q: "Comando para mover/renombrar:", a: "Move-Item", ops: ["Move-Item", "Rename-Item", "Copy-Item", "Set-Item"], cat: "ARCHIVOS" },
+            { q: "Comando para leer contenido de archivo:", a: "Get-Content", ops: ["Get-Content", "Read-File", "Get-Item", "Open-File"], cat: "ARCHIVOS" },
+            { q: "Que comando mata procesos?", a: "Stop-Process", ops: ["Stop-Process", "Kill-Process", "End-Process", "Close-Process"], cat: "SISTEMA" },
+            { q: "Ver servicios de Windows:", a: "Get-Service", ops: ["Get-Service", "Get-Process", "list-services", "Services"], cat: "SISTEMA" },
+            { q: "Apagar equipo:", a: "Stop-Computer", ops: ["Stop-Computer", "Shutdown-Computer", "Off-Computer", "Exit-Computer"], cat: "SISTEMA" },
+            { q: "Pipeline se representa con:", a: "Pipe", ops: ["Pipe", "Mayor", "Menor", "Ampersand"], cat: "PIPELINE", showPipe: true },
+            { q: "Filtrar objetos:", a: "Where-Object", ops: ["Where-Object", "Filter-Object", "Select-Object", "Sort-Object"], cat: "PIPELINE" },
+            { q: "Seleccionar propiedades:", a: "Select-Object", ops: ["Select-Object", "Get-Object", "Pick-Object", "Choose-Object"], cat: "PIPELINE" },
+            { q: "Ordenar resultados:", a: "Sort-Object", ops: ["Sort-Object", "Order-Object", "Organize-Object", "Arrange-Object"], cat: "PIPELINE" },
+            { q: "Formato tabla:", a: "Format-Table", ops: ["Format-Table", "Table-Format", "Out-Table", "Display-Table"], cat: "FORMATO" },
+            { q: "Formato lista:", a: "Format-List", ops: ["Format-List", "List-Format", "Out-List", "Display-List"], cat: "FORMATO" },
+            { q: "Operador Igual a:", a: "-eq", ops: ["-eq", "=", "==", "-is"], cat: "OPERADORES" },
+            { q: "Operador Mayor que:", a: "-gt", ops: ["-gt", ">", ">>", "-ge"], cat: "OPERADORES" },
+            { q: "Operador No es igual a:", a: "-ne", ops: ["-ne", "!=", "<>", "-not"], cat: "OPERADORES" },
+            { q: "Comodin (like):", a: "asterisco", ops: ["asterisco", "pregunta", "porcento", "numeral"], cat: "OPERADORES", showStar: true },
+            { q: "Estructura IF/ELSE evalua:", a: "condicion", ops: ["condicion", "numero", "objeto", "texto"], cat: "BUCLES" },
+            { q: "Bucle con contador:", a: "for", ops: ["for", "foreach", "while", "do"], cat: "BUCLES" },
+            { q: "Bucle que evalua al inicio:", a: "while", ops: ["while", "do-while", "do", "for"], cat: "BUCLES" },
+            { q: "Bucle do-while garantiza...", a: "1 ejecucion", ops: ["1 ejecucion", "0 ejecuciones", "infinito", "2 ejecuciones"], cat: "BUCLES" },
+            { q: "Evalua variable vs multiples casos:", a: "switch", ops: ["switch", "case", "if", "match"], cat: "BUCLES" },
+            { q: "Variables en PowerShell usan:", a: "dolar", ops: ["dolar", "numeral", "arroba", "porcento"], cat: "VARIABLES", showDollar: true },
+            { q: "Historial de comandos:", a: "Get-History", ops: ["Get-History", "Get-Command", "Get-PSHistory", "History"], cat: "AYUDA" }
+        ];
+
+        let currentQ = 0, score = 0, lives = 3, available = [];
+
+        function startGame() {
+            currentQ = score = lives = 3;
+            available = questions.map((_, i) => i);
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('gameScreen').style.display = 'block';
+            document.getElementById('endScreen').style.display = 'none';
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (lives <= 0 || currentQ >= 10 || available.length === 0) {
+                return endGame();
+            }
+            
+            let pos = Math.floor(Math.random() * available.length);
+            let idx = available[pos];
+            available.splice(pos, 1);
+            
+            let q = questions[idx];
+            currentQ++;
+            
+            document.getElementById('category').textContent = q.cat;
+            document.getElementById('question').textContent = q.q;
+            document.getElementById('progress').style.width = (currentQ * 10) + '%';
+            document.getElementById('score').textContent = score;
+            document.getElementById('lives').textContent = lives;
+            
+            let opts = [...q.ops];
+            opts.sort(() => Math.random() - 0.5);
+            
+            let html = '';
+            opts.forEach(opt => {
+                let display = opt;
+                if (q.showPipe && opt === 'Pipe') display = '|';
+                if (q.showStar && opt === 'asterisco') display = '*';
+                if (q.showDollar && opt === 'dolar') display = '$';
+                html += `<div class="option" data-answer="${opt}">${display}</div>`;
+            });
+            document.getElementById('options').innerHTML = html;
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('nextBtn').style.display = 'none';
+            
+            document.querySelectorAll('.option').forEach(el => {
+                el.onclick = () => check(el, q.a, q);
+            });
+        }
+
+        function check(el, correct, q) {
+            if (document.getElementById('feedback').classList.contains('show')) return;
+            
+            let selected = el.dataset.answer;
+            
+            if (selected === correct) {
+                el.classList.add('correct');
+                score += 100;
+                showFeedback('CORRECTO! +100 pts', 'correct');
+            } else {
+                el.classList.add('wrong');
+                lives--;
+                
+                let correctDisplay = correct;
+                if (q.showPipe) correctDisplay = '|';
+                if (q.showStar && correct === 'asterisco') correctDisplay = '*';
+                if (q.showDollar && correct === 'dolar') correctDisplay = '$';
+                
+                showFeedback('ERROR! Era: ' + correctDisplay, 'wrong');
+            }
+            
+            document.querySelectorAll('.option').forEach(o => o.style.pointerEvents = 'none');
+            document.getElementById('score').textContent = score;
+            document.getElementById('lives').textContent = lives;
+            document.getElementById('nextBtn').style.display = 'block';
+            
+            if (lives <= 0) setTimeout(endGame, 1500);
+        }
+
+        function showFeedback(msg, type) {
+            let fb = document.getElementById('feedback');
+            fb.textContent = msg;
+            fb.className = 'feedback show ' + type;
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').style.display = 'none';
+            document.getElementById('endScreen').style.display = 'block';
+            document.getElementById('finalScore').textContent = score;
+            
+            let msg = document.getElementById('finalMessage');
+            if (score >= 800) msg.textContent = 'EXCELENTE! Aprobado!';
+            else if (score >= 500) msg.textContent = 'Bien! Pero sigue practicando';
+            else msg.textContent = 'Repasa el manual!';
+        }
+    </script>
+</body>
+</html>

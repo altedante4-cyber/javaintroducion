@@ -1,0 +1,2 @@
+La funcién principal de un router es enviar un paquete hacia su red de destino, que es la direccién IP de destino del paquete.
+Para hacerlo, el router necesita buscar la informacion de enrutamiento almacenada en su tabla de enrutamiento.

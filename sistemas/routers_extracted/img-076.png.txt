@@ -1,0 +1,8 @@
+La mascara de todas las subredes que aparecen en la figura es 255.255.255.0.
+
+a) Indique qué maquinas pueden intercambiar trafico IP sin modificar ningtin elemento de la
+figura.
+
+b) Indique qué cambios realizaria en las conexiones o en la configuracioén IP para que
+puedan intercambiar trafico todas las maquinas entre si. No se permite modificar las
+direcciones IP que aparecen en la figura.

@@ -1,0 +1,56 @@
+get-commando lista todod s los comandos alias y funciones
+get-help sistemas de ayuda paramaetro -full -detailes -examples -showwindos
+
+get-member  meustrar las propiedades y metodos de un objeto 
+show-comand generados grafico de comandos
+
+get-host => informacion sobre la consola actual 
+get-history / clear-history => gestion del historial de comandos
+
+2.gestion de archivo
+
+get-childitem(dis,ls) => lista contenido
+set-location(cd) =>  cambia de directorio 
+get-location muestra la ruta actual 
+new-item => crear archivo -ItemType file o carpetas -ItemType directory
+Copy-Item copia elementos usa -Recurse para carpetas con contenido
+Move-Item mueve o renombre archivos
+Remove-Item = elimina elementos
+rename-Item => CAMBIA EL NOMBRE de una archivo/carpeta
+get-Content lee el contenido de un archivo 
+
+
+3.Admiinstracion del sistema
+
+Get-Process /Stop-Process veer y deter procesos
+Get-Services / Start-Service / Stop-Service => Gestionar serviicos
+Get-NetAdapter => informacion de red
+Get-Disk / Get-Partition => Gestion de almacenamiento 
+Stop-Computer => apaga el equipo
+Get-Date / Set-Date => GEstion de fecha y hora 
+
+4.Tuberias(Pipeline) y Formateo
+
+Pipeline (|) pasa objetos de un comando a otro
+Where-Object => Filtra Objetos segun una condicion ($_.Status -eq 'Running')
+Select-Object => Seleciona propiedades especificas 
+Sort-Object => Ordena los resultados 
+Format-Table(ft) => Salida en columnas
+Format-List(fl) => Salida en lista detallada
+Format-Wide(fw)=> Salida en tabla ancha (uan sola propiedad)
+Out-File=> Guarda la salida en un archivo
+
+
+5.Estructuras de control y bucles 
+
+variables se define $ ejemplo $datos = Get-Process
+
+
+=== COMO SABER EL TIPO DE ARCHIVO SI ES UN ARCHIVO O UN DIRECTORIO"
+EXPLICACION DE -PathType
+-Container = Directorio/carpeta
+-Leaf = Archivo normal (no directorio)
+-Any = Cualquiera de los dos (por defecto) 
+
+
+	

@@ -1,0 +1,17 @@
+e Enrutamiento dindmico: este enrutamiento lo vemos en organizaciones me-
+dianas y grandes donde se necesita una actualizacién constante de las rutas. Se
+da mediante el encaminamiento de protocolos, los cuales actualizan automati-
+camente las rutas. Estos protocolos se basan en la tabla de enrutamiento para
+
+escoger la mejor ruta, brindan la posibilidad de es-
+tablecer normas para que la red siempre esté actua-
+lizada. Ejemplo: una empresa en la que se permite
+escoger nuevas rutas en casos especificos donde la
+ruta presente inconvenientes y se procede a encon-
+trar redes adyacentes.
+
+Adyacentes
+
+Se entiende como adyacente aquello
+que esté préximo o cercano.
+

@@ -1,0 +1,10 @@
+Comandos de edicion de |OS
+
+Descripcién
+Control-A Permite desplazarse hasta el principio de la linea de comando
+Esc-B Permite desplazarse una palabra hacia atras
+Control-B Permite desplazarse un caracter hacia atras
+Control-E Permite desplazarse hasta el final de la linea de comando
+Control-F Permite desplazarse un cardcter hacia adelante
+Esc-F Permite desplazarse una palabra hacia adelante
+

@@ -1,0 +1,15 @@
+Aceptar paquetes por las lineas de entrada
+
+Lookup: busqueda de la direccion de destino del
+paquete en la tabla de reenvio (para identificar puerto
+de salida).
+
+Header Processing: Manipulacion de la cabecera IP:
+decrementar TTL, recalcular checksum.
+
+Switching: Enviar el paquete al puerto de destino
+correspondiente.
+
+Buffering: Almacenar paquete en la cola.
+
+Transmitir paquete en la linea de salida.

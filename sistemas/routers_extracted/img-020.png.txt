@@ -1,0 +1,27 @@
+Capa de Aplicacién
+
+Capa de Presentacién
+
+Capa de Sesién
+
+Capa de Transporte
+
+Capa de Red
+
+Capa de Enlace de Datos
+
+Capa Fisica
+
+. Programas de aplicacién que usa la red.
+
+. Estandariza la forma en que se presentan los datos de las aplicaciones.
+
+. Gestiona las conexiones entre aplicaciones cooperativas.
+
+. Proporciona servicios de deteccién y correccién de errores.
+
+. Gestiona conexiones a través de la red para las capas superiores.
+
+. Proporciona servicios de envio de datos a través del enlace fisico.
+
+. Define las caracteristicas fisicas de la red material.

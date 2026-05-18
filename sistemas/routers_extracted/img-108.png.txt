@@ -1,0 +1,28 @@
+Los puertos se clasifican en 3 tipos:
+
+* Puertos bien conocidos. Van desde el 0 hasta el 1023 y como su propio nombre indica
+son aquellos que estén reservados para los protocolos , programas y servicios establecidos
+universalmente y conocidos por todos. Este rango de puertos est reservado para el
+sistema operativo y slo puede asignarlo en usuario con privilegios elevados como un
+superusuario (root). Esto es porque son servicios bastante criticos y si un usuario
+cualquiera pudiera abrirlos podria generar problemas de seguridad.
+
+Dentro de los puertos bien conocidos estarian el servidor web (80), servidor web seguro
+(443), SSH (22), DNS (53), FTP (21),
+
+‘+ Puertos registrados. Estos puertos estén asignados por la IANA y van desde el 1024 hasta
+el 49151. Los puertos registrados son los que utilizan las aplicaciones cuando queremos
+conectarnos a ellas. Dentro de este grupo estarian todos los servicios y aplicaciones que
+podemos instalar en un equipo. Aqui estarian comprendidos los juegos, aplicaciones de
+mensajeria, voz sobre IP (VolP),..
+
+Por ejemplo en los puertos registrados tenemos: Plex (32400), SIP (5060), VNC (5900),
+Zerotier (9993), Battlefield (14567),
+
+* Puertos efimeros o di s. Van desde el 49152 hasta el 65535 y son unos puertos
+temporales de usar y tirar que el sistema operativo asigna a las aplicaciones cuando los
+necesitan. Una vez que la conexién ha terminado ese puerto queda libre y puede ser
+reutilizado nuevamente por cualquier otra aplicacién.
+
+Cuando una aplicacién actéa como cliente y necesita conectarse a un servidor se le asigna un
+puerto efimero.

@@ -1,0 +1,16 @@
+Funcionamiento
+
+Cuando un router recibe un datagrama, mira la dir. IP de destino y busca en las filas de
+la tabla la subred a la que pertenece dicha direccién, utilizando para ello la mascara de
+subred.
+
+Ejemplo 1: direccién destino 172.30.3.5
+
+vy
+
+1729010 2352552550 17230101 1
+$0 17230.102 1
+
+172.9020
+1723030 2352552350 17230102 1
+0900 0000 17230103 1

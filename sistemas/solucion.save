@@ -1,0 +1,228 @@
+function Show-Many{
+
+	Clear-Host
+	Write-Host "=" * 60 
+}
+
+function Show-HelpSystem{
+	do{
+		Clear-Host
+		Write-Host "== Sistema de ayuda y descubrimiento"
+		$option = Read-Host "Selecione una opcion"
+
+		switch($option){
+			"1" {
+					                Write-Host "`nFiltros disponibles:" -ForegroundColor Cyan
+                Write-Host "[1] Todos los comandos"
+                Write-Host "[2] Solo Commandlets"
+                Write-Host "[3] Solo Funciones"
+                Write-Host "[4] Solo Alias"
+                Write-Host "[5] Filtrar por verbo"
+                Write-Host "[6] Filtrar por sustantivo"
+                	   $filter = Read-Host "'n Selecione filtro"
+
+                	   switch($filter){
+					"1"{Get-Command | Format-Table -AutoSize 	}
+					"2" {Get-Command -CommandType Cmdlet | Format-Table -AutoSize }
+					"3" {Get-Command -CommandType function | Format-Table -AutoSize }
+					"4"{Get-Command -CommandType Alias | Format-Table -AutoSize }
+					"5"{
+						$verb=Read-Host "Ingrese el verbo ej (Get,Set,Remove "
+						Get-Command -Verb $verb | Format-Table -AutoSize 
+					}
+
+					"6"{$noun = Read-Host "Ingrese el sustantivo (ej:Process , Service )" 
+						Get-Command -Noun $noun | Format-Table -AutoSize
+					}
+                	   }
+                	   Read-Host "Presione enter para contirnuar 
+				}
+
+			"2" {
+					$command = Read-Host "Ingrese el nombre del coamndo"
+					Write-Host "Opciones de ayuda" 
+					Write-Host "1. Básica"
+                Write-Host "2. Detallada (-Detailed)"
+                Write-Host "3. Ejemplos (-Examples)"
+
+                	$helpOption = Read-Host= "Selecione opcion"
+                	switch($helpOption){
+				"1" {Get-Help $command }
+				"2" {Get-Help $command -Detailed}
+				"3" {Get-Help $command -Examples }
+
+                	}
+                	Read-Host "presione enter para continuar"
+			 }
+
+			 "3" {
+					$object = Read-Host "Ingres un ocmando que produzca un objeto(Get-Process)"
+
+					Write-host "Propiedad y metodos de : $object" 
+					Invoke-Expression $object | Get-Member
+					Read-Host "Presione Enter para continuar"
+			 }
+			"4"{
+				Write-Host "n== Informacion de la consola "
+				Get-Host | Format-List
+				Read-Host "pRESIONE ENTER PARA CONTINUAR"
+			}
+
+			"5"{
+				 Write-Host"Historial de comandos"
+				 Write-Host "Ultimos 20 comandos"
+				 Get-History -Count 20 | Format-Table -AutoSize
+				 $action = Read-Host "Desea limpiar el histoirial"
+				 if($acction -eq 'S'){
+					Clear-History
+					Write-Host "HIstorial limpiado " 
+					
+				 }
+				 Read-Host "Presione enter para continuar"
+			}
+		}
+	}while ($option -ne "6")
+
+}
+#=====
+#2.Gestion del sistema de archivo 
+#==
+
+function Show-FileSystem{
+
+	do{
+		Clear-Host
+		Write-Host "==Gestion del sistema de carchivo"
+		Write-Host "==Ubicacion actual " -NoNewLine
+		Write-Host (Get-Location)
+		        Write-Host ""
+        Write-Host "1. Navegar entre directorios"
+        Write-Host "2. Listar contenido de carpeta"
+        Write-Host "3. Crear archivo/carpeta"
+        Write-Host "4. Copiar archivo/carpeta"
+        Write-Host "5. Mover/Renombrar archivo/carpeta"
+        Write-Host "6. Eliminar archivo/carpeta"
+        Write-Host "7. Leer archivo de texto"
+        Write-Host "8. Gestionar carpetas recursivamente"
+        Write-Host "9. Volver al menú principal"
+
+        $option=Read-Host "Seelccione uan opcion"
+
+        switch($option){
+		"1"{
+				$path = Read-Host "Ingrese la ruta ( para subir nivel "
+				if ( $path -eq ".."){
+					Set-Location ..
+				}else{
+					Set-Location $path 
+				}
+
+				Write-host "Nueva ubicacion" 
+				Get-Location
+				Read-Host "Presione enter para continuar"f
+			}
+		"2"{
+		                Write-Host "`nFormatos de visualización:" -ForegroundColor Cyan
+                Write-Host "1. Tabla (por defecto)"
+                Write-Host "2. Lista detallada"
+                Write-Host "3. Solo nombres (ancho)"
+                Write-Host "4. Personalizado (solo archivos o carpetas)"
+                
+                $format = Read-Host "Seleccione formato"
+
+                switch($format){
+				"1"{ Get-ChildItem | Format-Table -AutoSize }
+				"2"{Get-ChildItem | Format-List Name,Mode , Length , LastWriteTime }
+				"3"{Get-ChildItem | Format-Wide -Colum 3}
+				"4"{
+					$type = Read-Host "Mostrar(1=Archivos , 2=Carpetas)"
+					if($type -eq "1"){
+						Get-ChildItem -File | Format-Table Name , Length -AutoSize
+						
+					}else{
+						 Get-ChildItem -Directory | Format-Table Name -AutoSize
+					}
+				}
+                }
+                	Read-Host "Presione Eneter para continuar"
+		}
+
+		"3" {
+			$type = Read-Host "Crear (1= archivo 2=carpata)"
+			$name = Read-host "Ingree el nombre"
+			if($type -eq "1"){
+				New-Item -Path $name -ItemType File 
+				Wrtite-HOst "archivo creado $name" 
+			}else{
+				New-Item -Path $name -ItemType Directory
+				Write-Host "Carpeta creada $name " 
+			}
+		}
+
+		"4"{
+			$source = Read-Host "Origen"
+			$dest = Read-Host "Destino"
+			$recursive = Read-Host "Incluir subdirecotiro"
+
+			if($recursive -eq 'S'){
+	 		Copy-Item -Path $source -Destination $dest -Recurse
+			}else{
+				Copy-Item -Path $source -Destination $dest
+			}
+
+			Write-Host "elemento copiado " 
+			Read-Host "presione enter para continuar"
+		}
+
+		"5"{
+			  $source = Read-Host "Origen"
+			  $dest = Read-Host "Destino (nueva ruta /nombre"
+			  Move-Item -Path $source -Destination $dest
+			  Write-Host "ELemento movido /renombrado " 
+			  Read-Host "Presione enter para continuar"
+		}
+
+		"6"{
+		 	$item =Read-Host "Elemento a eliminar"
+		 	$recursive = Read-Host "Eliminar recursivamente "
+
+		 	if($recursive -eq 'S'){
+				 Remove-Item -Path $item -Recurse -Force
+		 	}else{
+				 REmove-Item -Path $item -Force
+		 	}
+
+		 	Write-Host "Elemento eliminado"
+		 	Read-Host "presione enter para continuar"
+		}
+		"7"{
+			 $file = Read-Host "Archivo a leer"
+			 if(Test-Path $file){
+				Get-Content $file
+			 }else{
+				Write-Host "Archivo no encontrado"
+			 }
+
+			 Read-Host "presione enter para continuar"
+		}
+
+		"8"{
+			$path = Read-Host "Ruta a analisar"
+			Write-Host "estuctura reuriva"
+			Get-ChildItem  -Path $path -Recurse | ForEach-Object {
+					if($_.PSIsContainer){
+						Write-Host "carpeta" 
+						Write-Host $_.FullName
+					}else{
+						Write-Host "Archivo" 
+						Write-Host "$($_.FullName) - $($_.Length) bytes"
+					}
+			}
+		}
+        }While($option -ne "9")
+
+	}
+
+	 
+
+}

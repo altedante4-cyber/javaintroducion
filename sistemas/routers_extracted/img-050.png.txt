@@ -1,0 +1,7 @@
+Enrutamiento estdtico
+
+Se considera una ruta estdtica aquella creada manual-
+mente por el administrador de red. Al no tener vinculos con
+los protocolos, las rutas estaticas no reciben actualizaciones,
+lo cual indica que el administrador debe reconfigurar estas
+rutas nuevamente e incluir los cambios en la topologia.

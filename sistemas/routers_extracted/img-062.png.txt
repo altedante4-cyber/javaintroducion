@@ -1,0 +1,15 @@
+° Basada en la direccion de destino
+
+del paquete IP R3
+. . ==) Todo el 10/8
+Paquete: Direccién IP excepto 10.1/16
+de destino: 10.1.1.1
+a
+R1 R2 R4
+10/8 > R3 10.1/16
+10.1/16 > R4
+20/8 > R5S
+30/8 > R6
+
+Tabla de enrutamiento
+de R2

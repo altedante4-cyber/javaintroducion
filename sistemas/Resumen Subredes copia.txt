@@ -1,0 +1,160 @@
+Resumen Redes
+
+Red de Ordenadores
+
+Red de Ordenadores
+
+Red de Ordenadores
+
+Protocolos
+Reglas que rigen las comunicaciones
+Toda comunicación, ya sea cara a cara o por una red, está regida por
+reglas predeterminadas denominadas protocolos.
+Estos protocolos son específicos de las características de la
+conversación. En nuestras comunicaciones personales cotidianas, las reglas
+que utilizamos para comunicarnos a través de un medio, como el teléfono,
+no necesariamente son las mismas que los protocolos que se usan en otro
+medio, como escribir una carta.
+
+Protocolos
+
+Protocolos
+
+Protocolos
+
+Modelos de Referencia TCP/IP
+
+Arquitectura en Capas
+
+Arquitectura en Capas
+
+Modelos de Referencia TCP/IP
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia OSI
+
+Modelos de Referencia
+
+Modelos de Refencia
+
+Modelos de Referencia TCP/IP
+
+Modelos de Referencia TCP/IP
+
+Modelos de Referencia TCP/IP
+
+Modelos de Referencia TCP/IP
+
+Modelos de Referencia TCP/IP
+
+Modelos de Referencia TCP/IP
+
+Modelos de Referencia TCP/IP
+
+Modelos de Referencia TCP/IP
+
+INTERNET
+
+Protocolos
+
+Protocolo TCP
+
+Protocolo IP
+
+Dirección IP
+
+Dirección IP
+
+Dirección IP
+
+Dirección IP
+
+FORMAS DE CREAR REDES Y SUBREDES:
+Direccionamiento Classful
+Subnetting
+VLSM
+Supernetting
+CIDR
+
+CLASSFUL
+
+SUBNETTING
+
+¿Qué es el subnetting?
+Definido de la forma más simple, el término subnetting hace referencia a la
+subdivisión de una red en varias subredes.
+El subneteo permite a los administradores de red, por ejemplo, dividir una red
+empresarial en varias subredes sin hacerlo público en Internet.
+Esto se traduce en que el router que establece la conexión entre la red e Internet
+se especifica como dirección única, aunque puede que haya varios hosts ocultos.
+Así, el número de hosts que están a disposición del administrador aumenta
+considerablemente.
+
+¿Cómo funciona el subnetting?
+En el subnetting o subneteo se toman bits del ID del host “prestados” para crear
+una subred. Con solo un bit se tiene la posibilidad de generar dos subredes, puesto
+que solo se tiene en cuenta el 0 o el 1.
+Para un número mayor de subredes se tienen que liberar más bits, de modo que
+hay menos espacio para direcciones de hosts.
+Cabe remarcar en este caso que tanto las direcciones IP de una subred como
+aquellas que no forman parte de ninguna tienen la misma apariencia y los
+ordenadores tampoco detectan ninguna diferencia, de ahí que se creen las
+llamadas máscaras de subred. Si se envían paquetes de datos de Internet a la
+propia red, el router es capaz de decidir mediante esta máscara en qué subred
+distribuye los datos.
+
+EJERCICIOS DE SUBREDES
+
+https://www.youtube.com/watch?v=lEKR7WtKzDA
+
+¿A qué Clase Pertenece 192.190.0.0? C
+
+¿Cuál es la máscara para una red tipo C?
+
+Máscara en Binario
+
+Queremos tres subredes.
+Necesitamos 2 bits para tener 3 subredes
+
+Necesitamos 2 bits por lo que lo ponemos a 1’s y pasamos la máscara a decimal
+
+¿Cuáles son las posibles tres subredes que hemos creado?
+Con dos bits tenemos las combinaciones 00,01,10,11
+192.190.0.00000000 = 192.190.0.0
+192.190.0.01000000 = 192.190.0.64
+192.190.0.10000000 = 192.190.0.128
+192.190.0.11000000 = 192.190.0.192
+
+VLSM
+
+¿Cuántos bits necesito para 250 hosts?
+Necesito 8 bits para hosts
+Los que me sobran se los paso a la sección de subred, por eso cambia la
+máscara.
+
+

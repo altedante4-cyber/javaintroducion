@@ -1,0 +1,8 @@
+a)
+
+Las maquinas que pueden intercambiar trafico son aquéllas que pertenecen a la misma subred IP.
+Por tanto pueden intercambiar trafico:
+
+- Al, A3 y B2, en la red 212.1.0.0/24.
+
+- A2 yB1, en la red 133.3.0.0/24.

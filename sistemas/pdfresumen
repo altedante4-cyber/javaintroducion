@@ -1,0 +1,302 @@
+========================
+RESUMEN POWERSHELL - COMANDOS Y CONCEPTOS
+========================
+
+1. DESCUBRIMIENTO DE COMANDOS (Get-Command)
+-------------------------------------------
+Get-Command -Noun Process          # Comandos relacionados con procesos
+Get-Command -Name Clear-Host       # Info de un comando específico
+Get-Command -Verb Get              # Comandos que empiezan con "Get"
+Get-Host                           # Versión de PowerShell instalada
+
+-- Listar todos los comandos disponibles (alias, funciones, cmdlets)
+Get-Command                        # Todos los comandos
+Get-Command get-help               # Buscar comando específico
+Get-Command get-help -Syntax       # Sintaxis de uso del comando
+Get-Command -Verb get              # Comandos con verbo "get"
+Get-Command -Noun service          # Comandos con sustantivo "service"
+Get-Command -CommandType Alias     # Solo alias
+Get-Command -CommandType Cmdlet    # Solo cmdlets
+Get-Command -CommandType Function  # Solo funciones
+
+2. CMDLETS ESENCIALES DE POWERSHELL
+-----------------------------------
+Get-Command      # Descubrir comandos
+Get-Help         # Obtener ayuda (ej: Get-Help Get-Process)
+Get-Alias        # Listar alias (ej: Get-Alias -Name ls)
+Get-Date         # Fecha y hora actual
+Set-Location     # Cambiar directorio (alias: cd, sl)
+Get-Location     # Directorio actual (alias: pwd, gl)
+New-Item         # Crear archivos/carpetas
+Remove-Item      # Eliminar archivos/carpetas (alias: del, rm)
+Copy-Item        # Copiar archivos/carpetas
+Move-Item        # Mover archivos/carpetas (alias: mv)
+Write-Output     # Escribir salida a pipeline
+Get-Service      # Listar servicios del sistema
+Get-Member       # Ver propiedades y métodos de objetos
+Select-Object    # Seleccionar propiedades específicas
+Where-Object     # Filtrar objetos (alias: ?)
+ForEach-Object   # Iterar sobre cada objeto (alias: %)
+Sort-Object      # Ordenar objetos
+Clear-Host       # Limpiar pantalla (alias: cls, clear)
+Read-Host        # Leer entrada del usuario
+Write-Host       # Escribir en pantalla (no va al pipeline)
+
+3. GESTIÓN DE ARCHIVOS Y CARPETAS
+----------------------------------
+Copy-Item       # Copiar archivos/carpetas
+  -Path         # Origen
+  -Destination  # Destino
+  -Recurse      # Incluir subcarpetas
+  -Force        # Sobrescribir si existe
+
+Get-ChildItem   # Listar contenido (alias: ls, dir)
+  -Path         # Ruta a listar
+  -Recurse      # Listar recursivamente
+  -File         # Solo archivos
+  -Directory    # Solo carpetas
+  -Hidden       # Incluir ocultos
+
+New-Item        # Crear archivos/carpetas
+  -Name         # Nombre del elemento
+  -ItemType     # "File" o "Directory"
+  -Value        # Contenido del archivo
+  -Path         # Ruta donde crear
+
+Move-Item       # Mover/renombrar
+Remove-Item     # Eliminar
+  -Recurse      # Eliminar recursivamente
+  -Force        # Forzar eliminación
+
+Set-Location    # Cambiar directorio (cd)
+Get-Location    # Directorio actual (pwd)
+
+-- EJEMPLOS PRÁCTICOS:
+# Copiar un archivo
+Copy-Item -Path C:\Temp\fichlog.txt -Destination D:\Logs
+
+# Copiar toda una jerarquía (subcarpetas y archivos)
+Copy-Item -Path DirSource -Destination DirDest -Recurse
+
+# Crear un archivo con contenido
+New-Item -Name miarchivo.txt -ItemType File -Value 'Viva PowerShell'
+
+# Crear una carpeta
+New-Item -Path "C:\Temp\NuevaCarpeta" -ItemType Directory
+
+# OBTENER RUTA ACTUAL EN VARIABLE
+$RutaActual = (Get-Location).Path
+
+-- NOTAS:
+- Copy-Item crea automáticamente la carpeta de destino si no existe
+- New-Item necesita ItemType "File" o "Directory"
+- Get-Location lleva a la carpeta del usuario por defecto
+
+4. FORMATEO DE SALIDA
+----------------------
+Format-Custom    # Formato personalizado (alias: fc)
+Format-List      # Formato de lista (alias: fl)
+Format-Table     # Formato de tabla (alias: ft)
+Format-Wide      # Formato ancho, una propiedad (alias: fw)
+
+-- Format-Wide: Visualiza una única propiedad (por defecto la principal)
+  -Property      # Propiedad a mostrar
+  -Column        # Número de columnas
+
+-- Format-List: Visualiza objeto en formato lista
+  -Property      # Propiedades específicas separadas por comas
+
+-- Format-Table: Visualiza objeto en formato tabla
+  -Property      # Propiedades específicas separadas por comas
+  -AutoSize      # Ajustar ancho de columnas automáticamente
+  -Wrap          # Ajustar texto largo a la columna
+  -GroupBy       # Agrupar por valor de una propiedad
+
+-- EJEMPLOS:
+Get-Process -Name powershell
+Get-Process -Name powershell | Format-Wide
+Get-Process -Name powershell | Format-Wide -Property Id
+Get-Process -Name powershell | Format-Wide -Property Name -Column 1
+Get-Process -Name powershell | Format-List
+Get-Process -Name powershell | Format-List -Property ProcessName,FileVersion,StartTime
+Get-Process -Name powershell | Format-List -Property *
+Get-Process -Name powershell | Format-Table
+Get-Process -Name powershell | Format-Table -Property Path,Name
+Get-Process -Name powershell | Format-Table -Property Path,Name,Id,Company -AutoSize
+Get-Process -Name powershell | Format-Table -Wrap -AutoSize -Property Name,Id,Path -GroupBy Company
+
+5. GESTIÓN DE USUARIOS Y GRUPOS
+--------------------------------
+Get-LocalUser              # Obtener usuarios locales
+Get-LocalUser -Name manolo # Info de usuario específico
+Get-LocalUser -Name manolo | fl  # Formato lista (fl = Format-List)
+
+Get-LocalGroup             # Obtener grupos locales
+Get-LocalGroupMember       # Miembros de un grupo
+New-LocalUser              # Crear usuario
+Remove-LocalUser           # Eliminar usuario
+Add-LocalGroupMember       # Añadir usuario a grupo
+
+6. INFORMACIÓN DEL SISTEMA
+--------------------------
+Get-SmbShare               # Recursos compartidos
+Get-Disk                   # Información de discos
+Get-Disk | Format-List     # Discos en formato lista
+Get-Disk -Number 0 | fl    # Disco específico (número 0)
+Get-Partition              # Particiones
+Get-Partition -DiskNumber 0 # Particiones de disco 0
+Get-Volume                 # Volúmenes
+Get-Process                # Procesos del sistema
+Get-Service                # Servicios del sistema
+Get-Process | Out-GridView # Ver procesos en ventana gráfica
+
+7. GET-MEMBER (Descubrir propiedades y métodos)
+------------------------------------------------
+Get-Member devuelve propiedades y métodos de un objeto
+
+Get-Date | Get-Member                    # Miembros de Get-Date
+Get-Date | Get-Member -MemberType Properties
+Get-Date | Get-Member -MemberType Method
+Get-Process | Get-Member
+
+-- Encontrar comandos por tipo de parámetro:
+Get-Command -ParameterType ServiceController
+
+8. TRABAJANDO CON OBJETOS - SELECT-OBJECT
+-----------------------------------------
+Select-Object selecciona propiedades del pipeline para construir nuevos objetos
+
+Get-Date | Select-Object -Property Day,Month,Year
+Get-Date | Select-Object -Property Day,Month,Year | Get-Member
+Get-Date | Select-Object -Property Day,Month,Year | Format-List
+
+-- Parámetros útiles:
+  -Property       # Lista de propiedades a seleccionar
+  -First N        # Primeros N objetos
+  -Last N         # Últimos N objetos
+  -Unique         # Valores únicos
+  -ExpandProperty # Expandir propiedad compleja
+
+9. TRABAJANDO CON OBJETOS - SORT-OBJECT
+---------------------------------------
+Sort-Object ordena objetos del pipeline
+
+Get-ChildItem -Path "C:\Users" | Sort-Object -Property Name
+Get-ChildItem -Path "C:\Users" | Sort-Object -Property Name -Descending
+Get-Process | Sort-Object -Property CPU -Descending
+Get-Process | Sort-Object -Property Name,Id
+
+-- Parámetros:
+  -Property       # Propiedades para ordenar
+  -Descending     # Orden descendente
+  -Unique         # Valores únicos
+
+10. FILTRAR OBJETOS - WHERE-OBJECT
+----------------------------------
+Where-Object filtra objetos del pipeline (alias: ?)
+
+-- Sintaxis de bloque script con $_ (objeto actual):
+Get-Content archivo.txt | Where-Object { $_.Contains("holamundo") } | Out-File filtrado.txt
+
+-- EJEMPLOS PRÁCTICOS:
+# Filtrar procesos por nombre
+Get-Process | Where-Object { $_.Name -eq "powershell" }
+
+# Filtrar servicios en ejecución
+Get-Service | Where-Object { $_.Status -eq "Running" }
+
+# Filtrar archivos por tamaño
+Get-ChildItem | Where-Object { $_.Length -gt 1MB }
+
+# Filtrar con múltiples condiciones
+Get-Process | Where-Object { $_.CPU -gt 10 -and $_.Name -ne "Idle" }
+
+# Sintaxis simplificada (PowerShell 3.0+)
+Get-Process | Where-Object Name -eq "powershell"
+Get-Service | Where-Object Status -eq "Running"
+
+-- Operadores de comparación:
+-eq   # Igual
+-ne   # No igual
+-gt   # Mayor que
+-lt   # Menor que
+-ge   # Mayor o igual
+-le   # Menor o igual
+-like # Coincidencia con comodines (*)
+-notlike # No coincide con comodines
+-contains # Contiene valor
+-notcontains # No contiene valor
+
+11. OPERACIONES CON FECHAS (Get-Date)
+--------------------------------------
+(Get-Date).Date                    # Solo fecha (sin hora)
+(Get-Date).Day                     # Día del mes
+(Get-Date).Month                   # Mes
+(Get-Date).Year                     # Año
+(Get-Date).Hour                    # Hora
+(Get-Date).Minute                  # Minuto
+(Get-Date).Second                  # Segundo
+(Get-Date).DayOfWeek               # Día de la semana
+
+Get-Date | Get-Member -MemberType Method
+
+(Get-Date).ToString()              # Convertir a string
+(Get-Date).ToString("dd/MM/yyyy")  # Formato personalizado
+(Get-Date).AddDays(4)              # Añadir 4 días
+(Get-Date).AddDays(4).ToString()   # Añadir 4 días y convertir
+(Get-Date).AddHours(2)             # Añadir 2 horas
+(Get-Date).AddMonths(1)            # Añadir 1 mes
+
+12. CONTAR OBJETOS
+------------------
+# Contar procesos en el sistema
+(Get-Process).Count
+Get-Process | Measure-Object | Select-Object Count
+
+# Contar archivos en un directorio
+(Get-ChildItem).Count
+Get-ChildItem | Measure-Object
+
+13. PIPELINE (TUBERÍA)
+----------------------
+El pipeline (|) pasa la salida de un comando como entrada al siguiente.
+
+Get-Process | Where-Object { $_.CPU -gt 10 } | Sort-Object CPU -Descending | Format-Table
+
+14. VARIABLES
+-------------
+$RutaActual = (Get-Location).Path  # Guardar ruta en variable
+$Nombre = "Juan"                   # Variable string
+$Numero = 123                      # Variable numérica
+$Lista = 1,2,3,4,5                # Array
+$Procesos = Get-Process            # Variable con objetos
+
+-- Variables automáticas útiles:
+$_                       # Objeto actual en pipeline
+$PSScriptRoot           # Directorio del script actual
+$PSVersionTable         # Información de versión de PowerShell
+$env:PATH               # Variable de entorno PATH
+$env:USERNAME           # Usuario actual
+
+15. AYUDA (Get-Help)
+--------------------
+Get-Help Get-Process                  # Ayuda básica
+Get-Help Get-Process -Detailed        # Ayuda detallada
+Get-Help Get-Process -Examples        # Ejemplos
+Get-Help Get-Process -Full            # Ayuda completa
+Get-Help *process*                    # Buscar ayuda con comodín
+Update-Help                           # Actualizar archivos de ayuda
+
+========================
+CONSEJOS PARA EL EXAMEN
+========================
+1. Los cmdlets siguen el formato: Verbo-Sustantivo (ej: Get-Process)
+2. Get-Help es tu mejor amigo para recordar sintaxis
+3. El pipeline (|) es fundamental en PowerShell
+4. $_ representa el objeto actual en el pipeline
+5. Get-Member te ayuda a descubrir qué puedes hacer con un objeto
+6. Los alias: ls=Get-ChildItem, cd=Set-Location, pwd=Get-Location
+7. Format-* solo cambian la visualización, no modifican el objeto
+8. Select-Object crea nuevos objetos con las propiedades seleccionadas
+9. Where-Object filtra; Sort-Object ordena
+10. Las propiedades distinguen entre mayúsculas y minúsculas en algunos casos

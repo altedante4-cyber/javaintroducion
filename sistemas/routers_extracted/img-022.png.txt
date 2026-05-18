@@ -1,0 +1,9 @@
+Capa 3
+
+El objetivo de la capa de red es hacer que los datos lleguen desde el origen al
+
+destino, atin cuando ambos no estén conectados directamente.
+Los routers trabajan en esta capa.
+
+En este nivel se realiza el direccionamiento légico y la determinacién de la ruta
+de los datos hasta su receptor final.
