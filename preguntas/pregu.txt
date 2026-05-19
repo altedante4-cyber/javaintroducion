@@ -1,0 +1,18 @@
+neo4j
+1.Justifica verbalmente el modelo de base de datos orientado a grafos (nodos,propiedades y relaciones
+y su
+2. idoneidad para tura y patrones complejuos
+identifica la similitud con sql en los atributos de la reslaciones 
+
+Redis
+Justifica verbalmente por que redis memoria es el motor idela para casos de alta concurrencia y baja latenica (chaches colas ranking
+
+5.explica la diferencia conceptual y de rendimiento entre usar redis y mysql 
+
+mongo 
+
+-justifica verbalmente por que una base de datos documental ofrece flexibilidad frente a mysql y su idoneidad par acatalogos
+
+5.explica el concepto de agregacion(aggregate) y lo diferencia del concepto tabla sql 
+
+
