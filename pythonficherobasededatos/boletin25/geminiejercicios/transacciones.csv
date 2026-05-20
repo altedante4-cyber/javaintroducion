@@ -1,0 +1,5 @@
+ID_Transaccion,Cantidad_EUR,Concepto
+TRX001,150.50,Compra componentes
+TRX002,error_dato,Devolución
+TRX003,45.00,Suscripción mensual
+TRX004,1200.00,Alquiler oficina

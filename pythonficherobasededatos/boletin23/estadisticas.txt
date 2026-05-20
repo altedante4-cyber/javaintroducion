@@ -1,0 +1,16 @@
+Hombre
+1.85
+Mujer
+1.60
+Mujer
+1.72
+Hombre
+1.70
+Hombre
+1.92
+Mujer
+1.65
+Hombre
+1.78
+Mujer
+1.58

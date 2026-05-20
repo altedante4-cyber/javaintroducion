@@ -1,0 +1,3 @@
+Línea 1: Programando en Python.
+Línea 2: Aprendiendo a manejar ficheros.
+Línea 3: Fin del archivo.

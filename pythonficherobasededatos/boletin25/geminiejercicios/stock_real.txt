@@ -1,0 +1,4 @@
+Manzanas:48
+Peras:30
+Naranjas:95
+Limones:5

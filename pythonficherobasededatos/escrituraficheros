@@ -1,0 +1,73 @@
+#aprederias estos 4 metodo principales
+
+open("archivo.txt","r") #leer
+open("archivo.txt","w") #escribir (sobreescibe)
+open("archivo.txt","a") #añadir 
+open("archivo.txt","r+")  #leer y escribir 
+
+#metodos esenciales
+
+archivo.read() #todo el contenido 
+archivo.readline() #una linea
+archivo.readlines() #lista de lineas
+archivo.write("texto")
+
+#MANEJO DE CADENAS
+
+#metodos que usaras en cada ejercicio 
+
+cadena.spiit()  #separa por espacios
+cadena.strip() #quitar espacios/saltos de linea
+cadena.replace() 
+cadena.find() 
+"".join(lista)
+
+#EXCEPIONES
+
+try:
+	#codigo que puede fallar
+	archivo = open("no existe.txt","r")
+
+except FileNotFoundError:
+	print("El archivo no existe")
+except Exception as e :
+	print("Error " , e )
+
+finally :
+	# se ejcuta siempre (para ceerrar el archivo 
+
+
+paso 3 ejercicio de ejmplo resuelto (para empesar)
+
+supangos que el primer ejercicio didce
+
+lee un archivo datos.txt que tiene numeros en cada linea calcular al a suma y maneja excepciones si el archiov no existe o hay texot no numerico 
+
+solucion que un estudiante escribiria
+
+def sumar_numero_archivo(nombre_archivo):
+	try:
+		with open(nombre_archivo,"r",encoding="utf-8") as f :
+			suma = 0 
+			for num_linea , linea in enumerate(f,1) :
+				linea_limpia = linea.strip()
+				if linea_limpia :
+					try:
+						suma += float(linea_limpia)
+					except ValueError:
+						print(f"linea{num_linea)
+
+			return suma 
+
+
+	except FileNOtFoundError:
+		print("Error no encuentor el archivo")
+		return None
+
+#uso 
+
+resultado = suma_numero_archivo("datos.txt")
+if resultado is not None:
+	print("sums total" ) 
+
+

@@ -1,0 +1,3 @@
+Manzanas:50
+Peras:30
+Naranjas:100

@@ -1,0 +1,4 @@
+2 Cola Cao
+2.5 Peras
+Total articulo en la lista: 2
+Precio de la compra: 15.2
