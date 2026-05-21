@@ -1,0 +1,68 @@
+================================================================================
+ DATOS A INSERTAR - Servicio B: Telemetría IoT (MongoDB)
+ Colección: telemetría
+ Base de datos: ecodrive
+================================================================================
+
+Vehículo: VH-001 (Patinete eléctrico)
+Fecha: 2025-06-01
+
+Los datos se insertan con el siguiente comando en mongosh:
+
+  use ecodrive
+  db.telemetria.insertMany([
+    {
+      vehicle_id: "VH-001",
+      vehicle_type: "patinete",
+      timestamp: new ISODate("2025-06-01T08:00:00Z"),
+      location: { lat: 40.4168, lng: -3.7038 },
+      speed: 0,
+      battery: 100
+    },
+    {
+      vehicle_id: "VH-001",
+      vehicle_type: "patinete",
+      timestamp: new ISODate("2025-06-01T09:00:00Z"),
+      location: { lat: 40.4175, lng: -3.7030 },
+      speed: 18.5,
+      battery: 87
+    },
+    {
+      vehicle_id: "VH-001",
+      vehicle_type: "patinete",
+      timestamp: new ISODate("2025-06-01T10:00:00Z"),
+      location: { lat: 40.4182, lng: -3.7025 },
+      speed: 22.0,
+      battery: 72
+    },
+    {
+      vehicle_id: "VH-001",
+      vehicle_type: "patinete",
+      timestamp: new ISODate("2025-06-01T11:00:00Z"),
+      location: { lat: 40.4190, lng: -3.7020 },
+      speed: 15.3,
+      battery: 58
+    },
+    {
+      vehicle_id: "VH-001",
+      vehicle_type: "patinete",
+      timestamp: new ISODate("2025-06-01T12:00:00Z"),
+      location: { lat: 40.4198, lng: -3.7015 },
+      speed: 0,
+      battery: 45
+    }
+  ])
+
+================================================================================
+ ÍNDICE RECOMENDADO (crear antes de insertar):
+================================================================================
+
+  db.telemetria.createIndex({ vehicle_id: 1, timestamp: -1 })
+
+================================================================================
+ CONSULTA PARA OBTENER HISTORIAL COMPLETO:
+================================================================================
+
+  db.telemetria.find({ vehicle_id: "VH-001" }).sort({ timestamp: 1 })
+
+================================================================================

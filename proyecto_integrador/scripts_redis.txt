@@ -1,8 +1,0 @@
-SET sesion:token:A7X3K9 "usuario:42|vehiculo:PAT-001|inicio:2025-05-19T08:30:00Z"
-EXPIRE sesion:token:A7X3K9 60
-
-HSET vehiculo:PAT-001:bateria nivel 85 ultima_actualizacion "2025-05-19T08:30:00Z"
-HSET vehiculo:BIC-002:bateria nivel 100 ultima_actualizacion "2025-05-19T08:30:00Z"
-HSET vehiculo:COC-003:bateria nivel 72 ultima_actualizacion "2025-05-19T08:30:00Z"
-
-HINCRBY vehiculo:PAT-001:bateria nivel -5
