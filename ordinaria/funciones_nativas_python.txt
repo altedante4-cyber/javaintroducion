@@ -1,0 +1,78 @@
+Funciones Nativas de Python (Built-in Functions)
+=================================================
+
+Python 3.x incluye las siguientes funciones integradas (built-in functions):
+
+1.  abs()       - Retorna el valor absoluto de un número.
+2.  all()       - Retorna True si todos los elementos de un iterable son verdaderos.
+3.  any()       - Retorna True si al menos un elemento de un iterable es verdadero.
+4.  ascii()     - Retorna una versión imprimible de un objeto, escapando caracteres no ASCII.
+5.  bin()       - Convierte un entero a una cadena binaria (prefijo '0b').
+6.  bool()      - Convierte un valor a booleano (True/False).
+7.  bytearray() - Retorna un nuevo array de bytes.
+8.  bytes()     - Retorna un nuevo objeto bytes inmutable.
+9.  callable()  - Retorna True si el objeto puede ser llamado (función, método, clase, etc.).
+10. chr()       - Retorna el carácter Unicode correspondiente a un entero.
+11. classmethod() - Transforma un método en un método de clase.
+12. compile()   - Compila código fuente en un objeto código o AST.
+13. complex()   - Crea un número complejo.
+14. delattr()   - Elimina un atributo de un objeto (equivalente a `del obj.atributo`).
+15. dict()      - Crea un diccionario.
+16. dir()       - Retorna una lista de nombres en el ámbito local o de atributos de un objeto.
+17. divmod()    - Retorna una tupla (cociente, resto) de una división.
+18. enumerate() - Retorna un iterador con pares (índice, elemento) de un iterable.
+19. eval()      - Evalúa una expresión Python a partir de una cadena.
+20. exec()      - Ejecuta código Python dinámicamente.
+21. filter()    - Filtra elementos de un iterable usando una función.
+22. float()     - Convierte un valor a número de punto flotante.
+23. format()    - Da formato a un valor usando una especificación de formato.
+24. frozenset() - Crea un conjunto inmutable (frozenset).
+25. getattr()   - Retorna el valor de un atributo de un objeto.
+26. globals()   - Retorna el diccionario de variables globales.
+27. hasattr()   - Retorna True si un objeto tiene un atributo dado.
+28. hash()      - Retorna el valor hash de un objeto (si es hasheable).
+29. help()      - Invoca el sistema de ayuda integrado.
+30. hex()       - Convierte un entero a cadena hexadecimal (prefijo '0x').
+31. id()        - Retorna la identidad única de un objeto (dirección de memoria).
+32. input()     - Lee una línea de la entrada estándar (teclado).
+33. int()       - Convierte un valor a entero.
+34. isinstance() - Retorna True si un objeto es instancia de una clase/tipo.
+35. issubclass() - Retorna True si una clase es subclase de otra.
+36. iter()      - Retorna un iterador para un objeto iterable.
+37. len()       - Retorna la longitud (número de elementos) de un objeto.
+38. list()      - Crea una lista.
+39. locals()    - Retorna el diccionario de variables locales.
+40. map()       - Aplica una función a cada elemento de uno o más iterables.
+41. max()       - Retorna el elemento más grande de un iterable o de varios argumentos.
+42. memoryview() - Retorna una vista de memoria de un objeto.
+43. min()       - Retorna el elemento más pequeño de un iterable o de varios argumentos.
+44. next()      - Retorna el siguiente elemento de un iterador.
+45. object()    - Retorna un nuevo objeto sin características especiales.
+46. oct()       - Convierte un entero a cadena octal (prefijo '0o').
+47. open()      - Abre un archivo y retorna un objeto archivo.
+48. ord()       - Retorna el entero Unicode de un carácter.
+49. pow()       - Retorna x**y (potencia), opcionalmente con módulo (x**y % z).
+50. print()     - Imprime objetos a la salida estándar.
+51. property()  - Crea y retorna un descriptor de propiedad.
+52. range()     - Retorna una secuencia inmutable de números (rango).
+53. repr()      - Retorna una representación formal (string) de un objeto.
+54. reversed()  - Retorna un iterador que recorre un iterable en orden inverso.
+55. round()     - Redondea un número flotante.
+56. set()       - Crea un conjunto (set).
+57. setattr()   - Establece el valor de un atributo de un objeto.
+58. slice()     - Retorna un objeto slice (rebanada).
+59. sorted()    - Retorna una nueva lista ordenada a partir de un iterable.
+60. staticmethod() - Transforma un método en un método estático.
+61. str()       - Convierte un valor a cadena (string).
+62. sum()       - Suma los elementos de un iterable.
+63. super()     - Retorna un objeto proxy que delega llamadas a una clase padre.
+64. tuple()     - Crea una tupla.
+65. type()      - Retorna el tipo de un objeto, o crea una nueva clase.
+66. vars()      - Retorna el atributo __dict__ de un objeto (variables accesibles).
+67. zip()       - Agrupa elementos de varios iterables en tuplas.
+68. __import__() - Función avanzada para importar módulos (no recomendada para uso directo).
+
+Adicionales introducidas en versiones recientes:
+69. breakpoint() - Llama a pdb.set_trace() o al debugger configurado (Python 3.7+).
+
+Total: 69 funciones nativas (built-in functions).
